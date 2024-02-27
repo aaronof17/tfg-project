@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react';
 import {getJSON} from './functions/functions.js';
 import Login from './components/Login.js';
 import ProfileView from './components/ProfileView.js';
+import ResponsiveDrawer from './components/NavigationDrawer/NavigationDrawer.js';
+import i18n from './i18n';
 
 const CLIENT_ID = "b771595a6c15c6653d02";
 
 function App() {
 
   const [rerender, setRerender] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({}); 
   
   useEffect(() => {
     const queryString = window.location.search;
@@ -78,7 +80,8 @@ function App() {
       <header className="App-header">
 
         {localStorage.getItem("accessToken") ? 
-        <ProfileView rerenderPass={rerenderPass}/>
+        <ResponsiveDrawer></ResponsiveDrawer>
+        //<ProfileView rerenderPass={rerenderPass}/>
         :
         <Login/>
         }

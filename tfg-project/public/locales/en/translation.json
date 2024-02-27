@@ -1,0 +1,7 @@
+{
+    "navigationDrawer" : {
+        "students" : "Students",
+        "addStudents": "Add Students",
+        "makeIssue": "Make issue"
+    }
+}

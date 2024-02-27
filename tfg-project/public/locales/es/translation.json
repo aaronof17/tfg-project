@@ -1,0 +1,7 @@
+{
+    "navigationDrawer" : {
+        "students" : "Alumnos",
+        "addStudents": "Añadir estudiante",
+        "makeIssue": "Crear Issue"
+    }
+}

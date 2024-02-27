@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {getJSON} from '../functions/functions.js';
-
+import ResponsiveDrawer from './NavigationDrawer/NavigationDrawer.js';
 
 function ProfileView({rerenderPass}){
 
@@ -69,6 +69,7 @@ function ProfileView({rerenderPass}){
     
     return(
         <div className="ProfileView">
+          <ResponsiveDrawer></ResponsiveDrawer>
             <h1> We have the access token</h1>
             <button onClick={() => {
                 localStorage.removeItem("accessToken"); 
