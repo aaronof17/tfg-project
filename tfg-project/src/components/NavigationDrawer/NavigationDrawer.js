@@ -25,14 +25,17 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import {useTranslation} from "react-i18next";
 
-import StudentsList from './StudentsList';
+import StudentsList from './options/StudentsList';
+import MakeIssue from './options/MakeIssue';
 
 
 const drawerWidth = 240;
 
 function FirstView() {
   return (
-    <StudentsList></StudentsList>
+    <div style={{ flexGrow: 1 }}> 
+      <StudentsList></StudentsList>
+    </div>
   );
 }
 
@@ -45,10 +48,18 @@ function SecondView() {
   );
 }
 
-const views = [<FirstView />, <SecondView />];
+function ThirdView() {
+  return (
+    <div>
+      <MakeIssue></MakeIssue>
+    </div>
+  );
+}
+
+const views = [<FirstView />, <SecondView />, <ThirdView/>];
 
 function ResponsiveDrawer(props) {
-  const { window } = props;
+  const { window, rerenderPass } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const [currentView, setCurrentView] = React.useState(0);
@@ -129,6 +140,7 @@ function ResponsiveDrawer(props) {
     })
   }
   
+  
 
   const drawer = (
     <div>
@@ -180,7 +192,6 @@ function ResponsiveDrawer(props) {
             variant="contained"
             color="secondary"
             startIcon={<Avatar src={getProfileImage()} />}
-            //onClick={chargeProfile()}
           >
             <a href={userData.html_url} style={{"color":"white"}}>
               {getProfileName()}
@@ -196,6 +207,16 @@ function ResponsiveDrawer(props) {
               <img src="en_flag.jpg" alt="english flag" width="20" height="10"></img>
           </button>
 
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => {
+              localStorage.removeItem("accessToken"); 
+              rerenderPass()
+          }}
+          > 
+            Log Out
+          </Button>
 
 
         </Toolbar>
@@ -233,22 +254,15 @@ function ResponsiveDrawer(props) {
         </Drawer>
       </Box>
       <Box
+      className="probina"
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
-        <Toolbar />
-        {views[currentView]}
-      </Box>
+        {views[currentView]} 
+       </Box>
     </Box>
   );
 }
 
-// ResponsiveDrawer.propTypes = {
-//   /**
-//    * Injected by the documentation to work in an iframe.
-//    * Remove this when copying and pasting into your project.
-//    */
-//   window: PropTypes.func,
-// };
 
 export default ResponsiveDrawer;

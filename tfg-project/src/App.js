@@ -80,8 +80,7 @@ function App() {
       <header className="App-header">
 
         {localStorage.getItem("accessToken") ? 
-        <ResponsiveDrawer></ResponsiveDrawer>
-        //<ProfileView rerenderPass={rerenderPass}/>
+        <ResponsiveDrawer rerenderPass={rerenderPass}></ResponsiveDrawer>
         :
         <Login/>
         }

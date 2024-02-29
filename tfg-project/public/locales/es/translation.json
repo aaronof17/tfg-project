@@ -3,5 +3,11 @@
         "students" : "Alumnos",
         "addStudents": "Añadir estudiante",
         "makeIssue": "Crear Issue"
+    },
+    "studentList" : {
+        "name" : "Nombre",
+        "username" : "Nombre de Usuario",
+        "email" : "Email",
+        "githubprofile" : "Perfil de GitHub"
     }
 }
