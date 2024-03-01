@@ -54,7 +54,7 @@ function StudentsList(props) {
 
       const getRows = () =>{
         let rows = [];
-        if(students != undefined){
+        if(students !== undefined){
           students.map((student,index) => {
           
               rows[index] = student;

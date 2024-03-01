@@ -1,3 +1,4 @@
+import './LoginForm.css';
 
 const CLIENT_ID = "b771595a6c15c6653d02";
 
@@ -8,7 +9,7 @@ function Login(){
     }
 
     return(
-        <div className="Login">
+        <div className="wrapper">
             <h3>User is not login</h3>
             <button onClick={loginWithGitHub}>
             Login with Github
