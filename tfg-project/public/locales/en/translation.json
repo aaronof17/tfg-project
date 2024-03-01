@@ -8,6 +8,8 @@
         "name" : "Name",
         "username" : "Username",
         "email" : "Email",
-        "githubprofile" : "GitHub Profile"
+        "githubprofile" : "GitHub Profile",
+        "group" : "Group",
+        "subject" : "Subject"
     }
 }

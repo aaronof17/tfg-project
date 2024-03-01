@@ -2,10 +2,13 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
-
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
+
 import studentsData from "./students.json";
+import {calculateWidth} from "../../../functions/genericFunctions.js";
+   
+
 
 function MakeIssue() {
 
@@ -30,12 +33,7 @@ function MakeIssue() {
 
     }
 
-    const calculateMenuWidth = () => {
-      const longestOption = Math.max(...getStudents().map(option => option.length));
-      const approximateCharWidth = 8; 
-      return longestOption * approximateCharWidth;
-    };
-   
+
   return (
     <Box
       
@@ -50,7 +48,7 @@ function MakeIssue() {
         disablePortal
         id="combo-box-demo"
         options={getStudents()}
-        sx={{ width: calculateMenuWidth()}}
+        sx={{ width: calculateWidth(getStudents())}}
         renderInput={(params) => <TextField {...params} label="Alumnos" />}
       />
       <p>hola</p>

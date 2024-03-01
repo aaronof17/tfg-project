@@ -15,7 +15,6 @@ app.use(bodyParser.json());
 //code being passed from the fronted
 app.get('/getAccessToken', async function (req,res){
     
-    console.log(req.query.code);
     const params = "?client_id="+ CLIENT_ID + "&client_secret="+ CLIENT_SECRET + "&code=" + req.query.code;
     await fetch("https://github.com/login/oauth/access_token" + params, {
         method: "POST",
@@ -91,6 +90,30 @@ app.get('/getUserData', async function  (req, res){
     }).then((data) => {
         console.log(data);
         res.json(data);
+    })
+})
+
+
+app.get('/downloadRepo', async function  (req, res){
+    console.log("hola");
+    req.get("Authorization");
+    const user = 'aaronof17';
+    const repo = 'demo1';
+
+    await fetch(`https://api.github.com/repos/${user}/${repo}/zipball`, {
+        method: "GET",
+        headers: {
+            "Authorization" : req.get("Authorization")
+            
+        }
+    })
+    .then((res) =>{
+    console.log(res)
+    return res.json;
+    })
+    .then(json => {
+    console.log(json)
+        console.log(`Issue created at ${json.url}`)
     })
 })
 

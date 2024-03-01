@@ -1,31 +1,24 @@
 import  React, {useState, useEffect} from "react";
 import axios from "axios";
-import studentsData from "./students.json";
-
 import { DataGrid } from '@mui/x-data-grid';
 import {useTranslation} from "react-i18next";
+
+import {calculateWidth} from "../../../functions/genericFunctions.js";
+import {downloadRepo} from "../../../functions/gitHubFunctions.js";
+import studentsData from "./students.json";
+
 
 
 function StudentsList(props) {
     const [students, setStudents] = useState( );
-    const [t,i18n] = useTranslation();
+    const [t] = useTranslation();
 
     useEffect(function() {
         setStudents(studentsData.students);
     });
 
-    const handleChangeLanguage = (lang) => {
-      i18n.changeLanguage(lang);
-    }
-
     
-    const calculateWidth = (list) => {
-      const longestOption = Math.max(...list.map(option => option.length));
-      console.log("lista ->",longestOption);
 
-      const approximateCharWidth = 10; 
-      return longestOption * approximateCharWidth;
-    };
 
     const getColumns = () =>{
       let columns = [];
@@ -34,7 +27,8 @@ function StudentsList(props) {
         columns = [ 
           { field: 'id', headerName: 'ID', width: calculateWidth(students.map((student)=>student.id)) },
           { field: 'name', headerName: t('studentList.name'), width: calculateWidth(students.map((student)=>student.name)) },
-          { field: 'username', headerName: t('studentList.username'), width: calculateWidth(students.map((student)=>student.username)) },
+          { field: 'subject', headerName: t('studentList.subject'), width: calculateWidth(students.map((student)=>student.subject),true) },
+          { field: 'group', headerName: t('studentList.group'), width: calculateWidth(students.map((student)=>student.group)) },
           { field: 'email', headerName: t('studentList.email'), width: calculateWidth(students.map((student)=>student.email)) },
           {
             field: 'githubprofile',
@@ -88,9 +82,11 @@ function StudentsList(props) {
       }}
       pageSizeOptions={[5, 10]}
       checkboxSelection
-     
-      
     />
+    <button onClick={downloadRepo}>
+        Descargar
+    </button>
+
   </div>
   );
 }

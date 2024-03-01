@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {getJSON} from '../functions/functions.js';
+import {getJSON} from '../functions/genericFunctions.js';
 import ResponsiveDrawer from './NavigationDrawer/NavigationDrawer.js';
 
 function ProfileView({rerenderPass}){

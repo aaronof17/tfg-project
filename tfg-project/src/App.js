@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
-import {getJSON} from './functions/functions.js';
+import {getJSON} from './functions/genericFunctions.js';
 import Login from './components/Login.js';
 import ProfileView from './components/ProfileView.js';
 import ResponsiveDrawer from './components/NavigationDrawer/NavigationDrawer.js';
