@@ -1,8 +1,15 @@
 {
+    "login" : {
+        "welcome" : "BIENVENIDO",
+        "joinUs": "Únete a nosotros",
+        "login" : "Login con GitHub"
+    },
     "navigationDrawer" : {
         "students" : "Alumnos",
         "addStudents": "Añadir estudiante",
-        "makeIssue": "Crear Issue"
+        "makeIssue": "Crear Issue",
+        "profile": "Perfil de usuario"
+
     },
     "studentList" : {
         "name" : "Nombre",

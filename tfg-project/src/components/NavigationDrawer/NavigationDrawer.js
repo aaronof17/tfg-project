@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './NavigationDrawer.css';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,7 +11,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -26,7 +27,8 @@ import { useState } from 'react';
 import {useTranslation} from "react-i18next";
 
 import StudentsList from './options/StudentsList';
-import MakeIssue from './options/MakeIssue';
+import MakeIssue from './options/MakeIssue/MakeIssue';
+import ProfileView from './options/ProfileView/ProfileView.js';
 
 
 const drawerWidth = 240;
@@ -56,7 +58,15 @@ function ThirdView() {
   );
 }
 
-const views = [<FirstView />, <SecondView />, <ThirdView/>];
+function FourthView() {
+  return (
+    <div>
+      <ProfileView></ProfileView>
+    </div>
+  );
+}
+
+const views = [<FirstView />, <SecondView />, <ThirdView/>, <FourthView/>];
 
 function ResponsiveDrawer(props) {
   const { window, rerenderPass } = props;
@@ -111,6 +121,10 @@ function ResponsiveDrawer(props) {
       return (
         <CircleNotificationsIcon></CircleNotificationsIcon>
       );
+    }else if(index === 3){
+      return (
+        <AccountBoxIcon></AccountBoxIcon>
+      );
     }
   };
 
@@ -145,7 +159,6 @@ function ResponsiveDrawer(props) {
   const drawer = (
     <div>
       <Toolbar />
-      <Divider />
       <List>
         {drawerOptions.map((text, index) => (
           <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
@@ -160,7 +173,19 @@ function ResponsiveDrawer(props) {
           </ListItem>
         ))}
       </List>
-  
+      <Divider />
+      <List>
+        <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(3)}>
+          <ListItemButton>
+              <ListItemIcon>
+                {
+                iconSelecter(3)
+                }
+              </ListItemIcon>
+            <ListItemText primary={t('navigationDrawer.profile')} />
+            </ListItemButton>
+        </ListItem>
+      </List>
     </div>
   );
 
@@ -168,7 +193,7 @@ function ResponsiveDrawer(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box className="principalBox" sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -201,10 +226,12 @@ function ResponsiveDrawer(props) {
           <Box sx={{ flexGrow: 1 }} /> 
 
           <button id="esFlag" onClick={() => handleChangeLanguage("es")}>
-            <img src="es_flag.png" alt="spanish flag" width="20" height="10"></img>
+            {/* <img src="es_flag.png" alt="spanish flag" width="20" height="10"></img> */}
+            es
           </button>
           <button id="enFlag" onClick={() => handleChangeLanguage("en")}>
-              <img src="en_flag.jpg" alt="english flag" width="20" height="10"></img>
+              {/* <img src="en_flag.jpg" alt="english flag" width="20" height="10"></img> */}
+              en
           </button>
 
           <Button

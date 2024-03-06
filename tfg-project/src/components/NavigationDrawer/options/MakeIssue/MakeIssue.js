@@ -5,8 +5,8 @@ import Box from '@mui/material/Box';
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 
-import studentsData from "./students.json";
-import {calculateWidth} from "../../../functions/genericFunctions.js";
+import studentsData from "../students.json";
+import {calculateWidth} from "../../../../functions/genericFunctions.js";
    
 
 

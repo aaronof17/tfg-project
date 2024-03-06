@@ -1,8 +1,15 @@
 {
+    "login" : {
+        "welcome" : "WELCOME",
+        "joinUs": "Join Us",
+        "login" : "Login with GitHub"
+    },
     "navigationDrawer" : {
         "students" : "Students",
         "addStudents": "Add Students",
-        "makeIssue": "Make issue"
+        "makeIssue": "Make issue",
+        "profile": "User Profile"
+
     },
     "studentList" : {
         "name" : "Name",
