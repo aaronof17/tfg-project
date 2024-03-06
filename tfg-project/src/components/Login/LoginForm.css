@@ -44,6 +44,7 @@
     margin: 5%;
     width: 20%;
     background-color: inherit;
+    
 }
 
 
@@ -51,4 +52,5 @@ img {
     margin-top: 25px;
     width:70%;
     height: 70%;
+    border-radius: 50%;
   }
