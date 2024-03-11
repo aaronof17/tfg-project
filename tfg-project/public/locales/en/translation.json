@@ -18,5 +18,13 @@
         "githubprofile" : "GitHub Profile",
         "group" : "Group",
         "subject" : "Subject"
+    },
+    "userProfile" : {
+        "nameLabel" : "Name",
+        "name": "User Name",
+        "githubprofile" : "GitHub Profile",
+        "email" : "Email",
+        "avatar" : "Avatar"
+
     }
 }

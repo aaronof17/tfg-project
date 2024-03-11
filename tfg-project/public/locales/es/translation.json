@@ -18,5 +18,12 @@
         "githubprofile" : "Perfil de GitHub",
         "group" : "Grupo",
         "subject" : "Asignatura"
+    },
+    "userProfile" : {
+        "nameLabel" : "Nombre",
+        "name": "Nombre de Usuario",
+        "githubprofile" : "Perfil de GitHub",
+        "email" : "Email",
+        "avatar" : "Foto de perfil"
     }
 }

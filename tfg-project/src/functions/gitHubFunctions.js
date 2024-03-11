@@ -1,5 +1,4 @@
 
-
 export async function createIssue() {
     const file = require('../TestIssues.json');
     const user = 'aaronof17';
@@ -21,6 +20,26 @@ export async function createIssue() {
       })
   })
 }
+
+export async function getUserData(callback) {
+    try {
+        const response = await fetch("http://localhost:4000/getUserData", {
+          method: "GET",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken")
+          }
+        });
+    
+        const data = await response.json();
+        console.log(data);
+        callback(data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+  }
+
+
+
 
 
 
