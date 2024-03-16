@@ -24,6 +24,10 @@
         "name": "Nombre de Usuario",
         "githubprofile" : "Perfil de GitHub",
         "email" : "Email",
-        "avatar" : "Foto de perfil"
-    }
+        "avatar" : "Foto de perfil",
+        "token" : "Token de GitHub",
+        "tokenInfo":"Para realizar las principales funciones de la aplicación es necesario introducir el token de acceso generado en su perfil de GitHub, puede saber como generarlo desde este enlace",
+        "generateToken":"enlace",
+        "saveToken": "Guardar Token"
+     }
 }

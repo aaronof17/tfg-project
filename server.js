@@ -3,6 +3,7 @@ var cors = require('cors');
 const fetch = (...args) =>
 import('node-fetch').then(({default: fetch}) => fetch(...args));
 var bodyParser = require('body-parser');
+var connection = require('./database');
 
 const CLIENT_ID = "b771595a6c15c6653d02";
 const CLIENT_SECRET = "534c078c5dcaa7afc22d912c6aceb4bda2038b99";
@@ -11,6 +12,17 @@ var app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.get('/teachers', (req, res) => {
+    const sql = "SELECT * FROM teachers";
+    connection.query(sql, (err, data) =>{
+        if(err) return res.json(err);
+        console.log("hola");
+        return res.json(data);
+    })
+}
+
+)
 
 //code being passed from the fronted
 app.get('/getAccessToken', async function (req,res){
@@ -122,4 +134,9 @@ app.get('/downloadRepo', async function  (req, res){
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
+    connection.connect(function(err){
+        if(err) throw err;
+        console.log("Database Connected");
+    }
+    );
 });

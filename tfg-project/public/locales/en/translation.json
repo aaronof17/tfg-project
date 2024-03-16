@@ -24,7 +24,11 @@
         "name": "User Name",
         "githubprofile" : "GitHub Profile",
         "email" : "Email",
-        "avatar" : "Avatar"
+        "avatar" : "Avatar",
+        "token" : "GitHub Token",
+        "tokenInfo":"If you want to use all functions from our applications you have to add you personal access token from GitHub, if you need a tutorial use this link",
+        "generateToken":"link",
+        "saveToken": "Save Token"
 
     }
 }
