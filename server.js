@@ -38,6 +38,19 @@ app.post('/teachers/token', (req, res) => {
 }
 )
 
+app.post('/groups/subject', (req, res) => {
+    const sql = 'select name from labgroups where subject=? and teacheridfk=?';
+    const params = [req.body.actualSubject, req.body.teacherID];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            return res.json(err);
+        }else{
+            return res.json(data);
+        } 
+    })
+}
+)
+
 app.get('/labGroups', (req, res) => {
     const sql = "SELECT name FROM labgroups";
     connection.query(sql, (err, data) =>{
@@ -49,7 +62,7 @@ app.get('/labGroups', (req, res) => {
 
 
 app.get('/subjects', (req, res) => {
-    const sql = "SELECT subject FROM labgroups";
+    const sql = "SELECT DISTINCT subject FROM labgroups";
     connection.query(sql, (err, data) =>{
         if(err) return res.json(err);
         return res.json(data);

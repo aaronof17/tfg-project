@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
-import {getLabGroups,getSubjectsFromGroup} from "../../../../repositories/labGroupRepository.js";
+import {getLabGroups,getSubjectsFromGroup,getLabGroupsBySubject} from "../../../../repositories/labGroupRepository.js";
 import './CreateLabWork.css';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -13,7 +13,9 @@ import {calculateWidth} from "../../../../functions/genericFunctions.js";
 function CreateLabWork() {
     const [labGroups, setLabGroups] = useState([]);
     const [subjects, setSubjects] = useState([]);
-    const [t,i18n] = useTranslation();
+    const [actualSubject, setActualSubject] = useState("");
+    const [actualGroups, setActualGroups] = useState([]);
+    const [t] = useTranslation();
     const animatedComponents = makeAnimated();
 
     useEffect(() => {
@@ -32,11 +34,34 @@ function CreateLabWork() {
                 options[index] = subject.subject;
           });
         }     
-        console.log("options ", options);
         return options;
-  
-
       }
+
+      const getLabGroupsOption= () =>{
+        let options = [];
+        if(actualGroups != undefined){
+            for( var i = 0; i < actualGroups.length; i++){
+                console.log("pruebina", actualGroups[i].name);
+                options[i] = { value: actualGroups[i], label: actualGroups[i]}
+            }
+        }     
+        return options;
+      }
+
+
+
+      const handleGroupsChange = (e, selectedOption) => {
+        if (selectedOption) {
+            const fetchFilterGroups = async () => {
+                setActualSubject(selectedOption);
+                getLabGroupsBySubject(selectedOption, 1, setActualGroups);
+            };
+            fetchFilterGroups();
+            
+        }
+      }
+    
+
       const colourOptions = [
         { value: "ocean1", label: "Ocean" },
         { value: "blue", label: "Blue" },
@@ -59,14 +84,15 @@ function CreateLabWork() {
                     id="subject-combo-box"
                     options={getSubjects()}
                     renderInput={(params) => <TextField {...params} label={t('createLabWork.subjectFilter')} />}
+                    onChange={handleGroupsChange}
                 />
             </div>
             <div className="filterGroup">
-                <Select options={colourOptions} components={animatedComponents} isMulti/>
+                <Select options={getLabGroupsOption} components={animatedComponents} isMulti/>
             </div>
-            </div>
+        </div>
         <div className="labGroups">
-            <p>filtros</p>
+            
         </div>
         <div className="infoWork">
             <p>filtros</p>
