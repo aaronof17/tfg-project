@@ -8,7 +8,8 @@
         "students" : "Alumnos",
         "addStudents": "Añadir estudiante",
         "makeIssue": "Crear Issue",
-        "profile": "Perfil de usuario"
+        "profile": "Perfil de usuario",
+        "makeWork": "Crear Práctica de Laboratorio"
 
     },
     "studentList" : {
@@ -19,6 +20,10 @@
         "group" : "Grupo",
         "subject" : "Asignatura"
     },
+    "createLabWork":{
+        "subjectFilter" : "Asignatura",
+        "groupFilter" : "Grupo de Laboratorio"
+    },
     "userProfile" : {
         "nameLabel" : "Nombre",
         "name": "Nombre de Usuario",
@@ -28,6 +33,7 @@
         "token" : "Token de GitHub",
         "tokenInfo":"Para realizar las principales funciones de la aplicación es necesario introducir el token de acceso generado en su perfil de GitHub, puede saber como generarlo desde este enlace",
         "generateToken":"enlace",
-        "saveToken": "Guardar Token"
+        "saveToken": "Guardar Token",
+        "tokenError" : "El token no puede estar vacío, porfavor introduce tu token de GitHub"
      }
 }

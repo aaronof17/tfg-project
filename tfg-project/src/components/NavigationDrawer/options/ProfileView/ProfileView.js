@@ -1,15 +1,18 @@
 import * as React from 'react';
 import './ProfileView.css';
+import "react-toastify/dist/ReactToastify.css";
+import 'reactjs-popup/dist/index.css';
 import { useEffect,useState } from 'react';
-import TextField from '@mui/material/TextField';
 import {useTranslation} from "react-i18next";
 import { getUserData } from '../../../../functions/gitHubFunctions';
+import {ToastContainer, toast} from "react-toastify";
 import user_default from '../../../../assets/images/user-default.jpg';
+import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
-import 'reactjs-popup/dist/index.css';
 import PopupInfo from './PopUpInfo.js';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
+import {saveTeacherToken} from "../../../../repositories/teacherRepository.js";
 
 /**
  * Component for the Profile View 
@@ -17,6 +20,7 @@ import SaveIcon from '@mui/icons-material/Save';
  */
 function ProfileView() {
   const [userData, setUserData] = useState({});
+  const [token, setToken] = useState("");
   const [t] = useTranslation();
 
   useEffect(() => {
@@ -31,6 +35,22 @@ function ProfileView() {
   const estiloTextField = {
     pointerEvents: 'none',
   };
+
+  const handleTokenChange = (e) => {
+    setToken(e.target.value);
+  }
+
+
+  /**
+   * Save token in database
+   */
+  function saveToken(){
+    if(token === ""){
+      toast.error(t('userProfile.tokenError'));
+    }else{
+      saveTeacherToken(token);
+    }
+  }
 
 
   /**
@@ -113,15 +133,17 @@ function ProfileView() {
               className="gitHubToken"
               label={t('userProfile.token')}
               type="password"
+              onChange={handleTokenChange} 
             />
             <PopupInfo></PopupInfo>
           </div>
           <div className="saveToken" >
-            <Button variant="contained" startIcon={<SaveIcon />}>
+            <Button variant="contained" startIcon={<SaveIcon />} onClick={saveToken}>
               {t('userProfile.saveToken')}
             </Button>
           </div>
         </div>
+        <ToastContainer />
       </div>
       
     </div>

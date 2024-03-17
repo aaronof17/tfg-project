@@ -12,19 +12,54 @@ var app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json());
+
+//BD---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 app.get('/teachers', (req, res) => {
     const sql = "SELECT * FROM teachers";
     connection.query(sql, (err, data) =>{
         if(err) return res.json(err);
-        console.log("hola");
         return res.json(data);
     })
 }
-
 )
 
-//code being passed from the fronted
+app.post('/teachers/token', (req, res) => {
+    const sql = 'update teachers set githubToken=? where TeacherID=1';
+    connection.query(sql, [req.body.token, 1] ,(err, data) =>{
+        if(err){
+            
+            return res.json(err);
+        }else{
+            return res.json(data);
+        } 
+    })
+}
+)
+
+app.get('/labGroups', (req, res) => {
+    const sql = "SELECT name FROM labgroups";
+    connection.query(sql, (err, data) =>{
+        if(err) return res.json(err);
+        return res.json(data);
+    })
+}
+)
+
+
+app.get('/subjects', (req, res) => {
+    const sql = "SELECT subject FROM labgroups";
+    connection.query(sql, (err, data) =>{
+        if(err) return res.json(err);
+        return res.json(data);
+    })
+}
+)
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 app.get('/getAccessToken', async function (req,res){
     
     const params = "?client_id="+ CLIENT_ID + "&client_secret="+ CLIENT_SECRET + "&code=" + req.query.code;

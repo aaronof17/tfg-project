@@ -11,7 +11,7 @@ export function calculateWidth(list, lower=false){
     const longestOption = Math.max(...list.map(option => option.length));
     const approximateCharWidth = 9; 
     if(lower){
-        return longestOption * approximateCharWidth * 1.5;
+        return longestOption * approximateCharWidth * 2;
     }else{
         return longestOption * approximateCharWidth;
     }

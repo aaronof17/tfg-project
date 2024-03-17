@@ -8,8 +8,8 @@
         "students" : "Students",
         "addStudents": "Add Students",
         "makeIssue": "Make issue",
-        "profile": "User Profile"
-
+        "profile": "User Profile",
+        "makeWork": "Create Lab Work"
     },
     "studentList" : {
         "name" : "Name",
@@ -18,6 +18,10 @@
         "githubprofile" : "GitHub Profile",
         "group" : "Group",
         "subject" : "Subject"
+    },
+    "createLabWork":{
+        "subjectFilter" : "Subject",
+        "groupFilter" : "Lab Group"
     },
     "userProfile" : {
         "nameLabel" : "Name",
@@ -28,7 +32,8 @@
         "token" : "GitHub Token",
         "tokenInfo":"If you want to use all functions from our applications you have to add you personal access token from GitHub, if you need a tutorial use this link",
         "generateToken":"link",
-        "saveToken": "Save Token"
+        "saveToken": "Save Token",
+        "tokenError" : "Token can't be blank, please introduce your GitHub Personal Acess Token"
 
     }
 }

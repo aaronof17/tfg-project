@@ -19,6 +19,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import MenuIcon from '@mui/icons-material/Menu';
+import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import People from '@mui/icons-material/People';
 import Toolbar from '@mui/material/Toolbar';
@@ -29,6 +30,7 @@ import {useTranslation} from "react-i18next";
 import StudentsList from './options/StudentsList';
 import MakeIssue from './options/MakeIssue/MakeIssue';
 import ProfileView from './options/ProfileView/ProfileView.js';
+import CreateLabWork from './options/LabWork/CreateLabWork.js';
 
 
 const drawerWidth = 240;
@@ -61,12 +63,20 @@ function ThirdView() {
 function FourthView() {
   return (
     <div>
+      <CreateLabWork></CreateLabWork>
+    </div>
+  );
+}
+
+function FifthView() {
+  return (
+    <div>
       <ProfileView></ProfileView>
     </div>
   );
 }
 
-const views = [<FirstView />, <SecondView />, <ThirdView/>, <FourthView/>];
+const views = [<FirstView />, <SecondView />, <ThirdView/>, <FourthView/>, <FifthView/>];
 
 function ResponsiveDrawer(props) {
   const { window, rerenderPass } = props;
@@ -77,7 +87,7 @@ function ResponsiveDrawer(props) {
 
   const [t,i18n] = useTranslation();
 
-  const drawerOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue')];
+  const drawerOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue'), t('navigationDrawer.makeWork')];
 
   useEffect(() => {
     getUserData();
@@ -123,22 +133,16 @@ function ResponsiveDrawer(props) {
       );
     }else if(index === 3){
       return (
+        <HomeRepairServiceIcon></HomeRepairServiceIcon>
+      );
+    }else if(index === 4){
+      return (
         <AccountBoxIcon></AccountBoxIcon>
       );
     }
   };
 
-  const chargeProfile = () => {
-    
-  };
 
-  const getProfileImage = () => {
-    return userData.avatar_url;
-  };
-
-  const getProfileName = () => {
-    return userData.login;
-  };
 
   async function getUserData() {
     await fetch( "http://localhost:4000/getUserData", {
@@ -175,11 +179,11 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-        <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(3)}>
+        <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(4)}>
           <ListItemButton>
               <ListItemIcon>
                 {
-                iconSelecter(3)
+                iconSelecter(4)
                 }
               </ListItemIcon>
             <ListItemText primary={t('navigationDrawer.profile')} />
@@ -212,16 +216,7 @@ function ResponsiveDrawer(props) {
           >
           <MenuIcon />
           </IconButton>
-         
-          <Button
-            variant="contained"
-            color="secondary"
-            startIcon={<Avatar src={getProfileImage()} />}
-          >
-            <a href={userData.html_url} style={{"color":"white"}}>
-              {getProfileName()}
-            </a>
-          </Button>
+        
 
           <Box sx={{ flexGrow: 1 }} /> 
 
