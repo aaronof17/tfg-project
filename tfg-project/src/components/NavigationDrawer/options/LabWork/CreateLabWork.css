@@ -1,5 +1,5 @@
 .createLabWorkDiv{
-    margin: 20px 0;
+    margin-top: 10%;
     padding: 20px;
     align-items: center; 
     width: 100%; 
@@ -11,11 +11,16 @@
 }
   
 
-.filters-container {
-    display: flex;
-    justify-content: space-between;
+
+.filterGroup {
+    width: 100%; 
+    color: black;
+    font-size: small;
+    background-color: blue;
+    z-index: 1000;
 }
 
-.filter {
-    width: 45%; 
+.filterSubject{
+    font-size: small;
+
 }
