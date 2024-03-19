@@ -7,11 +7,10 @@ export async function getLabGroups(callback) {
             }
 
         })
-        console.log(response);
 
         const data = await response.json();
-        console.log(data);
-        callback(data);
+        const groups = data.map(group => ({ value: group.name, label: group.name }));
+        callback(groups);
       } catch (error) {
         console.error('Error getting lab groups:', error);
       }
@@ -27,10 +26,8 @@ export async function getSubjectsFromGroup(callback) {
             }
 
         })
-        console.log(response);
 
         const data = await response.json();
-        console.log(data);
         callback(data);
       } catch (error) {
         console.error('Error getting subjects:', error);
@@ -52,8 +49,9 @@ export async function getLabGroupsBySubject(actualSubject, teacherID, callback) 
       })
 
       const data = await response.json();
-      callback(data);
+      const groups = data.map(group => ({ value: group.name, label: group.name }));
+      callback(groups);
     } catch (error) {
-      console.error('Error getting groups from actual subjects:', error);
+      console.error('Error getting groups from actual subject:', error);
     }
 }

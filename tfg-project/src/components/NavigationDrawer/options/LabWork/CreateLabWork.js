@@ -25,8 +25,8 @@ function CreateLabWork() {
 
     useEffect(() => {
         const fetchGroups = async () => {
-           // getLabGroups(setLabGroups);
-           // getSubjectsFromGroup(setSubjects);
+           getLabGroups(setLabGroups);
+           getSubjectsFromGroup(setSubjects);
         };
     
         fetchGroups();
@@ -42,16 +42,6 @@ function CreateLabWork() {
         return options;
       }
 
-      function getLabGroupsOption(){
-        let options = [];
-        if(actualGroups !== undefined){
-            for( var i = 0; i < actualGroups.length; i++){
-                console.log("pruebina", actualGroups[i].name);
-                options[i] = { value: actualGroups[i], label: actualGroups[i]}
-            }
-        }     
-        return options;
-      }
 
       function saveLabWorks(){
 
@@ -59,14 +49,19 @@ function CreateLabWork() {
 
 
 
-      const handleGroupsChange = (e, selectedOption) => {
+      const handleSubjectChange = (e, selectedOption) => {
         if (selectedOption) {
             const fetchFilterGroups = async () => {
-                //setActualSubject(selectedOption);
-                //getLabGroupsBySubject(selectedOption, 1, setActualGroups);
+                setActualSubject(selectedOption);
+                getLabGroupsBySubject(selectedOption, 1, setLabGroups);
             };
             fetchFilterGroups();
-            
+        }else{
+          const fetchAllGroups = async () => {
+            setActualSubject("");
+            getLabGroups(setLabGroups);
+          };
+          fetchAllGroups();
         }
       }
 
@@ -78,27 +73,6 @@ function CreateLabWork() {
     }
     
 
-      const groupsPrueba = [
-        { value: "ASL_L1", label: "ASL_L1" },
-        { value: "ASL_L2", label: "ASL_L2" },
-        { value: "ASL_L3", label: "ASL_L3" },
-        { value: "DPPI_L1", label: "DPPI_L1" },
-        { value: "DPPI_L2", label: "DPPI_L2" },
-        { value: "SEW_L1", label: "SEW_L1" },
-        { value: "SEW_L2", label: "SEW_L2" },
-        { value: "SEW_L3", label: "SEW_L3" },
-        { value: "SEW_L4", label: "SEW_L4" },
-        { value: "SEW_L5", label: "SEW_L5" },
-        { value: "SEW_L6", label: "SEW_L6" },
-        { value: "SEW_L7", label: "SEW_L7" },
-        { value: "SEW_L8", label: "SEW_L8" },
-        { value: "SEW_L9", label: "SEW_L9" },
-        { value: "SEW_L10", label: "SEW_L10" },
-        { value: "SEW_L11", label: "SEW_L11" },
-        { value: "SEW_L12", label: "SEW_L12" },
-        { value: "SEW_L13", label: "SEW_L13" },
-        { value: "SEW_L14", label: "SEW_L14" }
-      ];
 
 
   return (
@@ -111,13 +85,13 @@ function CreateLabWork() {
                 id="subject-combo-box"
                 options={getSubjects()}
                 renderInput={(params) => <TextField {...params} label={t('createLabWork.subjectFilter')} />}
-                onChange={handleGroupsChange}
+                onChange={handleSubjectChange}
             />
             </div>
         </Grid>
         <Grid item xs={9}>
             <div className="filterGroup">
-              <Select options={groupsPrueba} components={animatedComponents} onChange={handleGroupsSelector} isMulti/>
+              <Select options={labGroups} components={animatedComponents} onChange={handleGroupsSelector} isMulti/>
             </div>
         </Grid>
       </Grid>
