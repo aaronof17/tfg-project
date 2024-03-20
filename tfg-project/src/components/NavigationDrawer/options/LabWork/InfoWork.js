@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import './InfoWork.css';
 
-function InfoWork() {
+function InfoWork({ setTitle, setDescription, setPercentage }) {
     const [t] = useTranslation();
 
     const handleKeyPress = (event) => {
@@ -22,6 +22,15 @@ function InfoWork() {
             intValue = 100;
         }
         event.target.value = intValue;
+        setPercentage(intValue);
+    };
+
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value);
+    };
+
+    const handleDescriptionChange = (e) => {
+        setDescription(e.target.value);
     };
 
     return (
@@ -34,6 +43,7 @@ function InfoWork() {
                         label="Title"
                         type="text"
                         inputProps={{ maxLength: 50 }}
+                        onChange={handleTitleChange}
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -60,6 +70,7 @@ function InfoWork() {
                         multiline
                         rows={4}
                         inputProps={{ maxLength: 200 }}
+                        onChange={handleDescriptionChange}
                     />
                 </Grid>
             </Grid>

@@ -4,9 +4,33 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./GroupTable.css";
 
-function TableRow({ rowData }) {
+function TableRow({ rowData, setDates }) {
     const [initialDate, setInitialDate] = useState(new Date());
     const [finalDate, setFinalDate] = useState(new Date());
+
+    useEffect(() => {
+        setDates(rowData, initialDate, finalDate);
+    }, [initialDate, finalDate, rowData, setDates]);
+
+    const handleInitialDateChange = (date) => {
+        setInitialDate(date);
+        if (date >= finalDate) {
+            const nextDay = new Date(date);
+            nextDay.setDate(nextDay.getDate() + 1);
+            setFinalDate(nextDay);
+        }
+        console.log("Fecha de inicio ",initialDate.getMonth());
+    };
+
+    const handleFinalDateChange = (date) => {
+        setFinalDate(date);
+        if (initialDate >= date) {
+            const previousDay = new Date(date);
+            previousDay.setDate(previousDay.getDate() - 1);
+            setInitialDate(previousDay);
+        }
+    };
+
 
     return (
         <tr>
@@ -14,14 +38,14 @@ function TableRow({ rowData }) {
             <td>
                 <DatePicker
                     selected={initialDate}
-                    onChange={(date) => setInitialDate(date)}
+                    onChange={handleInitialDateChange}
                     dateFormat="dd/MM/yyyy"
                 />
             </td>
             <td>
                 <DatePicker
                     selected={finalDate}
-                    onChange={(date) => setFinalDate(date)}
+                    onChange={handleFinalDateChange}
                     dateFormat="dd/MM/yyyy"
                 />
             </td>
@@ -29,7 +53,7 @@ function TableRow({ rowData }) {
     );
 }
 
-function GroupTable({ labGroups }) {
+function GroupTable({ setDates, labGroups }) {
     const [t] = useTranslation();
 
     return (
@@ -44,7 +68,7 @@ function GroupTable({ labGroups }) {
                 </thead>
                 <tbody>
                     {labGroups.map((row, idx) => (
-                        <TableRow key={idx} rowData={row} />
+                        <TableRow key={idx} rowData={row} setDates={setDates} />
                     ))}
                 </tbody>
             </table>

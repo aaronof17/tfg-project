@@ -20,6 +20,10 @@ function CreateLabWork() {
     const [subjects, setSubjects] = useState([]);
     const [actualSubject, setActualSubject] = useState("");
     const [actualGroups, setActualGroups] = useState([]);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [percentage, setPercentage] = useState("");
+    const [labWorkDetails, setLabWorkDetails] = useState([]);
     const [t] = useTranslation();
     const animatedComponents = makeAnimated();
 
@@ -42,6 +46,19 @@ function CreateLabWork() {
         return options;
       }
 
+      const updateLabWorkDetails = (groupName, initialDate, finalDate) => {
+        setLabWorkDetails(current => {
+            const index = current.findIndex(detail => detail.name === groupName);
+            if (index > -1) {
+                let updated = [...current];
+                updated[index] = { ...updated[index], initialDate, finalDate };
+                return updated;
+            } else {
+                return [...current, { name: groupName, initialDate, finalDate }];
+            }
+        });
+    };
+
       function getLabGroupsOption(){
         let options = [];
         if(actualGroups !== undefined){
@@ -54,7 +71,10 @@ function CreateLabWork() {
       }
 
       function saveLabWorks(){
-
+        var days = labWorkDetails.map((group) =>
+            group.initialDate.getFullYear()
+         );
+        console.log(days);
       }
 
 
@@ -139,10 +159,10 @@ function CreateLabWork() {
 
 
         <div className="labGroups">
-            <GroupTable labGroups={actualGroups}></GroupTable>
+            <GroupTable setDates={updateLabWorkDetails} labGroups={actualGroups}></GroupTable>
         </div>
         <div className="infoWork">
-          <InfoWork></InfoWork>
+          <InfoWork setTitle={setTitle} setDescription={setDescription} setPercentage={setPercentage}></InfoWork>
         </div>
         <div className="saveLabWorks" >
             <Button variant="contained" onClick={saveLabWorks}>
