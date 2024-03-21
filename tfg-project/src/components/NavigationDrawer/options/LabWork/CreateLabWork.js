@@ -95,7 +95,7 @@ function CreateLabWork() {
             const selectedGroups = selectedOptions.map(option => option.value);
             setActualGroups(selectedGroups);
         }
-    }
+      }
     
 
       const groupsPrueba = [
@@ -137,7 +137,13 @@ function CreateLabWork() {
         </Grid>
         <Grid item xs={9}>
             <div className="filterGroup">
-              <Select options={groupsPrueba} components={animatedComponents} onChange={handleGroupsSelector} isMulti/>
+              <Select styles={{
+                menu: (base, state) => ({
+                  ...base,
+                  zIndex: 15
+                })
+              }}
+              options={groupsPrueba} components={animatedComponents} onChange={handleGroupsSelector} isMulti/>
             </div>
         </Grid>
       </Grid>

@@ -59,14 +59,14 @@ function GroupTable({ setDates, labGroups }) {
     return (
         <div className='table-wrapper'>
             <table className="table">
-                <thead>
+                <thead style={{position:"sticky", top:0}}>
                     <tr>
                         <th>Lab Group Name</th>
                         <th>Initial Date</th>
                         <th>Final Date</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style={{max_height:"300px", overflow_y:"auto"}}>
                     {labGroups.map((row, idx) => (
                         <TableRow key={idx} rowData={row} setDates={setDates} />
                     ))}
