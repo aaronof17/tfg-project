@@ -20,6 +20,10 @@ function CreateLabWork() {
     const [subjects, setSubjects] = useState([]);
     const [actualSubject, setActualSubject] = useState("");
     const [actualGroups, setActualGroups] = useState([]);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [percentage, setPercentage] = useState("");
+    const [labWorkDetails, setLabWorkDetails] = useState([]);
     const [t] = useTranslation();
     const animatedComponents = makeAnimated();
 
@@ -43,8 +47,25 @@ function CreateLabWork() {
       }
 
 
-      function saveLabWorks(){
+      const updateLabWorkDetails = (groupName, initialDate, finalDate) => {
+        setLabWorkDetails(current => {
+            const index = current.findIndex(detail => detail.name === groupName);
+            if (index > -1) {
+                let updated = [...current];
+                updated[index] = { ...updated[index], initialDate, finalDate };
+                return updated;
+            } else {
+                return [...current, { name: groupName, initialDate, finalDate }];
+            }
+        });
+    };
 
+
+      function saveLabWorks(){
+        var days = labWorkDetails.map((group) =>
+            group.initialDate.getFullYear()
+         );
+        console.log(days);
       }
 
 
@@ -70,32 +91,40 @@ function CreateLabWork() {
             const selectedGroups = selectedOptions.map(option => option.value);
             setActualGroups(selectedGroups);
         }
-    }
+      }
     
 
 
 
   return (
-    <div className='createLabWorkDiv'>
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <div className="filterSubject">
-            <Autocomplete
-                disablePortal
-                id="subject-combo-box"
-                options={getSubjects()}
-                renderInput={(params) => <TextField {...params} label={t('createLabWork.subjectFilter')} />}
-                onChange={handleSubjectChange}
-            />
-            </div>
+    <Grid container spacing={2} className='createLabWorkDiv' justifyContent="center" alignItems="center">   
+     <Grid item xs={12}>
+        <Grid container spacing={2}>
+            <Grid item xs={3}>
+                <div className="filterSubject">
+                    <Autocomplete
+                        disablePortal
+                        id="subject-combo-box"
+                        options={getSubjects()}
+                        renderInput={(params) => <TextField {...params} label={t('createLabWork.subjectFilter')} />}
+                        onChange={handleSubjectChange}
+                    />
+                </div>
+            </Grid>
+            <Grid item xs={9}>
+                <div className="filterGroup">
+                    <Select styles={{
+                        menu: (base, state) => ({
+                            ...base,
+                            zIndex: 15
+                        })
+                    }}
+                        options={labGroups} components={animatedComponents} onChange={handleGroupsSelector} isMulti />
+                </div>
+            </Grid>
         </Grid>
-        <Grid item xs={9}>
-            <div className="filterGroup">
-              <Select options={labGroups} components={animatedComponents} onChange={handleGroupsSelector} isMulti/>
-            </div>
-        </Grid>
-      </Grid>
-{/* 
+    </Grid>
+    {/* 
         <div className="filters-container">
             <div className="filterSubject">
                 <Autocomplete
@@ -110,20 +139,25 @@ function CreateLabWork() {
                 <Select options={groupsPrueba} components={animatedComponents} onChange={handleGroupsSelector} isMulti/>
             </div>
         </div> */}
-
-
+    <Grid item xs={12}>
         <div className="labGroups">
-            <GroupTable labGroups={actualGroups}></GroupTable>
+            <GroupTable setDates={updateLabWorkDetails} labGroups={actualGroups}></GroupTable>
         </div>
+    </Grid>
+    <Grid item xs={12}>
         <div className="infoWork">
-          <InfoWork></InfoWork>
+            <InfoWork setTitle={setTitle} setDescription={setDescription} setPercentage={setPercentage}></InfoWork>
         </div>
-        <div className="saveLabWorks" >
+    </Grid>
+    <Grid item xs={12}>
+        <div className="saveLabWorks">
             <Button variant="contained" onClick={saveLabWorks}>
-              Save Works
+                Save Works
             </Button>
-          </div>
-    </div>
+        </div>
+    </Grid>
+</Grid>
+  
   );
 }
 

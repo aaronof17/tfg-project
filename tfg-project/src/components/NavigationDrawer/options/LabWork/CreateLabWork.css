@@ -1,5 +1,8 @@
 .createLabWorkDiv{
-    margin-top: 10%;
+    display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+    margin-top: 20%;
     padding: 20px;
     align-items: center; 
     width: 100%; 
@@ -7,7 +10,8 @@
     border-radius: 15px;
     box-shadow: 3px 10px 15px hsl(0deg 0% 0% / 0.31);
     background-color:white; 
-  
+    max-width: 70%;
+    
 }
   
 
