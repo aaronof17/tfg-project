@@ -51,6 +51,10 @@
   padding-top: 5%;
 }
 
+.custom-toast-container {
+    font-size: 1vw; 
+  }
+
 @media (max-width: 768px) {
   .profileViewerDiv {
     flex-direction: column;

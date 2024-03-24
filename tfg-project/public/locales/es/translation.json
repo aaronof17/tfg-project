@@ -9,7 +9,8 @@
         "addStudents": "Añadir estudiante",
         "makeIssue": "Crear Issue",
         "profile": "Perfil de usuario",
-        "makeWork": "Crear Práctica de Laboratorio"
+        "makeWork": "Crear Práctica de Laboratorio",
+        "mark": "Calificaciones"
 
     },
     "studentList" : {
@@ -22,7 +23,21 @@
     },
     "createLabWork":{
         "subjectFilter" : "Asignatura",
-        "groupFilter" : "Grupo de Laboratorio"
+        "groupFilter" : "Grupo de Laboratorio",
+        "dataBlankError" : "El título, la descripción y el porcentaje no pueden estar vacíos",
+        "datesBlankError": "Añade al menos un grupo de laboratorio al que quieras añadir una práctica de laboratorio",
+        "saveWorks":"Guardar trabajos",
+        "labGroup": "Grupo de laboratorio",
+        "initialDate": "Fecha de inicio",
+        "finalDate": "Fecha de fin",
+        "title": "Título",
+        "description" : "Descripción",
+        "percentage":"Porcentaje",
+        "worksSaved": "Trabajos guardados correctamente"
+    },
+    "mark":{
+        "students" : "Alumnos",
+        "labWork":"Práctica de laboratorio"
     },
     "userProfile" : {
         "nameLabel" : "Nombre",
@@ -34,6 +49,7 @@
         "tokenInfo":"Para realizar las principales funciones de la aplicación es necesario introducir el token de acceso generado en su perfil de GitHub, puede saber como generarlo desde este enlace",
         "generateToken":"enlace",
         "saveToken": "Guardar Token",
-        "tokenError" : "El token no puede estar vacío, porfavor introduce tu token de GitHub"
+        "tokenError" : "El token no puede estar vacío, porfavor introduce tu token de GitHub",
+        "tokenSaved" : "Token guardado"
      }
 }

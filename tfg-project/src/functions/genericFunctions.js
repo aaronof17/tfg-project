@@ -19,3 +19,34 @@ export function calculateWidth(list, lower=false){
   };
  
 
+  export function getDateFormat(day,month,year){
+    return year+"-"+month+"-"+day;
+  }
+
+
+  export function getTableInformation() {
+    const tableRows = document.querySelectorAll('.table tbody tr');
+    const labWorkDetails = [];
+
+    tableRows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const labGroupName = cells[0].textContent;
+        const initialDate = cells[1].querySelector('input').value;
+        const finalDate = cells[2].querySelector('input').value;
+
+        labWorkDetails.push({
+            labGroupName,
+            initialDate,
+            finalDate
+        });
+    });
+
+    return labWorkDetails;
+}
+
+
+export function getInfoFromFilterMark(str) {
+    var partes = str.split('-');
+    var segundaCadena = partes[1].trim();
+    return segundaCadena;
+}

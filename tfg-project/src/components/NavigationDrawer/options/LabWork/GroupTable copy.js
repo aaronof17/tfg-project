@@ -3,12 +3,14 @@ import { useTranslation } from "react-i18next";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./GroupTable.css";
- 
 
-function TableRow({ rowData  }) {
+function TableRow({ rowData, setDates }) {
     const [initialDate, setInitialDate] = useState(new Date());
     const [finalDate, setFinalDate] = useState(new Date());
-    const [t] = useTranslation();
+
+    useEffect(() => {
+        setDates(rowData, initialDate, finalDate);
+    }, [initialDate, finalDate, rowData, setDates]);
 
     const handleInitialDateChange = (date) => {
         setInitialDate(date);
@@ -17,6 +19,7 @@ function TableRow({ rowData  }) {
             nextDay.setDate(nextDay.getDate() + 1);
             setFinalDate(nextDay);
         }
+        console.log("Fecha de inicio ",initialDate.getMonth());
     };
 
     const handleFinalDateChange = (date) => {
@@ -36,38 +39,36 @@ function TableRow({ rowData  }) {
                 <DatePicker
                     selected={initialDate}
                     onChange={handleInitialDateChange}
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="dd/MM/yyyy"
                 />
             </td>
             <td>
                 <DatePicker
                     selected={finalDate}
                     onChange={handleFinalDateChange}
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="dd/MM/yyyy"
                 />
             </td>
         </tr>
     );
 }
 
-function GroupTable({ labGroups }) {
+function GroupTable({ setDates, labGroups }) {
     const [t] = useTranslation();
-
-    
 
     return (
         <div className='table-wrapper'>
             <table className="table">
                 <thead style={{position:"sticky", top:0}}>
                     <tr>
-                        <th>{t('createLabWork.labGroup')}</th>
-                        <th>{t('createLabWork.initialDate')}</th>
-                        <th>{t('createLabWork.finalDate')}</th>
+                        <th>Lab Group Name</th>
+                        <th>Initial Date</th>
+                        <th>Final Date</th>
                     </tr>
                 </thead>
                 <tbody style={{max_height:"300px", overflow_y:"auto"}}>
                     {labGroups.map((row, idx) => (
-                        <TableRow key={idx} rowData={row}/>
+                        <TableRow key={idx} rowData={row} setDates={setDates} />
                     ))}
                 </tbody>
             </table>

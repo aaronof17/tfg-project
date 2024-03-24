@@ -1,8 +1,7 @@
 
 
-export async function saveTeacherToken(teacherToken) {
+export async function saveTeacherToken(teacherToken, userProfileName) {
     try {
-        console.log(teacherToken);
         const response = await fetch('http://localhost:4000/teachers/token', {
             method: "POST",
             headers: {
@@ -10,7 +9,8 @@ export async function saveTeacherToken(teacherToken) {
               "Content-Type": "application/json"
             },
             body:
-                JSON.stringify({ token: teacherToken })
+                JSON.stringify({ token: teacherToken,
+                                  profileName: userProfileName})
           });
    
       } catch (error) {
@@ -19,18 +19,23 @@ export async function saveTeacherToken(teacherToken) {
   }
 
 
-  
-// export async function saveTeacherToken(token) {
-//     try {
-//         const formData = new FormData();
-//         formData.append("token",token);
-//         fetch('http://localhost:4000/teachers/token',formData)
-//         .then(res => res.json())
-//         .then(data => console.log(data))
-//         .catch(err => console.log("Error saving token", err))
-    
-   
-//       } catch (error) {
-//         console.error('Error saving token:', error);
-//       }
-//   }
+  export async function getTeacherId(callback, profileURL) {
+    try {
+      console.log("perfil ", profileURL);
+        const response = await fetch('http://localhost:4000/teachers/id', {
+            method: "POST",
+            headers: {
+              "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json"
+            },
+            body:
+                JSON.stringify({ profileURL: profileURL })
+          });
+        
+        const data = await response.json();
+        callback(data[0].teacherID);
+        return data[0].teacherID;
+      } catch (error) {
+        console.error('Error getting teacher id:', error);
+      }
+  }

@@ -48,7 +48,8 @@ function ProfileView() {
     if(token === ""){
       toast.error(t('userProfile.tokenError'));
     }else{
-      saveTeacherToken(token);
+      saveTeacherToken(token,userData.html_url);
+      toast.info(t('userProfile.tokenSaved'));
     }
   }
 
@@ -72,7 +73,6 @@ function ProfileView() {
   function getName(){
     if(userData && userData.name){
       return userData.name;
-
     }else{
       return t('userProfile.name');
     }
@@ -143,7 +143,7 @@ function ProfileView() {
             </Button>
           </div>
         </div>
-        <ToastContainer />
+        <ToastContainer className="custom-toast-container"/>
       </div>
       
     </div>

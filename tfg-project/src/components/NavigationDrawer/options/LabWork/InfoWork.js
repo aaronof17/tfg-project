@@ -40,9 +40,9 @@ function InfoWork({ setTitle, setDescription, setPercentage }) {
                     <TextField
                         id="outlined-required"
                         className="titleWork"
-                        label="Title"
+                        label={t('createLabWork.title')}
                         type="text"
-                        inputProps={{ maxLength: 50 }}
+                        inputProps={{ maxLength: 45 }}
                         onChange={handleTitleChange}
                     />
                 </Grid>
@@ -50,7 +50,7 @@ function InfoWork({ setTitle, setDescription, setPercentage }) {
                     <TextField
                         id="outlined-required"
                         className="percentageWork"
-                        label="Percentage"
+                        label={t('createLabWork.percentage')}
                         type="number"
                         inputProps={{
                             min: 0,
@@ -64,7 +64,7 @@ function InfoWork({ setTitle, setDescription, setPercentage }) {
                     <TextField
                         id="outlined-required"
                         className="descriptionWork"
-                        label="Description"
+                        label={t('createLabWork.description')}
                         type="text"
                         fullWidth
                         multiline

@@ -9,7 +9,8 @@
         "addStudents": "Add Students",
         "makeIssue": "Make issue",
         "profile": "User Profile",
-        "makeWork": "Create Lab Work"
+        "makeWork": "Create Lab Work",
+        "mark": "Marks"
     },
     "studentList" : {
         "name" : "Name",
@@ -21,7 +22,21 @@
     },
     "createLabWork":{
         "subjectFilter" : "Subject",
-        "groupFilter" : "Lab Group"
+        "groupFilter" : "Lab Group",
+        "dataBlankError" : "Title, description and percentage can't be blank",
+        "datesBlankError": "Add at least one lab group for the work",
+        "saveWorks":"Save Works",
+        "labGroup": "Lab Group",
+        "initialDate": "Initial Date",
+        "finalDate": "Final Date",
+        "title": "Title",
+        "description" : "Description",
+        "percentage":"Percentage",
+        "worksSaved": "Works saved"
+    },
+    "mark":{
+        "students" : "Students",
+        "labWork":"Lab Work"
     },
     "userProfile" : {
         "nameLabel" : "Name",
@@ -33,7 +48,8 @@
         "tokenInfo":"If you want to use all functions from our applications you have to add you personal access token from GitHub, if you need a tutorial use this link",
         "generateToken":"link",
         "saveToken": "Save Token",
-        "tokenError" : "Token can't be blank, please introduce your GitHub Personal Acess Token"
+        "tokenError" : "Token can't be blank, please introduce your GitHub Personal Acess Token",
+        "tokenSaved" : "Token saved"
 
     }
 }

@@ -26,8 +26,9 @@ app.get('/teachers', (req, res) => {
 )
 
 app.post('/teachers/token', (req, res) => {
-    const sql = 'update teachers set githubToken=? where TeacherID=1';
-    connection.query(sql, [req.body.token, 1] ,(err, data) =>{
+    const sql = 'update teachers set githubToken=? where githubProfile=?';
+    const params = [req.body.token, req.body.profileName];
+    connection.query(sql, params ,(err, data) =>{
         if(err){
             
             return res.json(err);
@@ -37,6 +38,107 @@ app.post('/teachers/token', (req, res) => {
     })
 }
 )
+
+app.post('/teachers/id', (req, res) => {
+    const sql = 'select teacherID from teachers where githubProfile=?';
+    const params = [req.body.profileURL];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            return res.json(err);
+        }else{
+            return res.json(data);
+        } 
+    })
+}
+)
+
+
+app.post('/students/teacher', (req, res) => {
+    const sql = "SELECT DISTINCT s.studentsID, s.name, s.lastname,"+
+                "s.email, s.githubProfile, s.repositoryURL " +
+                "FROM students s " +
+                "JOIN enrolled e ON s.studentsID = e.studentFK "+
+                "JOIN labgroups g ON e.labgroupFK = g.idlabgroup "+
+                "JOIN teachers t ON g.teacherIDFK = t.teacherID "+
+                "WHERE t.teacherID = ?";
+    const params = [req.body.teacherID];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            return res.json(err);
+        }else{
+            return res.json(data);
+        } 
+    })
+}
+)
+
+app.post('/students/work', (req, res) => {
+    const sql = "SELECT DISTINCT s.studentsID, s.name, s.lastname,"+
+                "s.email, s.githubProfile, s.repositoryURL " +
+                "FROM students s " +
+                "JOIN enrolled e ON s.studentsID = e.studentFK "+
+                "JOIN labgroups g ON e.labgroupFK = g.idlabgroup "+
+                "JOIN teachers t ON g.teacherIDFK = t.teacherID "+
+                "WHERE t.teacherID = ? and g.name = ?";
+    const params = [req.body.teacherID, req.body.actualWork];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            return res.json(err);
+        }else{
+            return res.json(data);
+        } 
+    })
+}
+)
+
+
+app.post('/works/save', (req, res) => {
+    const sql = 'INSERT INTO worklabs (title, description, initialdate, finaldate, percentage, labgroupNameFK, teacherIDFK) VALUES (?,?,?,?,?,?,?)';
+    const params = [req.body.title, req.body.description, req.body.initialDate,
+        req.body.finalDate, req.body.percentage, req.body.name,  req.body.teacherID];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.json(err);
+        }else{
+            return res.json(data);
+        } 
+    })
+}
+)
+
+app.post('/works', (req, res) => {
+    const sql = 'select worklabID, title, labgroupNameFK from worklabs where teacheridfk=?';
+    const params = [req.body.teacherID];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            return res.json(err);
+        }else{
+            return res.json(data);
+        } 
+    })
+}
+)
+
+
+app.post('/works/student', (req, res) => {
+    const sql = "SELECT DISTINCT w.worklabID, w.title, w.labgroupNameFK "+
+                "FROM worklabs w " +
+                "JOIN labgroups g ON w.labgroupnameFK = g.name "+
+                "JOIN enrolled e ON g.idlabgroup = e.labgroupfk "+
+                "JOIN students s ON e.studentfk = s.studentsID "+
+                "WHERE g.teacherIDFK = ? and s.email = ?";
+    const params = [req.body.teacherID, req.body.studentEmail];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            return res.json(err);
+        }else{
+            return res.json(data);
+        } 
+    })
+}
+)
+
 
 app.post('/groups/subject', (req, res) => {
     const sql = 'select name from labgroups where subject=? and teacheridfk=?';
@@ -51,21 +153,29 @@ app.post('/groups/subject', (req, res) => {
 }
 )
 
-app.get('/labGroups', (req, res) => {
-    const sql = "SELECT name FROM labgroups";
-    connection.query(sql, (err, data) =>{
-        if(err) return res.json(err);
-        return res.json(data);
+app.post('/labGroups', (req, res) => {
+    const sql = "SELECT name FROM labgroups where teacherIDFK=?";
+    const params = [req.body.teacherID];
+    connection.query(sql, params, (err, data) =>{
+        if(err){
+            return res.json(err);
+        }else{
+            return res.json(data);
+        } 
     })
 }
 )
 
 
-app.get('/subjects', (req, res) => {
-    const sql = "SELECT DISTINCT subject FROM labgroups";
-    connection.query(sql, (err, data) =>{
-        if(err) return res.json(err);
-        return res.json(data);
+app.post('/subjects', (req, res) => {
+    const sql = "SELECT DISTINCT subject FROM labgroups where teacherIDFK=? ";
+    const params = [req.body.teacherID];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            return res.json(err);
+        }else{
+            return res.json(data);
+        } 
     })
 }
 )

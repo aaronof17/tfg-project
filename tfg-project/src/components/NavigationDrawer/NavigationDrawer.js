@@ -21,6 +21,7 @@ import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 import People from '@mui/icons-material/People';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -31,52 +32,13 @@ import StudentsList from './options/StudentsList';
 import MakeIssue from './options/MakeIssue/MakeIssue';
 import ProfileView from './options/ProfileView/ProfileView.js';
 import CreateLabWork from './options/LabWork/CreateLabWork.js';
+import Mark from './options/Mark/Mark.js';
 
 
 const drawerWidth = 240;
 
-function FirstView() {
-  return (
-    <div style={{ flexGrow: 1 }}> 
-      <StudentsList></StudentsList>
-    </div>
-  );
-}
 
-function SecondView() {
-  return (
-    <div>
-      <Typography variant="h4">Second View</Typography>
-      {/* Add content for the second view here */}
-    </div>
-  );
-}
 
-function ThirdView() {
-  return (
-    <div>
-      <MakeIssue></MakeIssue>
-    </div>
-  );
-}
-
-function FourthView() {
-  return (
-    <div>
-      <CreateLabWork></CreateLabWork>
-    </div>
-  );
-}
-
-function FifthView() {
-  return (
-    <div>
-      <ProfileView></ProfileView>
-    </div>
-  );
-}
-
-const views = [<FirstView />, <SecondView />, <ThirdView/>, <FourthView/>, <FifthView/>];
 
 function ResponsiveDrawer(props) {
   const { window, rerenderPass } = props;
@@ -84,15 +46,63 @@ function ResponsiveDrawer(props) {
   const [isClosing, setIsClosing] = React.useState(false);
   const [currentView, setCurrentView] = React.useState(0);
   const [userData, setUserData] = useState({});
-
   const [t,i18n] = useTranslation();
 
-  const drawerOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue'), t('navigationDrawer.makeWork')];
+  const drawerOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue'), t('navigationDrawer.makeWork'), t('navigationDrawer.mark')];
+  const views = [<FirstView />, <SecondView />, <ThirdView/>, <FourthView/>, <FifthView/>, <SixthView/>];
 
   useEffect(() => {
     getUserData();
     }, []);
 
+    function FirstView() {
+      return (
+        <div style={{ flexGrow: 1 }}> 
+          <StudentsList userData={userData}></StudentsList>
+        </div>
+      );
+    }
+    
+    function SecondView() {
+      return (
+        <div>
+          <Typography variant="h4">Second View</Typography>
+          {/* Add content for the second view here */}
+        </div>
+      );
+    }
+    
+    function ThirdView() {
+      return (
+        <div>
+          <MakeIssue userData={userData}></MakeIssue>
+        </div>
+      );
+    }
+    
+    function FourthView() {
+      return (
+        <div>
+          <CreateLabWork userData={userData}></CreateLabWork>
+        </div>
+      );
+    }
+    
+    function FifthView() {
+      return (
+        <div>
+          <Mark userData={userData}></Mark>
+        </div>
+      );
+    }
+
+    function SixthView() {
+      return (
+        <div>
+          <ProfileView></ProfileView>
+        </div>
+      );
+    }
 
   const handleChangeLanguage = (lang) => {
     i18n.changeLanguage(lang);
@@ -136,6 +146,10 @@ function ResponsiveDrawer(props) {
         <HomeRepairServiceIcon></HomeRepairServiceIcon>
       );
     }else if(index === 4){
+      return (
+        <BorderColorIcon></BorderColorIcon>
+      );
+    }else if(index === 5){
       return (
         <AccountBoxIcon></AccountBoxIcon>
       );
@@ -183,7 +197,7 @@ function ResponsiveDrawer(props) {
           <ListItemButton>
               <ListItemIcon>
                 {
-                iconSelecter(4)
+                iconSelecter(5)
                 }
               </ListItemIcon>
             <ListItemText primary={t('navigationDrawer.profile')} />

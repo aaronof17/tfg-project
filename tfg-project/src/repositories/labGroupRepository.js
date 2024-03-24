@@ -1,11 +1,13 @@
-export async function getLabGroups(callback) {
+export async function getLabGroups(callback, teacherID) {
     try {
         const response = await fetch('http://localhost:4000/labGroups', {
-            method: "GET",
+            method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
-            }
-
+              "Content-Type": "application/json"
+            },
+            body:
+            JSON.stringify({ teacherID: teacherID})
         })
 
         const data = await response.json();
@@ -17,14 +19,16 @@ export async function getLabGroups(callback) {
 }
 
 
-export async function getSubjectsFromGroup(callback) {
+export async function getSubjectsFromGroup(callback, teacherID) {
     try {
         const response = await fetch('http://localhost:4000/subjects', {
-            method: "GET",
+            method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
-            }
-
+              "Content-Type": "application/json"
+            },
+            body:
+            JSON.stringify({ teacherID: teacherID})
         })
 
         const data = await response.json();
@@ -55,3 +59,7 @@ export async function getLabGroupsBySubject(actualSubject, teacherID, callback) 
       console.error('Error getting groups from actual subject:', error);
     }
 }
+
+
+
+
