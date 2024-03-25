@@ -37,7 +37,10 @@
     },
     "mark":{
         "students" : "Alumnos",
-        "labWork":"Práctica de laboratorio"
+        "labWork":"Práctica de laboratorio",
+        "comment": "Comentario",
+        "mark":"Nota",
+        "saveMark":"Guardar Calificación"
     },
     "userProfile" : {
         "nameLabel" : "Nombre",

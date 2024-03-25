@@ -11,6 +11,9 @@ import './Mark.css';
 import Autocomplete from '@mui/material/Autocomplete';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import InfoMark from './InfoMark.js';
+import {ToastContainer, toast} from "react-toastify";
+import Button from '@mui/material/Button';
 
 
 function Mark({userData}){
@@ -18,12 +21,17 @@ function Mark({userData}){
     const [t] = useTranslation();
     const [labworks, setLabWorks] = useState([]);
     const [students, setStudents] = useState([]);
+    const [comment, setComment] = useState("");
+    const [markNumber, setMarkNumber] = useState("");
+    const [actualStudent, setActualStudent] = useState("");
+    const [actualWork, setActualWork] = useState("");
+
 
     useEffect(() => {
         const fetchInfo = async () => {
             const id = await getTeacherId(setTeacherID,userData.html_url);
-           getLabWorks(setLabWorks,id);
-           getStudents(setStudents,id);
+           //getLabWorks(setLabWorks,id);
+          // getStudents(setStudents,id);
         };
     
         fetchInfo();
@@ -53,12 +61,13 @@ function Mark({userData}){
     const handleWorkChange = (e, selectedOption) => {
         if (selectedOption) {
             const fetchFilterStudents = async () => {
-                getStudentsByWork(getInfoFromFilterMark(selectedOption), setStudents, teacherID);
+                //getStudentsByWork(getInfoFromFilterMark(selectedOption), setStudents, teacherID);
             };
+            setActualWork(selectedOption);
             fetchFilterStudents();
         }else{
           const fetchAllStudents = async () => {
-            getStudents(setStudents,teacherID);
+            //getStudents(setStudents,teacherID);
           };
           fetchAllStudents();
         }
@@ -67,15 +76,20 @@ function Mark({userData}){
     const handleStudentChange = (e, selectedOption) => {
     if (selectedOption) {
         const fetchFilterWorks = async () => {
-            getWorksByStudent(getInfoFromFilterMark(selectedOption), setLabWorks, teacherID);
+            //getWorksByStudent(getInfoFromFilterMark(selectedOption), setLabWorks, teacherID);
         };
+        setActualStudent(selectedOption);
         fetchFilterWorks();
     }else{
         const fetchAllWorks = async () => {
-            getLabWorks(setLabWorks,teacherID);
+            //getLabWorks(setLabWorks,teacherID);
         };
         fetchAllWorks();
     }
+    }
+
+    function saveMark(){
+        
     }
 
 
@@ -111,8 +125,15 @@ function Mark({userData}){
                 <Grid item xs={1}>
                 </Grid>
             </Grid>
-            
-
+            <div className='infoMark'>
+                <InfoMark setComment={setComment} setMarkNumber={setMarkNumber}></InfoMark>
+            </div>
+            <div className="saveLabWorks" >
+                <Button variant="contained" onClick={saveMark}>
+                    {t('mark.saveMark')}
+                </Button>
+            </div>
+            <ToastContainer className="custom-toast-container"/>
         </div>
     );
 }

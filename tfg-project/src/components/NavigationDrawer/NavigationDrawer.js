@@ -193,7 +193,7 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-        <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(4)}>
+        <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(5)}>
           <ListItemButton>
               <ListItemIcon>
                 {

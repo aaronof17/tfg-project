@@ -36,7 +36,10 @@
     },
     "mark":{
         "students" : "Students",
-        "labWork":"Lab Work"
+        "labWork":"Lab Work",
+        "comment": "Comment",
+        "mark":"Mark",
+        "saveMark":"Save Mark"
     },
     "userProfile" : {
         "nameLabel" : "Name",
