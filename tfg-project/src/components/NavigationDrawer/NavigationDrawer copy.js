@@ -1,13 +1,16 @@
 import * as React from 'react';
 import './NavigationDrawer.css';
 import PropTypes from 'prop-types';
+import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import { useEffect } from 'react';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -15,6 +18,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import MenuIcon from '@mui/icons-material/Menu';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -29,7 +33,7 @@ import MakeIssue from './options/MakeIssue/MakeIssue';
 import ProfileView from './options/ProfileView/ProfileView.js';
 import CreateLabWork from './options/LabWork/CreateLabWork.js';
 import Mark from './options/Mark/Mark.js';
-import HeaderAppBar from './HeaderAppBar.js';
+
 
 const drawerWidth = 240;
 
@@ -41,7 +45,7 @@ function ResponsiveDrawer(props) {
   const [isClosing, setIsClosing] = React.useState(false);
   const [currentView, setCurrentView] = React.useState(0);
   const [userData, setUserData] = useState({});
-  const [t] = useTranslation();
+  const [t,i18n] = useTranslation();
 
   const drawerOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue'), t('navigationDrawer.makeWork'), t('navigationDrawer.mark')];
   const views = [<FirstView />, <SecondView />, <ThirdView/>, <FourthView/>, <FifthView/>, <SixthView/>];
@@ -99,6 +103,9 @@ function ResponsiveDrawer(props) {
       );
     }
 
+  const handleChangeLanguage = (lang) => {
+    i18n.changeLanguage(lang);
+  }
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -109,7 +116,12 @@ function ResponsiveDrawer(props) {
     setIsClosing(false);
   };
 
- 
+  const handleDrawerToggle = () => {
+    if (!isClosing) {
+      setMobileOpen(!mobileOpen);
+    }
+  };
+
   const handleListItemClick = (index) => {
     setCurrentView(index);
     handleDrawerClose();
@@ -200,10 +212,50 @@ function ResponsiveDrawer(props) {
   return (
     <Box className="principalBox" sx={{ display: 'flex' }}>
       <CssBaseline />
-      <HeaderAppBar 
-        rerenderPass={rerenderPass} isClosing={isClosing}
-        setMobileOpen={setMobileOpen} mobileOpen={mobileOpen}
-      ></HeaderAppBar>
+      <AppBar
+        position="fixed"
+        sx={{
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+          <MenuIcon />
+          </IconButton>
+        
+
+          <Box sx={{ flexGrow: 1 }} /> 
+
+          <button id="esFlag" onClick={() => handleChangeLanguage("es")}>
+            {/* <img src="es_flag.png" alt="spanish flag" width="20" height="10"></img> */}
+            es
+          </button>
+          <button id="enFlag" onClick={() => handleChangeLanguage("en")}>
+              {/* <img src="en_flag.jpg" alt="english flag" width="20" height="10"></img> */}
+              en
+          </button>
+
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => {
+              localStorage.removeItem("accessToken"); 
+              rerenderPass()
+          }}
+          > 
+            Log Out
+          </Button>
+
+
+        </Toolbar>
+      </AppBar>
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
