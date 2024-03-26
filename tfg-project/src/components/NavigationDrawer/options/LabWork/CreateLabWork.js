@@ -74,9 +74,14 @@ function CreateLabWork({userData}) {
           if(datesFromGroups.length === 0){
             toast.error(t('createLabWork.datesBlankError'));
           }else{
-            if(saveWorks(datesFromGroups, title, description, percentage, teacherID)){
-              toast.info(t('createLabWork.worksSaved'));
-            }
+            saveWorks(datesFromGroups, title, description, percentage, teacherID).then((res) => {
+              if(res){
+                toast.info(t('createLabWork.worksSaved'));
+              }else{
+                toast.error(t('createLabWork.error'));
+              }
+          });
+            
           }
         }
     }

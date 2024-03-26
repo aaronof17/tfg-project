@@ -12,10 +12,19 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
                 JSON.stringify({ token: teacherToken,
                                   profileName: userProfileName})
           });
-   
-      } catch (error) {
-        console.error('Error saving token:', error);
-      }
+          
+          const data = await response.json(); 
+
+          if(!data.success){
+            console.log("An error occurred saving token: ", data.error);
+            return { response: false, error: data.error};
+          }
+          
+          return { response: true, error: ""};
+  
+        } catch (error) {
+            return { response: false, error: "Sorry, an error occurred saving token"};
+        }
   }
 
 
@@ -33,8 +42,8 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           });
         
         const data = await response.json();
-        callback(data[0].teacherID);
-        return data[0].teacherID;
+        callback(data.data[0].teacherID);
+        return data.data[0].teacherID;
       } catch (error) {
         console.error('Error getting teacher id:', error);
       }

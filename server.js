@@ -19,8 +19,12 @@ app.use(express.json());
 app.get('/teachers', (req, res) => {
     const sql = "SELECT * FROM teachers";
     connection.query(sql, (err, data) =>{
-        if(err) return res.json(err);
-        return res.json(data);
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting teachers: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
     })
 }
 )
@@ -30,11 +34,11 @@ app.post('/teachers/token', (req, res) => {
     const params = [req.body.token, req.body.profileName];
     connection.query(sql, params ,(err, data) =>{
         if(err){
-            
-            return res.json(err);
-        }else{
-            return res.json(data);
-        } 
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error saving token: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
     })
 }
 )
@@ -44,10 +48,11 @@ app.post('/teachers/id', (req, res) => {
     const params = [req.body.profileURL];
     connection.query(sql, params,(err, data) =>{
         if(err){
-            return res.json(err);
-        }else{
-            return res.json(data);
-        } 
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting teacherID: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
     })
 }
 )
@@ -64,10 +69,11 @@ app.post('/students/teacher', (req, res) => {
     const params = [req.body.teacherID];
     connection.query(sql, params,(err, data) =>{
         if(err){
-            return res.json(err);
-        }else{
-            return res.json(data);
-        } 
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting students for teacher: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
     })
 }
 )
@@ -83,10 +89,11 @@ app.post('/students/work', (req, res) => {
     const params = [req.body.teacherID, req.body.actualWork];
     connection.query(sql, params,(err, data) =>{
         if(err){
-            return res.json(err);
-        }else{
-            return res.json(data);
-        } 
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting students for work: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
     })
 }
 )
@@ -99,10 +106,10 @@ app.post('/works/save', (req, res) => {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.json(err);
-        }else{
-            return res.json(data);
-        } 
+            return res.status(500).json({ success: false, error: 'Error saving works: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
     })
 }
 )
@@ -112,10 +119,11 @@ app.post('/works', (req, res) => {
     const params = [req.body.teacherID];
     connection.query(sql, params,(err, data) =>{
         if(err){
-            return res.json(err);
-        }else{
-            return res.json(data);
-        } 
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting works: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
     })
 }
 )
@@ -131,10 +139,27 @@ app.post('/works/student', (req, res) => {
     const params = [req.body.teacherID, req.body.studentEmail];
     connection.query(sql, params,(err, data) =>{
         if(err){
-            return res.json(err);
-        }else{
-            return res.json(data);
-        } 
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting work for student: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+)
+
+
+app.post('/marks/save', (req, res) => {
+    const sql = 'INSERT INTO marks (mark, comment, studentIDFK, worklabIDFK) VALUES (?,?,?,?)';
+    const params = [req.body.mark, req.body.comment, req.body.student,
+        req.body.work];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error saving mark at data base: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
     })
 }
 )
@@ -145,10 +170,11 @@ app.post('/groups/subject', (req, res) => {
     const params = [req.body.actualSubject, req.body.teacherID];
     connection.query(sql, params,(err, data) =>{
         if(err){
-            return res.json(err);
-        }else{
-            return res.json(data);
-        } 
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting labgroups for subject: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
     })
 }
 )
@@ -158,10 +184,11 @@ app.post('/labGroups', (req, res) => {
     const params = [req.body.teacherID];
     connection.query(sql, params, (err, data) =>{
         if(err){
-            return res.json(err);
-        }else{
-            return res.json(data);
-        } 
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting labgroups: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
     })
 }
 )
@@ -172,10 +199,11 @@ app.post('/subjects', (req, res) => {
     const params = [req.body.teacherID];
     connection.query(sql, params,(err, data) =>{
         if(err){
-            return res.json(err);
-        }else{
-            return res.json(data);
-        } 
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting subjects: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
     })
 }
 )
@@ -292,9 +320,9 @@ app.get('/downloadRepo', async function  (req, res){
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
-    // connection.connect(function(err){
-    //     if(err) throw err;
-    //     console.log("Database Connected");
-    // }
-    //);
+    connection.connect(function(err){
+        if(err) throw err;
+        console.log("Database Connected");
+    }
+    );
 });

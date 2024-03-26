@@ -17,12 +17,19 @@ export async function saveWorks(datesFromWorks, title, description, percentage,t
                                 percentage: percentage
                             })
           });
-        }
-        return true;
-      } catch (error) {
-        console.error('Error saving labWorks:', error);
+        
+          const data = await response.json(); 
+
+          if(!data.success){
+            console.log("An error occurred saving mark: ", data.error);
+            return { response: false, error: data.error};
+          }
       }
-      
+      return { response: true, error: ""};
+
+      } catch (error) {
+          return { response: false, error: "Sorry, an error occurred saving mark"};
+      }
   }
 
 
@@ -41,7 +48,7 @@ export async function getLabWorks(callback, teacherID) {
         })
 
         const data = await response.json();
-        callback(data);
+        callback(data.data);
       } catch (error) {
         console.error('Error getting lab groups:', error);
       }
@@ -63,7 +70,7 @@ export async function getWorksByStudent(studentEmail, callback, teacherID) {
       })
 
       const data = await response.json();
-      callback(data);
+      callback(data.data);
     } catch (error) {
       console.error('Error getting works by student:', error);
     }

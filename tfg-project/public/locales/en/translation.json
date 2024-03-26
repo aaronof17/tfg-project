@@ -23,7 +23,7 @@
     "createLabWork":{
         "subjectFilter" : "Subject",
         "groupFilter" : "Lab Group",
-        "dataBlankError" : "Title, description and percentage can't be blank",
+        "dataBlankError" : "Title, description and percentage cannot be blank",
         "datesBlankError": "Add at least one lab group for the work",
         "saveWorks":"Save Works",
         "labGroup": "Lab Group",
@@ -32,14 +32,19 @@
         "title": "Title",
         "description" : "Description",
         "percentage":"Percentage",
-        "worksSaved": "Works saved"
+        "worksSaved": "Works saved",
+        "error":"Sorry, an error has ocurred saving works"
     },
     "mark":{
         "students" : "Students",
         "labWork":"Lab Work",
         "comment": "Comment",
         "mark":"Mark",
-        "saveMark":"Save Mark"
+        "saveMark":"Save Mark",
+        "dataBlankError": "Comment and mark cannot be blank",
+        "infoBlankError": "Please select a work and a student",
+        "markSaved" : "Mark saved",
+        "error":"Sorry, an error has ocurred saving mark"
     },
     "userProfile" : {
         "nameLabel" : "Name",
@@ -52,7 +57,8 @@
         "generateToken":"link",
         "saveToken": "Save Token",
         "tokenError" : "Token can't be blank, please introduce your GitHub Personal Acess Token",
-        "tokenSaved" : "Token saved"
+        "tokenSaved" : "Token saved",
+        "error" : "Sorry, an error has ocurred saving token"
 
     }
 }

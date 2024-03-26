@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import {getLabWorks,getWorksByStudent } from "../../../../repositories/labWorkRepository.js";
 import {getStudents,getStudentsByWork} from "../../../../repositories/studentRepository.js";
 import {getTeacherId} from "../../../../repositories/teacherRepository.js";
+import {saveMark} from "../../../../repositories/markRepository.js";
 import {getInfoFromFilterMark} from "../../../../functions/genericFunctions.js";
 
 import './Mark.css';
@@ -30,8 +31,8 @@ function Mark({userData}){
     useEffect(() => {
         const fetchInfo = async () => {
             const id = await getTeacherId(setTeacherID,userData.html_url);
-           //getLabWorks(setLabWorks,id);
-          // getStudents(setStudents,id);
+            getLabWorks(setLabWorks,id);
+            getStudents(setStudents,id);
         };
     
         fetchInfo();
@@ -42,7 +43,10 @@ function Mark({userData}){
         let options = [];
         if(labworks != undefined){
             labworks.map((work,index) => {
-                options[index] = work.title+" - "+work.labgroupNameFK;
+                options[index] = {
+                    label: `${work.title} - ${work.labgroupNameFK}`,
+                    value: work.worklabID
+                };
           });
         }     
         return options;
@@ -52,22 +56,26 @@ function Mark({userData}){
         let options = [];
         if(students != undefined){
             students.map((student,index) => {
-                options[index] = student.name+" - "+student.email;
+                options[index] = {
+                    label: `${student.name} - ${student.email}`,
+                    value: student.studentsID
+                };
           });
         }     
+
         return options;
     }
 
     const handleWorkChange = (e, selectedOption) => {
         if (selectedOption) {
             const fetchFilterStudents = async () => {
-                //getStudentsByWork(getInfoFromFilterMark(selectedOption), setStudents, teacherID);
+                getStudentsByWork(getInfoFromFilterMark(selectedOption.label), setStudents, teacherID);
             };
             setActualWork(selectedOption);
             fetchFilterStudents();
         }else{
           const fetchAllStudents = async () => {
-            //getStudents(setStudents,teacherID);
+            getStudents(setStudents,teacherID);
           };
           fetchAllStudents();
         }
@@ -76,20 +84,34 @@ function Mark({userData}){
     const handleStudentChange = (e, selectedOption) => {
     if (selectedOption) {
         const fetchFilterWorks = async () => {
-            //getWorksByStudent(getInfoFromFilterMark(selectedOption), setLabWorks, teacherID);
+            getWorksByStudent(getInfoFromFilterMark(selectedOption.label), setLabWorks, teacherID);
         };
         setActualStudent(selectedOption);
         fetchFilterWorks();
     }else{
         const fetchAllWorks = async () => {
-            //getLabWorks(setLabWorks,teacherID);
+            getLabWorks(setLabWorks,teacherID);
         };
         fetchAllWorks();
     }
     }
 
-    function saveMark(){
-        
+    function saveMarkButton(){
+        if(comment === "" || markNumber === ""){
+            toast.error(t('mark.dataBlankError'));
+        }else{
+            if(actualStudent === "" || actualWork=== ""){
+                toast.error(t('mark.infoBlankError'));
+            }else{
+                saveMark(actualWork.value, actualStudent.value, comment, markNumber).then((res)=>{
+                    if(res.response){
+                        toast.info(t('mark.markSaved'));
+                      }else{
+                        toast.error(res.error); 
+                      }
+                });
+            }
+        }
     }
 
 
@@ -129,7 +151,7 @@ function Mark({userData}){
                 <InfoMark setComment={setComment} setMarkNumber={setMarkNumber}></InfoMark>
             </div>
             <div className="saveLabWorks" >
-                <Button variant="contained" onClick={saveMark}>
+                <Button variant="contained" onClick={saveMarkButton}>
                     {t('mark.saveMark')}
                 </Button>
             </div>

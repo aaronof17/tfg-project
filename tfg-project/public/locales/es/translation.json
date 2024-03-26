@@ -33,14 +33,19 @@
         "title": "Título",
         "description" : "Descripción",
         "percentage":"Porcentaje",
-        "worksSaved": "Trabajos guardados correctamente"
+        "worksSaved": "Trabajos guardados correctamente",
+        "error":"Lo sentimos ha ocurrido un error guardando los trabajos"
     },
     "mark":{
         "students" : "Alumnos",
         "labWork":"Práctica de laboratorio",
         "comment": "Comentario",
         "mark":"Nota",
-        "saveMark":"Guardar Calificación"
+        "saveMark":"Guardar Calificación",
+        "dataBlankError": "Añada un comentario y una nota",
+        "infoBlankError": "Porfavor, seleccione tanto una práctica de laboratorio como un alumno",
+        "markSaved" : "Calificación guardada",
+        "error":"Lo sentimos ha ocurrido un error guardando la calificación"
     },
     "userProfile" : {
         "nameLabel" : "Nombre",
@@ -53,6 +58,7 @@
         "generateToken":"enlace",
         "saveToken": "Guardar Token",
         "tokenError" : "El token no puede estar vacío, porfavor introduce tu token de GitHub",
-        "tokenSaved" : "Token guardado"
+        "tokenSaved" : "Token guardado",
+        "error" : "Lo sentimos ha ocurrido un error guardando el token"
      }
 }

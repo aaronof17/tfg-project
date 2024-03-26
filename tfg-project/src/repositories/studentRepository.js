@@ -12,7 +12,7 @@ export async function getStudents(callback, teacherID) {
         })
 
         const data = await response.json();
-        callback(data);
+        callback(data.data);
       } catch (error) {
         console.error('Error getting students:', error);
       }
@@ -35,7 +35,7 @@ export async function getStudentsByWork(actualWork, callback, teacherID) {
         })
 
         const data = await response.json();
-        callback(data);
+        callback(data.data);
       } catch (error) {
         console.error('Error getting students by work:', error);
       }
