@@ -43,6 +43,7 @@ app.post('/teachers/token', (req, res) => {
 }
 )
 
+
 app.post('/teachers/id', (req, res) => {
     const sql = 'select teacherID from teachers where githubProfile=?';
     const params = [req.body.profileURL];
@@ -59,8 +60,8 @@ app.post('/teachers/id', (req, res) => {
 
 
 app.post('/students/teacher', (req, res) => {
-    const sql = "SELECT DISTINCT s.studentsID, s.name, s.lastname,"+
-                "s.email, s.githubProfile, s.repositoryURL " +
+    const sql = "SELECT DISTINCT s.studentsID, s.name, "+
+                "s.email, s.githubuser, e.repositoryURL " +
                 "FROM students s " +
                 "JOIN enrolled e ON s.studentsID = e.studentFK "+
                 "JOIN labgroups g ON e.labgroupFK = g.idlabgroup "+
@@ -79,7 +80,7 @@ app.post('/students/teacher', (req, res) => {
 )
 
 app.post('/students/work', (req, res) => {
-    const sql = "SELECT DISTINCT s.studentsID, s.name, s.lastname,"+
+    const sql = "SELECT DISTINCT s.studentsID, s.name, "+
                 "s.email, s.githubProfile, s.repositoryURL " +
                 "FROM students s " +
                 "JOIN enrolled e ON s.studentsID = e.studentFK "+
@@ -91,6 +92,20 @@ app.post('/students/work', (req, res) => {
         if(err){
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting students for work: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+)
+
+app.post('/students/save', (req, res) => {
+    const sql = 'INSERT INTO students (name, email, githubuser) VALUES (?,?,?)';
+    const params = [req.body.name, req.body.email, req.body.user];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error saving student: '+ err.sqlMessage});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -114,8 +129,39 @@ app.post('/works/save', (req, res) => {
 }
 )
 
+app.post('/works/edit', (req, res) => {
+    const sql = 'update worklabs set title=?, description=?, percentage=?, '+
+                'initialdate=?, finaldate=? where worklabID=?';
+    const params = [req.body.title, req.body.description, req.body.percentage,
+                    req.body.initialdate, req.body.finaldate, req.body.worklabID];
+    connection.query(sql, params ,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error editing work: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+)
+
+app.post('/works/delete', (req, res) => {
+    const sql = 'delete from worklabs where worklabID = ?';
+    const params = [req.body.worklabID];
+    connection.query(sql, params ,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error deleting work: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+)
+
+
 app.post('/works', (req, res) => {
-    const sql = 'select worklabID, title, labgroupNameFK from worklabs where teacheridfk=?';
+    const sql = 'select worklabID, title, labgroupNameFK, description, percentage, initialdate, finaldate from worklabs where teacheridfk=?';
     const params = [req.body.teacherID];
     connection.query(sql, params,(err, data) =>{
         if(err){
@@ -180,7 +226,7 @@ app.post('/groups/subject', (req, res) => {
 )
 
 app.post('/labGroups', (req, res) => {
-    const sql = "SELECT name FROM labgroups where teacherIDFK=?";
+    const sql = "SELECT name,idlabGroup FROM labgroups where teacherIDFK=?";
     const params = [req.body.teacherID];
     connection.query(sql, params, (err, data) =>{
         if(err){
@@ -190,7 +236,7 @@ app.post('/labGroups', (req, res) => {
             return res.status(200).json({ success: true, data: data });
         }
     })
-}
+    }
 )
 
 
@@ -201,6 +247,21 @@ app.post('/subjects', (req, res) => {
         if(err){
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting subjects: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+)
+
+
+app.post('/enrolled/save', (req, res) => {
+    const sql = 'INSERT INTO enrolled (studentFK, labgroupFK, repositoryURL) VALUES (?,?,?)';
+    const params = [req.body.studentId, req.body.groupId, req.body.repository];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error saving enrolled: '+ err.sqlMessage});
         } else {
             return res.status(200).json({ success: true, data: data });
         }

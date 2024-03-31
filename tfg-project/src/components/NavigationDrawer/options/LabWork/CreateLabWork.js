@@ -50,24 +50,8 @@ function CreateLabWork({userData}) {
       }
 
 
-
-    // const updateLabWorkDetails = (groupName, initialDate, finalDate) => {
-    //     setLabWorkDetails(current => {
-    //         const index = current.findIndex(detail => detail.name === groupName);
-    //         if (index > -1) {
-    //             let updated = [...current];
-    //             updated[index] = { ...updated[index], initialDate, finalDate };
-    //             return updated;
-    //         } else {
-    //             return [...current, { name: groupName, initialDate, finalDate }];
-    //         }
-    //     });
-    // };
-
-
-
       function saveLabWorks(){
-        if(title === "" || description === "" || percentage === ""){
+        if(title === "" || description === "" || percentage === "" || isNaN(percentage)){
           toast.error(t('createLabWork.dataBlankError'));
         }else{
           var datesFromGroups = getTableInformation();
@@ -104,7 +88,7 @@ function CreateLabWork({userData}) {
 
       const handleGroupsSelector = async (selectedOptions) => {
         if (selectedOptions) {
-            const selectedGroups = selectedOptions.map(option => option.value);
+            const selectedGroups = selectedOptions.map(option => option.label);
             setActualGroups(selectedGroups);
         }
       }

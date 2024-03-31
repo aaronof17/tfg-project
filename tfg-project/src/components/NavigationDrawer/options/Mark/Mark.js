@@ -77,6 +77,7 @@ function Mark({userData}){
           const fetchAllStudents = async () => {
             getStudents(setStudents,teacherID);
           };
+          setActualWork("");
           fetchAllStudents();
         }
       }
@@ -92,12 +93,13 @@ function Mark({userData}){
         const fetchAllWorks = async () => {
             getLabWorks(setLabWorks,teacherID);
         };
+        setActualStudent("");
         fetchAllWorks();
     }
     }
 
     function saveMarkButton(){
-        if(comment === "" || markNumber === ""){
+        if(comment === "" || markNumber === "" || isNaN(markNumber)){
             toast.error(t('mark.dataBlankError'));
         }else{
             if(actualStudent === "" || actualWork=== ""){

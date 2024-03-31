@@ -42,6 +42,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           });
         
         const data = await response.json();
+        console.log("yeah",data.data[0]);
         callback(data.data[0].teacherID);
         return data.data[0].teacherID;
       } catch (error) {

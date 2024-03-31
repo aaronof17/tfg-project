@@ -4,10 +4,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./GroupTable.css";
  
+const today = new Date();
+today.setDate(today.getDate() + 1);
 
 function TableRow({ rowData  }) {
     const [initialDate, setInitialDate] = useState(new Date());
-    const [finalDate, setFinalDate] = useState(new Date());
+    const [finalDate, setFinalDate] = useState(today);
     const [t] = useTranslation();
 
     const handleInitialDateChange = (date) => {

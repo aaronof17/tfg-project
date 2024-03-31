@@ -19,6 +19,7 @@ import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import People from '@mui/icons-material/People';
+import ChecklistIcon from '@mui/icons-material/Checklist';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
@@ -28,8 +29,10 @@ import StudentsList from './options/StudentsList';
 import MakeIssue from './options/MakeIssue/MakeIssue';
 import ProfileView from './options/ProfileView/ProfileView.js';
 import CreateLabWork from './options/LabWork/CreateLabWork.js';
+import WorksList from './options/WorkList/WorkList.js';
 import Mark from './options/Mark/Mark.js';
 import HeaderAppBar from './HeaderAppBar.js';
+import AddStudents from './options/AddStudents/AddStudents.js';
 
 const drawerWidth = 240;
 
@@ -43,8 +46,8 @@ function ResponsiveDrawer(props) {
   const [userData, setUserData] = useState({});
   const [t] = useTranslation();
 
-  const drawerOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue'), t('navigationDrawer.makeWork'), t('navigationDrawer.mark')];
-  const views = [<FirstView />, <SecondView />, <ThirdView/>, <FourthView/>, <FifthView/>, <SixthView/>];
+  const drawerOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue'), t('navigationDrawer.makeWork'), t('navigationDrawer.workList'), t('navigationDrawer.mark')];
+  const views = [<FirstView />, <SecondView />, <ThirdView/>, <FourthView/>, <FifthView/>, <SixthView/>, <SeventhView/>];
 
   useEffect(() => {
     getUserData();
@@ -61,8 +64,7 @@ function ResponsiveDrawer(props) {
     function SecondView() {
       return (
         <div>
-          <Typography variant="h4">Second View</Typography>
-          {/* Add content for the second view here */}
+          <AddStudents userData={userData} ></AddStudents>
         </div>
       );
     }
@@ -86,12 +88,20 @@ function ResponsiveDrawer(props) {
     function FifthView() {
       return (
         <div>
-          <Mark userData={userData}></Mark>
+          <WorksList userData={userData}></WorksList>
         </div>
       );
     }
 
     function SixthView() {
+      return (
+        <div>
+          <Mark userData={userData}></Mark>
+        </div>
+      );
+    }
+
+    function SeventhView() {
       return (
         <div>
           <ProfileView></ProfileView>
@@ -134,9 +144,13 @@ function ResponsiveDrawer(props) {
       );
     }else if(index === 4){
       return (
-        <BorderColorIcon></BorderColorIcon>
+        <ChecklistIcon></ChecklistIcon>
       );
     }else if(index === 5){
+      return (
+        <BorderColorIcon></BorderColorIcon>
+      );
+    }else if(index === 6){
       return (
         <AccountBoxIcon></AccountBoxIcon>
       );
@@ -180,11 +194,11 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-        <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(5)}>
+        <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(6)}>
           <ListItemButton>
               <ListItemIcon>
                 {
-                iconSelecter(5)
+                iconSelecter(6)
                 }
               </ListItemIcon>
             <ListItemText primary={t('navigationDrawer.profile')} />

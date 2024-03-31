@@ -1,3 +1,5 @@
+import {formatDate} from '../functions/genericFunctions.js';
+
 export async function saveWorks(datesFromWorks, title, description, percentage,teacherID) {
     try {
       for(var i = 0; i < datesFromWorks.length; i++){
@@ -73,5 +75,65 @@ export async function getWorksByStudent(studentEmail, callback, teacherID) {
       callback(data.data);
     } catch (error) {
       console.error('Error getting works by student:', error);
+    }
+}
+
+
+export async function editWork(editRow) {
+  try {
+      const response = await fetch('http://localhost:4000/works/edit', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ worklabID: editRow.worklabID,
+                            title: editRow.title,
+                            description: editRow.description,
+                            percentage: editRow.percentage,
+                            initialdate: formatDate(editRow.initialdate),
+                            finaldate: formatDate(editRow.finaldate)
+                          })
+        });
+      
+    const data = await response.json(); 
+
+    if(!data.success){
+      console.log("An error occurred editing work: ", data.error);
+      return { response: false, error: data.error};
+    }
+      
+    return { response: true, error: ""};
+
+    } catch (error) {
+        return { response: false, error: "Sorry, an error occurred editing work"};
+    }
+}
+
+
+export async function deleteWork(id) {
+  try {
+      const response = await fetch('http://localhost:4000/works/delete', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ worklabID: id})
+        });
+      
+    const data = await response.json(); 
+
+    if(!data.success){
+      console.log("An error occurred deleting work: ", data.error);
+      return { response: false, error: data.error};
+    }
+      
+    return { response: true, error: ""};
+
+    } catch (error) {
+        return { response: false, error: "Sorry, an error occurred deleting work"};
     }
 }

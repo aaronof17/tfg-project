@@ -10,7 +10,8 @@
         "makeIssue": "Crear Issue",
         "profile": "Perfil de usuario",
         "makeWork": "Crear Práctica de Laboratorio",
-        "mark": "Calificaciones"
+        "mark": "Calificaciones",
+        "workList":"Lista de Prácticas de Laboratorio"
 
     },
     "studentList" : {
@@ -20,6 +21,10 @@
         "githubprofile" : "Perfil de GitHub",
         "group" : "Grupo",
         "subject" : "Asignatura"
+    },
+    "addStudents":{
+        "dataBlank" : "Ningún campo puede estar vacío",
+        "studentSaved" : "Estudiante guardado"
     },
     "createLabWork":{
         "subjectFilter" : "Asignatura",
@@ -35,6 +40,24 @@
         "percentage":"Porcentaje",
         "worksSaved": "Trabajos guardados correctamente",
         "error":"Lo sentimos ha ocurrido un error guardando los trabajos"
+    },
+    "worksList":{
+        "title" : "Título",
+        "labGroup" : "Grupo de laboratorio",
+        "initialDate" : "Fecha Inicial",
+        "finalDate" : "Fecha final",
+        "description" : "Descripción",
+        "percentage" : "Porcentaje",
+        "actions" : "Acciones",
+        "blankInfo" : "Ningún campo puede estar vacío",
+        "errorOccurred" : "Ha ocurrido un error, prueba en otro momento",
+        "workEdited" : "Práctica de laboratorio editada",
+        "dateError" : "La fecha inicial tiene que ser anterior a la fecha final",
+        "workDeleted" : "Práctica de laboratorio borrada",
+        "confirmDialogTitle" : "¿Estás seguro que quieres eliminarlo?",
+        "confirmDialogText" : "Ten en cuenta que toda la información relacionada con este trabajo también será borrada",
+        "confirm" : "Confirmar",
+        "cancel" : "Cancelar"
     },
     "mark":{
         "students" : "Alumnos",

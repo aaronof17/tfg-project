@@ -1,0 +1,71 @@
+.table-wrapperWork {
+    width: 100%;
+    max-height: 400px;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+    background-color: white;
+    font-size: large;
+  }
+  
+  .tableWork{
+    border: 1rem hidden #443C68;
+    border-collapse: collapse;
+    overflow: hidden;
+  }
+  
+  .tableWork thead {
+    background-color: #ccc;
+    color: #222;
+  }
+  
+  .tableWork th,
+  .tableWork td {
+    padding: 0.8rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 300px;
+    word-wrap: break-word;
+    color: #222;
+
+  }
+
+  .tableWork td.description {
+    max-width: 300px;
+    white-space: normal;
+    word-wrap: break-word; 
+  }
+  
+  .tableWork td {
+    border-top: 0.5px solid #ddd;
+    background-color: white;
+    max-width: 300px;
+    white-space: normal;
+    word-wrap: break-word; 
+  }
+  
+  .tableWork tbody tr:hover {
+    background-color: #eee;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-around;
+    top:0
+  }
+  
+  .actions svg {
+    cursor: pointer;
+  }
+  
+  .delete-btn {
+    color: #e10d05;
+  }
+  
+
+  @media (max-width: 768px) {
+    .tableWork {
+        overflow-x: unset;
+    }
+  }
+  

@@ -11,7 +11,7 @@ export async function getLabGroups(callback, teacherID) {
         })
 
         const data = await response.json();
-        const groups = data.data.map(group => ({ value: group.name, label: group.name }));
+        const groups = data.data.map(group => ({ value: group.idlabGroup, label: group.name }));
         callback(groups);
       } catch (error) {
         console.error('Error getting lab groups:', error);
@@ -59,7 +59,4 @@ export async function getLabGroupsBySubject(actualSubject, teacherID, callback) 
       console.error('Error getting groups from actual subject:', error);
     }
 }
-
-
-
 

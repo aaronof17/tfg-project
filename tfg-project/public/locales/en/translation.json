@@ -10,7 +10,8 @@
         "makeIssue": "Make issue",
         "profile": "User Profile",
         "makeWork": "Create Lab Work",
-        "mark": "Marks"
+        "mark": "Marks",
+        "workList":"Lab Works List"
     },
     "studentList" : {
         "name" : "Name",
@@ -19,6 +20,10 @@
         "githubprofile" : "GitHub Profile",
         "group" : "Group",
         "subject" : "Subject"
+    },
+    "addStudents":{
+        "dataBlank" : "No field can be blank",
+        "studentSaved" : "Student saved"
     },
     "createLabWork":{
         "subjectFilter" : "Subject",
@@ -34,6 +39,24 @@
         "percentage":"Percentage",
         "worksSaved": "Works saved",
         "error":"Sorry, an error has ocurred saving works"
+    },
+    "worksList":{
+        "title" : "Title",
+        "labGroup" : "Lab Group",
+        "initialDate" : "Initial Date",
+        "finalDate" : "Final Date",
+        "description" : "Description",
+        "percentage" : "Percentage",
+        "actions" : "Actions",
+        "blankInfo" : "No field can be blank",
+        "errorOccurred" : "Something went wrong, try it in another moment",
+        "workEdited" : "Lab Work edited",
+        "dateError" : "Initial date needs to be before final date",
+        "workDeleted" : "Lab Work deleted",
+        "confirmDialogTitle" : "Are you sure tou want to delete?",
+        "confirmDialogText" : "All the information related with that work will be deleted too",
+        "confirm" : "Confirm",
+        "cancel" : "Cancel"
     },
     "mark":{
         "students" : "Students",
