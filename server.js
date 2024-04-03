@@ -221,9 +221,9 @@ app.get('/downloadRepo', async function  (req, res){
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
-    databaseRequests.connection.connect(function(err){
-        if(err) throw err;
-        console.log("Database Connected");
-    }
-    );
+    // databaseRequests.connection.connect(function(err){
+    //     if(err) throw err;
+    //     console.log("Database Connected");
+    // }
+    //);
 });

@@ -20,17 +20,10 @@
   }
 
   
-  .csv-modal h3{
+  .csv-modal h3,
+  .csv-modal h4,
+  .csv-modal input{
     color: black;
-  }
-  
-
-  .confirm-modal p{
-    font-size: medium;
-  }
-
-  .confirm-modal h4{
-    font-size: medium;
   }
   
   .confirm-modal .confirm-btn{
@@ -43,4 +36,12 @@
     background-color: red;
   }
   
+  .dropzone {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    border: 5px dashed rgb(117, 112, 112);
+    padding: 2rem;
+  }
   
