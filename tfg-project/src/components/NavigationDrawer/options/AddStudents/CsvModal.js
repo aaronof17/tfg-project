@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import "./CsvModal.css";
 
-function CsvModal ({closeModal, deleteRow, titleText,text}){
+function CsvModal ({closeModal, onSubmit}){
     const [t] = useTranslation(); 
     const [data, setData] = useState([]);
 
@@ -17,9 +17,10 @@ function CsvModal ({closeModal, deleteRow, titleText,text}){
         header: true,
         complete: (results) => {
             setData(results.data);
+
         },
         });
-        console.log("data ",data);
+        
     };
 
     return (
@@ -32,6 +33,7 @@ function CsvModal ({closeModal, deleteRow, titleText,text}){
         <div className="csv-modal">
             <h3>Arrastre el archivo a la zona</h3>
            <input type="file" accept=".csv" onChange={handleFileUpload} ></input>
+           <button onClick={}>Guardar alumnos</button>
         </div>
     </div>
   );
