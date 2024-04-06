@@ -1,0 +1,9 @@
+
+
+@media only screen and (min-width: 768px) {
+    /* Cambiar el tamaño de fuente en pantallas pequeñas */
+    .Toastify__toast{
+        font-size: large;
+    }
+    
+  }

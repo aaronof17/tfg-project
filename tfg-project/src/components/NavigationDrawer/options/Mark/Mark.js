@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import {getLabWorks,getWorksByStudent } from "../../../../repositories/labWorkRepository.js";
 import {getStudents,getStudentsByWork} from "../../../../repositories/studentRepository.js";
 import {getTeacherId} from "../../../../repositories/teacherRepository.js";
-import {saveMark} from "../../../../repositories/markRepository.js";
+import {saveMark,getMarkByWorkAndStudent,editMark } from "../../../../repositories/markRepository.js";
 import {getInfoFromFilterMark} from "../../../../functions/genericFunctions.js";
 
 import './Mark.css';
@@ -15,6 +15,7 @@ import TextField from '@mui/material/TextField';
 import InfoMark from './InfoMark.js';
 import {ToastContainer, toast} from "react-toastify";
 import Button from '@mui/material/Button';
+import RewriteModal from '../../../Modal/RewriteModal.js';
 
 
 function Mark({userData}){
@@ -26,6 +27,7 @@ function Mark({userData}){
     const [markNumber, setMarkNumber] = useState("");
     const [actualStudent, setActualStudent] = useState("");
     const [actualWork, setActualWork] = useState("");
+    const [modalOpen, setModalOpen] = useState(false);
 
 
     useEffect(() => {
@@ -98,20 +100,52 @@ function Mark({userData}){
     }
     }
 
-    function saveMarkButton(){
+    function rewriteMark(){
+        editMark(actualWork.value, actualStudent.value, comment, markNumber).then((res)=>{
+            if(res.response){
+                    toast.info(t('mark.markSaved'));
+                }else{
+                    toast.error(res.error); 
+                }
+        });
+      }
+
+      async function existsMark(actualWorkValue, actualStudentValue){
+        try {
+            const res = await getMarkByWorkAndStudent(actualWorkValue, actualStudentValue);
+            if (res.response) {
+                return res.data !== 0;
+            } else {
+                toast.error(res.error);
+                return false;
+            }
+        } catch (error) {
+            console.error('Error checking mark existence:', error);
+            return false;
+        }
+    }
+
+    async function saveMarkButton(){
         if(comment === "" || markNumber === "" || isNaN(markNumber)){
             toast.error(t('mark.dataBlankError'));
         }else{
             if(actualStudent === "" || actualWork=== ""){
                 toast.error(t('mark.infoBlankError'));
             }else{
-                saveMark(actualWork.value, actualStudent.value, comment, markNumber).then((res)=>{
-                    if(res.response){
-                        toast.info(t('mark.markSaved'));
-                      }else{
-                        toast.error(res.error); 
-                      }
-                });
+                const markExists = await existsMark(actualWork.value, actualStudent.value);
+
+                if(markExists){
+                    setModalOpen(true);
+                }else{
+                    saveMark(actualWork.value, actualStudent.value, comment, markNumber).then((res)=>{
+                        if(res.response){
+                            toast.info(t('mark.markSaved'));
+                            }else{
+                            toast.error(res.error); 
+                            }
+                    });
+                }
+               
             }
         }
     }
@@ -122,7 +156,7 @@ function Mark({userData}){
             <Grid container spacing={2}>
                 <Grid item xs={1}>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                     <div className="filterWork">
                         <Autocomplete
                             disablePortal
@@ -133,9 +167,9 @@ function Mark({userData}){
                         />
                     </div>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={1}>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={5}>
                     <div className="filterStudent">
                         <Autocomplete
                             disablePortal
@@ -157,6 +191,16 @@ function Mark({userData}){
                     {t('mark.saveMark')}
                 </Button>
             </div>
+            {modalOpen && (
+                <RewriteModal
+                    closeRewriteModal={() => {
+                    setModalOpen(false);
+                    }}
+                    genericFunction={rewriteMark}
+                    text1={t('mark.studentHasmark')}
+                    text2={t('mark.rewrite')}
+                />
+            )}
             <ToastContainer className="custom-toast-container"/>
         </div>
     );

@@ -79,3 +79,31 @@ export async function saveStudent(name, email, user, repository, groupId) {
   }
 }
 
+export async function getIdByEmail(email) {
+  try {
+    const response = await fetch('http://localhost:4000/students/email', {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+        "Content-Type": "application/json"
+      },
+      body:
+          JSON.stringify({ email: email})
+    });
+      
+      const data = await response.json();
+
+      if(!data.success){
+        console.log("An error occurred geting email: ", data.error);
+        return { response: false, error: data.error};
+      }
+      if(data.data.length === 0){
+        return { response: true, data:"undefined", error: ""};
+      }else{
+        return { response: true, data:data.data[0].studentsID, error: ""};
+      }
+      return data;
+    } catch (error) {
+      console.error('Error getting email:', error);
+    }
+}

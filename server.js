@@ -7,6 +7,8 @@ const fetch = (...args) =>
 import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const app = express();
+const CLIENT_ID = "b771595a6c15c6653d02";
+const CLIENT_SECRET = "534c078c5dcaa7afc22d912c6aceb4bda2038b99";
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -48,6 +50,10 @@ app.post('/students/save', async function (req, res) {
     return result;
 });
 
+app.post('/students/email', async function (req, res) {
+    const result = await databaseRequests.getIdByEmail(req,res);
+    return result;
+});
 
 app.post('/works/save',  async function (req, res) {
     const result = await databaseRequests.insertWork(req,res);
@@ -85,9 +91,23 @@ app.post('/marks/save', async function (req, res) {
     return result;
 });
 
+app.post('/marks/edit', async function (req, res) {
+    const result = await databaseRequests.editMark(req,res);
+    return result;
+});
+
+app.post('/marks/work/student', async function (req, res) {
+    const result = await databaseRequests.getMarkByWorkAndStudent(req,res);
+    return result;
+});
 
 app.post('/groups/subject', async function (req, res) {
     const result = await databaseRequests.getGroupsBySubject(req,res);
+    return result;
+});
+
+app.post('/groups/name', async function (req, res) {
+    const result = await databaseRequests.getIdFromGroupsByName(req,res);
     return result;
 });
 
@@ -221,9 +241,9 @@ app.get('/downloadRepo', async function  (req, res){
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
-    // databaseRequests.connection.connect(function(err){
-    //     if(err) throw err;
-    //     console.log("Database Connected");
-    // }
-    //);
+    databaseRequests.connection.connect(function(err){
+        if(err) throw err;
+        console.log("Database Connected");
+    }
+    );
 });

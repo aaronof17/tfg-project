@@ -70,7 +70,7 @@ function InfoWork({ setTitle, setDescription, setPercentage }) {
                         fullWidth
                         multiline
                         rows={4}
-                        inputProps={{ maxLength: 200 }}
+                        inputProps={{ maxLength: 1000 }}
                         onChange={handleDescriptionChange}
                     />
                 </Grid>

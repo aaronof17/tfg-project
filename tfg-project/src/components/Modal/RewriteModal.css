@@ -1,0 +1,46 @@
+.rewrite-modal-container {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .rewrite-modal {
+    border-radius: 5%;
+    padding: 2rem;
+    background-color: white;
+    width: 25em;
+  }
+
+  .rewrite-modal h4,
+  .rewrite-modal p{
+    color: black;
+  }
+  
+
+  .rewrite-modal p{
+    font-size: medium;
+  }
+
+  .rewrite-modal h4{
+    font-size: medium;
+  }
+  
+  .rewrite-modal .rewrite-btn{
+    margin: 3%;
+  }
+
+  .rewrite-modal .cancel-btn{
+    margin: 3%;
+
+    background-color: red;
+  }
+  
+  

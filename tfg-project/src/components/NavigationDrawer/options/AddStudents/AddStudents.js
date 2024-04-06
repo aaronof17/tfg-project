@@ -3,12 +3,14 @@ import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import {getTeacherId} from "../../../../repositories/teacherRepository.js";
 import {getLabGroups,getSubjectsFromGroup} from "../../../../repositories/labGroupRepository.js";
-import {saveStudent} from "../../../../repositories/studentRepository.js";
-import {ToastContainer, toast} from "react-toastify";
+import {saveStudent, getIdByEmail} from "../../../../repositories/studentRepository.js";
+import {saveEnrolled} from "../../../../repositories/enrolledRepository.js";
+import {toast} from "react-toastify";
 
 import StudentInfo from './StudentInfo.js';
 import StudentGroup from './StudentGroup.js';
 import CsvModal from './CsvModal.js';
+import RewriteModal from '../../../Modal/RewriteModal.js';
 
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -28,38 +30,98 @@ function AddStudents({userData}) {
     const [labGroups, setLabGroups] = useState([]);
     const [subjects, setSubjects] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
+    const [rewriteModalOpen, setRewriteModalOpen] = useState(false);
+    const [studentId, setStudentId] = useState(null);
 
 
     useEffect(() => {
         const fetchInfo = async () => {
             const id = await getTeacherId(setTeacherID,userData.html_url);
-            //getLabGroups(setLabGroups,id);
-            //getSubjectsFromGroup(setSubjects,id);
+            getLabGroups(setLabGroups,id);
+            getSubjectsFromGroup(setSubjects,id);
         };
     
         fetchInfo();
       }, []);
 
+    const handleSaveCsv = async (data) => {
+      for (let element of data) {
+        try {
+          await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group);
+        } catch (error) {
+          sendError(t('addStudents.errorSavingStudent')+error);
+        }
+      }
+    };
+  
+    const sendError = (message) => {
+      toast.error(message);
+    }
+  
+
+    function checkData(studentName, studentEmail, studentUser, 
+      studentRepository, studentGroup){
+      if(studentName === "" || studentEmail === "" ||studentUser === ""
+      || studentRepository === "" || studentGroup === ""){
+        sendError('Error with student '+studentName+':'+t('addStudents.dataBlank'));
+        return false;
+      }else{
+        return true;
+      }
+    } 
+
     function saveCsv(){
         setModalOpen(true);
     }
 
-    const handleSaveCsv = () => {
-       
-    };
+    function addEnrolled(){
+      saveEnrolled(studentId, group, repository).then((res)=>{
+          if(res.response){
+              toast.info(t('addStudents.studentEnrolled'));
+          }else{
+              toast.error(res.error); 
+          }
+      });
+    }
 
-    function saveStudentInfo(){
-      if(name === "" || email === "" ||user === ""
-          || repository === "" || group === ""){
-        toast.error(t('addStudents.dataBlank'));
-      }else{
-           saveStudent(name,email,user,repository,group).then((res)=>{
-              if(res.response){
-                  toast.info(t('addStudents.studentSaved'));
-                }else{
-                  toast.error(res.error); 
-                }
-          });
+    async function existsEmail(actualEmail){
+      try {
+          const res = await getIdByEmail(actualEmail);
+          if (res.response) {
+              if(!isNaN(res.data)){
+                setStudentId(res.data);
+                return true;
+              }else{
+                return false;
+              }
+          } else {
+              toast.error(res.error);
+              return false;
+          }
+      } catch (error) {
+          console.error('Error checking email count:', error);
+          return false;
+      }
+    }
+
+
+  async function saveStudentInfo(studentName, studentEmail, studentUser, studentRepository, studentGroup){
+      if(checkData(studentName, studentEmail, studentUser, studentRepository, studentGroup)){
+        try {
+          const emailExists = await existsEmail(studentEmail);
+          if(emailExists){
+            setRewriteModalOpen(true);
+          }else{
+            const res = await saveStudent(studentName, studentEmail, studentUser, studentRepository, studentGroup);
+            if (res.response) {
+              toast.info(t('addStudents.studentSaved'));
+            } else {
+              sendError(res.error);
+            }
+          }
+        } catch (error) {
+          sendError(t('addStudents.errorSavingStudent')+error);
+        }
       }
     }
 
@@ -75,13 +137,13 @@ function AddStudents({userData}) {
                 <Grid item xs={4}>
                 </Grid>
                 <Grid item xs={12} sm={2}>
-                    <Button variant="contained" onClick={saveStudentInfo}>
-                        {"Guardar"}
+                    <Button variant="contained" onClick={() => saveStudentInfo(name, email, user,repository, group)}>
+                      {t('addStudents.saveStudent')}
                     </Button>
                 </Grid>
                 <Grid item xs={12} sm={2}>
                     <Button variant="contained" onClick={saveCsv} >
-                        {"Cargar CSV"}
+                      {t('addStudents.loadCsv')}
                     </Button>
                 </Grid>
                 <Grid item xs={4}>
@@ -94,9 +156,21 @@ function AddStudents({userData}) {
               setModalOpen(false);
             }}
             onSubmit={handleSaveCsv}
+            sendError={sendError}
+            labgroups={labGroups}
+            existsEmail={existsEmail}
           />
         )}
-        <ToastContainer className="custom-toast-container"/>
+        {rewriteModalOpen && (
+                <RewriteModal
+                    closeRewriteModal={() => {
+                    setRewriteModalOpen(false);
+                    }}
+                    genericFunction={addEnrolled}
+                    text1={t('addStudents.studentExist')+email}
+                    text2={t('addStudents.addEnrolled')}
+                />
+            )}
     </div>
   );
 }

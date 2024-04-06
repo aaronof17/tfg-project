@@ -24,7 +24,29 @@
     },
     "addStudents":{
         "dataBlank" : "Ningún campo puede estar vacío",
-        "studentSaved" : "Estudiante guardado"
+        "studentSaved" : "Estudiante guardado",
+        "errorAnalizingCSV" : "Error analizando el archivo",
+        "informationCharged" : "La información se ha cargado con éxito",
+        "saveStudents" : "Guardar alumnos",
+        "saveStudent" : "Guardar alumno",
+        "loadCsv" : "Cargar CSV",
+        "cancel" : "Cancelar",
+        "dragFile" : "Arrastra el archivo al area",
+        "name": "Nombre completo",
+        "email": "Email",
+        "user" : "Usuario de GitHub",
+        "repository" : "Repositorio",
+        "subject" : "Asignatura",
+        "groups" : "Grupo de Laboratorio",
+        "errorNumberFiles" : "Solo puedes cargar un archivo",
+        "errorFormatFile" : "Error con el formato del archivo, solo pueden cargarse archivos csv",
+        "errorSomethingWentWrong" : "Algo ha ido mal, pruébelo en otro momento",
+        "errorSavingStudent": "Error guardando al alumno:",
+        "errorCSVdataBlank": "Ningún campo del csv puede estar en blanco",
+        "errorGroupNotFound" : "Un grupo de laboratorio del csv no existe: ",
+        "studentExist" : "Este estudiante ya existe, su email es: ",
+        "addEnrrolled" : "¿Quiéres matricularlo en este grupo de laboratorio?",
+        "studentEnrolled" : "Estudiante matriculado"
     },
     "createLabWork":{
         "subjectFilter" : "Asignatura",
@@ -68,7 +90,11 @@
         "dataBlankError": "Añada un comentario y una nota",
         "infoBlankError": "Porfavor, seleccione tanto una práctica de laboratorio como un alumno",
         "markSaved" : "Calificación guardada",
-        "error":"Lo sentimos ha ocurrido un error guardando la calificación"
+        "error":"Lo sentimos ha ocurrido un error guardando la calificación",
+        "confirm" : "Confirmar",
+        "cancel" : "Cancelar",
+        "studentHasmark" : "Este estudiante ya tiene una calificación en este trabajo",
+        "rewrite" : "¿Quiéres sobreescribirlo?"
     },
     "userProfile" : {
         "nameLabel" : "Nombre",

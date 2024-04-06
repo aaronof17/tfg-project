@@ -29,44 +29,48 @@ function StudentInfo({setName, setEmail, setUser, setRepository}) {
     return (
         <div className="student-info-wrapper">
             <Grid container spacing={2}>
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} sm={6}>
                     <TextField
                         id="outlined-required"
                         className="studentName"
-                        label="Nombre Completo"
+                        label={t('addStudents.name')}
                         type="text"
                         inputProps={{ maxLength: 45 }}
                         onChange={handleNameChange}
+                        sx={{ width: '100%' }}
                     />
                 </Grid>
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} sm={6}>
                     <TextField
                         id="outlined-required"
                         className="studentEmail"
-                        label="Email"
+                        label={t('addStudents.email')}
                         type="email"
                         inputProps={{ maxLength: 45 }}
                         onChange={handleEmailChange}
+                        sx={{ width: '100%' }}
                     />
                 </Grid>
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} sm={6}>
                     <TextField
                         id="outlined-required"
                         className="studentGitHubUser"
-                        label="GitHub User"
+                        label={t('addStudents.user')}
                         type="text"
                         inputProps={{ maxLength: 45 }}
                         onChange={handleUserChange}
+                        sx={{ width: '100%' }}
                     />
                 </Grid>
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} sm={6}>
                     <TextField
                         id="outlined-required"
                         className="studentRepository"
-                        label="Repository"
+                        label={t('addStudents.repository')}
                         type="text"
                         inputProps={{ maxLength: 200 }}
                         onChange={handleRepositoryChange}
+                        sx={{ width: '100%' }}
                     />
                 </Grid>
             </Grid>

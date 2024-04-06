@@ -8,31 +8,83 @@ import { useTranslation } from "react-i18next";
 
 import "./CsvModal.css";
 
-function CsvModal ({closeModal, onSubmit}){
+function CsvModal ({closeModal, onSubmit, sendError, labgroups, existsEmail}){
     const [t] = useTranslation(); 
     const [data, setData] = useState([]);
     const [file, setFile] = useState(null);
-    //const [dataChargedMessage, setDataChargedMessage] = useState(false);
 
     const handleFileUpload = (e) => {
-        const file = e.target.files[0];
-        setFile(file)
-        Papa.parse(file, {
-        header: true,
-        complete: (results) => {
-            setData(results.data);
-        },
-        });
-        
+        const files = e.target.files;
+        validateFiles(files);
     };
 
-    function saveCsvInfo(){
-   
+    function parseCSV(fileParameter){
+      Papa.parse(fileParameter, {
+        header: true,
+        complete: (results) => {
+          console.log("Información del archivo CSV cargado:", results.data);
+          checkCSVData(results.data,fileParameter)
+        },
+        error: (error) => {
+          console.error("Error al analizar el archivo CSV:", error);
+          sendError(t('addStudents.errorAnalizingCSV'));
+        }
+      });
     }
+
+    async function checkCSVData(csvData,fileParameter){
+      for (let i = 0; i < csvData.length; i++) {
+        const row = csvData[i];
+        if (!row.name || !row.group || !row.email || !row.repo || !row.githubuser) {
+          sendError(t('addStudents.errorCSVdataBlank'));
+          return false; 
+        }
+
+        let groupExists = labgroups.some(group => group.label === row.group);
+        if (!groupExists) {
+            sendError(t('addStudents.errorGroupNotFound') + row.group);
+            return false;
+        }
+
+        let emailResponse = await existsEmail(row.email);
+        if(emailResponse){
+          sendError(t('addStudents.studentExist') + row.email);
+          return false;
+        }
+      }
+      setData(csvData);
+      setFile(fileParameter);
+      console.log("Todos los campos están completos en todas las filas.");
+      return true;
+    }
+
+    function validateFiles(files){
+      if(files.length != 1){
+        sendError(t('addStudents.errorNumberFiles'));
+      }else{
+        const fileFromCsv = files[0]
+        if(!fileFromCsv.name.endsWith('.csv')){ 
+          sendError(t('addStudents.errorFormatFile'));
+        }else{
+          parseCSV(fileFromCsv);
+        }
+      }
+    }
+
+    const handlesaveCsvInfo = (e) => {
+      if(data){
+        onSubmit(data);
+        closeModal();
+      }else{
+        sendError(t('addStudents.errorSomethingWentWrong'));
+      }
+    };
+
 
     const handleDrop = (event) => {
       event.preventDefault();
-      setFile(event.dataTransfer.files)
+      const files = event.dataTransfer.files;
+      validateFiles(files);
     };
 
     const handleDragOver = (event) => {
@@ -50,16 +102,16 @@ function CsvModal ({closeModal, onSubmit}){
         <div className="csv-modal">
           <Grid container spacing={2}>
               <Grid item xs={12}>
-                <h4>¡La información se ha cargado con éxito!</h4>
+                <h4>{t('addStudents.informationCharged')}</h4>
               </Grid>
               <Grid item xs={12}>
-                <Button variant="contained" onClick={saveCsvInfo} >
-                  {"Guardar alumnos"}
+                <Button variant="contained" onClick={handlesaveCsvInfo} >
+                  {t('addStudents.saveStudents')}
                 </Button>
               </Grid>
               <Grid item xs={12}>
                 <Button variant="contained" onClick={() => setFile(null)} >
-                  {"Cancelar"}
+                  {t('addStudents.cancel')}
                 </Button>
               </Grid>
           </Grid>
@@ -82,7 +134,7 @@ function CsvModal ({closeModal, onSubmit}){
             >
               <Grid container spacing={2}>
                     <Grid item xs={12}>
-                      <h3>Arrastre el archivo a la zona</h3>
+                      <h3> {t('addStudents.dragFile')}</h3>
                     </Grid>
                     <Grid item xs={12}>
                       <input type="file" accept=".csv" onChange={handleFileUpload} ></input>
@@ -93,5 +145,6 @@ function CsvModal ({closeModal, onSubmit}){
       </div>
   );
 };
+
 
 export default CsvModal;

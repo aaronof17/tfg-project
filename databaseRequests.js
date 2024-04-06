@@ -255,4 +255,60 @@ function insertEnrolled(req,res) {
     })
 }
 
-module.exports = {connection, getTeachers, updateTeacherToken, insertEnrolled, getSubjectsByTeacherId, getGroupsBySubject, getGroupsByTeacherId, getTeacherId, insertMark, getWorkByStudent, deleteWork, getWorksByTeacherId, insertWork, editWork, insertStudent, getStudentsByGroup, getStudentsByTeacher};
+
+function getIdFromGroupsByName(req,res) {
+    const sql = "SELECT idlabgroup FROM labgroups where name=? ";
+    const params = [req.body.groupName];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting id from group: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+
+function getMarkByWorkAndStudent(req,res) {
+    const sql = "SELECT COUNT(*) as count FROM marks where studentIDFK=? and worklabIDFK=? ";
+    const params = [req.body.student, req.body.work];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting id from marks: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+function getIdByEmail(req,res) {
+    const sql = "SELECT studentsID FROM students where email=? ";
+    const params = [req.body.email];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting student id for email: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+function editMark(req,res){
+    const sql = 'update marks set mark=?, comment=? where studentIDFK=? and worklabIDFK=?';
+    const params = [req.body.mark, req.body.comment, req.body.student,
+                    req.body.work];
+    connection.query(sql, params ,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error editing mark: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+
+module.exports = {connection, getIdFromGroupsByName, getIdByEmail, editMark, getMarkByWorkAndStudent, getTeachers, updateTeacherToken, insertEnrolled, getSubjectsByTeacherId, getGroupsBySubject, getGroupsByTeacherId, getTeacherId, insertMark, getWorkByStudent, deleteWork, getWorksByTeacherId, insertWork, editWork, insertStudent, getStudentsByGroup, getStudentsByTeacher};

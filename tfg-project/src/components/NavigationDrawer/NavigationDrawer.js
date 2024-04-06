@@ -24,6 +24,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import {useTranslation} from "react-i18next";
+import {ToastContainer, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 import StudentsList from './options/StudentsList';
 import MakeIssue from './options/MakeIssue/MakeIssue';
@@ -257,6 +259,7 @@ function ResponsiveDrawer(props) {
       >
         {views[currentView]} 
        </Box>
+       <ToastContainer/>
     </Box>
   );
 }

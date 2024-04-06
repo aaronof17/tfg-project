@@ -20,8 +20,8 @@ function InfoMark({ setComment, setMarkNumber }) {
         let floatValue = parseFloat(value);
         if (floatValue < 0) {
             floatValue = 0;
-        } else if (floatValue > 100) {
-            floatValue = 100;
+        } else if (floatValue > 10) {
+            floatValue = 10;
         }
         event.target.value = floatValue;
         setMarkNumber(floatValue);
@@ -40,9 +40,10 @@ function InfoMark({ setComment, setMarkNumber }) {
                         id="outlined-required"
                         className="markNumber"
                         label={t('mark.mark')}
-                        type="text"
+                        type="number"
                         inputProps={{
-                            pattern: "[0-9]*", 
+                            min: 0,
+                            max: 10,
                             onKeyPress: handleKeyPress,
                             onBlur: handleNumberChange 
                         }}

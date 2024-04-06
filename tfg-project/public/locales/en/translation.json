@@ -23,7 +23,30 @@
     },
     "addStudents":{
         "dataBlank" : "No field can be blank",
-        "studentSaved" : "Student saved"
+        "studentSaved" : "Student saved",
+        "informationCharged" : "Information has been loaded successfully",
+        "saveStudents" : "Save students",
+        "saveStudent" : "Save student",
+        "loadCsv" : "Load CSV",
+        "cancel" : "Cancel",
+        "dragFile" : "Drag file to the area", 
+        "name": "Complete name",
+        "email": "Email",
+        "user" : "GitHub User",
+        "repository" : "Repository",
+        "subject" : "Subject",
+        "groups" : "Lab groups",
+        "errorAnalizingCSV" : "Error analizing file",
+        "errorNumberFiles" : "You can only use one file",
+        "errorFormatFile" : "Error with file extension, you can only use .csv",
+        "errorSomethingWentWrong" : "Something went wrong, please try again",
+        "errorSavingStudent": "Error saving student:",
+        "errorWithStudentBlankField": "Error with student ",
+        "errorCSVdataBlank": "No csv field can be blank",
+        "errorGroupNotFound" : "Lab group in csv not found: ",
+        "studentExist" : "This student already exist, his email is: ",
+        "addEnrolled" : "Do you want to enroll this student in this new lab group?",
+        "studentEnrolled" : "Student enrolled"
     },
     "createLabWork":{
         "subjectFilter" : "Subject",
@@ -67,7 +90,12 @@
         "dataBlankError": "Comment and mark cannot be blank",
         "infoBlankError": "Please select a work and a student",
         "markSaved" : "Mark saved",
-        "error":"Sorry, an error has ocurred saving mark"
+        "error":"Sorry, an error has ocurred saving mark",
+        "confirm" : "Confirm",
+        "cancel" : "Cancel",
+        "studentHasmark" : "This student already has a mark in this work",
+        "rewrite" : "Do you want to rewrite?"
+
     },
     "userProfile" : {
         "nameLabel" : "Name",

@@ -60,3 +60,21 @@ export async function getLabGroupsBySubject(actualSubject, teacherID, callback) 
     }
 }
 
+export async function getIdFromGroup(groupName) {
+  try {
+      const response = await fetch('http://localhost:4000/groups/name', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ groupName: groupName})
+      })
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error getting id from group:', error);
+    }
+}

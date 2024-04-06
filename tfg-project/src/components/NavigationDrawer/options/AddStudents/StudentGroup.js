@@ -59,7 +59,7 @@ function StudentGroup({labGroups, setLabGroups, subjects, setSubject, setGroup, 
                         disablePortal
                         id="subject-combo-box"
                         options={getSubjects()}
-                        renderInput={(params) => <TextField {...params} label={t('createLabWork.subjectFilter')} />}
+                        renderInput={(params) => <TextField {...params} label={t('addStudents.subject')} />}
                         onChange={handleSubjectChange}
                     />
                 </Grid>
@@ -70,7 +70,7 @@ function StudentGroup({labGroups, setLabGroups, subjects, setSubject, setGroup, 
                         disablePortal
                         id="group-combo-box"
                         options={labGroups}
-                        renderInput={(params) => <TextField {...params} label="Grupos" />}
+                        renderInput={(params) => <TextField {...params} label={t('addStudents.groups')} />}
                         onChange={handleGroupChange}
                     />
                 </Grid>

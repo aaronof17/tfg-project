@@ -1,5 +1,18 @@
+import { getIdFromGroup } from "./labGroupRepository";
+
+
 export async function saveEnrolled(studentId, groupId, repository) {
     try {
+        let id = groupId;
+        if(isNaN(groupId)){
+            const groupIdResponse = await getIdFromGroup(groupId);
+            if (!groupIdResponse.success) {
+                return { response: false, error: groupIdResponse.error };
+            } else {
+                id = groupIdResponse.data[0].idlabgroup;
+            }
+        }
+
         const response = await fetch('http://localhost:4000/enrolled/save', {
             method: "POST",
             headers: {
@@ -8,7 +21,7 @@ export async function saveEnrolled(studentId, groupId, repository) {
             },
             body:
                 JSON.stringify({ studentId: studentId,
-                                groupId: groupId,
+                                groupId: id,
                                 repository: repository
                             })
         });
@@ -22,6 +35,6 @@ export async function saveEnrolled(studentId, groupId, repository) {
         return { response: true, error: ""};
 
       } catch (error) {
-          return { response: false, error: "Sorry, an error occurred saving enrolled"};
+          return { response: false, error: "Sorry, an error occurred saving enrolled "+error};
       }
   }
