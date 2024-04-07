@@ -27,6 +27,11 @@ app.post('/teachers/token',  async function (req, res) {
     return result;
 });
 
+app.post('/teachers/token/id',  async function (req, res) {
+    const result = await databaseRequests.getTeacherToken(req,res);
+    return result;
+});
+
 
 app.post('/teachers/id', async function (req, res) {
     const result = await databaseRequests.getTeacherId(req,res);
@@ -214,27 +219,76 @@ app.get('/getUserData', async function  (req, res){
 
 
 app.get('/downloadRepo', async function  (req, res){
-    console.log("hola");
-    req.get("Authorization");
-    const user = 'aaronof17';
-    const repo = 'demo1';
+    
+    try {
+        const user = 'AaronOF27';
+        const repo = 'prueba';
 
-    await fetch(`https://api.github.com/repos/${user}/${repo}/zipball`, {
-        method: "GET",
-        headers: {
-            "Authorization" : req.get("Authorization")
-            
+        const githubResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/zipball`, {
+            method: "GET",
+            headers: {
+                "Authorization" : req.get("Authorization")
+            }
+        });
+
+        console.log("respuesta de descargar repo ", githubResponse);
+
+        if (!githubResponse.ok) {
+            throw new Error(`Error al obtener los contenidos del repositorio: ${githubResponse.statusText}`);
         }
-    })
-    .then((res) =>{
-    console.log(res)
-    return res.json;
-    })
-    .then(json => {
-    console.log(json)
-        console.log(`Issue created at ${json.url}`)
-    })
-})
+
+        const jsonData = await githubResponse.json();
+        console.log("Datos JSON:", jsonData);
+
+        // Envía los datos JSON al cliente
+        res.json(jsonData);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error en el servidor' });
+    }
+});
+
+
+app.post('/commit', async function(req, res) {
+    try {
+        const user = 'AaronOF27';
+        const repo = 'prueba';
+        const filePath = 'archivo.txt';
+        const commitMessage = 'Commit desde la API de GitHub';
+
+        // Datos del commit
+        const commitData = {
+            message: commitMessage,
+            content: Buffer.from('Contenido del archivo').toString('base64') // Contenido del archivo codificado en base64
+        };
+
+        // Realizar la solicitud de commit
+        const commitResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${filePath}`, {
+            method: "PUT",
+            headers: {
+                "Authorization": req.get("Authorization"),
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(commitData)
+        });
+
+        if (!commitResponse.ok) {
+            throw new Error(`Error al realizar el commit: ${commitResponse.statusText}`);
+        }
+
+        const commitJson = await commitResponse.json();
+        console.log("Datos del commit:", commitJson);
+
+        // Envía la respuesta al cliente
+        res.json({ message: 'Commit exitoso' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error en el servidor' });
+    }
+});
+
 
 
 

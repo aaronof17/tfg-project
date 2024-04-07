@@ -27,7 +27,7 @@ import {useTranslation} from "react-i18next";
 import {ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-import StudentsList from './options/StudentsList';
+import StudentsList from './options/StudentsList/StudentsList.js';
 import MakeIssue from './options/MakeIssue/MakeIssue';
 import ProfileView from './options/ProfileView/ProfileView.js';
 import CreateLabWork from './options/LabWork/CreateLabWork.js';

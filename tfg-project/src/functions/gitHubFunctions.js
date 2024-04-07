@@ -67,25 +67,23 @@ export async function getUserData(callback) {
 // }
 
 export async function downloadRepo() {
-    const apiUrl = 'http://localhost:4000/downloadRepo?code='; // Reemplaza con la URL de tu servidor
+  const apiUrl = 'http://localhost:4000/downloadRepo'; // Reemplaza con la URL de tu servidor
+  try {
+      const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+              "Authorization" : "Bearer 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" ,
+      }});
 
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization" : "Bearer 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" ,
-    }})
-
-        if (!response.ok) {
-            throw new Error(`Error al llamar a la API: ${response.statusText}`);
-        }
-
-        const json = await response.json();
-        console.log(json);
-        // Continúa con el procesamiento de la respuesta según sea necesario
-    } catch (error) {
-        console.error(error);
-        // Maneja errores aquí
-    }
+      if (!response.ok) {
+          throw new Error(`Error al llamar a la API: ${response.statusText}`);
+      }
+      console.log("respuesta en funciones ",response);
+      const json = await response.json();
+      console.log(json);
+      // Continúa con el procesamiento de la respuesta según sea necesario
+  } catch (error) {
+      console.error(error);
+      // Maneja errores aquí
+  }
 }

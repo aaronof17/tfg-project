@@ -13,7 +13,7 @@ function getTeachers(req,res) {
 }
 
 function updateTeacherToken(req,res) {
-    const sql = 'update teacherss set githubToken=? where githubProfile=?';
+    const sql = 'update teachers set githubToken=? where githubProfile=?';
     const params = [req.body.token, req.body.profileName];
     connection.query(sql, params ,(err, data) =>{
         if(err){
@@ -39,6 +39,19 @@ function getTeacherId(req,res) {
     })
 }
 
+
+function getTeacherToken(req,res) {
+    const sql = 'select githubToken from teachers where teacherid=?';
+    const params = [req.body.teacherId];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting token: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
 
 function getStudentsByTeacher(req,res) {
     const sql = "SELECT DISTINCT s.studentsID, s.name, "+
@@ -311,4 +324,4 @@ function editMark(req,res){
 }
 
 
-module.exports = {connection, getIdFromGroupsByName, getIdByEmail, editMark, getMarkByWorkAndStudent, getTeachers, updateTeacherToken, insertEnrolled, getSubjectsByTeacherId, getGroupsBySubject, getGroupsByTeacherId, getTeacherId, insertMark, getWorkByStudent, deleteWork, getWorksByTeacherId, insertWork, editWork, insertStudent, getStudentsByGroup, getStudentsByTeacher};
+module.exports = {connection, getIdFromGroupsByName, getIdByEmail, editMark, getMarkByWorkAndStudent, getTeacherToken, getTeachers, updateTeacherToken, insertEnrolled, getSubjectsByTeacherId, getGroupsBySubject, getGroupsByTeacherId, getTeacherId, insertMark, getWorkByStudent, deleteWork, getWorksByTeacherId, insertWork, editWork, insertStudent, getStudentsByGroup, getStudentsByTeacher};

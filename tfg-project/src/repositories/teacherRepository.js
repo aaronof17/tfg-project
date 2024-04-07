@@ -42,10 +42,29 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           });
         
         const data = await response.json();
-        console.log("yeah",data.data[0]);
         callback(data.data[0].teacherID);
         return data.data[0].teacherID;
       } catch (error) {
         console.error('Error getting teacher id:', error);
+      }
+  }
+
+
+  export async function getTeacherToken(callback, teacherId) {
+    try {
+        const response = await fetch('http://localhost:4000/teachers/token/id', {
+            method: "POST",
+            headers: {
+              "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json"
+            },
+            body:
+                JSON.stringify({ teacherId: teacherId })
+          });
+        
+        const data = await response.json();
+        callback(data.data[0].githubToken);
+      } catch (error) {
+        console.error('Error getting teacher token:', error);
       }
   }
