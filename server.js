@@ -2,9 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const databaseRequests = require('./databaseRequests');
-//const githubRequests = require('./githubRequests.js');
-const fetch = (...args) =>
-import('node-fetch').then(({default: fetch}) => fetch(...args));
+const githubRequests = require('./githubRequests.js');
 
 const app = express();
 const CLIENT_ID = "b771595a6c15c6653d02";
@@ -14,6 +12,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
+const path = require('path');
+const fs = require('fs');
 //BD---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 app.get('/teachers',  async function (req, res) {
@@ -218,34 +218,13 @@ app.get('/getUserData', async function  (req, res){
 })
 
 
-app.get('/downloadRepo', async function  (req, res){
-    
+app.post('/downloadRepo', async function  (req, res){
     try {
-        const user = 'AaronOF27';
-        const repo = 'prueba';
-
-        const githubResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/zipball`, {
-            method: "GET",
-            headers: {
-                "Authorization" : req.get("Authorization")
-            }
-        });
-
-        console.log("respuesta de descargar repo ", githubResponse);
-
-        if (!githubResponse.ok) {
-            throw new Error(`Error al obtener los contenidos del repositorio: ${githubResponse.statusText}`);
-        }
-
-        const jsonData = await githubResponse.json();
-        console.log("Datos JSON:", jsonData);
-
-        // Envía los datos JSON al cliente
-        res.json(jsonData);
-
+        const result = await githubRequests.downloadRepo(req, res);
+        return res.status(200).json({ success: true, data: result });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error en el servidor' });
+        return res.status(500).json({ success: false, error: 'Error en el servidor la intentar descargar el repositorio' });
     }
 });
 
@@ -290,14 +269,227 @@ app.post('/commit', async function(req, res) {
 });
 
 
+// app.post('/commitRepo', async function(req, res) {
+//     try {
+//         console.log("sipsip");
+//         const user = 'AaronOF27';
+//         const repo = 'prueba';
+//         const branch = 'main'; // Cambia esto por el nombre de la rama en la que deseas hacer el commit
+//         const commitMessage = 'Mensaje de commit';
+
+//         // Autenticación
+//         //const accessToken = req.get("Authorization"); // Debes proporcionar un token de acceso válido con permisos de escritura en el repositorio
+
+//         // Contenido del archivo que deseas modificar
+//         const fileContent = 'Contenido del archivo a modificar';
+
+//         // Obtener el árbol actual de la rama
+//         const getTreeResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/git/trees/${branch}`, {
+//             method: 'GET',
+//             headers: {
+//                 'Authorization': req.get("Authorization")
+//             }
+//         });
+//         const treeData = await getTreeResponse.json();
+//         const treeSha = treeData.sha;
+
+//         console.log("treSha ",treeData);
+
+
+//         // Crear un nuevo árbol con los cambios
+//         const newTree = [{
+//             path: 'archivo.txt', // Cambia esto por el nombre y la ruta del archivo que deseas modificar
+//             mode: '100644', // Modo de archivo (normalmente 100644 para archivos regulares)
+//             type: 'blob',
+//             content: fileContent
+//         }];
+
+//         const createTreeResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/git/trees`, {
+//             method: 'POST',
+//             headers: {
+//                 'Authorization': req.get("Authorization"),
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 base_tree: treeSha,
+//                 tree: newTree
+//             })
+//         });
+//         const newTreeData = await createTreeResponse.json();
+//         const newTreeSha = newTreeData.sha;
+
+//         console.log("NEWtreSha ",newTreeSha);
+
+
+//         // Crear un nuevo commit
+//         const createCommitResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/git/commits`, {
+//             method: 'POST',
+//             headers: {
+//                 'Authorization': req.get("Authorization"),
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 message: commitMessage,
+//                 tree: newTreeSha,
+//                 parents: [treeSha]
+//             })
+//         });
+//         const newCommitData = await createCommitResponse.json();
+//         const newCommitSha = newCommitData.sha;
+
+//         console.log("token ",accessToken);
+
+//         // Actualizar la referencia de la rama
+//         const updateRefResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/git/refs/heads/${branch}`, {
+//             method: 'PATCH',
+//             headers: {
+//                 'Authorization': req.get("Authorization"),
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 sha: newCommitSha
+//             })
+//         });
+
+//         if (!updateRefResponse.ok) {
+//             throw new Error(`Error al actualizar la referencia de la rama: ${updateRefResponse.statusText}`);
+//         }
+
+//         // Respuesta exitosa
+//         res.json({ message: 'Commit exitoso' });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Error en el servidor' });
+//     }
+// });
+
+async function hacerCommitEnRepositorio(req, cambios) {
+    try {
+        const user = 'AaronOF27';
+        const repo = 'prueba';
+        const branch = 'main'; // Cambia esto por el nombre de la rama en la que deseas hacer el commit
+        const mensajeCommit = 'Mensaje de commit nuevo 2';
+
+        // Obtener el último commit de la rama
+        const ultimoCommitResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/git/ref/heads/${branch}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': req.get("Authorization"),
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        const ultimoCommitData = await ultimoCommitResponse.json();
+        const ultimoCommitSha = ultimoCommitData.object.sha;
+
+        // Crear un nuevo árbol con los cambios
+        const nuevoArbolResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/git/trees`, {
+            method: 'POST',
+            headers: {
+                'Authorization': req.get("Authorization"),
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                base_tree: ultimoCommitSha,
+                tree: cambios.map(cambio => ({
+                    path: cambio.path,
+                    mode: '100644',
+                    type: 'blob',
+                    content: cambio.content
+                }))
+            })
+        });
+        const nuevoArbolData = await nuevoArbolResponse.json();
+        const nuevoArbolSha = nuevoArbolData.sha;
+
+        // Crear un nuevo commit
+        const nuevoCommitResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/git/commits`, {
+            method: 'POST',
+            headers: {
+                'Authorization': req.get("Authorization"),
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: mensajeCommit,
+                tree: nuevoArbolSha,
+                parents: [ultimoCommitSha]
+            })
+        });
+        const nuevoCommitData = await nuevoCommitResponse.json();
+        const nuevoCommitSha = nuevoCommitData.sha;
+
+        // Actualizar la referencia de la rama
+        const actualizarRamaResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/git/refs/heads/${branch}`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': req.get("Authorization"),
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                sha: nuevoCommitSha
+            })
+        });
+
+        if (!actualizarRamaResponse.ok) {
+            throw new Error(`Error al actualizar la referencia de la rama: ${actualizarRamaResponse.statusText}`);
+        }
+
+        console.log('Commit exitoso.');
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+
+app.post('/commitRepo', async function(req, res) {
+
+    const directorio = 'C:/Users/aorozco/Desktop/Aaron/Estudio/Proyecto/pruebas/aa/aaronorozcofernandez-uo281997';
+
+    leerDirectorioRecursivo(directorio)
+    .then(cambios => {
+        hacerCommitEnRepositorio(req, cambios);
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+
+
+async function leerDirectorioRecursivo(directorio) {
+    let cambios = [];
+
+    // Leer el contenido del directorio
+    const archivos = await fs.promises.readdir(directorio);
+
+    // Recorrer todos los archivos y subdirectorios
+    for (const archivo of archivos) {
+        const rutaArchivo = path.join(directorio, archivo);
+        const estadisticas = await fs.promises.stat(rutaArchivo);
+
+        if (estadisticas.isFile()) {
+            // Si es un archivo, leer su contenido
+            const contenido = await fs.promises.readFile(rutaArchivo, 'utf8');
+            cambios.push({
+                path: rutaArchivo.replace(/\\/g, '/'), // Reemplazar las barras invertidas con barras inclinadas
+                content: contenido
+            });
+        } else if (estadisticas.isDirectory()) {
+            // Si es un directorio, leer su contenido recursivamente
+            const cambiosDirectorio = await leerDirectorioRecursivo(rutaArchivo);
+            cambios = cambios.concat(cambiosDirectorio);
+        }
+    }
+
+    return cambios;
+}
 
 
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
-    databaseRequests.connection.connect(function(err){
-        if(err) throw err;
-        console.log("Database Connected");
-    }
-    );
+    // databaseRequests.connection.connect(function(err){
+    //     if(err) throw err;
+    //     console.log("Database Connected");
+    // }
+    // );
 });

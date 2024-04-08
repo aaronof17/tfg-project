@@ -31,7 +31,6 @@ export async function getUserData(callback) {
         });
     
         const data = await response.json();
-        console.log(data);
         callback(data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -67,23 +66,55 @@ export async function getUserData(callback) {
 // }
 
 export async function downloadRepo() {
-  const apiUrl = 'http://localhost:4000/downloadRepo'; // Reemplaza con la URL de tu servidor
+  const apiUrl = 'http://localhost:4000/downloadRepo';
   try {
+      console.log("entra ");
       const response = await fetch(apiUrl, {
-          method: 'GET',
+          method: 'POST',
           headers: {
-              "Authorization" : "Bearer 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" ,
-      }});
+              "Authorization" : "Bearer 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",
+              "Content-Type": "application/json"
+          }
+      });
 
-      if (!response.ok) {
-          throw new Error(`Error al llamar a la API: ${response.statusText}`);
+      const data = await response.json(); 
+
+      if (!data.success) {
+        console.log("An error occurred downloading repository: ", data.error);
+        return { response: false, error: data.error};
+      } else {
+          console.log("Datos recibidos:", data); // Aquí puedes acceder a los datos
+          descargarArchivo(data.data);
       }
-      console.log("respuesta en funciones ",response);
-      const json = await response.json();
-      console.log(json);
-      // Continúa con el procesamiento de la respuesta según sea necesario
   } catch (error) {
       console.error(error);
       // Maneja errores aquí
   }
+}
+
+
+
+async function descargarArchivo(url) {
+  fetch(url)
+    .then(response => response.blob())
+    .then(blob => {
+        // Crear un objeto URL a partir del blob
+        const urlBlob = URL.createObjectURL(blob);
+        
+        // Crear un enlace y configurarlo para descargar el archivo
+        const enlaceDescarga = document.createElement('a');
+        enlaceDescarga.href = urlBlob;
+        enlaceDescarga.download = 'archivo_descargado'; // Nombre del archivo descargado
+        
+        // Agregar el enlace al DOM y hacer clic en él
+        document.body.appendChild(enlaceDescarga);
+        enlaceDescarga.click();
+        
+        // Limpiar el objeto URL y eliminar el enlace después de la descarga
+        setTimeout(() => {
+            URL.revokeObjectURL(urlBlob);
+            document.body.removeChild(enlaceDescarga);
+        }, 0);
+    })
+    .catch(error => console.error('Error al descargar el archivo:', error));
 }

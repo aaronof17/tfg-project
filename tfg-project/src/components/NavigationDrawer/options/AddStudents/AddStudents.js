@@ -36,9 +36,9 @@ function AddStudents({userData}) {
 
     useEffect(() => {
         const fetchInfo = async () => {
-            const id = await getTeacherId(setTeacherID,userData.html_url);
-            getLabGroups(setLabGroups,id);
-            getSubjectsFromGroup(setSubjects,id);
+            //const id = await getTeacherId(setTeacherID,userData.html_url);
+            //getLabGroups(setLabGroups,id);
+            //getSubjectsFromGroup(setSubjects,id);
         };
     
         fetchInfo();
@@ -163,12 +163,12 @@ function AddStudents({userData}) {
         )}
         {rewriteModalOpen && (
                 <RewriteModal
-                    closeRewriteModal={() => {
-                    setRewriteModalOpen(false);
-                    }}
-                    genericFunction={addEnrolled}
-                    text1={t('addStudents.studentExist')+email}
-                    text2={t('addStudents.addEnrolled')}
+                  closeRewriteModal={() => {
+                  setRewriteModalOpen(false);
+                  }}
+                  genericFunction={addEnrolled}
+                  text1={t('addStudents.studentExist')+email}
+                  text2={t('addStudents.addEnrolled')}
                 />
             )}
     </div>
