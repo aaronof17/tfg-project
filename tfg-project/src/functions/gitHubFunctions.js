@@ -94,27 +94,25 @@ export async function downloadRepo() {
 
 
 
-async function descargarArchivo(url) {
+function descargarArchivo(url) {
+  var nombreArchivo = "nuevo_nombre_archivo.zip"; // El nuevo nombre de archivo que deseas
+  
   fetch(url)
-    .then(response => response.blob())
-    .then(blob => {
-        // Crear un objeto URL a partir del blob
-        const urlBlob = URL.createObjectURL(blob);
-        
-        // Crear un enlace y configurarlo para descargar el archivo
-        const enlaceDescarga = document.createElement('a');
-        enlaceDescarga.href = urlBlob;
-        enlaceDescarga.download = 'archivo_descargado'; // Nombre del archivo descargado
-        
-        // Agregar el enlace al DOM y hacer clic en él
-        document.body.appendChild(enlaceDescarga);
-        enlaceDescarga.click();
-        
-        // Limpiar el objeto URL y eliminar el enlace después de la descarga
-        setTimeout(() => {
-            URL.revokeObjectURL(urlBlob);
-            document.body.removeChild(enlaceDescarga);
-        }, 0);
-    })
-    .catch(error => console.error('Error al descargar el archivo:', error));
+  .then(response => response.blob())
+  .then(blob => {
+      // Crear un objeto Blob con el contenido y tipo MIME del archivo
+      var newBlob = new Blob([blob], { type: 'application/zip' });
+
+      // Crear un enlace para el archivo
+      var a = document.createElement('a');
+      var url = window.URL.createObjectURL(newBlob);
+      a.href = url;
+      a.download = nombreArchivo; // Establecer el nombre de archivo
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+  })
+  .catch(error => {
+      console.error('Hubo un error al descargar el archivo:', error);
+  });
 }

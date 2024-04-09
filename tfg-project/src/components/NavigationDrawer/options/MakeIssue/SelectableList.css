@@ -1,0 +1,53 @@
+.selectable-lists-container {
+    display: flex;
+    color: black;
+}
+
+.selectable-list-container {
+    flex: 1;
+    padding: 0 10px;
+    background: #dbdbdb;
+    margin-top: 5rem;
+    padding: 2rem;
+    border-radius: 5px;
+}
+
+.selectable-list-container h2 {
+    margin-bottom: 10px;
+    font-size: medium;
+}
+
+.selectable-list li{
+  font-size: medium;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f8f8;
+  color: #000000;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+.move-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    margin: 5%;
+}
+
+.move-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    margin: 5%;
+}
+
+
+.move-buttons .move-all-right,
+.move-buttons .move-all-left{
+    margin: 10%;
+    background: #dbdbdb;
+}
