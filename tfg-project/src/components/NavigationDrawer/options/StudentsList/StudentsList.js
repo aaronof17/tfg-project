@@ -6,7 +6,7 @@ import {useTranslation} from "react-i18next";
 import Button from '@mui/material/Button';
 
 import {calculateWidth} from "../../../../functions/genericFunctions.js";
-import {downloadRepo} from "../../../../functions/gitHubFunctions.js";
+import {downloadRepo, createCommit} from "../../../../functions/gitHubFunctions.js";
 import {getStudents} from "../../../../repositories/studentRepository.js";
 import {getTeacherId, getTeacherToken} from "../../../../repositories/teacherRepository.js";
 
@@ -72,6 +72,7 @@ function StudentsList({userData}) {
 
     async function downloadRepository(){
       downloadRepo();
+      //createCommit(); 
     }
 
 
@@ -94,7 +95,7 @@ function StudentsList({userData}) {
       <div className="saveLabWorks" >
         <Button variant="contained" onClick={downloadRepository}>
             Descargar repositorios
-        </Button>
+        </Button>        
       </div>
     </div>
   );

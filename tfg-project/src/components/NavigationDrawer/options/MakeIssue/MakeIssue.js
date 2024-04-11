@@ -5,13 +5,18 @@ import {useTranslation} from "react-i18next";
 import studentsData from "../students.json";
 import SelectableList from "./SelectableList.js";
 import {calculateWidth} from "../../../../functions/genericFunctions.js";
+import {createIssue} from "../../../../functions/gitHubFunctions.js";
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import {toast} from "react-toastify";
+
 
 import './MakeIssue.css';
+import CreateIssueModal from './CreateIssueModal.js';
 
 function MakeIssue() {
 
@@ -29,6 +34,9 @@ function MakeIssue() {
     { id: 9, name: 'Estudiante 9' },
   ]);
   const [selectedStudents, setSelectedStudents] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     // const fetchInfo = async () => {
@@ -53,6 +61,22 @@ function MakeIssue() {
     return options;
 
   }
+
+  function getIssueForm(){
+    setModalOpen(true)
+  }
+
+  const saveIssue = () => {
+    createIssue('AaronOF27','prueba',title,description,"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").then((res) =>{
+      if(res.response){
+        setModalOpen(false);
+        toast.info("Issue creada con éxito");
+      }else{
+        toast.error("Hubo un error");
+      }
+    });
+  };
+
 
 
 return (
@@ -93,6 +117,21 @@ return (
       selectedStudents={selectedStudents}
       setSelectedStudents={setSelectedStudents}
     ></SelectableList>
+    <Button variant="contained" onClick={getIssueForm}>
+            Rellenar datos
+    </Button>
+    {modalOpen && (
+      <CreateIssueModal
+        closeModal={() => {
+          setModalOpen(false);
+        }}
+        onSubmit={saveIssue}
+        setTitle={setTitle}
+        title={title}
+        setDescription={setDescription}
+        description={description}
+      />
+    )}
   </div>
   
 );

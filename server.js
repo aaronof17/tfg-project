@@ -153,52 +153,23 @@ app.get('/getAccessToken', async function (req,res){
     }) 
 }); 
 
-app.post('/createIssue', async function (req,res){
-    console.log("hola")
 
-    const { repoName, userName} = req.body;
-    const accessToken = req.get("Authorization");
-   // const createIssueUrl = 'https://api.github.com/repos/${userName}/${repoName}/issues';
-    try{
-        const issuesData = await fs.readFile('./TestIssues.json', 'utf8');
-        const issues = JSON.parse(issuesData); 
-        // Crear cada issue en el repositorio
-        const createIssuePromises = issues.map(async (issue) => {
-            const createIssueUrl = "https://api.github.com/repos/"+userName+"/"+repoName+"/issues";
-
-            // Crear la issue
-            const response = await fetch(createIssueUrl, {
-                method: "POST",
-                headers: {
-                    "Authorization": accessToken,
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    title: issue.title,
-                    body: issue.body || '', // Puedes ajustar según tu necesidad
-                    labels: issue.labels || [] // Puedes ajustar según tu necesidad
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error al crear la issue: ${response.statusText}`);
-            }
-
-            return response.json();
-        });
-
-        // Esperar a que se completen todas las promesas de creación de issue
-        const createdIssues = await Promise.all(createIssuePromises);
-
-        console.log(createdIssues);
-        res.json(createdIssues);
+app.post('/createIssue', async function  (req, res){
+    try {
+        const result = await githubRequests.createIssue(req, res);
+        return res.status(200).json({ success: true, data: result });
     } catch (error) {
-        console.error("Error TOCHO",error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error(error);
+        return res.status(500).json({ success: false, error: 'Error en el servidor al intentar enviar una issue' });
     }
+});
 
-})
+app.get('/descargar', (req, res) => {
+    const archivo = 'https://codeload.github.com/AaronOF27/prueba/legacy.zip/refs/heads/main?token=AYMUKH7IDTJFFK5IOMWUQSTGC7EC6'; // Ruta del archivo que deseas descargar
+    const nombreArchivo = 'nombre_archivo.zip'; // Nombre deseado para el archivo descargado
+    res.download(archivo, nombreArchivo);
+});
+
 
 
 app.get('/getUserData', async function  (req, res){
@@ -444,9 +415,9 @@ async function hacerCommitEnRepositorio(req, cambios) {
 
 app.post('/commitRepo', async function(req, res) {
 
-    const directorio = 'C:/Users/aorozco/Desktop/Aaron/Estudio/Proyecto/pruebas/aa/aaronorozcofernandez-uo281997';
+    const directorioRepo = 'C:/Users/aorozco/Desktop/Aaron/Estudio/Proyecto/pruebas/AaronOF27-prueba-713b657d8946e741fb2753f3caf103b3b82c7183/AaronOF27-prueba-713b657d8946e741fb2753f3caf103b3b82c7183/';
 
-    leerDirectorioRecursivo(directorio)
+    leerDirectorioRecursivo(directorioRepo,directorioRepo)
     .then(cambios => {
         hacerCommitEnRepositorio(req, cambios);
     })
@@ -455,7 +426,7 @@ app.post('/commitRepo', async function(req, res) {
 
 
 
-async function leerDirectorioRecursivo(directorio) {
+async function leerDirectorioRecursivo(directorioRepo,directorio) {
     let cambios = [];
 
     // Leer el contenido del directorio
@@ -469,20 +440,20 @@ async function leerDirectorioRecursivo(directorio) {
         if (estadisticas.isFile()) {
             // Si es un archivo, leer su contenido
             const contenido = await fs.promises.readFile(rutaArchivo, 'utf8');
+            const rutaRelativa = rutaArchivo.replace(/\\/g, '/').replace(directorioRepo, '');
             cambios.push({
-                path: rutaArchivo.replace(/\\/g, '/'), // Reemplazar las barras invertidas con barras inclinadas
+                path: rutaRelativa, // Reemplazar las barras invertidas con barras inclinadas
                 content: contenido
             });
         } else if (estadisticas.isDirectory()) {
             // Si es un directorio, leer su contenido recursivamente
-            const cambiosDirectorio = await leerDirectorioRecursivo(rutaArchivo);
+            const cambiosDirectorio = await leerDirectorioRecursivo(directorioRepo, rutaArchivo);
             cambios = cambios.concat(cambiosDirectorio);
         }
     }
 
-    return cambios;
+   return cambios;
 }
-
 
 
 app.listen(4000, function() {

@@ -17,8 +17,43 @@ async function getAccessToken(code) {
     return data;
 }
 
-async function createIssue(repoName, userName, accessToken, issues) {
-    // Lógica para crear problemas en GitHub
+async function createIssue(req, res) {
+    console.log("entra a la creación de issue")
+
+    const userName = req.body.user;
+    const repo = req.body.repo;
+    const title = req.body.title;
+    const description = req.body.description;
+
+    const accessToken = req.get("Authorization");
+   // const createIssueUrl = 'https://api.github.com/repos/${userName}/${repoName}/issues';
+    try{
+        const createIssueUrl = "https://api.github.com/repos/"+userName+"/"+repo+"/issues";
+
+        const response = await fetch(createIssueUrl, {
+            method: "POST",
+            headers: {
+                "Authorization": accessToken,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                title: title,
+                body: description || ''
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error al crear la issue: ${response.statusText}`);
+        }
+
+        return response;
+ 
+    } catch (error) {
+        console.error(error);
+        throw new Error(`Error al crear la issue: ${error}`);
+    }
+
 }
 
 async function getUserData(accessToken) {
@@ -29,7 +64,6 @@ async function downloadRepo(req, res) {
     try {
         const user = 'AaronOF27';
         const repo = 'prueba';
-        console.log("va a hacer la petición");
 
         const githubResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/zipball`, {
             method: "GET",
@@ -49,7 +83,7 @@ async function downloadRepo(req, res) {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error en el servidor' });
+        res.status(500).json({ error: 'Error en el servidor al descarga repositorio' });
     }
 }
 

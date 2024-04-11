@@ -22,6 +22,18 @@
         "group" : "Grupo",
         "subject" : "Asignatura"
     },
+    "makeIssue" : {
+        "title" : "Título",
+        "description" : "Descripción",
+        "subject" : "Asignatura",
+        "group" : "Grupo de laboratorio",
+        "availableStudents" : "Estudiantes disponibles",
+        "selectedStudents" : "Estudiantes seleccionados",
+        "fillOutForm" : "Rellenar Formulario",
+        "sendIssue" : "Enviar Issue",
+        "dataBlank" : "Rellena todos los campos del formulario",
+        "studentsEmpty" : "Debe haber al menos un alumno en la lista de seleccionados"
+    },
     "addStudents":{
         "dataBlank" : "Ningún campo puede estar vacío",
         "studentSaved" : "Estudiante guardado",

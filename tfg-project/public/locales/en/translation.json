@@ -21,6 +21,18 @@
         "group" : "Group",
         "subject" : "Subject"
     },
+    "makeIssue" : {
+        "title" : "Title",
+        "description" : "Description",
+        "subject" : "Subject",
+        "group" : "Lab group",
+        "availableStudents" : "Available Students",
+        "selectedStudents" : "Selected Students",
+        "fillOutForm" : "Fill out form",
+        "sendIssue" : "Send Issue",
+        "dataBlank" : "No field can be blank",
+        "studentsEmpty" : "There must be at least one student on the selected list"
+    },
     "addStudents":{
         "dataBlank" : "No field can be blank",
         "studentSaved" : "Student saved",
