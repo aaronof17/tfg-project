@@ -1,3 +1,6 @@
+import saveAs from 'file-saver';
+
+
 export async function createIssue(user,repo,title,description,token) {
   const apiUrl = 'http://localhost:4000/createIssue';
   try {
@@ -15,12 +18,10 @@ export async function createIssue(user,repo,title,description,token) {
                           })
       });
       const data = await response.json(); 
-      console.log("data ",data);
       if (!data.success) {
         console.log("An error occurred sending issue: ", data.error);
         return { response: false, error: data.error};
       } else {
-        console.log("gucci");
         return { response: true, error: ""};
       }
   } catch (error) {
@@ -75,10 +76,15 @@ export async function createCommit() {
 
 
 
-export async function downloadRepo() {
-  const apiUrl = 'http://localhost:4000/descargar';
+export async function descargar() {
   try {
-    fetch('http://localhost:4000/descargar')
+    fetch('http://localhost:4000/download/repo', {
+      method: 'POST',
+      headers: {
+          "Authorization" : "Bearer ",
+          "Content-Type": "application/json"
+      }
+    })
     .then(response => {
         // Verificar si la respuesta es correcta
         if (!response.ok) {
@@ -110,41 +116,83 @@ export async function downloadRepo() {
   }
 }
 
-// export async function downloadRepo() {
-//   const apiUrl = 'http://localhost:4000/downloadRepo';
-//   try {
-//       console.log("entra ");
-//       const response = await fetch(apiUrl, {
-//           method: 'POST',
-//           headers: {
-//               "Authorization" : "Bearer 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",
-//               "Content-Type": "application/json"
-//           }
-//       });
+export async function downloadRepo(token, repositoryURL, githubUser) {
+  const apiUrl = 'http://localhost:4000/downloadRepo';
+  let intento = 0;
+  let maximoIntento = 3;
+  while(intento < maximoIntento){
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                "Authorization" : "Bearer "+token,
+                "Content-Type": "application/json"
+            },
+            body:
+                JSON.stringify({repo: repositoryURL,
+                                user: githubUser
+                              })
+        });
 
-//       const data = await response.json(); 
-//       if (!data.success) {
-//         console.log("An error occurred downloading repository: ", data.error);
-//         return { response: false, error: data.error};
-//       } else {
-//           console.log("Datos recibidos:", data); // Aquí puedes acceder a los datos
-//           descargarArchivo(data.data);
-//       }
+        const data = await response.json(); 
+        if (!data.success) {
+          console.log("An error occurred downloading repository: ", data.error);
+          return { response: false, error: data.error};
+        } else {
+          await descargarArchivo(data.data);
+          return { response: true, error: ""};
+        }
+    } catch (error) {
+        console.error("Error downloading ",error);
+        intento++;
+    }
+  }
+}
+
+
+async function descargarArchivo(url) {
+  const enlace = document.createElement('a');
+  enlace.href = url;
+  enlace.click();
+}
+
+
+async function downloadFileFromLink(url) {
+  try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      saveAs(blob, 'downloaded_file.zip'); // Set a filename
+  } catch (error) {
+      console.error('Download error:', error);
+      // Handle the error
+  }
+}
+
+
+// async function descargarArchivod(url) {
+//   try {
+//     const respuesta = await fetch(urls);
+//     const blob = await respuesta.blob();
+//     const nombreArchivo = obtenerNombreArchivoDesdeURL(url);
+//     descargarBlobComoArchivo(blob, nombreArchivo);
 //   } catch (error) {
-//       console.error(error);
-//       // Maneja errores aquí
+//     console.error(`Error al descargar el archivo ${url}:`, error);
 //   }
 // }
 
+function obtenerNombreArchivoDesdeURL(url) {
+  // Lógica para extraer el nombre del archivo de la URL, por ejemplo:
+  const partesURL = url.split('/');
+  return partesURL[partesURL.length - 1];
+}
 
-
-function descargarArchivo(url) {
-  var nombreArchivo = "nuevo_nombre_archivo.zip"; // El nuevo nombre de archivo que deseas
-  
-  var enlace = document.createElement('a');
+// Función para descargar un blob como archivo
+function descargarBlobComoArchivo(blob, nombreArchivo) {
+  const url = window.URL.createObjectURL(new Blob([blob]));
+  const enlace = document.createElement('a');
   enlace.href = url;
-  enlace.download = nombreArchivo;
-
-  // Simular clic en el enlace
+  enlace.setAttribute('download', nombreArchivo);
+  document.body.appendChild(enlace);
   enlace.click();
+  document.body.removeChild(enlace);
 }

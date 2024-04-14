@@ -55,7 +55,7 @@ function getTeacherToken(req,res) {
 
 function getStudentsByTeacher(req,res) {
     const sql = "SELECT DISTINCT s.studentsID, s.name, "+
-                "s.email, s.githubuser, e.repositoryURL " +
+                "s.email, s.githubuser, e.repositoryURL, g.name as labgroup " +
                 "FROM students s " +
                 "JOIN enrolled e ON s.studentsID = e.studentFK "+
                 "JOIN labgroups g ON e.labgroupFK = g.idlabgroup "+
@@ -73,24 +73,82 @@ function getStudentsByTeacher(req,res) {
 }
 
 
-function getStudentsByGroup(req,res) {
+function getStudentsBySubject(req,res) {
     const sql = "SELECT DISTINCT s.studentsID, s.name, "+
-                "s.email, s.githubuser, e.repositoryURL " +
+                "s.email, s.githubuser, e.repositoryURL, g.name as labgroup " +
                 "FROM students s " +
                 "JOIN enrolled e ON s.studentsID = e.studentFK "+
                 "JOIN labgroups g ON e.labgroupFK = g.idlabgroup "+
                 "JOIN teachers t ON g.teacherIDFK = t.teacherID "+
-                "WHERE t.teacherID = ? and g.name = ?";
-    const params = [req.body.teacherID, req.body.actualWork];
+                "WHERE t.teacherID = ? and g.subject = ?";
+    const params = [req.body.teacherID, req.body.subject];
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting students for work: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting students by subject: '+ err.sqlMessage});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
     })
 }
+
+
+function getStudentsByGroup(req,res) {
+    const sql = "SELECT DISTINCT s.studentsID, s.name, "+
+                "s.email, s.githubuser, e.repositoryURL, g.name as labgroup " +
+                "FROM students s " +
+                "JOIN enrolled e ON s.studentsID = e.studentFK "+
+                "JOIN labgroups g ON e.labgroupFK = g.idlabgroup "+
+                "JOIN teachers t ON g.teacherIDFK = t.teacherID "+
+                "WHERE t.teacherID = ? and g.name = ?";
+    const params = [req.body.teacherID, req.body.group];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting students by group: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+function getStudentsByTeacherWithoutRepo(req,res) {
+    const sql = "SELECT DISTINCT s.studentsID, s.name, "+
+                "s.email, s.githubuser " +
+                "FROM students s " +
+                "JOIN enrolled e ON s.studentsID = e.studentFK "+
+                "JOIN labgroups g ON e.labgroupFK = g.idlabgroup "+
+                "JOIN teachers t ON g.teacherIDFK = t.teacherID "+
+                "WHERE t.teacherID = ?";
+    const params = [req.body.teacherID];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting students for teacher: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+// function getStudentsByGroup(req,res) {
+//     const sql = "SELECT DISTINCT s.studentsID, s.name, "+
+//                 "s.email, s.githubuser, e.repositoryURL " +
+//                 "FROM students s " +
+//                 "JOIN enrolled e ON s.studentsID = e.studentFK "+
+//                 "JOIN labgroups g ON e.labgroupFK = g.idlabgroup "+
+//                 "JOIN teachers t ON g.teacherIDFK = t.teacherID "+
+//                 "WHERE t.teacherID = ? and g.name = ?";
+//     const params = [req.body.teacherID, req.body.actualWork];
+//     connection.query(sql, params,(err, data) =>{
+//         if(err){
+//             console.log(err);
+//             return res.status(500).json({ success: false, error: 'Error getting students for work: '+ err.sqlMessage});
+//         } else {
+//             return res.status(200).json({ success: true, data: data });
+//         }
+//     })
+// }
 
 function insertStudent(req,res) {
     const sql = 'INSERT INTO students (name, email, githubuser) VALUES (?,?,?)';
@@ -99,6 +157,19 @@ function insertStudent(req,res) {
         if(err){
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error saving student: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+function deleteStudent(req,res) {
+    const sql = 'delete from students where email=?';
+    const params = [req.body.email];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error deleting student: '+ err.sqlMessage});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -324,4 +395,4 @@ function editMark(req,res){
 }
 
 
-module.exports = {connection, getIdFromGroupsByName, getIdByEmail, editMark, getMarkByWorkAndStudent, getTeacherToken, getTeachers, updateTeacherToken, insertEnrolled, getSubjectsByTeacherId, getGroupsBySubject, getGroupsByTeacherId, getTeacherId, insertMark, getWorkByStudent, deleteWork, getWorksByTeacherId, insertWork, editWork, insertStudent, getStudentsByGroup, getStudentsByTeacher};
+module.exports = {connection, getIdFromGroupsByName, getIdByEmail, editMark, getMarkByWorkAndStudent, getTeacherToken, deleteStudent, getTeachers, getStudentsByTeacherWithoutRepo, updateTeacherToken, insertEnrolled, getSubjectsByTeacherId, getGroupsBySubject, getGroupsByTeacherId, getTeacherId, insertMark, getWorkByStudent, deleteWork, getStudentsBySubject, getWorksByTeacherId, insertWork, editWork, insertStudent, getStudentsByGroup, getStudentsByTeacher};

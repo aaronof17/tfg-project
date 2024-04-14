@@ -36,9 +36,9 @@ function AddStudents({userData}) {
 
     useEffect(() => {
         const fetchInfo = async () => {
-            //const id = await getTeacherId(setTeacherID,userData.html_url);
-            //getLabGroups(setLabGroups,id);
-            //getSubjectsFromGroup(setSubjects,id);
+            const id = await getTeacherId(setTeacherID,userData.html_url);
+            getLabGroups(setLabGroups,id);
+            getSubjectsFromGroup(setSubjects,id);
         };
     
         fetchInfo();

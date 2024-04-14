@@ -3,6 +3,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const databaseRequests = require('./databaseRequests');
 const githubRequests = require('./githubRequests.js');
+const fetch = (...args) =>
+import('node-fetch').then(({default: fetch}) => fetch(...args));
+
+
 
 const app = express();
 const CLIENT_ID = "b771595a6c15c6653d02";
@@ -45,6 +49,16 @@ app.post('/students/teacher', async function (req, res) {
     return result;
 });
 
+app.post('/students/teacher/subject', async function (req, res) {
+    const result = await databaseRequests.getStudentsBySubject(req,res);
+    return result;
+});
+
+app.post('/students/teacher/repo', async function (req, res) {
+    const result = await databaseRequests.getStudentsByTeacherWithoutRepo(req,res);
+    return result;
+});
+
 app.post('/students/work', async function (req, res) {
     const result = await databaseRequests.getStudentsByGroup(req,res);
     return result;
@@ -52,6 +66,11 @@ app.post('/students/work', async function (req, res) {
 
 app.post('/students/save', async function (req, res) {
     const result = await databaseRequests.insertStudent(req,res);
+    return result;
+});
+
+app.post('/students/delete', async function (req, res) {
+    const result = await databaseRequests.deleteStudent(req,res);
     return result;
 });
 
@@ -88,8 +107,6 @@ app.post('/works/student', async function (req, res) {
     const result = await databaseRequests.getWorkByStudent(req,res);
     return result;
 });
-
-
 
 app.post('/marks/save', async function (req, res) {
     const result = await databaseRequests.insertMark(req,res);
@@ -159,12 +176,14 @@ app.post('/createIssue', async function  (req, res){
         const result = await githubRequests.createIssue(req, res);
         return res.status(200).json({ success: true, data: result });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ success: false, error: 'Error en el servidor al intentar enviar una issue' });
+        if(error.message === 'Error: Unauthorized'){
+            return res.status(401).json({ success: false, error: 'Unauthorized' });
+        }
+        return res.status(500).json({ success: false, error: error });
     }
 });
 
-app.get('/descargar', (req, res) => {
+app.get('/download/repo', (req, res) => {
     const archivo = 'https://codeload.github.com/AaronOF27/prueba/legacy.zip/refs/heads/main?token=AYMUKH7IDTJFFK5IOMWUQSTGC7EC6'; // Ruta del archivo que deseas descargar
     const nombreArchivo = 'nombre_archivo.zip'; // Nombre deseado para el archivo descargado
     res.download(archivo, nombreArchivo);
@@ -194,8 +213,10 @@ app.post('/downloadRepo', async function  (req, res){
         const result = await githubRequests.downloadRepo(req, res);
         return res.status(200).json({ success: true, data: result });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ success: false, error: 'Error en el servidor la intentar descargar el repositorio' });
+        if(error.message === 'Error: Unauthorized'){
+            return res.status(401).json({ success: false, error: 'Unauthorized' });
+        }
+        return res.status(500).json({ success: false, error: error });
     }
 });
 
@@ -458,9 +479,9 @@ async function leerDirectorioRecursivo(directorioRepo,directorio) {
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
-    // databaseRequests.connection.connect(function(err){
-    //     if(err) throw err;
-    //     console.log("Database Connected");
-    // }
-    // );
+    databaseRequests.connection.connect(function(err){
+        if(err) throw err;
+        console.log("Database Connected");
+    }
+    );
 });

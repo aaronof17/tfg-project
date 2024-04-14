@@ -12,17 +12,14 @@ function SelectableList({ availableStudents, setAvailableStudents, selectedStude
     const [t] = useTranslation();
 
     const handleToggleSelect = (student) => {
-        // Verificar si el estudiante ya está seleccionado
-        const isSelected = selectedStudents.some((s) => s.id === student.id);
+        const isSelected = selectedStudents.some((s) => (s.name+"-"+s.labgroup) === (student.name+"-"+student.labgroup));
 
         if (isSelected) {
-            // Si el estudiante está seleccionado, se deselecciona
-            setSelectedStudents(selectedStudents.filter((s) => s.id !== student.id));
+            setSelectedStudents(selectedStudents.filter((s) => (s.name+"-"+s.labgroup)!== (student.name+"-"+student.labgroup)));
             setAvailableStudents([...availableStudents, student]);
         } else {
-            // Si el estudiante no está seleccionado, se selecciona
             setSelectedStudents([...selectedStudents, student]);
-            setAvailableStudents(availableStudents.filter((s) => s.id !== student.id));
+            setAvailableStudents(availableStudents.filter((s) => (s.name+"-"+s.labgroup) !== (student.name+"-"+student.labgroup)));
         }
     };
 
@@ -39,18 +36,18 @@ function SelectableList({ availableStudents, setAvailableStudents, selectedStude
     return (
         <div className='selectable-lists-container'>
             <div className="selectable-list-container">
-            <h2>Estudiantes Disponibles</h2>
+            <h2>{t('makeIssue.availableStudents')}</h2>
                 <div className="selectable-list"  style={{ maxHeight: '300px', overflowY: 'auto' }}>
                     <ul>
                         {availableStudents.map((student) => (
-                            <li key={student.id}>
-                                {student.name}
+                            <li key={student.name+"-"+student.labgroup}>
+                                {student.name+"-"+student.labgroup}
                                 <IconButton 
                                     aria-label="move-right" 
                                     className="move-right"
                                     onClick={() => handleToggleSelect(student)}
                                 >
-                                    {selectedStudents.some((s) => s.id === student.id) ? <ArrowBackIcon/> : <ArrowForwardIcon/>}
+                                    {selectedStudents.some((s) => (s.name+"-"+s.labgroup) === (student.name+"-"+student.labgroup)) ? <ArrowBackIcon/> : <ArrowForwardIcon/>}
                                 </IconButton>
                             </li>
                         ))}
@@ -74,18 +71,18 @@ function SelectableList({ availableStudents, setAvailableStudents, selectedStude
                 </IconButton>
             </div>
             <div className="selectable-list-container">
-                <h2>Estudiantes Seleccionados</h2>
+                <h2>{t('makeIssue.selectedStudents')}</h2>
                 <div className="selectable-list"  style={{ maxHeight: '300px', overflowY: 'auto' }}>
                     <ul>
                         {selectedStudents.map((student) => (
-                            <li key={student.id}>
-                                {student.name}
+                            <li key={student.name+"-"+student.labgroup}>
+                                {student.name+"-"+student.labgroup}
                                 <IconButton 
                                     aria-label="move-left" 
                                     className="move-left"
                                     onClick={() => handleToggleSelect(student)}
                                 >
-                                    {selectedStudents.some((s) => s.id === student.id) ? <ArrowBackIcon/> : <ArrowForwardIcon/>}
+                                    {selectedStudents.some((s) => (s.name+"-"+s.labgroup) === (student.name+"-"+student.labgroup)) ? <ArrowBackIcon/> : <ArrowForwardIcon/>}
                                 </IconButton>
                             </li>
                         ))}

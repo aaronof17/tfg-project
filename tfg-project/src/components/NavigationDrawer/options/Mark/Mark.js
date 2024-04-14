@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react';
 import { useTranslation } from "react-i18next";
 
 import {getLabWorks,getWorksByStudent } from "../../../../repositories/labWorkRepository.js";
-import {getStudents,getStudentsByWork} from "../../../../repositories/studentRepository.js";
+import {getStudentsWithoutRepo,getStudentsByWork} from "../../../../repositories/studentRepository.js";
 import {getTeacherId} from "../../../../repositories/teacherRepository.js";
 import {saveMark,getMarkByWorkAndStudent,editMark } from "../../../../repositories/markRepository.js";
 import {getInfoFromFilterMark} from "../../../../functions/genericFunctions.js";
@@ -34,7 +34,7 @@ function Mark({userData}){
         const fetchInfo = async () => {
             const id = await getTeacherId(setTeacherID,userData.html_url);
             getLabWorks(setLabWorks,id);
-            getStudents(setStudents,id);
+            getStudentsWithoutRepo(setStudents,id);
         };
     
         fetchInfo();
@@ -77,7 +77,7 @@ function Mark({userData}){
             fetchFilterStudents();
         }else{
           const fetchAllStudents = async () => {
-            getStudents(setStudents,teacherID);
+            getStudentsWithoutRepo(setStudents,teacherID);
           };
           setActualWork("");
           fetchAllStudents();

@@ -14,16 +14,62 @@ export async function getStudents(callback, teacherID) {
         })
 
         const data = await response.json();
+        console.log("Students ",data.data);
         callback(data.data);
+        return data.data;
       } catch (error) {
         console.error('Error getting students:', error);
       }
 }
+
+export async function getStudentsBySubject(teacherID, subject) {
+  try {
+      const response = await fetch('http://localhost:4000/students/teacher/subject', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ teacherID: teacherID,
+                              subject:subject})
+      })
+
+      const data = await response.json();
+      return data.data;
+    } catch (error) {
+      console.error('Error getting students by subject:', error);
+    }
+}
+
+
+
+export async function getStudentsWithoutRepo(callback, teacherID) {
+  try {
+      const response = await fetch('http://localhost:4000/students/teacher/repo', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ teacherID: teacherID})
+
+      })
+
+      const data = await response.json();
+      console.log("students ",data.data);
+      callback(data.data);
+    } catch (error) {
+      console.error('Error getting students:', error);
+    }
+}
+
   
 
-export async function getStudentsByWork(actualWork, callback, teacherID) {
+export async function getStudentsByWork(group, callback, teacherID) {
     try {
-        console.log(actualWork);
+      console.log("grupo", group);
         const response = await fetch('http://localhost:4000/students/work', {
             method: "POST",
             headers: {
@@ -32,12 +78,13 @@ export async function getStudentsByWork(actualWork, callback, teacherID) {
             },
             body:
                 JSON.stringify({ teacherID: teacherID,
-                            actualWork: actualWork})
+                            group: group})
 
         })
 
         const data = await response.json();
         callback(data.data);
+        return data.data;
       } catch (error) {
         console.error('Error getting students by work:', error);
       }
@@ -76,6 +123,33 @@ export async function saveStudent(name, email, user, repository, groupId) {
       }
   } catch (error) {
       return { response: false, error: "Sorry, an error occurred saving student"};
+  }
+}
+
+
+export async function deleteStudent(email) {
+  try {
+
+    const response = await fetch('http://localhost:4000/students/delete', {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+          "Content-Type": "application/json"
+        },
+        body:
+            JSON.stringify({email: email})
+      });
+    
+      const data = await response.json(); 
+
+      if(!data.success){
+        console.log("An error occurred deleting student: ", data.error);
+        return { response: false, error: data.error};
+      }
+      return { response: true, error: ""};
+
+  } catch (error) {
+      return { response: false, error: "Sorry, an error occurred deleting student"};
   }
 }
 

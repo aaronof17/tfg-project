@@ -32,6 +32,7 @@ export async function getSubjectsFromGroup(callback, teacherID) {
         })
 
         const data = await response.json();
+        console.log("asignaturas ",data.data);
         callback(data.data);
       } catch (error) {
         console.error('Error getting subjects:', error);

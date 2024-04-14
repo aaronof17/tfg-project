@@ -7,12 +7,14 @@ export function getJSON(yourUrl){
     return Httpreq.responseText;          
 }
 
-export function calculateWidth(list, lower=false){
+export function calculateWidth(list, uppercase=false, itsURL=false){
     const longestOption = Math.max(...list.map(option => option.length));
-    console.log("lista ",longestOption);
-    const approximateCharWidth = 9; 
-    if(lower){
+    let approximateCharWidth = 9; 
+    if(uppercase){
         return longestOption * approximateCharWidth * 2;
+    }else if(itsURL){
+        approximateCharWidth = 5;
+        return longestOption * approximateCharWidth;
     }else{
         return longestOption * approximateCharWidth;
     }
@@ -67,3 +69,22 @@ export function getInfoFromFilterMark(str) {
     var segundaCadena = partes[1].trim();
     return segundaCadena;
 }
+
+
+export function getRepositoryName(url) {
+    const partes = url.split('/');
+    console.log("repositorio ",partes[partes.length - 1]);
+    return partes[partes.length - 1];
+}
+
+
+export function getSubjectsForComboBox(subjects) {
+    let options = [];
+    if(subjects != undefined){
+        subjects.map((subject,index) => {
+            options[index] = subject.subject;
+      });
+    }     
+    return options;
+}
+    

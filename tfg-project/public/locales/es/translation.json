@@ -20,7 +20,19 @@
         "email" : "Email",
         "githubprofile" : "Perfil de GitHub",
         "group" : "Grupo",
-        "subject" : "Asignatura"
+        "subject" : "Asignatura",
+        "actions" :"Acciones",
+        "edit" : "Editar",
+        "delete" : "Eliminar",
+        "studentsBlank" : "Selecciona al menos un estudiante",
+        "downloadRepo" : "Descargar repositorios",
+        "tokenError" : "Hubo un problema con tu token, puede que no sea correcto o esté caducado",
+        "downloadError" : "Hubo un problema descargando los archivos",
+        "deleteStudent": "Vas a eliminar a un estudiante",
+        "errorDeletingStudent" : "Ha ocurrido un error eliminando al estudiante",
+        "studentInfo" : "Ten en cuenta que toda la información relacionada con él desaparecerá",
+        "studentDeleted" : "Estudiante eliminado"
+
     },
     "makeIssue" : {
         "title" : "Título",
@@ -32,7 +44,12 @@
         "fillOutForm" : "Rellenar Formulario",
         "sendIssue" : "Enviar Issue",
         "dataBlank" : "Rellena todos los campos del formulario",
-        "studentsEmpty" : "Debe haber al menos un alumno en la lista de seleccionados"
+        "studentsEmpty" : "Debe haber al menos un alumno en la lista de seleccionados",
+        "tokenEmpty" : "Porfavor, introduce tu token de GitHub en tu perfil",
+        "issueSended" : "Issue enviada",
+        "issueErrorSendStudent" : "Hubo un error enviando la issue para ",
+        "issueErrorSend" : "Hubo un error enviando la issue",
+        "tokenError" : "Hubo un problema con tu token, puede que no sea correcto o esté caducado"
     },
     "addStudents":{
         "dataBlank" : "Ningún campo puede estar vacío",

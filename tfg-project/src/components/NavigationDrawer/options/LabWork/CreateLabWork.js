@@ -6,6 +6,7 @@ import {useTranslation} from "react-i18next";
 import {getLabGroups,getSubjectsFromGroup,getLabGroupsBySubject} from "../../../../repositories/labGroupRepository.js";
 import {getTeacherId} from "../../../../repositories/teacherRepository.js";
 import {saveWorks} from "../../../../repositories/labWorkRepository.js";
+import {getSubjectsForComboBox} from "../../../../functions/genericFunctions.js";
 import GroupTable from "./GroupTable.js";
 import InfoWork from "./InfoWork.js";
 import Autocomplete from '@mui/material/Autocomplete';
@@ -38,17 +39,6 @@ function CreateLabWork({userData}) {
     
         fetchGroups();
       }, []);
-
-      const getSubjects= () =>{
-        let options = [];
-        if(subjects != undefined){
-            subjects.map((subject,index) => {
-                options[index] = subject.subject;
-          });
-        }     
-        return options;
-      }
-
 
       function saveLabWorks(){
         if(title === "" || description === "" || percentage === "" || isNaN(percentage)){
@@ -105,7 +95,7 @@ function CreateLabWork({userData}) {
             <Autocomplete
                 disablePortal
                 id="subject-combo-box"
-                options={getSubjects()}
+                options={getSubjectsForComboBox(subjects)}
                 renderInput={(params) => <TextField {...params} label={t('createLabWork.subjectFilter')} />}
                 onChange={handleSubjectChange}
             />

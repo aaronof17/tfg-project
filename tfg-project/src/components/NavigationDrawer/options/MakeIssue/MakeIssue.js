@@ -2,80 +2,124 @@ import * as React from 'react';
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 
-import studentsData from "../students.json";
 import SelectableList from "./SelectableList.js";
-import {calculateWidth} from "../../../../functions/genericFunctions.js";
 import {createIssue} from "../../../../functions/gitHubFunctions.js";
+import {getLabGroups,getSubjectsFromGroup, getLabGroupsBySubject} from "../../../../repositories/labGroupRepository.js";
+import {getStudents, getStudentsBySubject, getStudentsByWork} from "../../../../repositories/studentRepository.js";
+import {getTeacherId, getTeacherToken} from "../../../../repositories/teacherRepository.js";
+import {getSubjectsForComboBox,getRepositoryName} from "../../../../functions/genericFunctions.js";
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import {toast} from "react-toastify";
 
-
 import './MakeIssue.css';
 import CreateIssueModal from './CreateIssueModal.js';
 
-function MakeIssue() {
+function MakeIssue({userData}) {
 
-  const [students, setStudents] = useState( );
+  const [groups, setLabGroups] = useState();
+  const [subjects, setSubjects] = useState();
+  const [teacherID, setTeacherID] = useState("");
   const [t] = useTranslation();
-  const [availableStudents, setAvailableStudents] = useState([
-    { id: 1, name: 'Estudiante 1' },
-    { id: 2, name: 'Estudiante 2' },
-    { id: 3, name: 'Estudiante 3' },
-    { id: 4, name: 'Estudiante 4' },
-    { id: 5, name: 'Estudiante 5' },
-    { id: 6, name: 'Estudiante 6' },
-    { id: 7, name: 'Estudiante 7' },
-    { id: 8, name: 'Estudiante 8' },
-    { id: 9, name: 'Estudiante 9' },
-  ]);
+  const [availableStudents, setAvailableStudents] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [teacherToken, setTeacherToken] = useState("");
 
   useEffect(() => {
-    // const fetchInfo = async () => {
-    //     const id = await getTeacherId(setTeacherID,userData.html_url);
-    //     getLabWorks(setLabWorks,id);
-    //     getStudents(setStudents,id);
-    // };
+    const fetchInfo = async () => {
+        const id = await getTeacherId(setTeacherID,userData.html_url);
+        getLabGroups(setLabGroups,id);
+        getSubjectsFromGroup(setSubjects,id);
+        getStudents(setAvailableStudents,id);
+        getTeacherToken(setTeacherToken,id);
+    };
 
-    // fetchInfo();
+    fetchInfo();
   }, []);
 
-  const getStudents= () =>{
-    let options = [];
-    if(students != undefined){
-      students.map((student,index) => {
-      
-        options[index] = student.name;
 
-      });
-    }     
+  const handleSubjectChange = (e, selectedOption) => {
+    if (selectedOption) {
+        const fetchFilterStudents = async () => {
+            getLabGroupsBySubject(selectedOption, teacherID, setLabGroups);
+            const newStudents = await getStudentsBySubject(teacherID, selectedOption);
+            const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => existingStudent.githubuser === student.githubuser));
+            setAvailableStudents(filteredStudents);
+        };
+        fetchFilterStudents();
+    }else{
+      const fetchAllStudents = async () => {
+        getLabGroups(setLabGroups,teacherID);
+        getStudents(setAvailableStudents,teacherID).then((newStudents)=>{
+          const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => existingStudent.githubuser === student.githubuser));
+          setAvailableStudents(filteredStudents);
+        });
+      };
+      fetchAllStudents();
+    }
+  }
 
-    return options;
-
+  const handleGroupChange = (e, selectedOption) => {
+    if (selectedOption) {
+        const fetchFilterStudents = async () => {
+          getStudentsByWork(selectedOption.label, setAvailableStudents, teacherID).then((newStudents)=>{
+            const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => existingStudent.githubuser === student.githubuser));
+            setAvailableStudents(filteredStudents);
+          });
+        };
+        fetchFilterStudents();
+    }else{
+      const fetchAllStudents = async () => {
+        getStudents(setAvailableStudents,teacherID).then((newStudents)=>{
+          const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => existingStudent.githubuser === student.githubuser));
+          setAvailableStudents(filteredStudents);
+        });
+      };
+      fetchAllStudents();
+    }
   }
 
   function getIssueForm(){
-    setModalOpen(true)
+    if(selectedStudents.length > 0){
+      setModalOpen(true)
+    }else{
+      toast.error(t('makeIssue.studentsEmpty'));
+    }
+    
   }
 
-  const saveIssue = () => {
-    createIssue('AaronOF27','prueba',title,description,"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").then((res) =>{
-      if(res.response){
-        setModalOpen(false);
-        toast.info("Issue creada con éxito");
-      }else{
-        toast.error("Hubo un error");
-      }
-    });
+  const saveIssue = async () => {
+    if(teacherToken === ""){
+      toast.error(t('makeIssue.tokenEmpty'));
+    }else{
+      for (let actualStudent of selectedStudents) {
+        try {
+          await createIssue(actualStudent.githubuser,getRepositoryName(actualStudent.repositoryURL),title,description,teacherToken).then((res) =>{
+          if(res.response){
+            setModalOpen(false);
+            toast.info(t('makeIssue.issueSended'));
+          }else{
+            if(res.error === 'Unauthorized'){
+              toast.error(t('makeIssue.tokenError'));
+            }else{
+              toast.error(t('makeIssue.issueErrorSendStudent')+res.name);
+            }
+          }
+        });
+        } catch (error) {
+          toast.error(t('makeIssue.issueErrorSend')+error);
+        }
+        
+    };
+  }
   };
+  
 
 
 
@@ -89,9 +133,9 @@ return (
               <Autocomplete
                   disablePortal
                   id="subject-combo-box"
-                  options={getStudents()}
-                  renderInput={(params) => <TextField {...params} label={t('mark.labWork')} />}
-                  //onChange={handleWorkChange}
+                  options={getSubjectsForComboBox(subjects)}
+                  renderInput={(params) => <TextField {...params} label={t('makeIssue.subject')} />}
+                  onChange={handleSubjectChange}
               />
           </div>
       </Grid>
@@ -102,9 +146,9 @@ return (
               <Autocomplete
                   disablePortal
                   id="group-combo-box"
-                  options={getStudents()}
-                  renderInput={(params) => <TextField {...params} label={t('mark.students')} />}
-                  //onChange={handleStudentChange}
+                  options={groups}
+                  renderInput={(params) => <TextField {...params} label={t('makeIssue.group')} />}
+                  onChange={handleGroupChange}
               />
           </div>
       </Grid>
@@ -118,7 +162,7 @@ return (
       setSelectedStudents={setSelectedStudents}
     ></SelectableList>
     <Button variant="contained" onClick={getIssueForm}>
-            Rellenar datos
+      {t('makeIssue.fillOutForm')}
     </Button>
     {modalOpen && (
       <CreateIssueModal

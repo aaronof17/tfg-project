@@ -18,15 +18,12 @@ async function getAccessToken(code) {
 }
 
 async function createIssue(req, res) {
-    console.log("entra a la creación de issue")
-
     const userName = req.body.user;
     const repo = req.body.repo;
     const title = req.body.title;
     const description = req.body.description;
-
     const accessToken = req.get("Authorization");
-   // const createIssueUrl = 'https://api.github.com/repos/${userName}/${repoName}/issues';
+
     try{
         const createIssueUrl = "https://api.github.com/repos/"+userName+"/"+repo+"/issues";
 
@@ -44,14 +41,14 @@ async function createIssue(req, res) {
         });
 
         if (!response.ok) {
-            throw new Error(`Error al crear la issue: ${response.statusText}`);
+            throw new Error(`${response.statusText}`);
         }
 
         return response;
  
     } catch (error) {
         console.error(error);
-        throw new Error(`Error al crear la issue: ${error}`);
+        throw new Error(`${error}`);
     }
 
 }
@@ -62,8 +59,8 @@ async function getUserData(accessToken) {
 
 async function downloadRepo(req, res) {
     try {
-        const user = 'AaronOF27';
-        const repo = 'prueba';
+        const user = req.body.user;
+        const repo = req.body.repo;
 
         const githubResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/zipball`, {
             method: "GET",
@@ -71,9 +68,9 @@ async function downloadRepo(req, res) {
                 "Authorization": req.get("Authorization")
             }
         });
-
+        
         if (!githubResponse.ok) {
-            return res.status(500).json({ success: false, error: 'Error downloading github repository' });
+            throw new Error(`${githubResponse.statusText}`);
         }
 
         const url = githubResponse.url; // Obtener directamente la URL de descarga del campo 'url'
@@ -83,7 +80,7 @@ async function downloadRepo(req, res) {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error en el servidor al descarga repositorio' });
+        throw new Error(`${error}`);
     }
 }
 

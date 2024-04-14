@@ -19,7 +19,19 @@
         "email" : "Email",
         "githubprofile" : "GitHub Profile",
         "group" : "Group",
-        "subject" : "Subject"
+        "subject" : "Subject",
+        "actions" :"Actions",
+        "edit" : "Edit",
+        "delete" : "Delete",
+        "studentsBlank" : "There must be at least one student on the selected list",
+        "downloadRepo" : "Download repositories",
+        "tokenError" : "There was a problem with your token, its could be not correct or expired",
+        "downloadError" : "There was an error downloading archives",
+        "deleteStudent": "You will delete a student",
+        "studentInfo" : "All his information will be deleted too",
+        "errorDeletingStudent" : "An error ocurred deleting stundent",
+        "studentDeleted" : "Student deleted"
+
     },
     "makeIssue" : {
         "title" : "Title",
@@ -31,7 +43,13 @@
         "fillOutForm" : "Fill out form",
         "sendIssue" : "Send Issue",
         "dataBlank" : "No field can be blank",
-        "studentsEmpty" : "There must be at least one student on the selected list"
+        "studentsEmpty" : "There must be at least one student on the selected list",
+        "tokenEmpty" : "Please introduce your GitHub personal access token in your profile",
+        "issueSended" : "Issue sended",
+        "issueErrorSendStudent" : "There was an error sending issue for ",
+        "issueErrorSend" : "There was an error sending issue",
+        "tokenError" : "There was a problem with your token, its could be not correct or expired"
+
     },
     "addStudents":{
         "dataBlank" : "No field can be blank",
