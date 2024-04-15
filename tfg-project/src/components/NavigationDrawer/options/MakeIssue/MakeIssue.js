@@ -4,9 +4,9 @@ import {useTranslation} from "react-i18next";
 
 import SelectableList from "./SelectableList.js";
 import {createIssue} from "../../../../functions/gitHubFunctions.js";
-import {getLabGroups,getSubjectsFromGroup, getLabGroupsBySubject} from "../../../../repositories/labGroupRepository.js";
-import {getStudents, getStudentsBySubject, getStudentsByWork} from "../../../../repositories/studentRepository.js";
-import {getTeacherId, getTeacherToken} from "../../../../repositories/teacherRepository.js";
+import {getLabGroups,getSubjectsFromGroup, getLabGroupsBySubject} from "../../../../service/labGroupService.js";
+import {getStudents, getStudentsBySubject, getStudentsByWork} from "../../../../service/studentService.js";
+import {getTeacherId, getTeacherToken} from "../../../../service/teacherService.js";
 import {getSubjectsForComboBox,getRepositoryName} from "../../../../functions/genericFunctions.js";
 
 import TextField from '@mui/material/TextField';

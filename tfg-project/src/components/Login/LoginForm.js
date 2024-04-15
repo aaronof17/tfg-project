@@ -13,7 +13,7 @@ function Login(){
 
     const handleChangeLanguage = (lang) => {
         i18n.changeLanguage(lang);
-      }
+    }
 
 
     function loginWithGitHub(){

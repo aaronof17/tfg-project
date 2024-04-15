@@ -1,4 +1,4 @@
-import { getIdFromGroup } from "./labGroupRepository";
+import { getIdFromGroup } from "./labGroupService";
 
 
 export async function saveEnrolled(studentId, groupId, repository) {

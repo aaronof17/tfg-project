@@ -2,16 +2,26 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import {useTranslation} from "react-i18next";
+import LanguageIcon from '@mui/icons-material/Language';
 
 export default function BasicMenu() {
+
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [t,i18n] = useTranslation();
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleChangeLanguage = (lang) => {
+    i18n.changeLanguage(lang);
+  }
 
   return (
     <div>
@@ -22,7 +32,7 @@ export default function BasicMenu() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        Dashboard
+        <LanguageIcon sx={{color:'white'}}/>
       </Button>
       <Menu
         id="basic-menu"
@@ -33,9 +43,8 @@ export default function BasicMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={() =>handleChangeLanguage("es")}>Español</MenuItem>
+        <MenuItem onClick={() => handleChangeLanguage("en")}>English</MenuItem>
       </Menu>
     </div>
   );

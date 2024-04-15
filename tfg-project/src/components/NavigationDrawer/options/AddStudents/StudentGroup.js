@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
-import {getLabGroups, getLabGroupsBySubject} from "../../../../repositories/labGroupRepository.js";
+import {getLabGroups, getLabGroupsBySubject} from "../../../../services/labGroupService.js";
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';

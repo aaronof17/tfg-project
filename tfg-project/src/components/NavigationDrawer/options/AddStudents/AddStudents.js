@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
-import {getTeacherId} from "../../../../repositories/teacherRepository.js";
-import {getLabGroups,getSubjectsFromGroup} from "../../../../repositories/labGroupRepository.js";
-import {saveStudent, getIdByEmail} from "../../../../repositories/studentRepository.js";
-import {saveEnrolled} from "../../../../repositories/enrolledRepository.js";
+import {getTeacherId} from "../../../../services/teacherService.js";
+import {getLabGroups,getSubjectsFromGroup} from "../../../../services/labGroupService.js";
+import {saveStudent, getIdByEmail} from "../../../../services/studentService.js";
+import {saveEnrolled} from "../../../../services/enrolledService.js";
 import {toast} from "react-toastify";
 
 import StudentInfo from './StudentInfo.js';

@@ -184,7 +184,7 @@ function ResponsiveDrawer(props) {
         {drawerOptions.map((text, index) => (
           <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon sx={{ color: 'white' }}>
                 {
                 iconSelecter(index)
                 }
@@ -198,7 +198,7 @@ function ResponsiveDrawer(props) {
       <List>
         <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(6)}>
           <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon sx={{ color: 'white' }}>
                 {
                 iconSelecter(6)
                 }
@@ -236,7 +236,8 @@ function ResponsiveDrawer(props) {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth,
+            backgroundColor: '#5D6363', color: 'white'}
           }}
         >
           {drawer}
@@ -245,7 +246,8 @@ function ResponsiveDrawer(props) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, 
+            backgroundColor: '#5D6363', color: 'white'},
           }}
           open
         >
@@ -255,7 +257,7 @@ function ResponsiveDrawer(props) {
       <Box
       className="views"
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` },  }}
       >
         {views[currentView]} 
        </Box>

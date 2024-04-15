@@ -42,37 +42,6 @@ function App() {
   const rerenderPass = () => {
     setRerender(!rerender);
   }
-
-
-
-  // async function createIssue() {
-  //   const octokit = new Octokit({
-  //     auth: 'YOUR-TOKEN'
-  //   })
-
-  //   try{
-  //     await fetch( "http://localhost:4000/createIssue", {
-  //       method: "POST",
-  //         headers: {
-  //             "Authorization" : "Bearer "+ localStorage.getItem("accessToken"),
-  //             "Content-Type": "application/json"
-  //           },
-  //         body: JSON.stringify({
-  //           repoName: "demo1",
-  //           userName: "aaronof17"
-  //         })
-  //     }).then((response) => {       
-  //       console.log(response);
-  //        return response;
-  //     }).then((data) => {
-  //         setUserData(data);
-  //     })
-  //   }catch(err){
-  //     console.error("Error creating issue:", err.message);
-  //   }
-    
-  // }
-
  
 
   return (
