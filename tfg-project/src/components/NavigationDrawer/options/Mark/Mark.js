@@ -2,10 +2,10 @@ import * as React from 'react';
 import { useState, useEffect} from 'react';
 import { useTranslation } from "react-i18next";
 
-import {getLabWorks,getWorksByStudent } from "../../../../repositories/labWorkRepository.js";
-import {getStudentsWithoutRepo,getStudentsByWork} from "../../../../repositories/studentRepository.js";
-import {getTeacherId} from "../../../../repositories/teacherRepository.js";
-import {saveMark,getMarkByWorkAndStudent,editMark } from "../../../../repositories/markRepository.js";
+import {getLabWorks,getWorksByStudent } from "../../../../services/labWorkService.js";
+import {getStudentsWithoutRepo,getStudentsByWork} from "../../../../services/studentService.js";
+import {getTeacherId} from "../../../../services/teacherService.js";
+import {saveMark,getMarkByWorkAndStudent,editMark } from "../../../../services/markService.js";
 import {getInfoFromFilterMark} from "../../../../functions/genericFunctions.js";
 
 import './Mark.css';

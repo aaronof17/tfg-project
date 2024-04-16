@@ -10,8 +10,8 @@ import Button from '@mui/material/Button';
 
 import {calculateWidth, getRepositoryName} from "../../../../functions/genericFunctions.js";
 import {downloadRepo} from "../../../../functions/gitHubFunctions.js";
-import {getStudents,deleteStudent} from "../../../../repositories/studentRepository.js";
-import {getTeacherId, getTeacherToken} from "../../../../repositories/teacherRepository.js";
+import {getStudents,deleteStudent} from "../../../../services/studentService.js";
+import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 
 import RewriteModal from '../../../Modal/RewriteModal.js';
 import './StudentsList.css';
@@ -184,8 +184,7 @@ function StudentsList({userData}) {
       
     }
 
-     
-      
+  if(studentsList.length !== 0)
   return (
     <div className="students-wrapper">
       <DataGrid
@@ -217,6 +216,12 @@ function StudentsList({userData}) {
           text2={t('studentList.studentInfo')}
         />
       )}
+    </div>
+  );
+
+  return (
+    <div className="students-wrapper">
+      <h3>{t('studentList.studentsListEmpty')}</h3>
     </div>
   );
 }

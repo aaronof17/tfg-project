@@ -5,8 +5,8 @@ import('node-fetch').then(({default: fetch}) => fetch(...args));
 const CLIENT_ID = "b771595a6c15c6653d02";
 const CLIENT_SECRET = "534c078c5dcaa7afc22d912c6aceb4bda2038b99";
 
-async function getAccessToken(code) {
-    const params = "?client_id="+ CLIENT_ID + "&client_secret="+ CLIENT_SECRET + "&code=" + code;
+async function getAccessToken(req, res) {
+    const params = "?client_id="+ CLIENT_ID + "&client_secret="+ CLIENT_SECRET + "&code=" + req.query.code;
     const response = await fetch("https://github.com/login/oauth/access_token" + params, {
         method: "POST",
         headers: {

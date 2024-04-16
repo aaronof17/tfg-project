@@ -7,8 +7,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import {ToastContainer, toast} from "react-toastify";
-import {getLabWorks, editWork, deleteWork} from "../../../../repositories/labWorkRepository.js";
-import {getTeacherId} from "../../../../repositories/teacherRepository.js";
+import {getLabWorks, editWork, deleteWork} from "../../../../services/labWorkService.js";
+import {getTeacherId} from "../../../../services/teacherService.js";
 import { formatDate } from '../../../../functions/genericFunctions.js';
 
 import './WorkList.css';

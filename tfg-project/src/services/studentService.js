@@ -1,4 +1,4 @@
-import { saveEnrolled } from "./enrolledRepository";
+import { saveEnrolled } from "./enrolledService";
 
 export async function getStudents(callback, teacherID) {
     try {
@@ -58,7 +58,7 @@ export async function getStudentsWithoutRepo(callback, teacherID) {
       })
 
       const data = await response.json();
-      console.log("students ",data.data);
+      console.log("students ", data.data);
       callback(data.data);
     } catch (error) {
       console.error('Error getting students:', error);

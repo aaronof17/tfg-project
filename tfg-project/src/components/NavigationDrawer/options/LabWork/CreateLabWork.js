@@ -3,9 +3,9 @@ import './CreateLabWork.css';
 
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
-import {getLabGroups,getSubjectsFromGroup,getLabGroupsBySubject} from "../../../../service/labGroupService.js";
-import {getTeacherId} from "../../../../service/teacherService.js";
-import {saveWorks} from "../../../../service/labWorkService.js";
+import {getLabGroups,getSubjectsFromGroup,getLabGroupsBySubject} from "../../../../services/labGroupService.js";
+import {getTeacherId} from "../../../../services/teacherService.js";
+import {saveWorks} from "../../../../services/labWorkService.js";
 import {getSubjectsForComboBox} from "../../../../functions/genericFunctions.js";
 import GroupTable from "./GroupTable.js";
 import InfoWork from "./InfoWork.js";

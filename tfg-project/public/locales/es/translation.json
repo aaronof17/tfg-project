@@ -31,7 +31,8 @@
         "deleteStudent": "Vas a eliminar a un estudiante",
         "errorDeletingStudent" : "Ha ocurrido un error eliminando al estudiante",
         "studentInfo" : "Ten en cuenta que toda la información relacionada con él desaparecerá",
-        "studentDeleted" : "Estudiante eliminado"
+        "studentDeleted" : "Estudiante eliminado",
+        "studentsListEmpty" : "Todavía no se ha añadido ningún estudiante"
 
     },
     "makeIssue" : {

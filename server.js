@@ -1,7 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const databaseRequests = require('./databaseRequests');
+//const databaseRequests = require('./databaseRequests');
+const markRequests = require('./databaseRequests/MarkRequests.js');
+const studentRequests = require('./databaseRequests/StudentRequests.js');
+const workRequests = require('./databaseRequests/WorkRequests.js');
+const groupRequests = require('./databaseRequests/LabGroupRequests.js');
+const teacherRequests = require('./databaseRequests/TeacherRequests.js');
+const enrrolledRequests = require('./databaseRequests/EnrolledRequests.js');
 const githubRequests = require('./githubRequests.js');
 const fetch = (...args) =>
 import('node-fetch').then(({default: fetch}) => fetch(...args));
@@ -21,132 +27,132 @@ const fs = require('fs');
 //BD---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 app.get('/teachers',  async function (req, res) {
-    const result = await databaseRequests.getTeachers(req,res);
+    const result = await teacherRequests.getTeachers(req,res);
     return result;
 });
 
 
 app.post('/teachers/token',  async function (req, res) {
-    const result = await databaseRequests.updateTeacherToken(req,res);
+    const result = await teacherRequests.updateTeacherToken(req,res);
     return result;
 });
 
 app.post('/teachers/token/id',  async function (req, res) {
-    const result = await databaseRequests.getTeacherToken(req,res);
+    const result = await teacherRequests.getTeacherToken(req,res);
     return result;
 });
 
 
 app.post('/teachers/id', async function (req, res) {
-    const result = await databaseRequests.getTeacherId(req,res);
+    const result = await teacherRequests.getTeacherId(req,res);
     return result;
 });
 
 
 
 app.post('/students/teacher', async function (req, res) {
-    const result = await databaseRequests.getStudentsByTeacher(req,res);
+    const result = await studentRequests.getStudentsByTeacher(req,res);
     return result;
 });
 
 app.post('/students/teacher/subject', async function (req, res) {
-    const result = await databaseRequests.getStudentsBySubject(req,res);
+    const result = await studentRequests.getStudentsBySubject(req,res);
     return result;
 });
 
 app.post('/students/teacher/repo', async function (req, res) {
-    const result = await databaseRequests.getStudentsByTeacherWithoutRepo(req,res);
+    const result = await studentRequests.getStudentsByTeacherWithoutRepo(req,res);
     return result;
 });
 
 app.post('/students/work', async function (req, res) {
-    const result = await databaseRequests.getStudentsByGroup(req,res);
+    const result = await studentRequests.getStudentsByGroup(req,res);
     return result;
 });
 
 app.post('/students/save', async function (req, res) {
-    const result = await databaseRequests.insertStudent(req,res);
+    const result = await studentRequests.insertStudent(req,res);
     return result;
 });
 
 app.post('/students/delete', async function (req, res) {
-    const result = await databaseRequests.deleteStudent(req,res);
+    const result = await studentRequests.deleteStudent(req,res);
     return result;
 });
 
 app.post('/students/email', async function (req, res) {
-    const result = await databaseRequests.getIdByEmail(req,res);
+    const result = await studentRequests.getIdByEmail(req,res);
     return result;
 });
 
 app.post('/works/save',  async function (req, res) {
-    const result = await databaseRequests.insertWork(req,res);
+    const result = await workRequests.insertWork(req,res);
     return result;
 });
 
 
 app.post('/works/edit', async function (req, res) {
-    const result = await databaseRequests.editWork(req,res);
+    const result = await workRequests.editWork(req,res);
     return result;
 });
 
 
 app.post('/works/delete', async function (req, res) {
-    const result = await databaseRequests.deleteWork(req,res);
+    const result = await workRequests.deleteWork(req,res);
     return result;
 });
 
 
 app.post('/works', async function (req, res) {
-    const result = await databaseRequests.getWorksByTeacherId(req,res);
+    const result = await workRequests.getWorksByTeacherId(req,res);
     return result;
 });
 
 
 app.post('/works/student', async function (req, res) {
-    const result = await databaseRequests.getWorkByStudent(req,res);
+    const result = await workRequests.getWorkByStudent(req,res);
     return result;
 });
 
 app.post('/marks/save', async function (req, res) {
-    const result = await databaseRequests.insertMark(req,res);
+    const result = await markRequests.insertMark(req,res);
     return result;
 });
 
 app.post('/marks/edit', async function (req, res) {
-    const result = await databaseRequests.editMark(req,res);
+    const result = await markRequests.editMark(req,res);
     return result;
 });
 
 app.post('/marks/work/student', async function (req, res) {
-    const result = await databaseRequests.getMarkByWorkAndStudent(req,res);
+    const result = await markRequests.getMarkByWorkAndStudent(req,res);
     return result;
 });
 
 app.post('/groups/subject', async function (req, res) {
-    const result = await databaseRequests.getGroupsBySubject(req,res);
+    const result = await groupRequests.getGroupsBySubject(req,res);
     return result;
 });
 
 app.post('/groups/name', async function (req, res) {
-    const result = await databaseRequests.getIdFromGroupsByName(req,res);
+    const result = await groupRequests.getIdFromGroupsByName(req,res);
     return result;
 });
 
 app.post('/labGroups', async function (req, res) {
-    const result = await databaseRequests.getGroupsByTeacherId(req,res);
+    const result = await groupRequests.getGroupsByTeacherId(req,res);
     return result;
 });
 
 
 app.post('/subjects', async function (req, res) {
-    const result = await databaseRequests.getSubjectsByTeacherId(req,res);
+    const result = await groupRequests.getSubjectsByTeacherId(req,res);
     return result;
 });
 
 
 app.post('/enrolled/save', async function (req, res) {
-    const result = await databaseRequests.insertEnrolled(req,res);
+    const result = await enrrolledRequests.insertEnrolled(req,res);
     return result;
 });
 
@@ -155,19 +161,24 @@ app.post('/enrolled/save', async function (req, res) {
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 app.get('/getAccessToken', async function (req,res){
-    
-    const params = "?client_id="+ CLIENT_ID + "&client_secret="+ CLIENT_SECRET + "&code=" + req.query.code;
-    await fetch("https://github.com/login/oauth/access_token" + params, {
-        method: "POST",
-        headers: {
-            "Accept" : "application/json"
-        }
-    }).then((response) => {
-        return response.json();
-    }).then((data) => {
-        console.log(data);
-        res.json(data);
-    }) 
+    try {
+        const result = await githubRequests.getAccessToken(req, res);
+        return res.status(200).json({ success: true, data: result });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error });
+    }
+    // const params = "?client_id="+ CLIENT_ID + "&client_secret="+ CLIENT_SECRET + "&code=" + req.query.code;
+    // await fetch("https://github.com/login/oauth/access_token" + params, {
+    //     method: "POST",
+    //     headers: {
+    //         "Accept" : "application/json"
+    //     }
+    // }).then((response) => {
+    //     return response.json();
+    // }).then((data) => {
+    //     console.log(data);
+    //     res.json(data);
+    // }) 
 }); 
 
 

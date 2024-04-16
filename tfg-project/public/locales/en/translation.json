@@ -30,7 +30,8 @@
         "deleteStudent": "You will delete a student",
         "studentInfo" : "All his information will be deleted too",
         "errorDeletingStudent" : "An error ocurred deleting stundent",
-        "studentDeleted" : "Student deleted"
+        "studentDeleted" : "Student deleted",
+        "studentsListEmpty" : "There are no students yet"
 
     },
     "makeIssue" : {

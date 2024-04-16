@@ -12,7 +12,7 @@ import Link from '@mui/material/Link';
 import PopupInfo from './PopUpInfo.js';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
-import {saveTeacherToken} from "../../../../repositories/teacherRepository.js";
+import {saveTeacherToken} from "../../../../services/teacherService.js";
 
 /**
  * Component for the Profile View 
@@ -120,6 +120,8 @@ function ProfileView() {
             label={t('userProfile.nameLabel')}
             value={getName()}
             style={estiloTextField}
+            InputLabelProps={{ style: { color: 'black' } }}
+            
           />
         </div>
         <div className="textField">
@@ -129,6 +131,8 @@ function ProfileView() {
             label={t('userProfile.email')}
             value={"example@email.com"}
             style={estiloTextField}
+            InputLabelProps={{ style: { color: 'black' } }}
+
           />
         </div>
         <div className="textField" style={{"display": "flex"}}>
@@ -139,6 +143,8 @@ function ProfileView() {
               label={t('userProfile.token')}
               type="password"
               onChange={handleTokenChange} 
+              InputLabelProps={{ style: { color: 'black' } }}
+
             />
             <PopupInfo></PopupInfo>
           </div>

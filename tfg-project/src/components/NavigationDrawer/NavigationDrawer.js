@@ -27,6 +27,7 @@ import {useTranslation} from "react-i18next";
 import {ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
+import { getUserData } from '../../functions/gitHubFunctions.js';
 import StudentsList from './options/StudentsList/StudentsList.js';
 import MakeIssue from './options/MakeIssue/MakeIssue';
 import ProfileView from './options/ProfileView/ProfileView.js';
@@ -52,7 +53,7 @@ function ResponsiveDrawer(props) {
   const views = [<FirstView />, <SecondView />, <ThirdView/>, <FourthView/>, <FifthView/>, <SixthView/>, <SeventhView/>];
 
   useEffect(() => {
-    getUserData();
+    getUserData(setUserData);
     }, []);
 
     function FirstView() {
@@ -161,19 +162,19 @@ function ResponsiveDrawer(props) {
 
 
 
-  async function getUserData() {
-    await fetch( "http://localhost:4000/getUserData", {
-      method: "GET",
-        headers: {
-            "Authorization" : "Bearer "+ localStorage.getItem("accessToken")
-        }
-    }).then((response) => {       
-       return response.json();
-    }).then((data) => {
-      console.log(data);
-        setUserData(data);
-    })
-  }
+  // async function getUserData() {
+  //   await fetch( "http://localhost:4000/getUserData", {
+  //     method: "GET",
+  //       headers: {
+  //           "Authorization" : "Bearer "+ localStorage.getItem("accessToken")
+  //       }
+  //   }).then((response) => {       
+  //      return response.json();
+  //   }).then((data) => {
+  //     console.log("aqui aqui ",data);
+  //       setUserData(data);
+  //   })
+  // }
   
   
 

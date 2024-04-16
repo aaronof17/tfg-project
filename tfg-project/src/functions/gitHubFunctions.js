@@ -44,7 +44,21 @@ export async function getUserData(callback) {
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
-  }
+}
+
+export async function getAccessToken(setRerender,rerender, codeParam){
+  await fetch("http://localhost:4000/getAccessToken?code=" + codeParam, {
+    method: "GET"
+  }).then((response) => {
+    return response.json();
+  }).then((data) => {
+    console.log("mucha data ",data.data);
+    if(data.data.access_token){
+      localStorage.setItem("accessToken", data.data.access_token);
+      setRerender(!rerender);
+    }
+  })
+}
 
 
 export async function createCommit() {
