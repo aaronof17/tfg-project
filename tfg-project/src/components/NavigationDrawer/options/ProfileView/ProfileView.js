@@ -154,7 +154,6 @@ function ProfileView() {
             </Button>
           </div>
         </div>
-        <ToastContainer className="custom-toast-container"/>
       </div>
       
     </div>
