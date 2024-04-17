@@ -110,7 +110,8 @@
         "confirmDialogTitle" : "¿Estás seguro que quieres eliminarlo?",
         "confirmDialogText" : "Ten en cuenta que toda la información relacionada con este trabajo también será borrada",
         "confirm" : "Confirmar",
-        "cancel" : "Cancelar"
+        "cancel" : "Cancelar",
+        "worksEmpty" : "No hay trabajos de laboratorio asignados todavía"
     },
     "mark":{
         "students" : "Alumnos",

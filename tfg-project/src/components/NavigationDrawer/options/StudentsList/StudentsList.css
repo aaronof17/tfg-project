@@ -8,17 +8,18 @@
     border-radius: 1.5vw; 
     box-shadow: 0.3vw 1vw 1.5vw hsl(0deg 0% 0% / 0.31);
     background-color: #D5DBDB;
-    overflow-x: auto; 
 }
+
+
 
 .students-wrapper h3{
     color: black;
 }
 
 
-
 .students-table {
     min-width: 100%; 
+    margin:5px;
     background-color: rgb(202, 202, 202);
 }
 

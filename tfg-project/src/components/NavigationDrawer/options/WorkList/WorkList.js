@@ -89,7 +89,7 @@ function WorksList({userData}){
 
 
     
-
+  if(labworks.length !== 0)
     return (
       <div className="work-list">
         <div className="table-wrapperWork">
@@ -178,6 +178,12 @@ function WorksList({userData}){
           />
         )}
         <ToastContainer className="custom-toast-container"/>
+      </div>
+    );
+
+    return(
+      <div className="work-list">
+        <h3>{t('worksList.worksEmpty')}</h3>
       </div>
     );
 }

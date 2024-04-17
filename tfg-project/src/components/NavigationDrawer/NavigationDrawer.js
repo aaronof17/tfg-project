@@ -51,15 +51,18 @@ function ResponsiveDrawer(props) {
   const drawerTeacherOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue'), t('navigationDrawer.makeWork'), t('navigationDrawer.workList'), t('navigationDrawer.mark')];
   const drawerStudentOptions = [t('navigationDrawer.studentLabWorks')];
 
-  const teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
+  let teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
                       <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
-  const studentViews = [<StudentWorks userData={userData}/>, <ProfileView userData={userData}/>];
+  let studentViews = [<StudentWorks userData={userData}/>, <ProfileView userData={userData}/>];
   const adminViews = [];
   const defaultViews = [];
 
   useEffect(() => {
     getUserData(setUserData).then(() =>{
-      setRole("student");
+      setRole("teacher");
+      teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
+                      <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
+      studentViews = [<StudentWorks userData={userData}/>, <ProfileView userData={userData}/>];
     });
     }, []);
 

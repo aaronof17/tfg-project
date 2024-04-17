@@ -1,4 +1,4 @@
-const connection = require('./databaseInfo');
+const connection = require('./databaseRequests/databaseInfo');
 
 function getTeachers(req,res) {
     const sql = "SELECT * FROM teachers";

@@ -49,7 +49,9 @@ function MakeIssue({userData}) {
         const fetchFilterStudents = async () => {
             getLabGroupsBySubject(selectedOption, teacherID, setLabGroups);
             const newStudents = await getStudentsBySubject(teacherID, selectedOption);
-            const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => existingStudent.githubuser === student.githubuser));
+            const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => 
+                                                                 existingStudent.labgroup === student.labgroup
+                                                              && existingStudent.githubuser === student.githubuser));
             setAvailableStudents(filteredStudents);
         };
         fetchFilterStudents();
@@ -57,7 +59,9 @@ function MakeIssue({userData}) {
       const fetchAllStudents = async () => {
         getLabGroups(setLabGroups,teacherID);
         getStudents(setAvailableStudents,teacherID).then((newStudents)=>{
-          const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => existingStudent.githubuser === student.githubuser));
+          const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => 
+                                                                                        existingStudent.labgroup === student.labgroup
+                                                                                     && existingStudent.githubuser === student.githubuser));
           setAvailableStudents(filteredStudents);
         });
       };
@@ -69,7 +73,9 @@ function MakeIssue({userData}) {
     if (selectedOption) {
         const fetchFilterStudents = async () => {
           getStudentsByWork(selectedOption.label, setAvailableStudents, teacherID).then((newStudents)=>{
-            const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => existingStudent.githubuser === student.githubuser));
+            const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent =>
+                                                                                          existingStudent.labgroup === student.labgroup
+                                                                                          && existingStudent.githubuser === student.githubuser));
             setAvailableStudents(filteredStudents);
           });
         };
@@ -77,7 +83,8 @@ function MakeIssue({userData}) {
     }else{
       const fetchAllStudents = async () => {
         getStudents(setAvailableStudents,teacherID).then((newStudents)=>{
-          const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => existingStudent.githubuser === student.githubuser));
+          const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => existingStudent.labgroup === student.labgroup
+                                                                                        && existingStudent.githubuser === student.githubuser));
           setAvailableStudents(filteredStudents);
         });
       };

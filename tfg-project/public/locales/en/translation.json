@@ -111,7 +111,8 @@
         "confirmDialogTitle" : "Are you sure tou want to delete?",
         "confirmDialogText" : "All the information related with that work will be deleted too",
         "confirm" : "Confirm",
-        "cancel" : "Cancel"
+        "cancel" : "Cancel",
+        "worksEmpty" : "There are no lab works yet"
     },
     "mark":{
         "students" : "Students",

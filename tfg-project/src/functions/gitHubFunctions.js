@@ -30,6 +30,31 @@ export async function createIssue(user,repo,title,description,token) {
     }
 }
 
+
+export async function pruebasGitHub() {
+  const apiUrl = 'http://localhost:4000/pruebasGit';
+  try {
+      const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+              "Authorization" : "Bearer ",
+              "Content-Type": "application/json"
+          }
+      });
+      const data = await response.json(); 
+      if (!data.success) {
+        console.log("An error occurred sending issue: ", data.error);
+        return { response: false, error: data.error};
+      } else {
+        console.log(data);
+        return { response: true, error: ""};
+      }
+  } catch (error) {
+      console.error(error);
+      return { response: false, error: error};
+    }
+}
+
 export async function getUserData(callback) {
     try {
         const response = await fetch("http://localhost:4000/getUserData", {

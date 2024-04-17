@@ -8,8 +8,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
-import {calculateWidth, getRepositoryName} from "../../../../functions/genericFunctions.js";
-import {downloadRepo} from "../../../../functions/gitHubFunctions.js";
+import {calculateWidth, getRepositoryName,} from "../../../../functions/genericFunctions.js";
+import {downloadRepo, pruebasGitHub} from "../../../../functions/gitHubFunctions.js";
 import {getStudents,deleteStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 
@@ -28,9 +28,9 @@ function StudentsList({userData}) {
 
     useEffect(() => {
       const fetchInfo = async () => {
-        //const id = await getTeacherId(setTeacherId,userData.html_url);
-        //getTeacherToken(setTeacherToken,id);
-        //getStudents(setStudentsList,id);
+        const id = await getTeacherId(setTeacherId,userData.html_url);
+        getTeacherToken(setTeacherToken,id);
+        getStudents(setStudentsList,id);
       };
 
       fetchInfo();
@@ -154,6 +154,12 @@ function StudentsList({userData}) {
       }
     }
 
+
+    async function pruebasGit() {
+      await pruebasGitHub();
+    }
+
+
   
     const handleSelectionChange = (ids) => {
       const selectedIDs = new Set(ids);
@@ -203,6 +209,9 @@ function StudentsList({userData}) {
       <div className="saveLabWorks" >
         <Button variant="contained" onClick={downloadRepository}>
             {t('studentList.downloadRepo')}
+        </Button>
+        <Button variant="contained" onClick={pruebasGit}>
+            pruebas git
         </Button>
       </div>
       {deleteModalOpen && (

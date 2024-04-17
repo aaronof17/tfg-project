@@ -25,6 +25,7 @@
     "mysql": "^2.18.1",
     "node-fetch": "^3.3.2",
     "nodemon": "^3.1.0",
-    "react-dropzone": "^14.2.3"
+    "react-dropzone": "^14.2.3",
+    "simple-git": "^3.24.0"
   }
 }
