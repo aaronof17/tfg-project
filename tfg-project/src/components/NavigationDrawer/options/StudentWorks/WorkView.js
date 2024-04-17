@@ -30,6 +30,8 @@ function WorkView({work}) {
         overflowY: 'auto', // Habilitar el scroll vertical cuando sea necesario
     };
 
+    
+
   return (
     <div className='work-view-div'>
         <Grid container spacing={2}>
