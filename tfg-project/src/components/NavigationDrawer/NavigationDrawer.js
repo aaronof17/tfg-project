@@ -1,8 +1,6 @@
 import * as React from 'react';
 import './NavigationDrawer.css';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
 import { useEffect } from 'react';
 
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,7 +19,6 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import People from '@mui/icons-material/People';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import {useTranslation} from "react-i18next";
 import {ToastContainer, toast} from "react-toastify";
@@ -36,6 +33,7 @@ import WorksList from './options/WorkList/WorkList.js';
 import Mark from './options/Mark/Mark.js';
 import HeaderAppBar from './HeaderAppBar.js';
 import AddStudents from './options/AddStudents/AddStudents.js';
+import StudentWorks from './options/StudentWorks/StudentWorks.js'
 
 const drawerWidth = 240;
 
@@ -47,70 +45,23 @@ function ResponsiveDrawer(props) {
   const [isClosing, setIsClosing] = React.useState(false);
   const [currentView, setCurrentView] = React.useState(0);
   const [userData, setUserData] = useState({});
+  const [role, setRole] = useState("");
   const [t] = useTranslation();
 
-  const drawerOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue'), t('navigationDrawer.makeWork'), t('navigationDrawer.workList'), t('navigationDrawer.mark')];
-  const views = [<FirstView />, <SecondView />, <ThirdView/>, <FourthView/>, <FifthView/>, <SixthView/>, <SeventhView/>];
+  const drawerTeacherOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue'), t('navigationDrawer.makeWork'), t('navigationDrawer.workList'), t('navigationDrawer.mark')];
+  const drawerStudentOptions = [t('navigationDrawer.studentLabWorks')];
+
+  const teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
+                      <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
+  const studentViews = [<StudentWorks userData={userData}/>, <ProfileView userData={userData}/>];
+  const adminViews = [];
+  const defaultViews = [];
 
   useEffect(() => {
-    getUserData(setUserData);
+    getUserData(setUserData).then(() =>{
+      setRole("student");
+    });
     }, []);
-
-    function FirstView() {
-      return (
-        <div style={{ flexGrow: 1 }}> 
-          <StudentsList userData={userData}></StudentsList>
-        </div>
-      );
-    }
-    
-    function SecondView() {
-      return (
-        <div>
-          <AddStudents userData={userData} ></AddStudents>
-        </div>
-      );
-    }
-    
-    function ThirdView() {
-      return (
-        <div>
-          <MakeIssue userData={userData}></MakeIssue>
-        </div>
-      );
-    }
-    
-    function FourthView() {
-      return (
-        <div>
-          <CreateLabWork userData={userData}></CreateLabWork>
-        </div>
-      );
-    }
-    
-    function FifthView() {
-      return (
-        <div>
-          <WorksList userData={userData}></WorksList>
-        </div>
-      );
-    }
-
-    function SixthView() {
-      return (
-        <div>
-          <Mark userData={userData}></Mark>
-        </div>
-      );
-    }
-
-    function SeventhView() {
-      return (
-        <div>
-          <ProfileView></ProfileView>
-        </div>
-      );
-    }
 
 
   const handleDrawerClose = () => {
@@ -159,30 +110,13 @@ function ResponsiveDrawer(props) {
       );
     }
   };
-
-
-
-  // async function getUserData() {
-  //   await fetch( "http://localhost:4000/getUserData", {
-  //     method: "GET",
-  //       headers: {
-  //           "Authorization" : "Bearer "+ localStorage.getItem("accessToken")
-  //       }
-  //   }).then((response) => {       
-  //      return response.json();
-  //   }).then((data) => {
-  //     console.log("aqui aqui ",data);
-  //       setUserData(data);
-  //   })
-  // }
-  
   
 
   const drawer = (
     <div>
       <Toolbar />
-      <List>
-        {drawerOptions.map((text, index) => (
+        {role==='teacher' && drawerTeacherOptions.map((text, index) => (
+          <List>
           <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
             <ListItemButton>
               <ListItemIcon sx={{ color: 'white' }}>
@@ -193,21 +127,37 @@ function ResponsiveDrawer(props) {
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
+          </List>
         ))}
-      </List>
-      <Divider />
-      <List>
-        <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(6)}>
-          <ListItemButton>
+        {role==='student' && drawerStudentOptions.map((text, index) => (
+          <List>
+          <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
+            <ListItemButton>
               <ListItemIcon sx={{ color: 'white' }}>
-                {
-                iconSelecter(6)
-                }
+                <HomeRepairServiceIcon></HomeRepairServiceIcon>
               </ListItemIcon>
-            <ListItemText primary={t('navigationDrawer.profile')} />
+              <ListItemText primary={text} />
             </ListItemButton>
-        </ListItem>
-      </List>
+          </ListItem>
+          </List>
+        ))}
+        {role==='teacher' && (
+        <>
+          <Divider />
+          <List>
+            <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(6)}>
+              <ListItemButton>
+                  <ListItemIcon sx={{ color: 'white' }}>
+                    {
+                    iconSelecter(6)
+                    }
+                  </ListItemIcon>
+                <ListItemText primary={t('navigationDrawer.profile')} />
+                </ListItemButton>
+            </ListItem>
+          </List>
+        </>
+        )}
     </div>
   );
 
@@ -260,8 +210,11 @@ function ResponsiveDrawer(props) {
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` },  }}
       >
-        {views[currentView]} 
-       </Box>
+        {role === 'teacher' && teacherViews[currentView]} 
+        {role === 'student' && studentViews[currentView]} 
+        {role === 'admin' && adminViews[currentView]}      
+        {role === '' && defaultViews[currentView]}
+    </Box>
        <ToastContainer/>
     </Box>
   );

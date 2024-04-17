@@ -11,7 +11,8 @@
         "profile": "Perfil de usuario",
         "makeWork": "Crear Práctica de Laboratorio",
         "mark": "Calificaciones",
-        "workList":"Lista de Prácticas de Laboratorio"
+        "workList":"Lista de Prácticas de Laboratorio",
+        "studentLabWorks" : "Prácticas de laboratorio"
 
     },
     "studentList" : {
@@ -139,5 +140,15 @@
         "tokenError" : "El token no puede estar vacío, porfavor introduce tu token de GitHub",
         "tokenSaved" : "Token guardado",
         "error" : "Lo sentimos ha ocurrido un error guardando el token"
-     }
+     },
+     "studentWorks" : {
+         "worksBlank" : "No tienes ninguna práctica asignada todavía",
+         "title" : "Título",
+         "description" : "Descripción",
+         "percentage" : "Porcentaje",
+         "mark" : "Calificación",
+         "comment" : "Comentario",
+         "group" : "Grupo de laboratorio",
+         "withoutMark" : "This work has not been marked yet"
+      }
 }

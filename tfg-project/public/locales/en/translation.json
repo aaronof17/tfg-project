@@ -11,7 +11,8 @@
         "profile": "User Profile",
         "makeWork": "Create Lab Work",
         "mark": "Marks",
-        "workList":"Lab Works List"
+        "workList":"Lab Works List",
+        "studentLabWorks" : "Lab Works"
     },
     "studentList" : {
         "name" : "Name",
@@ -141,6 +142,15 @@
         "tokenError" : "Token can't be blank, please introduce your GitHub Personal Acess Token",
         "tokenSaved" : "Token saved",
         "error" : "Sorry, an error has ocurred saving token"
-
-    }
+    },
+    "studentWorks" : {
+        "worksBlank" : "You don't have any lab work assigned yet",
+        "title" : "Title",
+        "description" : "Description",
+        "percentage" : "Percentage",
+        "mark" : "Mark",
+        "comment" : "Comment",
+        "group" : "Lab Group",
+        "withoutMark" : "This work has not been marked yet"
+     }
 }
