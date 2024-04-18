@@ -80,7 +80,28 @@ function getWorkByStudent(req,res) {
 }
 
 
+function getWorksByStudentId(req,res) {
+    const sql = "SELECT DISTINCT w.worklabID, w.title, w.labgroupNameFK, w.description, w.initialdate, "+
+                "w.finaldate, w.percentage, m.mark, m.comment "+
+                "FROM worklabs w " +
+                "JOIN labgroups g ON w.labgroupnameFK = g.name "+
+                "JOIN enrolled e ON g.idlabgroup = e.labgroupfk "+
+                "JOIN students s ON e.studentfk = s.studentsID "+
+                "JOIN marks m ON w.worklabID = m.worklabIDFk "+
+                "WHERE s.studentsId=? and s.studentsId = m.studentIDFK";
+    const params = [req.body.studentId];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting work for student: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
 
 
 
-module.exports = {getWorkByStudent, deleteWork, getWorksByTeacherId, insertWork, editWork};
+
+
+module.exports = {getWorkByStudent, getWorksByStudentId, deleteWork, getWorksByTeacherId, insertWork, editWork};

@@ -24,7 +24,8 @@ import {useTranslation} from "react-i18next";
 import {ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-import { getUserData } from '../../functions/gitHubFunctions.js';
+import {getUserData} from '../../functions/gitHubFunctions.js';
+import {getRoleByGitHubUser} from '../../services/teacherService.js';
 import StudentsList from './options/StudentsList/StudentsList.js';
 import MakeIssue from './options/MakeIssue/MakeIssue';
 import ProfileView from './options/ProfileView/ProfileView.js';
@@ -58,12 +59,23 @@ function ResponsiveDrawer(props) {
   const defaultViews = [];
 
   useEffect(() => {
-    getUserData(setUserData).then(() =>{
-      setRole("teacher");
+
+    const fetchInfo = async () => {
+      const userDataResponse = await getUserData(setUserData);
+
+      if (userDataResponse.login) {
+        const role = await getRoleByGitHubUser(userDataResponse.login);
+        setRole(role);
+      }
+
       teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
-                      <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
-      studentViews = [<StudentWorks userData={userData}/>, <ProfileView userData={userData}/>];
-    });
+                        <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
+      studentViews = [<StudentWorks userData={userData}/>];
+
+      
+    };
+
+    fetchInfo();
     }, []);
 
 

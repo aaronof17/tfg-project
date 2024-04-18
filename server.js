@@ -27,8 +27,18 @@ const path = require('path');
 const fs = require('fs');
 //BD---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+app.post('/role/gituser',  async function (req, res) {
+    const result = await teacherRequests.getRoleByGitHubUser(req,res);
+    return result;
+});
+
 app.get('/teachers',  async function (req, res) {
     const result = await teacherRequests.getTeachers(req,res);
+    return result;
+});
+
+app.post('/teachers/gituser',  async function (req, res) {
+    const result = await teacherRequests.getTeacherByGitHubUser(req,res);
     return result;
 });
 
@@ -49,7 +59,10 @@ app.post('/teachers/id', async function (req, res) {
     return result;
 });
 
-
+app.post('/students/id', async function (req, res) {
+    const result = await studentRequests.getStudentId(req,res);
+    return result;
+});
 
 app.post('/students/teacher', async function (req, res) {
     const result = await studentRequests.getStudentsByTeacher(req,res);
@@ -83,6 +96,11 @@ app.post('/students/delete', async function (req, res) {
 
 app.post('/students/email', async function (req, res) {
     const result = await studentRequests.getIdByEmail(req,res);
+    return result;
+});
+
+app.post('/works/student/id',  async function (req, res) {
+    const result = await workRequests.getWorksByStudentId(req,res);
     return result;
 });
 
@@ -518,9 +536,9 @@ async function leerDirectorioRecursivo(directorioRepo,directorio) {
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
-    // databaseRequests.connection.connect(function(err){
-    //     if(err) throw err;
-    //     console.log("Database Connected");
-    // }
-    // );
+    databaseRequests.connection.connect(function(err){
+        if(err) throw err;
+        console.log("Database Connected");
+    }
+    );
 });

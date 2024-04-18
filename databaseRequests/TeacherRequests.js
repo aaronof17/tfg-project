@@ -1,8 +1,48 @@
 const connection = require('./databaseInfo');
 
+function getRoleByGitHubUser(req,res) {
+    const sql = "SELECT 'teacher' AS user_type "+
+    "FROM teachers WHERE githubProfile = ? "+
+    "UNION "+
+    "SELECT 'student' AS user_type " +
+    "FROM students WHERE githubuser = ? " +
+    "UNION "+
+    "SELECT 'admin' AS user_type " +
+    "FROM admins WHERE githubProfile = ? ";
+
+    console.log(req.body.gituser);
+
+    const params = [req.body.gituser, req.body.gituser, req.body.gituser];
+    connection.query(sql, params, (err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting teachers: '+ err.sqlMessage});
+        } else {
+            console.log("sisi ",data);
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
 function getTeachers(req,res) {
     const sql = "SELECT * FROM teachers";
     connection.query(sql, (err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting teachers: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+
+
+function getTeacherByGitHubUser(req,res) {
+    const sql = "SELECT COUNT(*) as count FROM teachers where githubProfile = ?";
+    const params = [req.body.gituser];
+
+    connection.query(sql, params, (err, data) =>{
         if(err){
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting teachers: '+ err.sqlMessage});
@@ -54,4 +94,4 @@ function getTeacherToken(req,res) {
 }
 
 
-module.exports = {getTeacherToken, getTeachers, updateTeacherToken, getTeacherId};
+module.exports = {getTeacherToken, getTeachers, updateTeacherToken, getTeacherId, getTeacherByGitHubUser, getRoleByGitHubUser};

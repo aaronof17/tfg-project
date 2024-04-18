@@ -32,7 +32,7 @@ function Mark({userData}){
 
     useEffect(() => {
         const fetchInfo = async () => {
-            const id = await getTeacherId(setTeacherID,userData.html_url);
+            const id = await getTeacherId(setTeacherID,userData.login);
             getLabWorks(setLabWorks,id);
             getStudentsWithoutRepo(setStudents,id);
         };

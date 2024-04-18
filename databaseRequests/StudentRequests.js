@@ -19,6 +19,20 @@ function getStudentsByTeacher(req,res) {
     })
 }
 
+function getStudentId(req,res) {
+    const sql = 'select studentsID from students where githubuser=?';
+    const params = [req.body.githubUser];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting student id: '+ err.sqlMessage});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+
 
 function getStudentsBySubject(req,res) {
     const sql = "SELECT DISTINCT s.studentsID, s.name, "+
@@ -122,4 +136,4 @@ function getIdByEmail(req,res) {
 
 
 
-module.exports = {getIdByEmail, deleteStudent, getStudentsByTeacherWithoutRepo, getStudentsBySubject,insertStudent, getStudentsByGroup, getStudentsByTeacher};
+module.exports = {getIdByEmail, deleteStudent, getStudentsByTeacherWithoutRepo, getStudentsBySubject,insertStudent, getStudentsByGroup, getStudentsByTeacher, getStudentId};

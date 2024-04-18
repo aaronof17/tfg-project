@@ -181,3 +181,23 @@ export async function getIdByEmail(email) {
       console.error('Error getting email:', error);
     }
 }
+
+export async function getStundentId(callback, githubUser) {
+  try {
+      const response = await fetch('http://localhost:4000/students/id', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ githubUser: githubUser })
+        });
+      
+      const data = await response.json();
+      callback(data.data[0].studentsID);
+      return data.data[0].studentsID;
+    } catch (error) {
+      console.error('Error getting student id:', error);
+    }
+}

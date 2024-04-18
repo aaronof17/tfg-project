@@ -33,7 +33,7 @@ function MakeIssue({userData}) {
 
   useEffect(() => {
     const fetchInfo = async () => {
-        const id = await getTeacherId(setTeacherID,userData.html_url);
+        const id = await getTeacherId(setTeacherID,userData.login);
         getLabGroups(setLabGroups,id);
         getSubjectsFromGroup(setSubjects,id);
         getStudents(setAvailableStudents,id);

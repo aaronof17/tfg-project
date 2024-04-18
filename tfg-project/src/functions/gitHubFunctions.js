@@ -66,6 +66,7 @@ export async function getUserData(callback) {
     
         const data = await response.json();
         callback(data);
+        return data;
       } catch (error) {
         console.error('Error fetching user data:', error);
       }

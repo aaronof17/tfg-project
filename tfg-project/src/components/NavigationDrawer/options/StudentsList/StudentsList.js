@@ -28,7 +28,7 @@ function StudentsList({userData}) {
 
     useEffect(() => {
       const fetchInfo = async () => {
-        const id = await getTeacherId(setTeacherId,userData.html_url);
+        const id = await getTeacherId(setTeacherId,userData.login);
         getTeacherToken(setTeacherToken,id);
         getStudents(setStudentsList,id);
       };
