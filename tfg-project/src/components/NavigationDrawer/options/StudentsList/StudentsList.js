@@ -231,6 +231,9 @@ function StudentsList({userData}) {
   return (
     <div className="students-wrapper">
       <h3>{t('studentList.studentsListEmpty')}</h3>
+      <Button variant="contained" onClick={pruebasGit}>
+            pruebas git
+      </Button>
     </div>
   );
 }

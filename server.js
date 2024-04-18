@@ -197,29 +197,29 @@ app.post('/createIssue', async function  (req, res){
 
 
 app.post('/pruebasGit', async function  (req, res){
-    // simpleGit().clone('https://github.com/aaronof17/demo1', 'C:/Users/aaron/Desktop/UNI/tfg/rutadeprueba/yes', (error, result) => {
-    //     if (error) {
-    //         console.error('Error al clonar el repositorio:', error);
-    //         res.status(500).send('Error al clonar el repositorio');
-    //     } else {
-    //         console.log('Repositorio clonado con éxito:', result);
-    //         res.status(200).send('Repositorio clonado con éxito');
-    //     }
-    // }, {
-    //     '--config': `http.https://github.com/.extraheader="Authorization: Bearer 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"`
-    // });
-
-    const USER = 'AaronOF27';
-    const PASS = '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';
-    const REPO = 'github.com/aaronof17/demo1';
+    const USER = 'aaronof17';
+    const PASS = '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';
+    const REPO = 'github.com/JonathanAriass/SEW';
 
     const remote = `https://${USER}:${PASS}@${REPO}`;
 
-    git.clone(remote, 'C:/Users/aaron/Desktop/UNI/tfg/rutadeprueba/ui')
+    git.clone(remote, 'C:/Users/aorozco/Desktop/Aaron/Estudio/Proyecto/directorioDeprueba/otro')
     .then(() => console.log('Repositorio clonado exitosamente'))
     .catch(error => console.error('Error al clonar el repositorio:', error));
     //Bearer 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
-    
+    //Bearer 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
+
+    // git.cwd('C:/Users/aorozco/Desktop/Aaron/Estudio/Proyecto/directorioDeprueba/si')
+    //             .add('.')
+    //             .commit('Mensaje del commit', (error, result) => {
+    //                 if (error) {
+    //                     console.error('Error al hacer commit:', error);
+    //                 } else {
+    //                     console.log('Commit exitoso:', result);
+    //                 }
+    //             });
+
+
 });
 
 app.get('/download/repo', (req, res) => {
@@ -518,9 +518,9 @@ async function leerDirectorioRecursivo(directorioRepo,directorio) {
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
-    databaseRequests.connection.connect(function(err){
-        if(err) throw err;
-        console.log("Database Connected");
-    }
-    );
+    // databaseRequests.connection.connect(function(err){
+    //     if(err) throw err;
+    //     console.log("Database Connected");
+    // }
+    // );
 });
