@@ -73,7 +73,7 @@ function StudentWorks({userData}) {
     <div className='student-works-div'>
         {works.length !== 0 ? 
         works.map((work) => {
-          return <WorkView work={work}></WorkView>
+          return <WorkView key={work.id} work={work}></WorkView>
         })
         :
         <h3>{t('studentWorks.worksBlank')}</h3>

@@ -80,7 +80,6 @@ export async function getWorksByStudent(studentEmail, callback, teacherID) {
 
 
 export async function getWorksByStudentId(callback, studentId) {
-  console.log("yes ",studentId);
   try {
       const response = await fetch('http://localhost:4000/works/student/id', {
           method: "POST",
@@ -93,7 +92,6 @@ export async function getWorksByStudentId(callback, studentId) {
       })
 
       const data = await response.json();
-      console.log("works ",data);
       callback(data.data);
     } catch (error) {
       console.error('Error getting works by student id:', error);

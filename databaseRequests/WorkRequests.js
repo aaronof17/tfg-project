@@ -81,14 +81,14 @@ function getWorkByStudent(req,res) {
 
 
 function getWorksByStudentId(req,res) {
-    const sql = "SELECT DISTINCT w.worklabID, w.title, w.labgroupNameFK, w.description, w.initialdate, "+
-                "w.finaldate, w.percentage, m.mark, m.comment "+
+    const sql = "SELECT DISTINCT w.worklabID as id, w.title, w.labgroupNameFK as groupName, w.description, w.initialdate, "+
+                "w.finaldate, w.percentage, COALESCE(m.mark, '') AS mark, COALESCE(m.comment, '') AS comment  "+
                 "FROM worklabs w " +
                 "JOIN labgroups g ON w.labgroupnameFK = g.name "+
                 "JOIN enrolled e ON g.idlabgroup = e.labgroupfk "+
                 "JOIN students s ON e.studentfk = s.studentsID "+
-                "JOIN marks m ON w.worklabID = m.worklabIDFk "+
-                "WHERE s.studentsId=? and s.studentsId = m.studentIDFK";
+                "LEFT JOIN marks m ON w.worklabID = m.worklabIDFk AND s.studentsId = m.studentIDFK  "+
+                "WHERE s.studentsId=?";
     const params = [req.body.studentId];
     connection.query(sql, params,(err, data) =>{
         if(err){

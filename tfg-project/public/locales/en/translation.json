@@ -152,6 +152,8 @@
         "mark" : "Mark",
         "comment" : "Comment",
         "group" : "Lab Group",
+        "initialDate" : "Initial Date",
+        "finalDate" : "Final Date",
         "withoutMark" : "This work has not been marked yet"
      }
 }

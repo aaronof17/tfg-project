@@ -6,3 +6,32 @@
     padding: 5%;
     background-color: #ffffff; 
 }
+
+.work-view-div h2{
+    color: black;
+    font-size: xx-large;
+}
+
+.mark-comment-div{
+    margin-top: 2%;
+    width: 100%;
+    padding: 2%;
+    border-radius: 1.5vw; 
+    background-color: #c7c7c7;
+}
+
+.mark-comment-div h3{
+    font-size: xx-large;
+    color: black;
+}
+
+@media screen and (max-width: 768px) {
+    .work-view-div {
+        margin: 8% 4%;
+    }
+
+    .mark-comment-div h3{
+        font-size: large;
+        color: black;
+    }
+}

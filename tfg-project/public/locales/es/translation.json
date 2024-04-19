@@ -143,13 +143,15 @@
         "error" : "Lo sentimos ha ocurrido un error guardando el token"
      },
      "studentWorks" : {
-         "worksBlank" : "No tienes ninguna práctica asignada todavía",
-         "title" : "Título",
-         "description" : "Descripción",
-         "percentage" : "Porcentaje",
-         "mark" : "Calificación",
-         "comment" : "Comentario",
-         "group" : "Grupo de laboratorio",
-         "withoutMark" : "This work has not been marked yet"
+        "worksBlank" : "No tienes ninguna práctica asignada todavía",
+        "title" : "Título",
+        "description" : "Descripción",
+        "percentage" : "Porcentaje",
+        "mark" : "Calificación",
+        "comment" : "Comentario",
+        "group" : "Grupo de laboratorio",
+        "initialDate" : "Fecha Inicial",
+        "finalDate" : "Fecha Final",
+        "withoutMark" : "Este trabajo todavía no ha sido calificado"
       }
 }
