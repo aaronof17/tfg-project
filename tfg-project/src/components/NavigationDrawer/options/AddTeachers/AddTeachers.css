@@ -1,0 +1,17 @@
+.students-add-div {
+    margin-top: 5vh; 
+    padding: 2vw; 
+    align-items: center;
+    width: 90vw; 
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    border-radius: 1.5vw; 
+    box-shadow: 0.3vw 1vw 1.5vw hsl(0deg 0% 0% / 0.31);
+    background-color: white;
+}
+
+
+.students-add-buttons{
+    margin-top: 5%;
+}
