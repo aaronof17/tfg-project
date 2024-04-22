@@ -8,12 +8,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
-import {calculateWidth, getRepositoryName,} from "../../../../functions/genericFunctions.js";
+import {calculateWidth, getRepositoryName, extractId} from "../../../../functions/genericFunctions.js";
 import {downloadRepo, pruebasGitHub} from "../../../../functions/gitHubFunctions.js";
-import {getStudents,deleteStudent} from "../../../../services/studentService.js";
+import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 
 import RewriteModal from '../../../Modal/RewriteModal.js';
+import EditModal from './EditModal.js';
 import './StudentsList.css';
 
 function StudentsList({userData}) {
@@ -22,15 +23,18 @@ function StudentsList({userData}) {
     const [teacherToken, setTeacherToken] = useState("");
     const [selectedStudents, setSelectedStudents] = useState([]);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [editModalOpen, setEditModalOpen] = useState(false);
     const [rowToDelete, setRowToDelete] = useState("");
     const [rowToEdit, setRowToEdit] = useState("");
     const [t] = useTranslation();
+    const fileInput = React.createRef();
 
     useEffect(() => {
       const fetchInfo = async () => {
         const id = await getTeacherId(setTeacherId,userData.login);
         getTeacherToken(setTeacherToken,id);
         getStudents(setStudentsList,id);
+        
       };
 
       fetchInfo();
@@ -91,8 +95,8 @@ function StudentsList({userData}) {
     }
 
     const handleEdit = (row) =>{
-      // setRowToEdit(row);
-      // setEn(true);
+      setRowToEdit(row);
+      setEditModalOpen(true);
     }
 
     const handleDelete = (rowToDelete) =>{
@@ -173,12 +177,12 @@ function StudentsList({userData}) {
 
     function deleteStudentMethod(){
       if(rowToDelete != ""){
-        deleteStudent(rowToDelete.email).then((res)=>{
+        deleteStudent(rowToDelete).then((res)=>{
           if(res.response){
-            toast.info(t('studentList.studentDeleted'));
-            const updatedRows = studentsList.filter((row) => row.email !== rowToDelete.email);
-            setStudentsList(updatedRows);
-            setRowToDelete("");
+            getStudents(setStudentsList,teacherId).then(()=>{
+              toast.info(t('studentList.studentDeleted'));
+              setRowToDelete("");
+            })
           }else{
             toast.error('studentList.errorDeletingStudent',res.error); 
           }
@@ -189,6 +193,41 @@ function StudentsList({userData}) {
       }
       
     }
+
+
+    const handleEditRow = (newRow) => {
+      if(rowToEdit != null){
+
+        editStudent(newRow).then((res) =>{
+          if(res.response){
+            getStudents(setStudentsList,teacherId).then(()=>{
+              toast.info(t('studentList.studentEdited'));
+              setRowToEdit("");
+            })
+            
+          }else{
+            toast.error(res.error); 
+          }
+        });
+      }else{
+        toast.error(t('studentList.errorOccurred'));
+      }
+    };
+
+
+    const handleFileSelect = () => {
+      fileInput.current.click();
+    };
+  
+    const handleFileChange = (event) => {
+      const selectedFiles = event.target.files;
+      if (selectedFiles.length > 0) {
+        const directoryPath = selectedFiles[0].webkitRelativePath.split('/')[0];
+        console.log("Ruta del directorio seleccionado:", selectedFiles);
+        // Aquí puedes pasar la directoryPath a donde lo necesites en tu aplicación
+      }
+    };
+
 
   if(studentsList.length !== 0)
   return (
@@ -213,6 +252,20 @@ function StudentsList({userData}) {
         <Button variant="contained" onClick={pruebasGit}>
             pruebas git
         </Button>
+        <Button variant="contained" onClick={handleFileSelect}>
+            pruebas directorio
+        </Button>
+        <input
+          type="file"
+          ref={fileInput}
+          style={{ display: 'none' }}
+          onChange={handleFileChange}
+          directory=""
+          webkitdirectory=""
+          mozdirectory=""
+          msdirectory=""
+          odirectory=""
+        />
       </div>
       {deleteModalOpen && (
           <RewriteModal
@@ -225,6 +278,17 @@ function StudentsList({userData}) {
           text2={t('studentList.studentInfo')}
         />
       )}
+      {editModalOpen && (
+          <EditModal
+            closeModal={() => {
+              setEditModalOpen(false);
+              setRowToEdit("");
+            }}
+            onSubmit={handleEditRow}
+            defaultValue={rowToEdit}
+            studentsList={studentsList}
+          />
+        )}
     </div>
   );
 

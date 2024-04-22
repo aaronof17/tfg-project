@@ -19,6 +19,7 @@
         "username" : "Username",
         "email" : "Email",
         "githubprofile" : "GitHub Profile",
+        "repository" : "Repositorio",
         "group" : "Group",
         "subject" : "Subject",
         "actions" :"Actions",
@@ -32,7 +33,14 @@
         "studentInfo" : "All his information will be deleted too",
         "errorDeletingStudent" : "An error ocurred deleting stundent",
         "studentDeleted" : "Student deleted",
-        "studentsListEmpty" : "There are no students yet"
+        "studentsListEmpty" : "There are no students yet",
+        "blankInfo" : "No field can be blank",
+        "emailExists" : "This email already exists",
+        "userExists" : "This github user already exists",
+        "confirm" : "Confirm",
+        "cancel" : "Cancel",
+        "studentEdited" : "Student edited",
+        "errorOccurred" : "An error has ocurred"
 
     },
     "makeIssue" : {

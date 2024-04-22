@@ -89,6 +89,11 @@ app.post('/students/save', async function (req, res) {
     return result;
 });
 
+app.post('/students/edit', async function (req, res) {
+    const result = await studentRequests.editStudent(req,res);
+    return result;
+});
+
 app.post('/students/delete', async function (req, res) {
     const result = await studentRequests.deleteStudent(req,res);
     return result;

@@ -1,4 +1,5 @@
 import { saveEnrolled } from "./enrolledService";
+import {extractId} from "../functions/genericFunctions"
 
 export async function getStudents(callback, teacherID) {
     try {
@@ -127,9 +128,8 @@ export async function saveStudent(name, email, user, repository, groupId) {
 }
 
 
-export async function deleteStudent(email) {
+export async function deleteStudent(rowToDelete) {
   try {
-
     const response = await fetch('http://localhost:4000/students/delete', {
         method: "POST",
         headers: {
@@ -137,7 +137,8 @@ export async function deleteStudent(email) {
           "Content-Type": "application/json"
         },
         body:
-            JSON.stringify({email: email})
+            JSON.stringify({studentID: extractId(rowToDelete.id),
+                            group: rowToDelete.group})
       });
     
       const data = await response.json(); 
@@ -201,3 +202,36 @@ export async function getStundentId(callback, githubUser) {
       console.error('Error getting student id:', error);
     }
 }
+
+export async function editStudent(editRow) {
+  try {
+      const response = await fetch('http://localhost:4000/students/edit', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ studentId: extractId(editRow.id),
+                            name: editRow.name,
+                            email: editRow.email,
+                            githubuser: editRow.githubuser,
+                            repository: editRow.repository,
+                            group: editRow.group
+                          })
+        });
+      
+    const data = await response.json(); 
+
+    if(!data.success){
+      console.log("An error occurred editing student: ", data.error);
+      return { response: false, error: data.error};
+    }
+      
+    return { response: true, error: ""};
+
+    } catch (error) {
+        return { response: false, error: "Sorry, an error occurred editing student"};
+    }
+}
+

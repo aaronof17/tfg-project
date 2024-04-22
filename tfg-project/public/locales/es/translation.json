@@ -20,6 +20,7 @@
         "username" : "Nombre de Usuario",
         "email" : "Email",
         "githubprofile" : "Perfil de GitHub",
+        "repository" : "Repositorio",
         "group" : "Grupo",
         "subject" : "Asignatura",
         "actions" :"Acciones",
@@ -33,7 +34,14 @@
         "errorDeletingStudent" : "Ha ocurrido un error eliminando al estudiante",
         "studentInfo" : "Ten en cuenta que toda la información relacionada con él desaparecerá",
         "studentDeleted" : "Estudiante eliminado",
-        "studentsListEmpty" : "Todavía no se ha añadido ningún estudiante"
+        "studentsListEmpty" : "Todavía no se ha añadido ningún estudiante",
+        "blankInfo" : "Ningún campo puede estar vacío",
+        "emailExists" : "Este email ya existe",
+        "userExists" : "Este usuario de github ya existe",
+        "confirm" : "Confirmar",
+        "cancel" : "Cancelar",
+        "studentEdited" : "Estudiante editado",
+        "errorOccurred" : "Ha ocurrido un error"
 
     },
     "makeIssue" : {

@@ -88,3 +88,12 @@ export function getSubjectsForComboBox(subjects) {
     return options;
 }
     
+
+export function extractId(cadena){
+    const match = cadena.match(/\d+/);
+    if (match) {
+        return parseInt(match[0]);
+    } else {
+        return null;
+    }
+}
