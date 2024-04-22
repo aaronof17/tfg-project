@@ -36,6 +36,7 @@ import Mark from './options/Mark/Mark.js';
 import HeaderAppBar from './HeaderAppBar.js';
 import AddStudents from './options/AddStudents/AddStudents.js';
 import StudentWorks from './options/StudentWorks/StudentWorks.js'
+import AddTeachers from './options/AddTeachers/AddTeachers.js';
 
 const drawerWidth = 240;
 
@@ -52,12 +53,14 @@ function ResponsiveDrawer(props) {
 
   const drawerTeacherOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue'), t('navigationDrawer.makeWork'), t('navigationDrawer.workList'), t('navigationDrawer.mark')];
   const drawerStudentOptions = [t('navigationDrawer.studentLabWorks')];
+  const drawerAdminOptions = [t('navigationDrawer.addTeachers'), t('navigationDrawer.teachersList'), t('navigationDrawer.addGroups'), t('navigationDrawer.groupsList')];
+
 
   let teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
                       <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
   let studentViews = [<StudentWorks userData={userData}/>, <ProfileView userData={userData}/>];
-  const adminViews = [];
-  const defaultViews = [];
+  let adminViews = [<AddTeachers userData={userData}/>];
+  let defaultViews = [];
 
   useEffect(() => {
 
@@ -66,13 +69,13 @@ function ResponsiveDrawer(props) {
 
       if (userDataResponse.login) {
         const role = await getRoleByGitHubUser(userDataResponse.login);
-        setRole("teacher");
+        setRole("admin");
       }
 
       teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
                         <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
       studentViews = [<StudentWorks userData={userData}/>];
-
+      adminViews = [<AddTeachers userData={userData}/>];
       
     };
 
@@ -146,6 +149,18 @@ function ResponsiveDrawer(props) {
           </List>
         ))}
         {role==='student' && drawerStudentOptions.map((text, index) => (
+          <List>
+          <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
+            <ListItemButton>
+              <ListItemIcon sx={{ color: 'white' }}>
+                <HomeRepairServiceIcon></HomeRepairServiceIcon>
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+          </List>
+        ))}
+        {role==='admin' && drawerAdminOptions.map((text, index) => (
           <List>
           <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
             <ListItemButton>

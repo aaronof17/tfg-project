@@ -12,7 +12,11 @@
         "makeWork": "Create Lab Work",
         "mark": "Marks",
         "workList":"Lab Works List",
-        "studentLabWorks" : "Lab Works"
+        "studentLabWorks" : "Lab Works",
+        "addTeachers" : "Add Teachers",
+        "teachersList" : "Teachers List",
+        "addGroups" : "Add Lab Groups",
+        "groupsList" : "Lab Group List"
     },
     "studentList" : {
         "name" : "Name",

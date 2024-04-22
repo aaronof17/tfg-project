@@ -12,7 +12,11 @@
         "makeWork": "Crear Práctica de Laboratorio",
         "mark": "Calificaciones",
         "workList":"Lista de Prácticas de Laboratorio",
-        "studentLabWorks" : "Prácticas de laboratorio"
+        "studentLabWorks" : "Prácticas de laboratorio",
+        "addTeachers" : "Añadir profesor",
+        "teachersList" : "Lista de Profesores",
+        "addGroups" : "Añadir grupo de laboratorio",
+        "groupsList" : "Lista de grupos de laboratorio"
 
     },
     "studentList" : {
