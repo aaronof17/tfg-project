@@ -219,6 +219,7 @@ app.post('/createIssue', async function  (req, res){
 });
 
 
+
 app.post('/pruebasGit', async function  (req, res){
     const USER = 'aaronof17';
     const PASS = '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';
@@ -261,10 +262,10 @@ app.get('/getUserData', async function  (req, res){
             "Authorization" : req.get("Authorization")
         }
     }).then((response) => {
-        console.log(response);
+        //console.log(response);
         return response.json();
     }).then((data) => {
-        console.log(data);
+        //console.log(data);
         res.json(data);
     })
 })
@@ -273,6 +274,19 @@ app.get('/getUserData', async function  (req, res){
 app.post('/downloadRepo', async function  (req, res){
     try {
         const result = await githubRequests.downloadRepo(req, res);
+        return res.status(200).json({ success: true, data: result });
+    } catch (error) {
+        if(error.message === 'Error: Unauthorized'){
+            return res.status(401).json({ success: false, error: 'Unauthorized' });
+        }
+        return res.status(500).json({ success: false, error: error });
+    }
+});
+
+
+app.post('/getFinalCommitInfo', async function  (req, res){
+    try {
+        const result = await githubRequests.getFinalCommitInfo(req, res);
         return res.status(200).json({ success: true, data: result });
     } catch (error) {
         if(error.message === 'Error: Unauthorized'){
@@ -541,9 +555,9 @@ async function leerDirectorioRecursivo(directorioRepo,directorio) {
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
-    // databaseRequests.connection.connect(function(err){
-    //     if(err) throw err;
-    //     console.log("Database Connected");
-    // }
-    // );
+    databaseRequests.connection.connect(function(err){
+        if(err) throw err;
+        console.log("Database Connected");
+    }
+    );
 });

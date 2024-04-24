@@ -38,14 +38,20 @@ function TableRow({ rowData  }) {
                 <DatePicker
                     selected={initialDate}
                     onChange={handleInitialDateChange}
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="yyyy-MM-dd HH:mm"
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15} 
                 />
             </td>
             <td>
                 <DatePicker
                     selected={finalDate}
                     onChange={handleFinalDateChange}
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="yyyy-MM-dd HH:mm"
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15} 
                 />
             </td>
         </tr>

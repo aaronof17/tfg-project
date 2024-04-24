@@ -1,11 +1,9 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import Grid from '@mui/material/Grid';
-import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 
-function StudentInfo({setName, setEmail, setUser, setRepository}) {
+function StudentInfo({setName, setEmail, setUser, setRepository, setPath}) {
 
     const [t] = useTranslation();
 
@@ -23,6 +21,10 @@ function StudentInfo({setName, setEmail, setUser, setRepository}) {
     
     const handleRepositoryChange = (e) => {
         setRepository(e.target.value);
+    };
+
+    const handlePathChange = (e) => {
+        setPath(e.target.value);
     };
             
 
@@ -70,6 +72,17 @@ function StudentInfo({setName, setEmail, setUser, setRepository}) {
                         type="text"
                         inputProps={{ maxLength: 200 }}
                         onChange={handleRepositoryChange}
+                        sx={{ width: '100%' }}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={12}>
+                    <TextField
+                        id="outlined-required"
+                        className="studentLocalPath"
+                        label={t('addStudents.localpath')}
+                        type="text"
+                        inputProps={{ maxLength: 1000 }}
+                        onChange={handlePathChange}
                         sx={{ width: '100%' }}
                     />
                 </Grid>

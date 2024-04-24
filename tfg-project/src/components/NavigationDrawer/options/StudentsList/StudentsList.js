@@ -9,13 +9,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
 import {calculateWidth, getRepositoryName, extractId} from "../../../../functions/genericFunctions.js";
-import {downloadRepo, pruebasGitHub} from "../../../../functions/gitHubFunctions.js";
+import {downloadRepo, getLastCommitInfo} from "../../../../functions/gitHubFunctions.js";
 import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
+import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js";
 
 import RewriteModal from '../../../Modal/RewriteModal.js';
 import EditModal from './EditModal.js';
 import './StudentsList.css';
+import { getWorkByStudent } from "../../../../../../databaseRequests.js";
 
 function StudentsList({userData}) {
     const [studentsList, setStudentsList] = useState([]);
@@ -26,14 +28,15 @@ function StudentsList({userData}) {
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [rowToDelete, setRowToDelete] = useState("");
     const [rowToEdit, setRowToEdit] = useState("");
+    const [outOfTimeCommits, setOutOfTimeCommits] = useState([]);
     const [t] = useTranslation();
-    const fileInput = React.createRef();
 
     useEffect(() => {
       const fetchInfo = async () => {
         const id = await getTeacherId(setTeacherId,userData.login);
         getTeacherToken(setTeacherToken,id);
         getStudents(setStudentsList,id);
+        
       };
 
       fetchInfo();
@@ -108,7 +111,7 @@ function StudentsList({userData}) {
       if(studentsList !== undefined){
         studentsList.map((student,index) => {
             rows[index] =  { id: student.studentsID+student.labgroup, name: student.name, email: student.email, githubuser: student.githubuser, group: student.labgroup,
-               repository: student.repositoryURL};
+               repository: student.repositoryURL, localPath: student.localPath};
         });
       }
       return rows;
@@ -117,7 +120,7 @@ function StudentsList({userData}) {
     const validateData = () =>{
       if(selectedStudents.length != 0){
         if(teacherToken === ""){
-          toast.error(t('makeIssue.tokenEmpty'));
+          toast.error(t('studentList.tokenEmpty'));
           return false;
         }else{
           return true; 
@@ -158,8 +161,38 @@ function StudentsList({userData}) {
     }
 
 
-    async function pruebasGit() {
-      await pruebasGitHub();
+    async function checkDatesFromWorks(){
+      for (let student of selectedStudents) {
+
+        try { 
+          await getLastCommitInfo(teacherToken, getRepositoryName(student.repository), student.githubuser).then((res) =>{
+            if(!res.response){
+              if(res.error === 'Unauthorized'){
+                toast.error(t('studentList.tokenError'));
+              }else{
+                toast.error(t('studentList.commitErrorForStudent')+student.name);
+              }
+            }else{
+              let commitsInfo = res.data;
+              await getWorksByStudentAndGroup();
+            }
+          });
+        } catch (error) {
+          toast.error(t('studentList.checkingDateError')+error);
+        }
+      }
+    }
+
+
+    async function checkDatesMethod(e) {
+      e.preventDefault();
+      if(validateData()){
+        try {
+          await checkDatesFromWorks();
+        } catch (error) {
+          toast.error(t('studentList.checkingDateError') + error);
+        }
+      }
     }
 
 
@@ -214,20 +247,6 @@ function StudentsList({userData}) {
     };
 
 
-    const handleFileSelect = () => {
-      fileInput.current.click();
-    };
-  
-    const handleFileChange = (event) => {
-      const selectedFiles = event.target.files;
-      if (selectedFiles.length > 0) {
-        const directoryPath = selectedFiles[0].webkitRelativePath.split('/')[0];
-        console.log("Ruta del directorio seleccionado:", selectedFiles);
-        // Aquí puedes pasar la directoryPath a donde lo necesites en tu aplicación
-      }
-    };
-
-
   if(studentsList.length !== 0)
   return (
     <div className="students-wrapper">
@@ -244,27 +263,13 @@ function StudentsList({userData}) {
         checkboxSelection
         onRowSelectionModelChange ={handleSelectionChange}
       />
-      <div className="saveLabWorks" >
-        <Button variant="contained" onClick={downloadRepository}>
-            {t('studentList.downloadRepo')}
+      <div className="buttons" >
+        <Button className="downloadRepo" variant="contained" onClick={downloadRepository}>
+          {t('studentList.downloadRepo')}
         </Button>
-        <Button variant="contained" onClick={pruebasGit}>
-            pruebas git
+        <Button className="checkWorksDates" variant="contained" onClick={checkDatesMethod}>
+          {t('studentList.checkWorksDates')}
         </Button>
-        <Button variant="contained" onClick={handleFileSelect}>
-            pruebas directorio
-        </Button>
-        <input
-          type="file"
-          ref={fileInput}
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
-          directory=""
-          webkitdirectory=""
-          mozdirectory=""
-          msdirectory=""
-          odirectory=""
-        />
       </div>
       {deleteModalOpen && (
           <RewriteModal
@@ -294,9 +299,6 @@ function StudentsList({userData}) {
   return (
     <div className="students-wrapper">
       <h3>{t('studentList.studentsListEmpty')}</h3>
-      <Button variant="contained" onClick={pruebasGit}>
-            pruebas git
-      </Button>
     </div>
   );
 }

@@ -25,6 +25,7 @@ function AddStudents({userData}) {
     const [email, setEmail] = useState("");
     const [user, setUser] = useState("");
     const [repository, setRepository] = useState("");
+    const [path, setPath] = useState("");
     const [subject, setSubject] = useState("");
     const [group, setGroup] = useState("");
     const [labGroups, setLabGroups] = useState([]);
@@ -47,7 +48,7 @@ function AddStudents({userData}) {
     const handleSaveCsv = async (data) => {
       for (let element of data) {
         try {
-          await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group);
+          await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group, element.path);
         } catch (error) {
           sendError(t('addStudents.errorSavingStudent')+error);
         }
@@ -75,7 +76,7 @@ function AddStudents({userData}) {
     }
 
     function addEnrolled(){
-      saveEnrolled(studentId, group, repository).then((res)=>{
+      saveEnrolled(studentId, group, repository, path).then((res)=>{
           if(res.response){
               toast.info(t('addStudents.studentEnrolled'));
           }else{
@@ -105,14 +106,14 @@ function AddStudents({userData}) {
     }
 
 
-  async function saveStudentInfo(studentName, studentEmail, studentUser, studentRepository, studentGroup){
+  async function saveStudentInfo(studentName, studentEmail, studentUser, studentRepository, studentGroup, studentPath){
       if(checkData(studentName, studentEmail, studentUser, studentRepository, studentGroup)){
         try {
           const emailExists = await existsEmail(studentEmail);
           if(emailExists){
             setRewriteModalOpen(true);
           }else{
-            const res = await saveStudent(studentName, studentEmail, studentUser, studentRepository, studentGroup);
+            const res = await saveStudent(studentName, studentEmail, studentUser, studentRepository, studentGroup, studentPath);
             if (res.response) {
               toast.info(t('addStudents.studentSaved'));
             } else {
@@ -128,7 +129,7 @@ function AddStudents({userData}) {
 
   return (
     <div className='students-add-div'>
-        <StudentInfo setName={setName} setEmail={setEmail} setUser={setUser} setRepository={setRepository}></StudentInfo>
+        <StudentInfo setName={setName} setEmail={setEmail} setUser={setUser} setRepository={setRepository} setPath={setPath}></StudentInfo>
         <StudentGroup labGroups={labGroups} setLabGroups={setLabGroups} subjects={subjects} 
             setSubject={setSubject} setGroup={setGroup} teacherID={teacherID}>
         </StudentGroup>
@@ -137,7 +138,7 @@ function AddStudents({userData}) {
                 <Grid item xs={4}>
                 </Grid>
                 <Grid item xs={12} sm={2}>
-                    <Button variant="contained" onClick={() => saveStudentInfo(name, email, user,repository, group)}>
+                    <Button variant="contained" onClick={() => saveStudentInfo(name, email, user,repository, group, path)}>
                       {t('addStudents.saveStudent')}
                     </Button>
                 </Grid>

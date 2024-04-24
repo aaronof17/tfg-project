@@ -25,6 +25,7 @@
         "email" : "Email",
         "githubprofile" : "Perfil de GitHub",
         "repository" : "Repositorio",
+        "path" : "Directory path",
         "group" : "Grupo",
         "subject" : "Asignatura",
         "actions" :"Acciones",
@@ -34,18 +35,26 @@
         "downloadRepo" : "Descargar repositorios",
         "tokenError" : "Hubo un problema con tu token, puede que no sea correcto o esté caducado",
         "downloadError" : "Hubo un problema descargando los archivos",
+        "commitError" : "Hubo un problema creando el commit",
         "deleteStudent": "Vas a eliminar a un estudiante",
         "errorDeletingStudent" : "Ha ocurrido un error eliminando al estudiante",
         "studentInfo" : "Ten en cuenta que toda la información relacionada con él desaparecerá",
         "studentDeleted" : "Estudiante eliminado",
         "studentsListEmpty" : "Todavía no se ha añadido ningún estudiante",
-        "blankInfo" : "Ningún campo puede estar vacío",
+        "blankInfo" : "Ningún campo puede estar vacío, excepto la ruta de directorio",
         "emailExists" : "Este email ya existe",
         "userExists" : "Este usuario de github ya existe",
         "confirm" : "Confirmar",
         "cancel" : "Cancelar",
         "studentEdited" : "Estudiante editado",
-        "errorOccurred" : "Ha ocurrido un error"
+        "errorOccurred" : "Ha ocurrido un error",
+        "createCommit" : "Crear commit",
+        "tokenEmpty" : "Porfavor, introduce tu token de GitHub en tu perfil",
+        "commitErrorForStudent" : "Hubo un error al enviar el commit a ",
+        "pathBlank" : "La ruta de directorio no puede ser vacía para: ",
+        "checkingDateError" : "Hubo un error intentando comprobar las fechas de las prácticas de laboratorio",
+        "checkWorksDates" : "Comprobar fecha de prácticas de laboratorio"
+
 
     },
     "makeIssue" : {
@@ -66,7 +75,7 @@
         "tokenError" : "Hubo un problema con tu token, puede que no sea correcto o esté caducado"
     },
     "addStudents":{
-        "dataBlank" : "Ningún campo puede estar vacío",
+        "dataBlank" : "Ningún campo puede estar vacío, excepto la ruta de directorio",
         "studentSaved" : "Estudiante guardado",
         "errorAnalizingCSV" : "Error analizando el archivo",
         "informationCharged" : "La información se ha cargado con éxito",
@@ -81,6 +90,7 @@
         "repository" : "Repositorio",
         "subject" : "Asignatura",
         "groups" : "Grupo de Laboratorio",
+        "localpath" : "Ruta de directorio",
         "errorNumberFiles" : "Solo puedes cargar un archivo",
         "errorFormatFile" : "Error con el formato del archivo, solo pueden cargarse archivos csv",
         "errorSomethingWentWrong" : "Algo ha ido mal, pruébelo en otro momento",

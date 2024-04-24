@@ -85,8 +85,35 @@ async function downloadRepo(req, res) {
 }
 
 
+async function getFinalCommitInfo(req, res) {
+    try {
+        const user = req.body.user;
+        const repo = req.body.repo;
+
+        const githubResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/commits`, {
+            method: "GET",
+            headers: {
+                "Authorization": req.get("Authorization")
+            }
+        });
+        
+        if (!githubResponse.ok) {
+            throw new Error(`${githubResponse.statusText}`);
+        }
+
+        const commits = await githubResponse.json(); // Convertir la respuesta a JSON
+   
+        return commits;
+
+    } catch (error) {
+        console.error(error);
+        throw new Error(`${error}`);
+    }
+}
+
+
 async function createCommit(user, repo, accessToken) {
     // Lógica para descargar un repositorio de GitHub
 }
 
-module.exports = { getAccessToken, createIssue, getUserData, downloadRepo, createCommit};
+module.exports = { getAccessToken, createIssue, getUserData, getFinalCommitInfo, downloadRepo, createCommit};

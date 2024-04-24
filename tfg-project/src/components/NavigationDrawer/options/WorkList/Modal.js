@@ -22,12 +22,13 @@ function Modal ({ closeModal, onSubmit, defaultValue, errorMessage }){
   const [t] = useTranslation();
 
   const handleInitialDateChange = (date) => {
+    const newDate = new Date(date);
     setFormState(prevState => ({
         ...prevState,
-        initialdate: date
+        initialdate: newDate
     }));
-    if (date >= formState.finaldate) {
-        const nextDay = new Date(date);
+    if (newDate >= formState.finaldate) {
+        const nextDay = new Date(newDate);
         nextDay.setDate(nextDay.getDate() + 1);
         setFormState(prevState => ({
             ...prevState,
@@ -38,12 +39,13 @@ function Modal ({ closeModal, onSubmit, defaultValue, errorMessage }){
 
   
 const handleFinalDateChange = (date) => {
+    const newDate = new Date(date);
     setFormState(prevState => ({
         ...prevState,
-        finaldate: date
+        finaldate: newDate
     }));
-    if (formState.initialdate >= date) {
-        const previousDay = new Date(date);
+    if (formState.initialdate >= newDate) {
+        const previousDay = new Date(newDate);
         previousDay.setDate(previousDay.getDate() - 1);
         setFormState(prevState => ({
             ...prevState,
@@ -141,17 +143,23 @@ const handlePercentageChange = (event) => {
           <div className="form-group">
             <label htmlFor="initialDate">{t('worksList.initialDate')}</label>
             <DatePicker
-                    selected={formState.initialdate}
+                    selected={new Date(formState.initialdate)}
                     onChange={handleInitialDateChange}
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="yyyy-MM-dd HH:mm"
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15} 
                 />
           </div>
           <div className="form-group">
             <label htmlFor="finalDate">{t('worksList.finalDate')}</label>
             <DatePicker
-                    selected={formState.finaldate}
+                    selected={new Date(formState.finaldate)}
                     onChange={handleFinalDateChange}
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="yyyy-MM-dd HH:mm"
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15} 
                 />
           </div>
           <Button className="confirm-btn" variant="contained" onClick={handleSubmit}>

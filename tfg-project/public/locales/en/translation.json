@@ -24,6 +24,7 @@
         "email" : "Email",
         "githubprofile" : "GitHub Profile",
         "repository" : "Repositorio",
+        "path" : "Ruta de directorio",
         "group" : "Group",
         "subject" : "Subject",
         "actions" :"Actions",
@@ -33,18 +34,25 @@
         "downloadRepo" : "Download repositories",
         "tokenError" : "There was a problem with your token, its could be not correct or expired",
         "downloadError" : "There was an error downloading archives",
+        "commitError" : "There was an error creating commit",
         "deleteStudent": "You will delete a student",
         "studentInfo" : "All his information will be deleted too",
         "errorDeletingStudent" : "An error ocurred deleting stundent",
         "studentDeleted" : "Student deleted",
         "studentsListEmpty" : "There are no students yet",
-        "blankInfo" : "No field can be blank",
+        "blankInfo" : "No field can be blank, except path",
         "emailExists" : "This email already exists",
         "userExists" : "This github user already exists",
         "confirm" : "Confirm",
         "cancel" : "Cancel",
         "studentEdited" : "Student edited",
-        "errorOccurred" : "An error has ocurred"
+        "errorOccurred" : "An error has ocurred",
+        "createCommit" : "Create commit",
+        "tokenEmpty" : "Please introduce your GitHub personal access token in your profile",
+        "commitErrorForStudent" : "There was an error creating commit for ",
+        "pathBlank" : "Path can not be blank for student: ",
+        "checkingDateError" : "There was an error checking lab works dates",
+        "checkWorksDates" : "Check Works Dates"
 
     },
     "makeIssue" : {
@@ -66,7 +74,7 @@
 
     },
     "addStudents":{
-        "dataBlank" : "No field can be blank",
+        "dataBlank" : "No field can be blank, except path",
         "studentSaved" : "Student saved",
         "informationCharged" : "Information has been loaded successfully",
         "saveStudents" : "Save students",
@@ -80,6 +88,7 @@
         "repository" : "Repository",
         "subject" : "Subject",
         "groups" : "Lab groups",
+        "localpath" : "Directory path",
         "errorAnalizingCSV" : "Error analizing file",
         "errorNumberFiles" : "You can only use one file",
         "errorFormatFile" : "Error with file extension, you can only use .csv",
