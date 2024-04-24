@@ -49,10 +49,11 @@
         "errorOccurred" : "An error has ocurred",
         "createCommit" : "Create commit",
         "tokenEmpty" : "Please introduce your GitHub personal access token in your profile",
-        "commitErrorForStudent" : "There was an error creating commit for ",
+        "commitErrorForStudent" : "There was an error getting commits for ",
         "pathBlank" : "Path can not be blank for student: ",
         "checkingDateError" : "There was an error checking lab works dates",
-        "checkWorksDates" : "Check Works Dates"
+        "checkWorksDates" : "Check Works Dates",
+        "errorGettingWorksForStudent" : "There was an error getting works for "
 
     },
     "makeIssue" : {

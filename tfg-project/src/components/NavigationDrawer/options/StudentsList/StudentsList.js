@@ -17,7 +17,6 @@ import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js
 import RewriteModal from '../../../Modal/RewriteModal.js';
 import EditModal from './EditModal.js';
 import './StudentsList.css';
-import { getWorkByStudent } from "../../../../../../databaseRequests.js";
 
 function StudentsList({userData}) {
     const [studentsList, setStudentsList] = useState([]);
@@ -163,7 +162,6 @@ function StudentsList({userData}) {
 
     async function checkDatesFromWorks(){
       for (let student of selectedStudents) {
-
         try { 
           await getLastCommitInfo(teacherToken, getRepositoryName(student.repository), student.githubuser).then((res) =>{
             if(!res.response){
@@ -174,13 +172,45 @@ function StudentsList({userData}) {
               }
             }else{
               let commitsInfo = res.data;
-              await getWorksByStudentAndGroup();
+              getWorksByStudentAndGroup(extractId(student.id), student.group, teacherId).then((worksRes)=>{
+                if(!res.response){
+                  if(res.error === 'Unauthorized'){
+                    toast.error(t('studentList.tokenError'));
+                  }else{
+                    toast.error(t('studentList.errorGettingWorksForStudent')+student.name);
+                  }
+                }else{
+                  if(commitsInfo.lenth != 0){
+                    if( worksRes.data.length != 0){
+                      let commitInfo = commitsInfo.map((c) => c.commit)[0];
+  
+                      let commitDate = new Date(commitInfo.committer.date);
+                      console.log("fecha del commit ",commitDate);
+                      let worksFiltered = worksRes.data.filter(work => new Date(work.finaldate) < commitDate );
+                      console.log("WORKS ",worksRes);
+                      if( worksFiltered.length != 0){
+                        for(let w of worksFiltered){
+                          outOfTimeCommits.push("Commit INFO :"+commitInfo.committer.date+ "/ WORK INFO :"+w.title+" "+w.finaldate+" / Student: "+student.name);
+                        }
+                      }
+                    }else{
+                      outOfTimeCommits.push( "Student: "+student.name+ " no tiene trabajos asociados a "+student.group);
+                    }
+                  }else{
+                    outOfTimeCommits.push( "Student: "+student.name+ " no tiene commits en su repositorio");
+                  }
+                  
+                }
+
+              });
             }
           });
         } catch (error) {
           toast.error(t('studentList.checkingDateError')+error);
         }
       }
+      console.log("QUE SIIIIII");
+
     }
 
 
@@ -188,7 +218,9 @@ function StudentsList({userData}) {
       e.preventDefault();
       if(validateData()){
         try {
-          await checkDatesFromWorks();
+          await checkDatesFromWorks().then(() =>{
+            console.log("COMMITS MALOS ",outOfTimeCommits);
+          });
         } catch (error) {
           toast.error(t('studentList.checkingDateError') + error);
         }

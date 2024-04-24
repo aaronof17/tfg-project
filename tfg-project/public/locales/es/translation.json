@@ -50,10 +50,12 @@
         "errorOccurred" : "Ha ocurrido un error",
         "createCommit" : "Crear commit",
         "tokenEmpty" : "Porfavor, introduce tu token de GitHub en tu perfil",
-        "commitErrorForStudent" : "Hubo un error al enviar el commit a ",
+        "commitErrorForStudent" : "Hubo un error al obtener los commits de ",
         "pathBlank" : "La ruta de directorio no puede ser vacía para: ",
         "checkingDateError" : "Hubo un error intentando comprobar las fechas de las prácticas de laboratorio",
-        "checkWorksDates" : "Comprobar fecha de prácticas de laboratorio"
+        "checkWorksDates" : "Comprobar fecha de prácticas de laboratorio",
+        "errorGettingWorksForStudent" : "Hubo un error obteniendo los trabajos para "
+
 
 
     },

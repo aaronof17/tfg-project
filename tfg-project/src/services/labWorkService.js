@@ -79,7 +79,7 @@ export async function getWorksByStudent(studentEmail, callback, teacherID) {
 }
 
 
-export async function getWorksByStudentAndGroup(studentEmail, teacherID, labgroupName) {
+export async function getWorksByStudentAndGroup(studentId, labgroupName, teacherID) {
   try {
       const response = await fetch('http://localhost:4000/works/student/group', {
           method: "POST",
@@ -89,12 +89,18 @@ export async function getWorksByStudentAndGroup(studentEmail, teacherID, labgrou
           },
           body:
               JSON.stringify({ teacherID: teacherID,
-                      studentEmail: studentEmail})
+                              studentId: studentId,
+                              group: labgroupName})
 
       })
 
       const data = await response.json();
-      callback(data.data);
+      if(!data.success){
+        console.log("An error occurred deleting work: ", data.error);
+        return { response: false, error: data.error};
+      }
+        
+      return { response: true, data:data.data , error: ""};
     } catch (error) {
       console.error('Error getting works by student:', error);
     }

@@ -55,6 +55,7 @@ function getWorksByTeacherId(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting works: '+ err.sqlMessage});
         } else {
+            console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
         }
     })
@@ -74,6 +75,26 @@ function getWorkByStudent(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting work for student: '+ err.sqlMessage});
         } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+
+function getWorksByStudentAndGroup(req,res) {
+    const sql = "SELECT DISTINCT w.worklabID, w.title, w.labgroupNameFK, w.initialdate, w.finaldate "+
+                "FROM worklabs w " +
+                "JOIN labgroups g ON w.labgroupnameFK = g.name "+
+                "JOIN enrolled e ON g.idlabgroup = e.labgroupfk "+
+                "JOIN students s ON e.studentfk = s.studentsID "+
+                "WHERE g.teacherIDFK = ? and s.studentsId = ? and g.name = ? ";
+    const params = [req.body.teacherID, req.body.studentId, req.body.group];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting work for student and group: '+ err.sqlMessage});
+        } else {
+            console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
         }
     })
@@ -104,4 +125,4 @@ function getWorksByStudentId(req,res) {
 
 
 
-module.exports = {getWorkByStudent, getWorksByStudentId, deleteWork, getWorksByTeacherId, insertWork, editWork};
+module.exports = {getWorkByStudent, getWorksByStudentId, deleteWork, getWorksByStudentAndGroup, getWorksByTeacherId, insertWork, editWork};

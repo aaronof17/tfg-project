@@ -42,8 +42,6 @@ export function calculateWidth(list, uppercase=false, itsURL=false){
         minutes = '0' + minutes;
     }
 
-    console.log(`${year}-${month}-${day} ${hours}:${minutes}`);
-
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 

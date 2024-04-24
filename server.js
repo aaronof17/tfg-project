@@ -138,6 +138,11 @@ app.post('/works/student', async function (req, res) {
     return result;
 });
 
+app.post('/works/student/group', async function (req, res) {
+    const result = await workRequests.getWorksByStudentAndGroup(req,res);
+    return result;
+});
+
 app.post('/marks/save', async function (req, res) {
     const result = await markRequests.insertMark(req,res);
     return result;
