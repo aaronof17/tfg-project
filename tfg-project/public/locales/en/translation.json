@@ -53,8 +53,19 @@
         "pathBlank" : "Path can not be blank for student: ",
         "checkingDateError" : "There was an error checking lab works dates",
         "checkWorksDates" : "Check Works Dates",
-        "errorGettingWorksForStudent" : "There was an error getting works for "
-
+        "errorGettingWorksForStudent" : "There was an error getting works for ",
+        "messageForOOTCommitStudent" : "Student: ",
+        "messageForOOTCommitWithoutWorks" : " does not have lab works associated with his group ",
+        "messageForOOTCommitWithoutCommits" : " does not have commits in his repository",
+        "messageForOOTCommitmessage1" : " has made a commit out of time for lab work ",
+        "messageForOOTCommitmessage2" : " with delivery date ",
+        "messageForOOTCommitmessage3" : " associated with group ",
+        "messageForOOTCommitmessage4" : " at repository ",
+        "messageForOOTCommitCommitInfo" : "Commit info: ",
+        "messageForOOTCommitCommitMessage" : "Message: ",
+        "messageForOOTCommitCommitDate" : "Commit date: ",
+        "download" : "Download",
+        "commitInfoArchive" : "studentsCommitsInformation"
     },
     "makeIssue" : {
         "title" : "Title",

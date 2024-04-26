@@ -48,7 +48,7 @@ function ProfileView() {
     if(token === ""){
       toast.error(t('userProfile.tokenError'));
     }else{
-      saveTeacherToken(token,userData.html_url).then((res) =>{
+      saveTeacherToken(token,userData.login).then((res) =>{
         if(res.response){
           toast.info(t('userProfile.tokenSaved'));
         }else{

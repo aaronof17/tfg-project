@@ -54,9 +54,19 @@
         "pathBlank" : "La ruta de directorio no puede ser vacía para: ",
         "checkingDateError" : "Hubo un error intentando comprobar las fechas de las prácticas de laboratorio",
         "checkWorksDates" : "Comprobar fecha de prácticas de laboratorio",
-        "errorGettingWorksForStudent" : "Hubo un error obteniendo los trabajos para "
-
-
+        "errorGettingWorksForStudent" : "Hubo un error obteniendo los trabajos para ",
+        "messageForOOTCommitStudent" : "Estudiante: ",
+        "messageForOOTCommitWithoutWorks" : " no tiene prácticas de laboratorio asociadas a su grupo ",
+        "messageForOOTCommitWithoutCommits" : " no tiene commits en el repositorio ",
+        "messageForOOTCommitmessage1" : " ha hecho un commit fuera de plazo para la práctica de laboratorio ",
+        "messageForOOTCommitmessage2" : " con fecha de entrega ",
+        "messageForOOTCommitmessage3" : " asocida al grupo ",
+        "messageForOOTCommitmessage4" : " en el repositorio ",
+        "messageForOOTCommitCommitInfo" : "Información del Commit: ",
+        "messageForOOTCommitCommitMessage" : "Mensaje: ",
+        "messageForOOTCommitCommitDate" : "Fecha del commit: ",
+        "download" : "Descargar",
+        "commitInfoArchive" : "estudiantesCommitsInformacion"
 
     },
     "makeIssue" : {

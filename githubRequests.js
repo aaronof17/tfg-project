@@ -100,9 +100,7 @@ async function getFinalCommitInfo(req, res) {
         if (!githubResponse.ok) {
             throw new Error(`${githubResponse.statusText}`);
         }
-
-        const commits = await githubResponse.json(); // Convertir la respuesta a JSON
-   
+        const commits = await githubResponse.json();   
         return commits;
 
     } catch (error) {

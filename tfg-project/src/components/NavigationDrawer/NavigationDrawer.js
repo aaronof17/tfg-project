@@ -70,7 +70,7 @@ function ResponsiveDrawer(props) {
       if (userDataResponse.login) {
         const role = await getRoleByGitHubUser(userDataResponse.login);
         setRole(role);
-       // setRole("student");
+       //setRole("student");
       }
 
       teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
@@ -195,7 +195,7 @@ function ResponsiveDrawer(props) {
 
 
   const container = window !== undefined ? () => window().document.body : undefined;
-  const isMobile = useMediaQuery('(max-width:100px)'); 
+  const isMobile = useMediaQuery('(max-width:700px)'); 
 
   return (
     <Box className="principalBox" sx={{ display: 'flex' }}>

@@ -8,7 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
-import {calculateWidth, getRepositoryName, extractId} from "../../../../functions/genericFunctions.js";
+import {calculateWidth, getRepositoryName, extractId, formatDate} from "../../../../functions/genericFunctions.js";
 import {downloadRepo, getLastCommitInfo} from "../../../../functions/gitHubFunctions.js";
 import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
@@ -16,6 +16,7 @@ import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js
 
 import RewriteModal from '../../../Modal/RewriteModal.js';
 import EditModal from './EditModal.js';
+import InformationModal from './InformationModal.js';
 import './StudentsList.css';
 
 function StudentsList({userData}) {
@@ -25,6 +26,7 @@ function StudentsList({userData}) {
     const [selectedStudents, setSelectedStudents] = useState([]);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
+    const [informationModalOpen, setInformationModalOpen] = useState(false);
     const [rowToDelete, setRowToDelete] = useState("");
     const [rowToEdit, setRowToEdit] = useState("");
     const [outOfTimeCommits, setOutOfTimeCommits] = useState([]);
@@ -160,8 +162,83 @@ function StudentsList({userData}) {
     }
 
 
+    // async function checkDatesFromWorks(){
+    //   for (let student of selectedStudents) {
+    //     try { 
+    //       await getLastCommitInfo(teacherToken, getRepositoryName(student.repository), student.githubuser).then((res) =>{
+    //         if(!res.response){
+    //           if(res.error === 'Unauthorized'){
+    //             toast.error(t('studentList.tokenError'));
+    //           }else{
+    //             toast.error(t('studentList.commitErrorForStudent')+student.name);
+    //             // outOfTimeCommits.push( {
+    //             //   "messageType" : "errorGettingCommits",
+    //             //   "studentName" : student.name,
+    //             //   "repo" : student.repository
+    //             // });
+    //           }
+    //         }else{
+    //           let commitsInfo = res.data;
+    //           getWorksByStudentAndGroup(extractId(student.id), student.group, teacherId).then((worksRes)=>{
+    //             if(!res.response){
+    //               if(res.error === 'Unauthorized'){
+    //                 toast.error(t('studentList.tokenError'));
+    //               }else{
+    //                 toast.error(t('studentList.errorGettingWorksForStudent')+student.name);
+    //               }
+    //             }else{
+    //               if(commitsInfo.length != 0){
+    //                 if( worksRes.data.length != 0){
+    //                   let commitInfo = commitsInfo.map((c) => c.commit)[0];
+    //                   let commitDate = new Date(commitInfo.committer.date);
+    //                   let worksFiltered = worksRes.data.filter(work => new Date(work.finaldate) < commitDate );
+    //                   if( worksFiltered.length != 0){
+    //                     for(let w of worksFiltered){
+    //                       outOfTimeCommits.push({
+    //                         "messageType" : "commit",
+    //                         "studentName" : student.name,
+    //                         "labgroup" : student.group,
+    //                         "repo" : student.repository,
+    //                         "work" : {
+    //                           "title" : w.title,
+    //                           "finaldate" : formatDate(w.finaldate)
+    //                         },
+    //                         "commit":{
+    //                           "message" : commitInfo.message,
+    //                           "date" : formatDate(commitInfo.committer.date)
+    //                         }
+    //                     });
+    //                     }
+    //                   }
+    //                 }else{
+    //                   outOfTimeCommits.push({
+    //                     "messageType" : "withoutWorks",
+    //                     "studentName" : student.name,
+    //                     "labgroup" : student.group,
+    //                   });
+    //                 }
+    //               }else{
+    //                 outOfTimeCommits.push( {
+    //                   "messageType" : "withoutCommit",
+    //                   "studentName" : student.name,
+    //                   "repo" : student.repository,
+    //                 });
+    //               }
+                  
+    //             }
+
+    //           });
+    //         }
+    //       });
+    //     } catch (error) {
+    //       toast.error(t('studentList.checkingDateError')+error);
+    //     }
+    //   }
+
+    // }
+
     async function checkDatesFromWorks(){
-      for (let student of selectedStudents) {
+      const promises = selectedStudents.map(async (student) => {
         try { 
           await getLastCommitInfo(teacherToken, getRepositoryName(student.repository), student.githubuser).then((res) =>{
             if(!res.response){
@@ -180,37 +257,61 @@ function StudentsList({userData}) {
                     toast.error(t('studentList.errorGettingWorksForStudent')+student.name);
                   }
                 }else{
-                  if(commitsInfo.lenth != 0){
+                  if(commitsInfo.length != 0){
                     if( worksRes.data.length != 0){
                       let commitInfo = commitsInfo.map((c) => c.commit)[0];
-  
                       let commitDate = new Date(commitInfo.committer.date);
-                      console.log("fecha del commit ",commitDate);
                       let worksFiltered = worksRes.data.filter(work => new Date(work.finaldate) < commitDate );
-                      console.log("WORKS ",worksRes);
                       if( worksFiltered.length != 0){
                         for(let w of worksFiltered){
-                          outOfTimeCommits.push("Commit INFO :"+commitInfo.committer.date+ "/ WORK INFO :"+w.title+" "+w.finaldate+" / Student: "+student.name);
+                          setOutOfTimeCommits(prevInfo => [...prevInfo, 
+                            {
+                              "messageType" : "commit",
+                              "studentName" : student.name,
+                              "labgroup" : student.group,
+                              "repo" : student.repository,
+                              "work" : {
+                                "title" : w.title,
+                                "finaldate" : formatDate(w.finaldate)
+                              },
+                              "commit":{
+                                "message" : commitInfo.message,
+                                "date" : formatDate(commitInfo.committer.date)
+                              }
+                            }
+                          ]);
                         }
                       }
                     }else{
-                      outOfTimeCommits.push( "Student: "+student.name+ " no tiene trabajos asociados a "+student.group);
+                      setOutOfTimeCommits(prevInfo => [...prevInfo,
+                        {
+                          "messageType" : "withoutWorks",
+                          "studentName" : student.name,
+                          "labgroup" : student.group
+                        }
+                      ]);
                     }
                   }else{
-                    outOfTimeCommits.push( "Student: "+student.name+ " no tiene commits en su repositorio");
+                    setOutOfTimeCommits(prevInfo => [...prevInfo,
+                      {
+                        "messageType" : "withoutCommit",
+                        "studentName" : student.name,
+                        "repo" : student.repository
+                      }
+                    ]);
                   }
-                  
                 }
-
               });
             }
           });
         } catch (error) {
           toast.error(t('studentList.checkingDateError')+error);
         }
-      }
-      console.log("QUE SIIIIII");
+      });
 
+      await Promise.all(promises);
+      setInformationModalOpen(true);
+    
     }
 
 
@@ -218,9 +319,12 @@ function StudentsList({userData}) {
       e.preventDefault();
       if(validateData()){
         try {
-          await checkDatesFromWorks().then(() =>{
-            console.log("COMMITS MALOS ",outOfTimeCommits);
-          });
+          // // await checkDatesFromWorks().then(() =>{
+          //   console.log("COMMITS MALOS ",outOfTimeCommits[0]);
+          //   setInformationModalOpen(true);
+            
+          // });
+          await checkDatesFromWorks();
         } catch (error) {
           toast.error(t('studentList.checkingDateError') + error);
         }
@@ -325,6 +429,15 @@ function StudentsList({userData}) {
             studentsList={studentsList}
           />
         )}
+      {informationModalOpen && (
+        <InformationModal
+          closeModal={() => {
+            setInformationModalOpen(false);
+            setOutOfTimeCommits([]);
+          }}
+          outOfTimeCommits={outOfTimeCommits}
+        />
+      )}
     </div>
   );
 

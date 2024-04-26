@@ -132,6 +132,7 @@ export async function getLastCommitInfo(token, repositoryURL, githubUser) {
           console.log("An error occurred getting last commit information: ", data.error);
           return { response: false, error: data.error};
         } else {
+          console.log("datation ",data);
           return { response: true, data: data.data,error: ""};
         }
     } catch (error) {

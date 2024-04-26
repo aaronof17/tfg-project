@@ -14,7 +14,6 @@ const githubRequests = require('./githubRequests.js');
 const fetch = (...args) =>
 import('node-fetch').then(({default: fetch}) => fetch(...args));
 
-
 const app = express();
 const CLIENT_ID = "b771595a6c15c6653d02";
 const CLIENT_SECRET = "534c078c5dcaa7afc22d912c6aceb4bda2038b99";

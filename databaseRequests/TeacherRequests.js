@@ -60,6 +60,7 @@ function updateTeacherToken(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error saving token: '+ err.sqlMessage});
         } else {
+            console.log("TOJEN ",req.body.profileName);
             return res.status(200).json({ success: true, data: data });
         }
     })
