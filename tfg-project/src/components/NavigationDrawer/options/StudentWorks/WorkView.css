@@ -1,4 +1,4 @@
-.work-view-div{
+.work-view-container{
     margin-top: 4%;
     margin-right: 2%;
     margin-left: 2%;
@@ -7,7 +7,7 @@
     background-color: #ffffff; 
 }
 
-.work-view-div h2{
+.work-view-container h2{
     color: black;
     font-size: xx-large;
 }
@@ -26,7 +26,7 @@
 }
 
 @media screen and (max-width: 768px) {
-    .work-view-div {
+    .work-view-container {
         margin: 8% 4%;
     }
 

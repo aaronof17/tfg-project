@@ -66,7 +66,9 @@
         "messageForOOTCommitCommitMessage" : "Mensaje: ",
         "messageForOOTCommitCommitDate" : "Fecha del commit: ",
         "download" : "Descargar",
-        "commitInfoArchive" : "estudiantesCommitsInformacion"
+        "commitInfoArchive" : "estudiantesCommitsInformacion",
+        "noConflicts": "No hubo conflictos con ningún commit",
+        "errorRepository" : "Hubo un problema con el repositorio, o no existe o probablemente no tengas acceso a él. Alumno: "
 
     },
     "makeIssue" : {
@@ -166,6 +168,7 @@
         "nameLabel" : "Nombre",
         "name": "Nombre de Usuario",
         "githubprofile" : "Perfil de GitHub",
+        "githubuser" : "Usuario de github",
         "email" : "Email",
         "avatar" : "Foto de perfil",
         "token" : "Token de GitHub",
@@ -176,7 +179,7 @@
         "tokenSaved" : "Token guardado",
         "error" : "Lo sentimos ha ocurrido un error guardando el token"
      },
-     "studentWorks" : {
+    "studentWorks" : {
         "worksBlank" : "No tienes ninguna práctica asignada todavía",
         "title" : "Título",
         "description" : "Descripción",
@@ -187,5 +190,26 @@
         "initialDate" : "Fecha Inicial",
         "finalDate" : "Fecha Final",
         "withoutMark" : "Este trabajo todavía no ha sido calificado"
-      }
+    },
+    "addTeachers" : {
+        "name" : "Nombre completo",
+        "email" : "Email",
+        "user" : "Usuario de GitHub",
+        "add" : "Añadir profesor",
+        "dataBlank" : "Ningún campo puede estar vacío",
+        "teacherSaved" : "Profesor guardado",
+        "errorSavingTeacher" : "Hubo un error guardando el profesor",
+        "errorExist" : " ya existe"
+    },
+    "teachersList" : {
+        "name" : "Nombre",
+        "email" : "Email",
+        "githubprofile" : "Usuario de GitHub",
+        "actions" : "Acciones",
+        "teacherDeleted" : "Profesor eliminado",
+        "errorDeletingTeacher" : "Hubo un error eliminando el profesor",
+        "deleteTeacher": "Vas a eliminar un profesor",
+        "teacherInfo" : "Toda será eliminada también",
+        "teachersListEmpty" : "No hay profesores todavía"
+    }
 }

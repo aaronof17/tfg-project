@@ -31,7 +31,7 @@ export async function saveEnrolled(studentId, groupId, repository, path) {
 
         if(!data.success){
             console.log("An error occurred saving enrolled: ", data.error);
-            return { response: false, error: data.error};
+            return { response: false, error: data.error, code:data.code};
         }
         return { response: true, error: ""};
 

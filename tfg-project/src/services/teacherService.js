@@ -1,7 +1,19 @@
+import * as CryptoJS from 'crypto-js';
 
+const encryptToken = (token) => {
+  const encryptedToken = CryptoJS.AES.encrypt(token, 'z8Y#rT@6Mv!yP$qX').toString();
+  return encryptedToken;
+}
+
+const decryptToken = (encryptedToken) => {
+  const decryptedBytes = CryptoJS.AES.decrypt(encryptedToken, 'z8Y#rT@6Mv!yP$qX');
+  const decryptedToken = decryptedBytes.toString(CryptoJS.enc.Utf8);
+  return decryptedToken;
+}
 
 export async function saveTeacherToken(teacherToken, userProfileName) {
     try {
+        const encryptedToken = await encryptToken(teacherToken);
         const response = await fetch('http://localhost:4000/teachers/token', {
             method: "POST",
             headers: {
@@ -9,7 +21,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
               "Content-Type": "application/json"
             },
             body:
-                JSON.stringify({ token: teacherToken,
+                JSON.stringify({ token: encryptedToken,
                                   profileName: userProfileName})
           });
           
@@ -17,7 +29,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
 
           if(!data.success){
             console.log("An error occurred saving token: ", data.error);
-            return { response: false, error: data.error};
+            return { response: false, error: data.error, code:data.code};
           }
           
           return { response: true, error: ""};
@@ -63,7 +75,9 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           });
         
         const data = await response.json();
-        callback(data.data[0].githubToken);
+        const decryptedToken = await decryptToken(data.data[0].githubToken);
+        console.log("TOKEN ",decryptedToken);
+        callback(decryptedToken);
       } catch (error) {
         console.error('Error getting teacher token:', error);
       }
@@ -132,4 +146,59 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
       } catch (error) {
         console.error('Error getting teachers:', error);
       }
+  }
+
+  export async function saveTeacher(name, email, user) {
+    try {
+  
+      const response = await fetch('http://localhost:4000/teachers/save', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ name: name,
+                              email: email,
+                              user: user
+                            })
+        });
+      
+        const data = await response.json(); 
+        console.log("data ",data);
+        if(!data.success){
+          console.log("An error occurred saving teacher: ", data.error);
+          return { response: false, error: data.error, code:data.code};
+        }else {
+          return { response: true, error: "" };
+        }
+    } catch (error) {
+        return { response: false, error: "Sorry, an error occurred saving teacher"};
+    }
+  }
+
+
+  export async function deleteTeacher(rowToDelete) {
+    try {
+      const response = await fetch('http://localhost:4000/teachers/delete', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({email: rowToDelete.email})
+        });
+      
+        const data = await response.json(); 
+  
+        if(!data.success){
+          console.log("An error occurred deleting teacher: ", data.error);
+          return { response: false, error: data.error};
+        }
+        return { response: true, error: ""};
+  
+    } catch (error) {
+        return { response: false, error: "Sorry, an error occurred deleting teacher"};
+    }
   }

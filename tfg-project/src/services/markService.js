@@ -18,7 +18,7 @@ export async function saveMark(work, student, comment, mark) {
 
         if(!data.success){
           console.log("An error occurred saving mark: ", data.error);
-          return { response: false, error: data.error};
+          return { response: false, error: data.error, code:data.code};
         }
         
         return { response: true, error: ""};
@@ -50,7 +50,7 @@ export async function saveMark(work, student, comment, mark) {
 
         if(!data.success){
           console.log("An error occurred editing mark: ", data.error);
-          return { response: false, error: data.error};
+          return { response: false, error: data.error, code:data.code};
         }
         
         return { response: true, error: ""};

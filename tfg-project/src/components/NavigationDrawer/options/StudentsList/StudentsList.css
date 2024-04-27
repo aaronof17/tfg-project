@@ -10,8 +10,6 @@
     background-color: #D5DBDB;
 }
 
-
-
 .students-wrapper h3{
     color: black;
 }
@@ -24,7 +22,7 @@
 }
 
 .buttons .downloadRepo,
-.buttons .createCommit{
+.buttons .checkWorksDates{
     margin-left: 2%;
     margin-right: 2%;
 }

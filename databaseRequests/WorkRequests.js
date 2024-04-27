@@ -9,7 +9,7 @@ function insertWork(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error saving works: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error saving: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -25,7 +25,7 @@ function editWork(req,res) {
     connection.query(sql, params ,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error editing work: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error saving: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -40,7 +40,7 @@ function deleteWork(req,res) {
     connection.query(sql, params ,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error deleting work: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error deleting work: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -53,7 +53,7 @@ function getWorksByTeacherId(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting works: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting works: '+ err.sqlMessage, code: err.code});
         } else {
             console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
@@ -73,7 +73,7 @@ function getWorkByStudent(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting work for student: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting work for student: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -92,7 +92,7 @@ function getWorksByStudentAndGroup(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting work for student and group: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting work for student and group: '+ err.sqlMessage, code: err.code});
         } else {
             console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
@@ -114,7 +114,7 @@ function getWorksByStudentId(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting work for student: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting work for student: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }

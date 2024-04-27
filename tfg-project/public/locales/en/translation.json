@@ -65,7 +65,9 @@
         "messageForOOTCommitCommitMessage" : "Message: ",
         "messageForOOTCommitCommitDate" : "Commit date: ",
         "download" : "Download",
-        "commitInfoArchive" : "studentsCommitsInformation"
+        "commitInfoArchive" : "studentsCommitsInformation",
+        "noConflicts": "There are no conflicts with commits",
+        "errorRepository" : "There was a problem with repository, it does not exists or you probably don't have access. Student: "
     },
     "makeIssue" : {
         "title" : "Title",
@@ -167,6 +169,7 @@
         "nameLabel" : "Name",
         "name": "User Name",
         "githubprofile" : "GitHub Profile",
+        "githubuser" : "Github User",
         "email" : "Email",
         "avatar" : "Avatar",
         "token" : "GitHub Token",
@@ -188,5 +191,26 @@
         "initialDate" : "Initial Date",
         "finalDate" : "Final Date",
         "withoutMark" : "This work has not been marked yet"
-     }
+     },
+    "addTeachers" : {
+        "name" : "Complete name",
+        "email" : "Email",
+        "user" : "GitHub User",
+        "add" : "Add teacher",
+        "dataBlank" : "No field can be blank",
+        "teacherSaved" : "Teacher saved",
+        "errorSavingTeacher" : "There was an error saving teacher",
+        "errorExist" : " already exists"
+    },
+    "teachersList" : {
+        "name" : "Name",
+        "email" : "Email",
+        "githubprofile" : "GitHub User",
+        "actions" : "Actions",
+        "teacherDeleted" : "Teacher Deleted",
+        "errorDeletingTeacher" : "There was an error deleting teacher",
+        "deleteTeacher": "You will delete a teacher",
+        "teacherInfo" : "All his information will be deleted too",
+        "teachersListEmpty" : "There are not teachers yet"
+    }
 }

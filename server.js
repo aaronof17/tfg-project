@@ -58,6 +58,17 @@ app.post('/teachers/id', async function (req, res) {
     return result;
 });
 
+
+app.post('/teachers/save', async function (req, res) {
+    const result = await teacherRequests.insertTeacher(req,res);
+    return result;
+});
+
+app.post('/teachers/delete', async function (req, res) {
+    const result = await teacherRequests.deleteTeacher(req,res);
+    return result;
+});
+
 app.post('/students/id', async function (req, res) {
     const result = await studentRequests.getStudentId(req,res);
     return result;
@@ -218,6 +229,9 @@ app.post('/createIssue', async function  (req, res){
         if(error.message === 'Error: Unauthorized'){
             return res.status(401).json({ success: false, error: 'Unauthorized' });
         }
+        if(error.message === 'Error: Not Found'){
+            return res.status(402).json({ success: false, error: 'Not Found' });
+        }
         return res.status(500).json({ success: false, error: error });
     }
 });
@@ -283,6 +297,9 @@ app.post('/downloadRepo', async function  (req, res){
         if(error.message === 'Error: Unauthorized'){
             return res.status(401).json({ success: false, error: 'Unauthorized' });
         }
+        if(error.message === 'Error: Not Found'){
+            return res.status(402).json({ success: false, error: 'Not Found' });
+        }
         return res.status(500).json({ success: false, error: error });
     }
 });
@@ -295,6 +312,9 @@ app.post('/getFinalCommitInfo', async function  (req, res){
     } catch (error) {
         if(error.message === 'Error: Unauthorized'){
             return res.status(401).json({ success: false, error: 'Unauthorized' });
+        }
+        if(error.message === 'Error: Not Found'){
+            return res.status(402).json({ success: false, error: 'Not Found' });
         }
         return res.status(500).json({ success: false, error: error });
     }

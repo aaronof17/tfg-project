@@ -24,7 +24,7 @@ export async function saveWorks(datesFromWorks, title, description, percentage,t
 
           if(!data.success){
             console.log("An error occurred saving mark: ", data.error);
-            return { response: false, error: data.error};
+            return { response: false, error: data.error, code:data.code};
           }
       }
       return { response: true, error: ""};
@@ -148,7 +148,7 @@ export async function editWork(editRow) {
 
     if(!data.success){
       console.log("An error occurred editing work: ", data.error);
-      return { response: false, error: data.error};
+      return { response: false, error: data.error, code:data.code};
     }
       
     return { response: true, error: ""};

@@ -22,7 +22,7 @@ function WorkView({work}) {
 
 
   return (
-    <div className='work-view-div'>
+    <div className='work-view-container'>
         <Grid container spacing={2}>
                 <Grid item xs={12} sm={12}>
                     <h2>{work.title}</h2>

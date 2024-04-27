@@ -83,7 +83,15 @@ function ProfileView() {
     }
   }
 
+  function getRoleByGitHubUser(){
+    if(userData && userData.login){
+      return userData.login;
+    }else{
+      return t('userProfile.githubuser');
+    }
+  }
 
+  
   /**
    * This method returns the url profile or
    * default message
@@ -127,9 +135,9 @@ function ProfileView() {
         <div className="textField">
           <TextField
             id="outlined-required"
-            className="profileEmail"
-            label={t('userProfile.email')}
-            value={"example@email.com"}
+            className="githubuser"
+            label={t('userProfile.githubuser')}
+            value={getRoleByGitHubUser()}
             style={estiloTextField}
             InputLabelProps={{ style: { color: 'black' } }}
 

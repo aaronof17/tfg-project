@@ -12,35 +12,45 @@
     z-index: 1;
   }
   
-  .modal {
-    border-radius: 5%;
-    padding: 2rem;
-    background-color: white;
-    width: 25em;
-  }
-  
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
+.modal {
+  border-radius: 5%;
+  padding: 2rem;
+  background-color: white;
+  width: 25em;
+}
 
-  .form-group textarea {
-    resize: none
-  }
-  
-  .form-group input,
-  .form-group textarea,
-  .form-group select {
-    border: 1px solid black;
-    border-radius: 0.3rem;
-    padding: 0.3rem;
-    font-size: 1rem;
-  }
-  
-  .form-group label {
-    font-size: large;
-    margin-bottom: 0.2rem;
-    color: black;
-  }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group textarea {
+  resize: none
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  border: 1px solid black;
+  border-radius: 0.3rem;
+  padding: 0.3rem;
+  font-size: 1rem;
+}
+
+.form-group label {
+  font-size: large;
+  margin-bottom: 0.2rem;
+  color: black;
+}
+
+.modal .confirm-btn,
+.modal .cancel-btn{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.modal .cancel-btn{
+  background-color: red;
+}

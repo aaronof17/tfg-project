@@ -1,4 +1,4 @@
-.students-add-div {
+.teachers-add-div {
     margin-top: 5vh; 
     padding: 2vw; 
     align-items: center;
@@ -12,6 +12,6 @@
 }
 
 
-.students-add-buttons{
+.teachers-add-buttons{
     margin-top: 5%;
 }

@@ -12,7 +12,7 @@ function getStudentsByTeacher(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting students for teacher: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting students for teacher: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -25,7 +25,7 @@ function getStudentId(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting student id: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting student id: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -46,7 +46,7 @@ function getStudentsBySubject(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting students by subject: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting students by subject: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -66,7 +66,7 @@ function getStudentsByGroup(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting students by group: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting students by group: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -85,7 +85,7 @@ function getStudentsByTeacherWithoutRepo(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting students for teacher: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting students for teacher: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -99,7 +99,7 @@ function insertStudent(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error saving student: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error saving student: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -124,7 +124,7 @@ function editStudent(req,res) {
     connection.query(sql, params ,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error editing student: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error saving: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -149,12 +149,12 @@ function deleteStudent(req,res) {
     connection.query(sql1, params1,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error deleting student: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error deleting student: '+ err.sqlMessage, code: err.code});
         } else {
             connection.query(sql2, params2,(err, data) =>{
                 if(err){
                     console.log(err);
-                    return res.status(500).json({ success: false, error: 'Error deleting student: '+ err.sqlMessage});
+                    return res.status(500).json({ success: false, error: 'Error deleting student: '+ err.sqlMessage, code: err.code});
                 } else {
                     return res.status(200).json({ success: true, data: data });
                 }

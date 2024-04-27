@@ -37,7 +37,7 @@ function StudentInfo({setName, setEmail, setUser, setRepository, setPath}) {
                         className="studentName"
                         label={t('addStudents.name')}
                         type="text"
-                        inputProps={{ maxLength: 45 }}
+                        inputProps={{ maxLength: 100 }}
                         onChange={handleNameChange}
                         sx={{ width: '100%' }}
                     />

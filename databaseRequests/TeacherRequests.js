@@ -16,7 +16,7 @@ function getRoleByGitHubUser(req,res) {
     connection.query(sql, params, (err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting teachers: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting teachers: '+ err.sqlMessage, code: err.code});
         } else {
             console.log("sisi ",data);
             return res.status(200).json({ success: true, data: data });
@@ -29,7 +29,7 @@ function getTeachers(req,res) {
     connection.query(sql, (err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting teachers: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting teachers: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -45,7 +45,7 @@ function getTeacherByGitHubUser(req,res) {
     connection.query(sql, params, (err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting teachers: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting teachers: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -58,7 +58,7 @@ function updateTeacherToken(req,res) {
     connection.query(sql, params ,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error saving token: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error saving: '+ err.sqlMessage, code: err.code});
         } else {
             console.log("TOJEN ",req.body.profileName);
             return res.status(200).json({ success: true, data: data });
@@ -73,7 +73,35 @@ function getTeacherId(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting teacherID: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting teacherID: '+ err.sqlMessage, code: err.code});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+
+function insertTeacher(req,res) {
+    const sql = 'INSERT INTO teachers (name, email, githubProfile) VALUES (?,?,?)';
+    const params = [req.body.name, req.body.email, req.body.user];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error saving: '+ err.sqlMessage, code: err.code});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+
+function deleteTeacher(req,res) {
+    const sql = 'delete from teachers where email = ?';
+    const params = [req.body.email];
+    connection.query(sql, params ,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error deleting teacher: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -87,7 +115,7 @@ function getTeacherToken(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting token: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting token: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -95,4 +123,4 @@ function getTeacherToken(req,res) {
 }
 
 
-module.exports = {getTeacherToken, getTeachers, updateTeacherToken, getTeacherId, getTeacherByGitHubUser, getRoleByGitHubUser};
+module.exports = {getTeacherToken, insertTeacher, getTeachers, deleteTeacher, updateTeacherToken, getTeacherId, getTeacherByGitHubUser, getRoleByGitHubUser};

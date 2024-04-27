@@ -22,55 +22,12 @@ function StudentWorks({userData}) {
         };
     
         fetchInfo();
-        // setWorks([
-        //   {
-        //       "id":1,
-        //       "title": "Practica 1",
-        //       "group": "ASL_L1",
-        //       "percentage" : 90,
-        //       "description" : "mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto ",
-        //       "mark":  {
-        //         "nota": 9,
-        //         "comentario": "Excelente trabajo, muy bien investigado y presentado. ¡Sigue así!"
-        //       }
-        //   },
-        //   {
-        //     "id":2,
-        //     "title": "Practica 2",
-        //     "group": "ASL_L2",
-        //     "percentage" : 44,
-        //     "description" : "mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa ",
-        //     "mark":  ""
-        //   },
-        //   {
-        //     "id":1,
-        //     "title": "Practica 3",
-        //     "group": "ASL_L1",
-        //     "percentage" : 90,
-        //     "description" : "mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto mucho texto y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa y mas cosa ",
-        //     "mark":  {
-        //       "nota": 9,
-        //       "comentario": "Excelente trabajo, muy bien investigado y presentado. ¡Sigue así!"
-        //     }
-        //   },
-        //   {
-        //     "id":1,
-        //     "title": "Practica 4",
-        //     "group": "ASL_3",
-        //     "percentage" : 90,
-        //     "description" : "mucho texto mucho texto ",
-        //     "mark":  {
-        //       "nota": 9,
-        //       "comentario": "Excelente trabajo, muy bien investigado y presentado. ¡Sigue así!"
-        //     }
-        //   }
-        // ]);
       }, []);
 
   
 
   return (
-    <div className='student-works-div'>
+    <div className='student-works-container'>
         {works.length !== 0 ? 
         works.map((work) => {
           return <WorkView key={work.id} work={work}></WorkView>

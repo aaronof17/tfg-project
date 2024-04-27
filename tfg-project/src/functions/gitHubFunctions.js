@@ -1,6 +1,6 @@
 import { LightningFS } from '@isomorphic-git/lightning-fs';
 // import git from 'isomorphic-git'
-import { git, plugins, clone,commit } from 'isomorphic-git'
+import { plugins, clone } from 'isomorphic-git'
 import FS from '@isomorphic-git/lightning-fs'
 import http from 'https://unpkg.com/isomorphic-git@beta/http/web/index.js'
 
@@ -36,9 +36,23 @@ export async function createIssue(user,repo,title,description,token) {
 
 
 export async function createCommit(title, message, path, token) {
-  let fs = new FS('fs', { wipe: true })
-  
-const dir = '/test-clone'
+  window.fs = new FS("fs");
+  //plugins.set('fs', window.fs);
+  let dir = 'C:/Users/aaron/Desktop/UNI/tfg/rutadeprueba/prueba';
+
+  await clone({
+    dir: '/',
+    corsProxy: 'https://cors.isomorphic-git.org',
+    url: 'https://github.com/isomorphic-git/isomorphic-git.git',
+    singleBranch: true,
+    depth: 1
+  })
+
+
+
+  //let fs = new FS('fs', { wipe: true })
+
+  //const dir = '/test-clone'
   // commit({
   //   fs,
   //   dir: '/tutorial',
@@ -51,7 +65,7 @@ const dir = '/test-clone'
   // .then
   // ((res) => console.log("respuesta ",res));
   
-  clone({ fs, http, dir, url: 'https://github.com/isomorphic-git/lightning-fs', corsProxy: 'https://cors.isomorphic-git.org' }).then(console.log)
+ // clone({ fs, http, dir, url: 'https://github.com/isomorphic-git/lightning-fs', corsProxy: 'https://cors.isomorphic-git.org' }).then(console.log)
 
   // const apiUrl = 'http://localhost:4000/createCommit';
   // try {

@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
 import {calculateWidth, getRepositoryName, extractId, formatDate} from "../../../../functions/genericFunctions.js";
-import {downloadRepo, getLastCommitInfo} from "../../../../functions/gitHubFunctions.js";
+import {downloadRepo, getLastCommitInfo, createCommit} from "../../../../functions/gitHubFunctions.js";
 import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js";
@@ -139,6 +139,8 @@ function StudentsList({userData}) {
             if(!res.response){
               if(res.error === 'Unauthorized'){
                 toast.error(t('studentList.tokenError'));
+              }else if(res.error === 'Not Found'){
+                toast.error(t('studentList.errorRepository')+student.name);
               }else{
                 toast.error(t('studentList.issueErrorSendStudent'));
               }
@@ -244,6 +246,8 @@ function StudentsList({userData}) {
             if(!res.response){
               if(res.error === 'Unauthorized'){
                 toast.error(t('studentList.tokenError'));
+              }else if(res.error === 'Not Found'){
+                toast.error(t('studentList.errorRepository')+student.name);
               }else{
                 toast.error(t('studentList.commitErrorForStudent')+student.name);
               }
@@ -332,6 +336,18 @@ function StudentsList({userData}) {
     }
 
 
+    async function cloneRepo(e) {
+      e.preventDefault();
+      if(validateData()){
+        try {
+          await createCommit();
+        } catch (error) {
+          toast.error(t('studentList.checkingDateError') + error);
+        }
+      }
+    }
+
+
   
     const handleSelectionChange = (ids) => {
       const selectedIDs = new Set(ids);
@@ -385,7 +401,8 @@ function StudentsList({userData}) {
 
   if(studentsList.length !== 0)
   return (
-    <div className="students-wrapper">
+  <div className="students-wrapper">
+    <div className="students-wrapper-container">
       <DataGrid
         className="students-table"
         rows={getRows()}
@@ -404,6 +421,9 @@ function StudentsList({userData}) {
           {t('studentList.downloadRepo')}
         </Button>
         <Button className="checkWorksDates" variant="contained" onClick={checkDatesMethod}>
+          {t('studentList.checkWorksDates')}
+        </Button>
+        <Button className="cloneRepo" variant="contained" onClick={cloneRepo}>
           {t('studentList.checkWorksDates')}
         </Button>
       </div>
@@ -438,6 +458,7 @@ function StudentsList({userData}) {
           outOfTimeCommits={outOfTimeCommits}
         />
       )}
+    </div>
     </div>
   );
 

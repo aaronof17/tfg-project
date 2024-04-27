@@ -1,22 +1,23 @@
-
-.student-works-container{
+.teachers-wrapper{
     margin-top: 5vh; 
     padding: 2vw; 
     align-items: center;
-    width: 90vw; 
-    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     height: 100%;
     border-radius: 1.5vw; 
     box-shadow: 0.3vw 1vw 1.5vw hsl(0deg 0% 0% / 0.31);
-    background-color: #D5DBDB; 
-    overflow-x: hidden;
+    background-color: #D5DBDB;
 }
 
-.student-works-container h3{
+.teachers-wrapper h3{
     color: black;
 }
 
-  
-  
-  
+
+.teachers-table {
+    min-width: 100%; 
+    margin:5px;
+    background-color: rgb(202, 202, 202);
+}
+

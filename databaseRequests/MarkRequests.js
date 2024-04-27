@@ -8,7 +8,7 @@ function insertMark(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error saving mark at data base: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error saving: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -23,7 +23,7 @@ function getMarkByWorkAndStudent(req,res) {
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error getting id from marks: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error getting id from marks: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }
@@ -37,7 +37,7 @@ function editMark(req,res){
     connection.query(sql, params ,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).json({ success: false, error: 'Error editing mark: '+ err.sqlMessage});
+            return res.status(500).json({ success: false, error: 'Error saving: '+ err.sqlMessage, code: err.code});
         } else {
             return res.status(200).json({ success: true, data: data });
         }

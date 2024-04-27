@@ -113,7 +113,7 @@ export async function saveStudent(name, email, user, repository, groupId, path) 
 
       if(!data.success){
         console.log("An error occurred saving student: ", data.error);
-        return { response: false, error: data.error};
+        return { response: false, error: data.error, code:data.code};
       }else {
         const enrolledResponse = await saveEnrolled(data.data.insertId, groupId, repository, path);
         if (enrolledResponse.response) {
@@ -226,7 +226,7 @@ export async function editStudent(editRow) {
 
     if(!data.success){
       console.log("An error occurred editing student: ", data.error);
-      return { response: false, error: data.error};
+      return { response: false, error: data.error, code:data.code};
     }
       
     return { response: true, error: ""};

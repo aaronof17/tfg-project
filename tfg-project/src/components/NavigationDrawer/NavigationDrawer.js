@@ -37,6 +37,7 @@ import HeaderAppBar from './HeaderAppBar.js';
 import AddStudents from './options/AddStudents/AddStudents.js';
 import StudentWorks from './options/StudentWorks/StudentWorks.js'
 import AddTeachers from './options/AddTeachers/AddTeachers.js';
+import TeachersList from './options/TeachersList/TeachersList.js';
 
 const drawerWidth = 240;
 
@@ -59,7 +60,7 @@ function ResponsiveDrawer(props) {
   let teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
                       <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
   let studentViews = [<StudentWorks userData={userData}/>, <ProfileView userData={userData}/>];
-  let adminViews = [<AddTeachers userData={userData}/>];
+  let adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>];
   let defaultViews = [];
 
   useEffect(() => {
@@ -69,14 +70,14 @@ function ResponsiveDrawer(props) {
 
       if (userDataResponse.login) {
         const role = await getRoleByGitHubUser(userDataResponse.login);
-        setRole(role);
-       //setRole("student");
+        //setRole(role);
+        setRole("admin");
       }
 
       teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
                         <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
       studentViews = [<StudentWorks userData={userData}/>];
-      adminViews = [<AddTeachers userData={userData}/>];
+      adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>];
       
     };
 
@@ -195,7 +196,7 @@ function ResponsiveDrawer(props) {
 
 
   const container = window !== undefined ? () => window().document.body : undefined;
-  const isMobile = useMediaQuery('(max-width:700px)'); 
+ // const isMobile = useMediaQuery('(max-width:700px)'); 
 
   return (
     <Box className="principalBox" sx={{ display: 'flex' }}>
@@ -211,7 +212,7 @@ function ResponsiveDrawer(props) {
       >
         <Drawer
           container={container}
-          variant={isMobile ? 'temporary' : 'permanent'}
+          variant={'temporary'}
           open={mobileOpen}
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
@@ -227,7 +228,7 @@ function ResponsiveDrawer(props) {
           {drawer}
         </Drawer>
         <Drawer
-          variant={isMobile ? 'temporary' : 'permanent'}
+          variant={'permanent'}
           sx={{
             display: { xs: 'none', sm: 'block' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, 

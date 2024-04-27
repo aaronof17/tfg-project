@@ -106,3 +106,14 @@ export function extractId(cadena){
         return null;
     }
 }
+
+
+export function extractDuplicateEntry(text) {
+    const regex = /Error saving: Duplicate entry '([^']+)'/;
+    const match = text.match(regex);
+    if (match && match.length > 1) {
+      return match[1];
+    } else {
+      return null;
+    }
+  }

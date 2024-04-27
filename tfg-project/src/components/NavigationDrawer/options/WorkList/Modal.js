@@ -165,6 +165,9 @@ const handlePercentageChange = (event) => {
           <Button className="confirm-btn" variant="contained" onClick={handleSubmit}>
                     {t('worksList.confirm')}
           </Button>
+          <Button className="cancel-btn" variant="contained" onClick={closeModal}>
+                    {t('worksList.cancel')}
+          </Button>
         </form>
       </div>
     </div>
