@@ -202,3 +202,56 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
         return { response: false, error: "Sorry, an error occurred deleting teacher"};
     }
   }
+
+
+  export async function getStundentId(callback, githubUser) {
+    try {
+        const response = await fetch('http://localhost:4000/students/id', {
+            method: "POST",
+            headers: {
+              "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json"
+            },
+            body:
+                JSON.stringify({ githubUser: githubUser })
+          });
+        
+        const data = await response.json();
+        callback(data.data[0].studentsID);
+        return data.data[0].studentsID;
+      } catch (error) {
+        console.error('Error getting student id:', error);
+      }
+  }
+  
+  export async function editTeacher(editRow) {
+    try {
+        const response = await fetch('http://localhost:4000/teachers/edit', {
+            method: "POST",
+            headers: {
+              "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json"
+            },
+            body:
+                JSON.stringify({
+                              teacherID: editRow.id,
+                              name: editRow.name,
+                              email: editRow.email,
+                              githubuser: editRow.githubProfile
+                            })
+          });
+        
+      const data = await response.json(); 
+  
+      if(!data.success){
+        console.log("An error occurred editing teacher: ", data.error);
+        return { response: false, error: data.error, code:data.code};
+      }
+        
+      return { response: true, error: ""};
+  
+      } catch (error) {
+          return { response: false, error: "Sorry, an error occurred editing teacher"};
+      }
+}
+  

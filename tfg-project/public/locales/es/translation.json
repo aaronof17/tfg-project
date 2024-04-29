@@ -210,6 +210,14 @@
         "errorDeletingTeacher" : "Hubo un error eliminando el profesor",
         "deleteTeacher": "Vas a eliminar un profesor",
         "teacherInfo" : "Toda será eliminada también",
-        "teachersListEmpty" : "No hay profesores todavía"
+        "teachersListEmpty" : "No hay profesores todavía",
+        "teacherEdited" : "Profesor editado",
+        "errorExist" : " ya existe",
+        "errorOccurred" : "Ha ocurrido un error",
+        "blankInfo" : "Ningún campo puede estar vacío",
+        "emailExists" : "Este email ya existe",
+        "userExists" : "Este usuario de github ya existe",
+        "confirm" : "Confirmar",
+        "cancel" : "Cancelar"
     }
 }

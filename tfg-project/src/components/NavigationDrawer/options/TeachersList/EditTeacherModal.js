@@ -60,7 +60,7 @@ function EditTeacherModal ({ closeModal, onSubmit, defaultValue, teachersList}){
                 name="name" 
                 onChange={handleChange} 
                 value={formState.name}
-                maxLength={45}
+                maxLength={100}
             />
           </div>
           <div className="form-group">
@@ -69,7 +69,7 @@ function EditTeacherModal ({ closeModal, onSubmit, defaultValue, teachersList}){
                 name="email" 
                 onChange={handleChange} 
                 value={formState.email}
-                maxLength={45}
+                maxLength={70}
             />
           </div>
           <div className="form-group">
@@ -78,7 +78,7 @@ function EditTeacherModal ({ closeModal, onSubmit, defaultValue, teachersList}){
                 name="githubProfile" 
                 onChange={handleChange} 
                 value={formState.githubProfile}
-                maxLength={45}
+                maxLength={70}
             />
           </div>
           <div className="buttons">

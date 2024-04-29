@@ -108,6 +108,20 @@ function deleteTeacher(req,res) {
     })
 }
 
+function editTeacher(req,res) {
+    const sql = "UPDATE teachers set name=?, email=?, githubProfile=? where email=?";
+
+    const params = [req.body.name,  req.body.email, req.body.githubuser, req.body.teacherID];
+    connection.query(sql, params ,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error saving: '+ err.sqlMessage, code: err.code});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
 
 function getTeacherToken(req,res) {
     const sql = 'select githubToken from teachers where teacherid=?';
@@ -123,4 +137,4 @@ function getTeacherToken(req,res) {
 }
 
 
-module.exports = {getTeacherToken, insertTeacher, getTeachers, deleteTeacher, updateTeacherToken, getTeacherId, getTeacherByGitHubUser, getRoleByGitHubUser};
+module.exports = {getTeacherToken, insertTeacher, getTeachers, editTeacher, deleteTeacher, updateTeacherToken, getTeacherId, getTeacherByGitHubUser, getRoleByGitHubUser};

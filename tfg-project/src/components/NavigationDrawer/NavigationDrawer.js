@@ -16,6 +16,7 @@ import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import People from '@mui/icons-material/People';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import Toolbar from '@mui/material/Toolbar';
@@ -38,6 +39,7 @@ import AddStudents from './options/AddStudents/AddStudents.js';
 import StudentWorks from './options/StudentWorks/StudentWorks.js'
 import AddTeachers from './options/AddTeachers/AddTeachers.js';
 import TeachersList from './options/TeachersList/TeachersList.js';
+import AddLabGroup from './options/AddLabGroup/AddLabGroup.js';
 
 const drawerWidth = 240;
 
@@ -60,8 +62,11 @@ function ResponsiveDrawer(props) {
   let teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
                       <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
   let studentViews = [<StudentWorks userData={userData}/>, <ProfileView userData={userData}/>];
-  let adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>];
+  let adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>];
   let defaultViews = [];
+
+  const teacherIcons = [ <People/>, <AddCircleOutlineIcon/>, <CircleNotificationsIcon/>, <HomeRepairServiceIcon/>, <ChecklistIcon/>, <BorderColorIcon/>, <AccountBoxIcon/>];
+  const adminIcons = [<AddCircleOutlineIcon/>,<FormatListBulletedIcon/>,<AddCircleOutlineIcon/>,<FormatListBulletedIcon/>];
 
   useEffect(() => {
 
@@ -77,7 +82,7 @@ function ResponsiveDrawer(props) {
       teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
                         <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
       studentViews = [<StudentWorks userData={userData}/>];
-      adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>];
+      adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>];
       
     };
 
@@ -100,37 +105,6 @@ function ResponsiveDrawer(props) {
     handleDrawerClose();
   };
 
-  const iconSelecter = (index) => {
-    if(index === 0){
-      return (
-        <People></People>
-      );
-    }else if(index === 1){
-      return (
-        <AddCircleOutlineIcon></AddCircleOutlineIcon>
-      );
-    }else if(index === 2){
-      return (
-        <CircleNotificationsIcon></CircleNotificationsIcon>
-      );
-    }else if(index === 3){
-      return (
-        <HomeRepairServiceIcon></HomeRepairServiceIcon>
-      );
-    }else if(index === 4){
-      return (
-        <ChecklistIcon></ChecklistIcon>
-      );
-    }else if(index === 5){
-      return (
-        <BorderColorIcon></BorderColorIcon>
-      );
-    }else if(index === 6){
-      return (
-        <AccountBoxIcon></AccountBoxIcon>
-      );
-    }
-  };
   
 
   const drawer = (
@@ -142,7 +116,7 @@ function ResponsiveDrawer(props) {
             <ListItemButton>
               <ListItemIcon sx={{ color: 'white' }}>
                 {
-                iconSelecter(index)
+                teacherIcons[index]
                 }
               </ListItemIcon>
               <ListItemText primary={text} />
@@ -167,7 +141,9 @@ function ResponsiveDrawer(props) {
           <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
             <ListItemButton>
               <ListItemIcon sx={{ color: 'white' }}>
-                <HomeRepairServiceIcon></HomeRepairServiceIcon>
+                {
+                  adminIcons[index]
+                }
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -181,9 +157,7 @@ function ResponsiveDrawer(props) {
             <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(6)}>
               <ListItemButton>
                   <ListItemIcon sx={{ color: 'white' }}>
-                    {
-                    iconSelecter(6)
-                    }
+                    <AccountBoxIcon/>
                   </ListItemIcon>
                 <ListItemText primary={t('navigationDrawer.profile')} />
                 </ListItemButton>

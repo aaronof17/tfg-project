@@ -69,6 +69,11 @@ app.post('/teachers/delete', async function (req, res) {
     return result;
 });
 
+app.post('/teachers/edit', async function (req, res) {
+    const result = await teacherRequests.editTeacher(req,res);
+    return result;
+});
+
 app.post('/students/id', async function (req, res) {
     const result = await studentRequests.getStudentId(req,res);
     return result;

@@ -7,15 +7,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
-import {calculateWidth, getRepositoryName, extractId, formatDate} from "../../../../functions/genericFunctions.js";
-import {downloadRepo, getLastCommitInfo, createCommit} from "../../../../functions/gitHubFunctions.js";
-import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
-import {getTeachers,deleteTeacher} from "../../../../services/teacherService.js";
-import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js";
+import {calculateWidth, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
+import {getTeachers,deleteTeacher, editTeacher} from "../../../../services/teacherService.js";
 
 import RewriteModal from '../../../Modal/RewriteModal.js';
 import EditTeacherModal from './EditTeacherModal.js';
 import './TeachersList.css';
+import strings from '../../../../assets/files/strings.json';
+
 
 function TeachersList({userData}) {
     const [teachersList, setTeachersList] = useState([]);
@@ -34,6 +33,7 @@ function TeachersList({userData}) {
 
       fetchInfo();
     }, []);
+    
 
 
     const getColumns = () =>{
@@ -95,16 +95,13 @@ function TeachersList({userData}) {
       return rows;
     }
 
-    const validateData = () =>{
-     
-    }
+
 
     const handleSelectionChange = (ids) => {
       const selectedIDs = new Set(ids);
       const selectedRows = getRows().filter((row) =>
         selectedIDs.has(row.id),
       );
-      console.log(selectedRows);
       setSelectedTeachers(selectedRows);
     };
 
@@ -131,22 +128,27 @@ function TeachersList({userData}) {
 
 
     const handleEditRow = (newRow) => {
-      // if(rowToEdit != null){
+      if(rowToEdit != null){
 
-      //   editStudent(newRow).then((res) =>{
-      //     if(res.response){
-      //       getStudents(setStudentsList,teacherId).then(()=>{
-      //         toast.info(t('studentList.studentEdited'));
-      //         setRowToEdit("");
-      //       })
+        editTeacher(newRow).then((res) =>{
+          if(res.response){
+            getTeachers().then((teacherGetted)=>{
+              setTeachersList(teacherGetted);
+              toast.info(t('teachersList.teacherEdited'));
+              setRowToEdit("");
+            })
             
-      //     }else{
-      //       toast.error(res.error); 
-      //     }
-      //   });
-      // }else{
-      //   toast.error(t('studentList.errorOccurred'));
-      // }
+          }else{
+            if(res.code === strings.errors.dupentry){
+              toast.error(extractDuplicateEntry(res.error)+t('teachersList.errorExist'));
+            }else{
+              toast.error(res.error);
+            }
+          }
+        });
+      }else{
+        toast.error(t('teachersList.errorOccurred'));
+      }
     };
 
 
@@ -164,7 +166,6 @@ function TeachersList({userData}) {
           },
         }}
         pageSize={5}
-        checkboxSelection
         onRowSelectionModelChange ={handleSelectionChange}
       />
       {deleteModalOpen && (

@@ -211,6 +211,14 @@
         "errorDeletingTeacher" : "There was an error deleting teacher",
         "deleteTeacher": "You will delete a teacher",
         "teacherInfo" : "All his information will be deleted too",
-        "teachersListEmpty" : "There are not teachers yet"
+        "teachersListEmpty" : "There are not teachers yet",
+        "teacherEdited" : "Teacher edited",
+        "errorExist" : " already exists",
+        "errorOccurred" : "An error has ocurred",
+        "blankInfo" : "No field can be blank",
+        "emailExists" : "This email already exists",
+        "userExists" : "This github user already exists",
+        "confirm" : "Confirm",
+        "cancel" : "Cancel"
     }
 }
