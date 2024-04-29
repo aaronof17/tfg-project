@@ -12,6 +12,8 @@ import Box from '@mui/material/Box';
 import BasicMenu from './DropDownMenu.js';
 import './HeaderAppBar.css';
 
+import {deleteAppToken} from "../../functions/gitHubFunctions.js";
+
 function HeaderAppBar({rerenderPass, isClosing, setMobileOpen, mobileOpen}){
   const [t,i18n] = useTranslation();
 
@@ -54,8 +56,10 @@ function HeaderAppBar({rerenderPass, isClosing, setMobileOpen, mobileOpen}){
         <Button
           variant="contained"
           onClick={() => {
-            localStorage.removeItem("accessToken"); 
-            rerenderPass()
+            console.log("TOKEN ",localStorage.getItem("accessToken"));
+            deleteAppToken(localStorage.getItem("accessToken"), rerenderPass);
+            // localStorage.removeItem("accessToken"); 
+            // rerenderPass()
           }}
           sx={{backgroundColor:"#c9c2c2", color:"black"}}
         > 

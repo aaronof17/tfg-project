@@ -220,5 +220,15 @@
         "userExists" : "This github user already exists",
         "confirm" : "Confirm",
         "cancel" : "Cancel"
+    },
+    "addLabGroups" : {
+        "name" : "Name",
+        "subject" : "Subject",
+        "assignedTeacher" : "Assigned Teacher",
+        "add" : "Add Lab Group",
+        "dataBlank" : "No field can be blank",
+        "groupSaved" : "Lab Group saved",
+        "errorExist" : " already exists",
+        "errorSavingGroup" : "There was a problem saving group"
     }
 }

@@ -2,37 +2,65 @@ import * as React from 'react';
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
-import {saveTeacher} from "../../../../services/teacherService.js";
+import {getTeachers} from "../../../../services/teacherService.js";
 import { extractDuplicateEntry } from '../../../../functions/genericFunctions.js';
+import {saveLabGroup} from "../../../../services/labGroupService.js";
 
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Autocomplete from '@mui/material/Autocomplete';
+
 
 import strings from '../../../../assets/files/strings.json';
 import './AddLabGroup.css';
 
 function AddLabGroup({userData}) {
   const [t] = useTranslation();
-  const [teacherName, setTeacherName] = useState("");
-  const [teacherEmail, setTeacherEmail] = useState("");
-  const [teacherGitUser, setTeacherGitUser] = useState("");
+  const [groupName, setGroupName] = useState("");
+  const [subject, setSubject] = useState("");
+  const [teacherAssigned, setTeacherAssigned] = useState("");
+  const [teachersList, setTeachersList] = useState([]);
 
-  const handleTeacherNameChange = (e) => {
-    setTeacherName(e.target.value);
+  useEffect(() => {
+    const fetchInfo = async () => {
+      // const teachers = await getTeachers();
+      // setTeachersList(teachers);
+      setTeachersList( 
+        [
+          {
+            "name" : "Paco"
+          },
+          {
+            "name" : "Manuel"
+          }
+        ]);
+      
+    };
+
+    fetchInfo();
+  }, []);
+
+  const handleGroupNameChange = (e) => {
+    setGroupName(e.target.value);
   };
 
-  const handleTeacherEmailChange = (e) => {
-    setTeacherEmail(e.target.value);
+  const handleSubjectChange = (e) => {
+    setSubject(e.target.value);
   };
 
-  const handleTeacherUserChange = (e) => {
-    setTeacherGitUser(e.target.value);
-  };
+  const handleTeacherAssignedChange = (e, selectedOption) => {
+    if (selectedOption) {
+        setTeacherAssigned(selectedOption);
+    }else{
+      setTeacherAssigned("");
+    }
+  }
 
   function checkData(){
-    if(teacherName === "" || teacherEmail === "" ||teacherGitUser === ""){
-      toast.error(t('addTeachers.dataBlank'));
+    console.log("Grupo: "+groupName+"/ Subject: "+subject+"/ Teacher: "+teacherAssigned);
+    if(groupName === "" || subject === "" ||teacherAssigned === "" ){
+      toast.error(t('addLabGroups.dataBlank'));
       return false;
     }else{
       return true;
@@ -41,69 +69,67 @@ function AddLabGroup({userData}) {
 
   async function saveTeacherInfo(){
     if(checkData()){
-      try {
-        const res = await saveTeacher(teacherName, teacherEmail, teacherGitUser);
-        if (res.response) {
-          toast.info(t('addTeachers.teacherSaved'));
-          setTeacherName("");
-          setTeacherEmail("");
-          setTeacherGitUser("");
-        } else {
-          if(res.code === strings.errors.dupentry){
-            toast.error(extractDuplicateEntry(res.error)+t('addTeachers.errorExist'));
-          }else{
-            toast.error(res.error);
-          }
-        }
-      } catch (error) {
-        toast.error(t('addTeachers.errorSavingTeacher')+error);
-      }
+      // try {
+      //   const res = await saveLabGroup(groupName, subject, teacherAssigned);
+      //   if (res.response) {
+      //     toast.info(t('addLabGroups.groupSaved'));
+      //     setGroupName("");
+      //     setTeacherAssigned("");
+      //     setSubject("");
+      //   } else {
+      //     if(res.code === strings.errors.dupentry){
+      //       toast.error(extractDuplicateEntry(res.error)+t('addLabGroups.errorExist'));
+      //     }else{
+      //       toast.error(res.error);
+      //     }
+      //   }
+      // } catch (error) {
+      //   toast.error(t('addLabGroups.errorSavingGroup')+error);
+      // }
     }
   }
 
   return (
-    <div className='teachers-add-div'>
+    <div className='groups-add-div'>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12} sm={6}>
             <TextField
-                id="outlined-required"
-                className="teacherName"
-                label={t('addTeachers.name')}
-                type="text"
-                value={teacherName}
-                inputProps={{ maxLength: 100 }}
-                onChange={handleTeacherNameChange}
-                sx={{ width: '100%' }}
+              id="outlined-required"
+              className="groupName"
+              label={t('addLabGroups.name')}
+              type="text"
+              value={groupName}
+              inputProps={{ maxLength: 45 }}
+              onChange={handleGroupNameChange}
+              sx={{ width: '100%' }}
             />
         </Grid>
         <Grid item xs={12} sm={6}>
             <TextField
-                id="outlined-required"
-                className="teacherEmail"
-                label={t('addTeachers.email')}
-                type="email"
-                value={teacherEmail}
-                inputProps={{ maxLength: 70 }}
-                onChange={handleTeacherEmailChange}
-                sx={{ width: '100%' }}
+              id="outlined-required"
+              className="subject"
+              label={t('addLabGroups.subject')}
+              type="text"
+              value={subject}
+              inputProps={{ maxLength: 45 }}
+              onChange={handleSubjectChange}
+              sx={{ width: '100%' }}
             />
         </Grid>
         <Grid item xs={12} sm={6}>
-            <TextField
-                id="outlined-required"
-                className="teacherGitHubUser"
-                label={t('addTeachers.user')}
-                type="text"
-                value={teacherGitUser}
-                inputProps={{ maxLength: 70 }}
-                onChange={handleTeacherUserChange}
-                sx={{ width: '100%' }}
+            <Autocomplete
+              disablePortal
+              id="teacher-combo-box"
+              options={teachersList.map((t) => t.name)}
+              renderInput={(params) => <TextField {...params} label={t('addLabGroups.assignedTeacher')} />}
+              onChange={handleTeacherAssignedChange}
+              value={teacherAssigned}
             />
         </Grid>
       </Grid>
-      <div className='teachers-add-buttons'>
+      <div className='groups-add-buttons'>
         <Button variant="contained" onClick={saveTeacherInfo} >
-          {t('addTeachers.add')}
+          {t('addLabGroups.add')}
         </Button>
       </div>
     </div>

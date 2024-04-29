@@ -219,5 +219,15 @@
         "userExists" : "Este usuario de github ya existe",
         "confirm" : "Confirmar",
         "cancel" : "Cancelar"
+    },
+    "addLabGroups" : {
+        "name" : "Nombre",
+        "subject" : "Asignatura",
+        "assignedTeacher" : "Profesor asignado",
+        "add" : "Añadir Grupo de Laboratorio",
+        "dataBlank" : "Ningún campo puede estar vacío",
+        "groupSaved" : "Grupo de laboratorio guardado",
+        "errorExist" : " ya existe",
+        "errorSavingGroup" : "Hubo un error guardando el grupo"
     }
 }

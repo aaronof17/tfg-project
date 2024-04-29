@@ -97,6 +97,7 @@ export async function createCommit(title, message, path, token) {
 
 export async function getUserData(callback) {
     try {
+      console.log("cositas");
         const response = await fetch("http://localhost:4000/getUserData", {
           method: "GET",
           headers: {
@@ -105,8 +106,11 @@ export async function getUserData(callback) {
         });
     
         const data = await response.json();
-        callback(data);
-        return data;
+
+        if (data.success) {
+          callback(data.data);
+          return data.data;
+        }
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -124,6 +128,28 @@ export async function getAccessToken(setRerender,rerender, codeParam){
       setRerender(!rerender);
     }
   })
+}
+
+
+export async function deleteAppToken(token,rerenderPass){
+  const apiUrl = 'http://localhost:4000/deleteAppToken';
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body:
+                JSON.stringify({token: token})
+        });
+
+        const data = await response.json(); 
+        console.log("DELTE DATA ",data);
+        localStorage.removeItem("accessToken"); 
+        rerenderPass();
+    } catch (error) {
+        console.error("Error getting last commit information:  ",error);
+    }
 }
 
 export async function getLastCommitInfo(token, repositoryURL, githubUser) {

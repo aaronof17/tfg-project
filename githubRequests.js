@@ -17,6 +17,23 @@ async function getAccessToken(req, res) {
     return data;
 }
 
+
+async function deleteAppToken(req, res) {
+    const token = req.body.toke;
+    const response = await fetch("https://github.com/applications/"+CLIENT_ID+"/token", {
+        method: "DELETE",
+        headers: {
+            "Accept" : "application/json"
+        },
+        body: JSON.stringify({
+            access_token: token
+        })
+    });
+    const data = await response.json();
+    return data;
+}
+
+
 async function createIssue(req, res) {
     const userName = req.body.user;
     const repo = req.body.repo;
@@ -53,8 +70,16 @@ async function createIssue(req, res) {
 
 }
 
-async function getUserData(accessToken) {
-    // Lógica para obtener datos del usuario de GitHub
+async function getUserData(req, res) {
+    const response = await fetch("https://api.github.com/user", {
+        method: "GET",
+        headers: {
+            "Authorization" : req.get("Authorization")
+        }
+    });
+    const data = await response.json();
+    console.log("USER DATA ",data);
+    return data;
 }
 
 async function downloadRepo(req, res) {
@@ -114,4 +139,4 @@ async function createCommit(user, repo, accessToken) {
     // Lógica para descargar un repositorio de GitHub
 }
 
-module.exports = { getAccessToken, createIssue, getUserData, getFinalCommitInfo, downloadRepo, createCommit};
+module.exports = { getAccessToken, createIssue, getUserData, getFinalCommitInfo, downloadRepo, createCommit, deleteAppToken};

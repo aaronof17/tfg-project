@@ -76,7 +76,7 @@ function ResponsiveDrawer(props) {
       if (userDataResponse.login) {
         const role = await getRoleByGitHubUser(userDataResponse.login);
         //setRole(role);
-        setRole("admin");
+        setRole("teacher");
       }
 
       teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 

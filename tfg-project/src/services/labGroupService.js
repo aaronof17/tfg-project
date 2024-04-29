@@ -79,3 +79,32 @@ export async function getIdFromGroup(groupName) {
       console.error('Error getting id from group:', error);
     }
 }
+
+export async function saveLabGroup(groupName, subject, teacherAssigned) {
+  try {
+
+    const response = await fetch('http://localhost:4000/groups/save', {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+          "Content-Type": "application/json"
+        },
+        body:
+            JSON.stringify({ name: groupName,
+                            subject: subject,
+                            teacherAssigned: teacherAssigned
+                          })
+      });
+    
+      const data = await response.json(); 
+      console.log("data ",data);
+      if(!data.success){
+        console.log("An error occurred saving lab group: ", data.error);
+        return { response: false, error: data.error, code:data.code};
+      }else {
+        return { response: true, error: "" };
+      }
+  } catch (error) {
+      return { response: false, error: "Sorry, an error occurred saving lab group"};
+  }
+}

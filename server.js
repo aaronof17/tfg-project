@@ -242,6 +242,17 @@ app.post('/createIssue', async function  (req, res){
 });
 
 
+app.post('/deleteAppToken', async function  (req, res){
+    try {
+        const result = await githubRequests.deleteAppToken(req, res);
+        return res.status(200).json({ success: true, data: result });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error });
+    }
+});
+
+
+
 
 app.post('/pruebasGit', async function  (req, res){
     const USER = 'aaronof17';
@@ -276,22 +287,31 @@ app.get('/download/repo', (req, res) => {
 });
 
 
-
 app.get('/getUserData', async function  (req, res){
-    req.get("Authorization");
-    await fetch("https://api.github.com/user", {
-        method: "GET",
-        headers: {
-            "Authorization" : req.get("Authorization")
-        }
-    }).then((response) => {
-        //console.log(response);
-        return response.json();
-    }).then((data) => {
-        //console.log(data);
-        res.json(data);
-    })
-})
+    try {
+        const result = await githubRequests.getUserData(req, res);
+        return res.status(200).json({ success: true, data: result });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error });
+    }
+});
+
+
+// app.get('/getUserData', async function  (req, res){
+//     req.get("Authorization");
+//     await fetch("https://api.github.com/user", {
+//         method: "GET",
+//         headers: {
+//             "Authorization" : req.get("Authorization")
+//         }
+//     }).then((response) => {
+//         console.log(response);
+//         return response.json();
+//     }).then((data) => {
+//         console.log(data);
+//         res.json(data);
+//     })
+// })
 
 
 app.post('/downloadRepo', async function  (req, res){
@@ -584,9 +604,9 @@ async function leerDirectorioRecursivo(directorioRepo,directorio) {
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
-    databaseRequests.connection.connect(function(err){
-        if(err) throw err;
-        console.log("Database Connected");
-    }
-    );
+    // databaseRequests.connection.connect(function(err){
+    //     if(err) throw err;
+    //     console.log("Database Connected");
+    // }
+    // );
 });
