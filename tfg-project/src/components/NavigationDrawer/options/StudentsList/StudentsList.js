@@ -8,12 +8,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
-import {calculateWidth, getRepositoryName, extractId, formatDate} from "../../../../functions/genericFunctions.js";
+import {calculateWidth, getRepositoryName, extractId, formatDate, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import {downloadRepo, getLastCommitInfo, createCommit} from "../../../../functions/gitHubFunctions.js";
 import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js";
 
+import strings from '../../../../assets/files/strings.json';
 import RewriteModal from '../../../Modal/RewriteModal.js';
 import EditModal from './EditModal.js';
 import InformationModal from './InformationModal.js';
@@ -34,10 +35,9 @@ function StudentsList({userData}) {
 
     useEffect(() => {
       const fetchInfo = async () => {
-        // const id = await getTeacherId(setTeacherId,userData.login);
-        // getTeacherToken(setTeacherToken,id);
-        // getStudents(setStudentsList,id);
-        
+        const id = await getTeacherId(setTeacherId,userData.login);
+        getTeacherToken(setTeacherToken,id);
+        getStudents(setStudentsList,id);
       };
 
       fetchInfo();
@@ -137,9 +137,9 @@ function StudentsList({userData}) {
         try { 
           await downloadRepo(teacherToken, getRepositoryName(student.repository), student.githubuser).then((res) =>{
             if(!res.response){
-              if(res.error === 'Unauthorized'){
+              if(res.error ===  strings.errors.unauthorized){
                 toast.error(t('studentList.tokenError'));
-              }else if(res.error === 'Not Found'){
+              }else if(res.error ===  strings.errors.notfound){
                 toast.error(t('studentList.errorRepository')+student.name);
               }else{
                 toast.error(t('studentList.issueErrorSendStudent'));
@@ -244,9 +244,9 @@ function StudentsList({userData}) {
         try { 
           await getLastCommitInfo(teacherToken, getRepositoryName(student.repository), student.githubuser).then((res) =>{
             if(!res.response){
-              if(res.error === 'Unauthorized'){
+              if(res.error ===  strings.errors.unauthorized){
                 toast.error(t('studentList.tokenError'));
-              }else if(res.error === 'Not Found'){
+              }else if(res.error ===  strings.errors.notfound){
                 toast.error(t('studentList.errorRepository')+student.name);
               }else{
                 toast.error(t('studentList.commitErrorForStudent')+student.name);
@@ -255,7 +255,7 @@ function StudentsList({userData}) {
               let commitsInfo = res.data;
               getWorksByStudentAndGroup(extractId(student.id), student.group, teacherId).then((worksRes)=>{
                 if(!res.response){
-                  if(res.error === 'Unauthorized'){
+                  if(res.error === strings.errors.unauthorized){
                     toast.error(t('studentList.tokenError'));
                   }else{
                     toast.error(t('studentList.errorGettingWorksForStudent')+student.name);
@@ -388,9 +388,12 @@ function StudentsList({userData}) {
               toast.info(t('studentList.studentEdited'));
               setRowToEdit("");
             })
-            
           }else{
-            toast.error(res.error); 
+            if(res.code === strings.errors.dupentry){
+              toast.error(extractDuplicateEntry(res.error)+t('worksList.errorExist'));
+            }else{
+              toast.error(res.error);
+            }
           }
         });
       }else{

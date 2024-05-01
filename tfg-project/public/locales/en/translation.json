@@ -90,6 +90,7 @@
     "addStudents":{
         "dataBlank" : "No field can be blank, except path",
         "studentSaved" : "Student saved",
+        "studentsSaved" : "Students saved",
         "informationCharged" : "Information has been loaded successfully",
         "saveStudents" : "Save students",
         "saveStudent" : "Save student",
@@ -113,7 +114,8 @@
         "errorGroupNotFound" : "Lab group in csv not found: ",
         "studentExist" : "This student already exist, his email is: ",
         "addEnrolled" : "Do you want to enroll this student in this new lab group?",
-        "studentEnrolled" : "Student enrolled"
+        "studentEnrolled" : "Student enrolled",
+        "csvTemplate" : "CSV template"
     },
     "createLabWork":{
         "subjectFilter" : "Subject",
@@ -147,7 +149,10 @@
         "confirmDialogText" : "All the information related with that work will be deleted too",
         "confirm" : "Confirm",
         "cancel" : "Cancel",
-        "worksEmpty" : "There are no lab works yet"
+        "worksEmpty" : "There are no lab works yet",
+        "subject" : "Subject",
+        "labgroup" : "Lab Work",
+        "errorExist" : " already exists"
     },
     "mark":{
         "students" : "Students",
@@ -230,5 +235,23 @@
         "groupSaved" : "Lab Group saved",
         "errorExist" : " already exists",
         "errorSavingGroup" : "There was a problem saving group"
+    },
+    "groupsList" : {
+        "name" : "Name",
+        "subject" : "Subject",
+        "teacherName" : "Teacher assigned",
+        "actions" : "Actions",
+        "groupsListEmpty" : "There are not lab groups yet",
+        "deleteGroup" : "You will delete a lab group",
+        "groupInfo" : "All his information will be deleted too",
+        "errorOccurred" : "An error has ocurred",
+        "errorExist" : " already exists",
+        "groupEdited" : "Lab Group edited",
+        "errorDeletingGroup" : "There was an error deleting lab group",
+        "groupDeleted" : "Lab Group deleted",
+        "blankInfo" : "No field can be blank",
+        "nameExists" : "This name already exists",
+        "confirm" : "Confirm",
+        "cancel" : "Cancel"
     }
 }

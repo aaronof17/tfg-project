@@ -91,6 +91,7 @@
     "addStudents":{
         "dataBlank" : "Ningún campo puede estar vacío, excepto la ruta de directorio",
         "studentSaved" : "Estudiante guardado",
+        "studentsSaved" : "Estudiantes guardados",
         "errorAnalizingCSV" : "Error analizando el archivo",
         "informationCharged" : "La información se ha cargado con éxito",
         "saveStudents" : "Guardar alumnos",
@@ -113,7 +114,8 @@
         "errorGroupNotFound" : "Un grupo de laboratorio del csv no existe: ",
         "studentExist" : "Este estudiante ya existe, su email es: ",
         "addEnrrolled" : "¿Quiéres matricularlo en este grupo de laboratorio?",
-        "studentEnrolled" : "Estudiante matriculado"
+        "studentEnrolled" : "Estudiante matriculado",
+        "csvTemplate" : "Plantilla de csv"
     },
     "createLabWork":{
         "subjectFilter" : "Asignatura",
@@ -147,7 +149,10 @@
         "confirmDialogText" : "Ten en cuenta que toda la información relacionada con este trabajo también será borrada",
         "confirm" : "Confirmar",
         "cancel" : "Cancelar",
-        "worksEmpty" : "No hay trabajos de laboratorio asignados todavía"
+        "worksEmpty" : "No hay trabajos de laboratorio asignados todavía",
+        "subject" : "Asignatura",
+        "labgroup" : "Grupo de laboratorio",
+        "errorExist" :" ya existe"
     },
     "mark":{
         "students" : "Alumnos",
@@ -229,5 +234,23 @@
         "groupSaved" : "Grupo de laboratorio guardado",
         "errorExist" : " ya existe",
         "errorSavingGroup" : "Hubo un error guardando el grupo"
+    },
+    "groupsList" : {
+        "name" : "Nombre",
+        "subject" : "Asignatura",
+        "teacherName" : "Profesor asignado",
+        "actions" : "Acciones",
+        "groupsListEmpty" : "Todavía no hay grupos de laboratorio",
+        "deleteGroup" : "Vas a eliminar un grupo de laboratorio",
+        "groupInfo" : "Toda la información relacionada será eliminada también",
+        "errorOccurred" : "Ha ocurrido un error",
+        "errorExist" : " ya existe",
+        "groupEdited" : "Grupo de laboratorio editado",
+        "errorDeletingGroup" : "Hubo un error eliminando el grupo de laboratorio",
+        "groupDeleted" : "Grupo de laboratorio eliminado",
+        "blankInfo" : "Ningún campo puede estar vacío",
+        "nameExists" : "Este nombre ya existe",
+        "confirm" : "Confirmar",
+        "cancel" : "Cancelar"
     }
 }

@@ -80,6 +80,34 @@ function getWorkByStudent(req,res) {
     })
 }
 
+function getWorskByGroup(req,res) {
+    const sql = "SELECT DISTINCT w.worklabID, w.title, w.labgroupNameFK, w.description, w.percentage, w.initialdate, w.finaldate "+
+                "FROM worklabs w where w.labgroupNameFK = ? and w.teacherIDFK = ?";;
+    const params = [req.body.groupName, req.body.teacherID];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting work for group: '+ err.sqlMessage, code: err.code});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+function getWorskBySubject(req,res) {
+    const sql = "SELECT DISTINCT w.worklabID, w.title, w.labgroupNameFK, w.description, w.percentage, w.initialdate, w.finaldate "+
+                "FROM worklabs w JOIN labgroups l ON l.name = w.labgroupNameFK where l.subject = ? and w.teacherIDFK = ?";;
+    const params = [req.body.subject, req.body.teacherID];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting work for subject: '+ err.sqlMessage, code: err.code});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
 
 function getWorksByStudentAndGroup(req,res) {
     const sql = "SELECT DISTINCT w.worklabID, w.title, w.labgroupNameFK, w.initialdate, w.finaldate "+
@@ -125,4 +153,4 @@ function getWorksByStudentId(req,res) {
 
 
 
-module.exports = {getWorkByStudent, getWorksByStudentId, deleteWork, getWorksByStudentAndGroup, getWorksByTeacherId, insertWork, editWork};
+module.exports = {getWorkByStudent, getWorskByGroup, getWorksByStudentId, getWorskBySubject, deleteWork, getWorksByStudentAndGroup, getWorksByTeacherId, insertWork, editWork};

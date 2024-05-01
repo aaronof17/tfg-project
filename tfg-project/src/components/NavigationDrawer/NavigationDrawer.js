@@ -40,6 +40,8 @@ import StudentWorks from './options/StudentWorks/StudentWorks.js'
 import AddTeachers from './options/AddTeachers/AddTeachers.js';
 import TeachersList from './options/TeachersList/TeachersList.js';
 import AddLabGroup from './options/AddLabGroup/AddLabGroup.js';
+import LabGroupList from './options/LabGroupList/LabGroupList.js';
+
 
 const drawerWidth = 240;
 
@@ -62,7 +64,7 @@ function ResponsiveDrawer(props) {
   let teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
                       <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
   let studentViews = [<StudentWorks userData={userData}/>, <ProfileView userData={userData}/>];
-  let adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>];
+  let adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>, <LabGroupList userData={userData}/>];
   let defaultViews = [];
 
   const teacherIcons = [ <People/>, <AddCircleOutlineIcon/>, <CircleNotificationsIcon/>, <HomeRepairServiceIcon/>, <ChecklistIcon/>, <BorderColorIcon/>, <AccountBoxIcon/>];
@@ -75,14 +77,14 @@ function ResponsiveDrawer(props) {
 
       if (userDataResponse.login) {
         const role = await getRoleByGitHubUser(userDataResponse.login);
-        //setRole(role);
-        setRole("teacher");
+        setRole(role);
+        //setRole("admin");
       }
 
       teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
                         <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
       studentViews = [<StudentWorks userData={userData}/>];
-      adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>];
+      adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>, <LabGroupList userData={userData}/>];
       
     };
 

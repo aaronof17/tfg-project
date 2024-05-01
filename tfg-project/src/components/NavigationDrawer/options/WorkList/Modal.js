@@ -5,11 +5,12 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 import { useTranslation } from "react-i18next";
+import {toast} from "react-toastify";
 
 import "./Modal.css";
 import "react-datepicker/dist/react-datepicker.css";
 
-function Modal ({ closeModal, onSubmit, defaultValue, errorMessage }){
+function Modal ({ closeModal, onSubmit, defaultValue }){
   const [formState, setFormState] = useState(
     defaultValue || {
       title: "",
@@ -78,10 +79,10 @@ const handlePercentageChange = (event) => {
     if(formState.title === "" || formState.description === "" ||
         isNaN(formState.percentage) || formState.initialdate === ""||
         formState.finaldate === ""){
-        errorMessage(t('worksList.blankInfo'));
+        toast.error(t('worksList.blankInfo'));
         return false;    
     }else if(Date.parse(formState.initialdate) >= Date.parse(formState.finaldate)){
-        errorMessage(t('worksList.dateError'));
+        toast.error(t('worksList.dateError'));
         return false;
     }
     return true;

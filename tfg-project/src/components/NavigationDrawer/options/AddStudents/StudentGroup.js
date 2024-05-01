@@ -2,14 +2,13 @@ import * as React from 'react';
 
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
-import {getLabGroups, getLabGroupsBySubject} from "../../../../services/labGroupService.js";
+import {getTeacherLabGroups, getLabGroupsBySubject} from "../../../../services/labGroupService.js";
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Grid from '@mui/material/Grid';
 
 import './StudentGroup.css';
-
 
 function StudentGroup({labGroups, setLabGroups, subjects, setSubject, setGroup, teacherID}) {
 
@@ -43,7 +42,7 @@ function StudentGroup({labGroups, setLabGroups, subjects, setSubject, setGroup, 
             fetchFilterGroups();
         }else{
             setSubject("");
-            getLabGroups(setLabGroups, teacherID);
+            getTeacherLabGroups(setLabGroups, teacherID);
         }
     }
 

@@ -6,15 +6,20 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import {ToastContainer, toast} from "react-toastify";
-import {getLabWorks, editWork, deleteWork} from "../../../../services/labWorkService.js";
+import {toast} from "react-toastify";
+import {getSubjectsFromGroup} from "../../../../services/labGroupService.js";
+import {getLabWorks, editWork, deleteWork, getWorksByGroup, getWorksBySubject} from "../../../../services/labWorkService.js";
 import {getTeacherId} from "../../../../services/teacherService.js";
-import { formatDate } from '../../../../functions/genericFunctions.js';
+import {formatDate, getSubjectsForComboBox, extractDuplicateEntry} from '../../../../functions/genericFunctions.js';
+import { getTeacherLabGroups} from '../../../../services/labGroupService.js';
 
+import strings from '../../../../assets/files/strings.json';
 import './WorkList.css';
 import Modal from "./Modal.js";
 import ConfirmModal from "./ConfirmModal.js";
-
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 function WorksList({userData}){
     const [teacherID, setTeacherID] = useState("");
@@ -25,11 +30,17 @@ function WorksList({userData}){
     const [rowToEdit, setRowToEdit] = useState(null);
     const [rowToDelete, setRowToDelete] = useState(null);
     const [workToDelete, setWorkToDelete] = useState(null);
+    const [actualGroupName, setActualGroupName] = useState("");
+    const [actualSubject, setSubject] = useState("");
+    const [labgroups, setLabGroups] = useState([]);
+    const [subjects, setSubjects] = useState([]);
 
     useEffect(() => {
         const fetchInfo = async () => {
             const id = await getTeacherId(setTeacherID,userData.login);
             getLabWorks(setLabWorks,id);
+            getTeacherLabGroups(setLabGroups,id);
+            getSubjectsFromGroup(setSubjects,id);
         };
         fetchInfo();
       }, []);
@@ -75,7 +86,11 @@ function WorksList({userData}){
               );
             toast.info(t('worksList.workEdited'));
           }else{
-            toast.error(res.error); 
+            if(res.code === strings.errors.dupentry){
+              toast.error(extractDuplicateEntry(res.error)+t('worksList.errorExist'));
+            }else{
+              toast.error(res.error);
+            }
           }
         });
       }else{
@@ -83,15 +98,60 @@ function WorksList({userData}){
       }
     };
 
-    const errorMessage = (message) => {
-      toast.error(message);
+    const handleSubjectChange = (e, selectedOption) => {
+      if (selectedOption) {
+        const fetchFilterWorks = async () => {
+          getWorksBySubject(selectedOption, setLabWorks, teacherID);
+        };
+        fetchFilterWorks();
+      }else{
+        const fetchAllWorks = async () => {
+          getLabWorks(setLabWorks,teacherID);
+        };
+        fetchAllWorks();
+      }
     }
 
 
-    
-  if(labworks.length !== 0)
+    const handleGroupNameChange = (e, selectedOption) => {
+      if (selectedOption) {
+        const fetchFilterWorks = async () => {
+          getWorksByGroup(selectedOption, setLabWorks, teacherID);
+        };
+        fetchFilterWorks();
+      }else{
+        const fetchAllWorks = async () => {
+          getLabWorks(setLabWorks,teacherID);
+        };
+        fetchAllWorks();
+      }
+    }
+
     return (
       <div className="work-list">
+        <div className="work-list-filters">
+          <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                  <Autocomplete
+                  disablePortal
+                  id="labgroup-combo-box"
+                  options={labgroups.map((l) => l.label)}
+                  renderInput={(params) => <TextField {...params} label={t('worksList.labgroup')} />}
+                  onChange={handleGroupNameChange}
+                  />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                  <Autocomplete
+                  disablePortal
+                  id="subject-combo-box"
+                  options={getSubjectsForComboBox(subjects)}
+                  renderInput={(params) => <TextField {...params} label={t('worksList.subject')} />}
+                  onChange={handleSubjectChange}
+                  />
+              </Grid>
+          </Grid>
+        </div>
+        {labworks.length !== 0 ? (
         <div className="table-wrapperWork">
           <table className="tableWork">
             <thead  style={{position:"sticky", top:0, zIndex: 1}}>
@@ -154,38 +214,35 @@ function WorksList({userData}){
             </tbody>
           </table>
         </div>
-        {modalOpen && (
-          <Modal
-            closeModal={() => {
-              setModalOpen(false);
-              setRowToEdit(null);
-            }}
-            onSubmit={handleEdit}
-            defaultValue={rowToEdit !== null && labworks[rowToEdit]}
-            errorMessage={errorMessage}
-          />
-        )}
-        {confirmModalOpen && (
-          <ConfirmModal
-            closeConfirmModal={() => {
-              setConfirmModalOpen(false);
-              setRowToDelete(null);
-              setWorkToDelete(null);
-            }}
-            deleteRow={deleteRow}
-            titleText={t('worksList.confirmDialogTitle')}
-            text={t('worksList.confirmDialogText')}
-          />
-        )}
-        <ToastContainer className="custom-toast-container"/>
-      </div>
-    );
+        ) : (
+          <h3>{t('worksList.worksEmpty')}</h3>
+        //<ToastContainer className="custom-toast-container"/>
+    )}
+    {modalOpen && (
+      <Modal
+        closeModal={() => {
+          setModalOpen(false);
+          setRowToEdit(null);
+        }}
+        onSubmit={handleEdit}
+        defaultValue={rowToEdit !== null && labworks[rowToEdit]}
+      />
+    )}
+    {confirmModalOpen && (
+      <ConfirmModal
+        closeConfirmModal={() => {
+          setConfirmModalOpen(false);
+          setRowToDelete(null);
+          setWorkToDelete(null);
+        }}
+        deleteRow={deleteRow}
+        titleText={t('worksList.confirmDialogTitle')}
+        text={t('worksList.confirmDialogText')}
+      />
+    )}
+  </div>
+)
 
-    return(
-      <div className="work-list">
-        <h3>{t('worksList.worksEmpty')}</h3>
-      </div>
-    );
 }
 
 export default WorksList;

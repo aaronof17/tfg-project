@@ -18,7 +18,6 @@ function StudentWorks({userData}) {
         const fetchInfo = async () => {
              const id = await getStundentId(setStudentId,userData.login);
              getWorksByStudentId(setWorks,id);
-            // getSubjectsFromGroup(setSubjects,id);
         };
     
         fetchInfo();

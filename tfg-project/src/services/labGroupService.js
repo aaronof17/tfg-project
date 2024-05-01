@@ -1,6 +1,6 @@
-export async function getLabGroups(callback, teacherID) {
+export async function getTeacherLabGroups(callback, teacherID) {
     try {
-        const response = await fetch('http://localhost:4000/labGroups', {
+        const response = await fetch('http://localhost:4000/groups/teacher', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -16,6 +16,84 @@ export async function getLabGroups(callback, teacherID) {
       } catch (error) {
         console.error('Error getting lab groups:', error);
       }
+}
+
+
+export async function editLabGroup(editRow) {
+  try {
+      const response = await fetch('http://localhost:4000/groups/edit', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({
+                            groupID: editRow.id,
+                            name: editRow.name,
+                            subject: editRow.subject,
+                            teacherID: editRow.teacherName.value
+                          })
+        });
+      
+    const data = await response.json(); 
+
+    if(!data.success){
+      console.log("An error occurred editing lab group: ", data.error);
+      return { response: false, error: data.error, code:data.code};
+    }
+      
+    return { response: true, error: ""};
+
+    } catch (error) {
+        return { response: false, error: "Sorry, an error occurred editing lab group"};
+    }
+}
+
+
+
+export async function deleteLabGroup(rowToDelete) {
+  try {
+    console.log(rowToDelete);
+    const response = await fetch('http://localhost:4000/groups/delete', {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+          "Content-Type": "application/json"
+        },
+        body:
+            JSON.stringify({groupName: rowToDelete.name})
+      });
+    
+      const data = await response.json(); 
+
+      if(!data.success){
+        console.log("An error occurred deleting lab group: ", data.error);
+        return { response: false, error: data.error};
+      }
+      return { response: true, error: ""};
+
+  } catch (error) {
+      return { response: false, error: "Sorry, an error occurred deleting lab group"};
+  }
+}
+
+
+export async function getLabGroups() {
+  try {
+      const response = await fetch('http://localhost:4000/groups', {
+          method: "GET",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          }
+      })
+
+      const data = await response.json();
+      return data.data;
+    } catch (error) {
+      console.error('Error getting lab groups:', error);
+    }
 }
 
 

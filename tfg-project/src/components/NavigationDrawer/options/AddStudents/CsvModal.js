@@ -5,10 +5,11 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
 import { useTranslation } from "react-i18next";
+import {toast} from "react-toastify";
 
 import "./CsvModal.css";
 
-function CsvModal ({closeModal, onSubmit, sendError, labgroups, existsEmail}){
+function CsvModal ({closeModal, onSubmit, labgroups, existsEmail}){
     const [t] = useTranslation(); 
     const [data, setData] = useState([]);
     const [file, setFile] = useState(null);
@@ -27,7 +28,7 @@ function CsvModal ({closeModal, onSubmit, sendError, labgroups, existsEmail}){
         },
         error: (error) => {
           console.error("Error al analizar el archivo CSV:", error);
-          sendError(t('addStudents.errorAnalizingCSV'));
+          toast.error(t('addStudents.errorAnalizingCSV'));
         }
       });
     }
@@ -36,19 +37,19 @@ function CsvModal ({closeModal, onSubmit, sendError, labgroups, existsEmail}){
       for (let i = 0; i < csvData.length; i++) {
         const row = csvData[i];
         if (!row.name || !row.group || !row.email || !row.repo || !row.githubuser) {
-          sendError(t('addStudents.errorCSVdataBlank'));
+          toast.error(t('addStudents.errorCSVdataBlank'));
           return false; 
         }
 
         let groupExists = labgroups.some(group => group.label === row.group);
         if (!groupExists) {
-            sendError(t('addStudents.errorGroupNotFound') + row.group);
+          toast.error(t('addStudents.errorGroupNotFound') + row.group);
             return false;
         }
 
         let emailResponse = await existsEmail(row.email);
         if(emailResponse){
-          sendError(t('addStudents.studentExist') + row.email);
+          toast.error(t('addStudents.studentExist') + row.email);
           return false;
         }
       }
@@ -60,11 +61,11 @@ function CsvModal ({closeModal, onSubmit, sendError, labgroups, existsEmail}){
 
     function validateFiles(files){
       if(files.length != 1){
-        sendError(t('addStudents.errorNumberFiles'));
+        toast.error(t('addStudents.errorNumberFiles'));
       }else{
         const fileFromCsv = files[0]
         if(!fileFromCsv.name.endsWith('.csv')){ 
-          sendError(t('addStudents.errorFormatFile'));
+          toast.error(t('addStudents.errorFormatFile'));
         }else{
           parseCSV(fileFromCsv);
         }
@@ -76,7 +77,7 @@ function CsvModal ({closeModal, onSubmit, sendError, labgroups, existsEmail}){
         onSubmit(data);
         closeModal();
       }else{
-        sendError(t('addStudents.errorSomethingWentWrong'));
+        toast.error(t('addStudents.errorSomethingWentWrong'));
       }
     };
 
@@ -89,6 +90,16 @@ function CsvModal ({closeModal, onSubmit, sendError, labgroups, existsEmail}){
 
     const handleDragOver = (event) => {
       event.preventDefault();
+    };
+
+    const downloadCSV = () => {
+      const url = require("../../../../assets/files/example.csv");
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'example.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     };
 
 
@@ -127,6 +138,7 @@ function CsvModal ({closeModal, onSubmit, sendError, labgroups, existsEmail}){
         }}
       >
           <div className="csv-modal">
+          <Button className="csv-template" onClick={downloadCSV} variant="contained" color="primary"> {t('addStudents.csvTemplate')}</Button>
             <div 
               className="dropzone"
               onDragOver={handleDragOver}

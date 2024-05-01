@@ -10,16 +10,9 @@ import './WorkView.css';
 function WorkView({work}) {
     const [t] = useTranslation();
 
-    useEffect(() => {
-        console.log(work);
-    
-
-      }, []);
-
     const estiloTextField = {
         pointerEvents: 'none',
     };
-
 
   return (
     <div className='work-view-container'>

@@ -11,7 +11,6 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Autocomplete from '@mui/material/Autocomplete';
 
-
 import strings from '../../../../assets/files/strings.json';
 import './AddLabGroup.css';
 
@@ -24,17 +23,9 @@ function AddLabGroup({userData}) {
 
   useEffect(() => {
     const fetchInfo = async () => {
-      // const teachers = await getTeachers();
-      // setTeachersList(teachers);
-      setTeachersList( 
-        [
-          {
-            "name" : "Paco"
-          },
-          {
-            "name" : "Manuel"
-          }
-        ]);
+      const teachers = await getTeachers();
+      console.log(teachers);
+      setTeachersList(teachers);
       
     };
 
@@ -57,8 +48,21 @@ function AddLabGroup({userData}) {
     }
   }
 
+  const getTeachersOptions= () =>{
+    let options = [];
+    if(teachersList != undefined){
+      teachersList.map((teacher,index) => {
+        options[index] = {
+            label: `${teacher.name}`,
+            value: teacher.TeacherID
+        };
+      });
+    }     
+
+    return options;
+  }
+
   function checkData(){
-    console.log("Grupo: "+groupName+"/ Subject: "+subject+"/ Teacher: "+teacherAssigned);
     if(groupName === "" || subject === "" ||teacherAssigned === "" ){
       toast.error(t('addLabGroups.dataBlank'));
       return false;
@@ -69,23 +73,23 @@ function AddLabGroup({userData}) {
 
   async function saveTeacherInfo(){
     if(checkData()){
-      // try {
-      //   const res = await saveLabGroup(groupName, subject, teacherAssigned);
-      //   if (res.response) {
-      //     toast.info(t('addLabGroups.groupSaved'));
-      //     setGroupName("");
-      //     setTeacherAssigned("");
-      //     setSubject("");
-      //   } else {
-      //     if(res.code === strings.errors.dupentry){
-      //       toast.error(extractDuplicateEntry(res.error)+t('addLabGroups.errorExist'));
-      //     }else{
-      //       toast.error(res.error);
-      //     }
-      //   }
-      // } catch (error) {
-      //   toast.error(t('addLabGroups.errorSavingGroup')+error);
-      // }
+      try {
+        const res = await saveLabGroup(groupName, subject, teacherAssigned.value);
+        if (res.response) {
+          toast.info(t('addLabGroups.groupSaved'));
+          setGroupName("");
+          setTeacherAssigned("");
+          setSubject("");
+        } else {
+          if(res.code === strings.errors.dupentry){
+            toast.error(extractDuplicateEntry(res.error)+t('addLabGroups.errorExist'));
+          }else{
+            toast.error(res.error);
+          }
+        }
+      } catch (error) {
+        toast.error(t('addLabGroups.errorSavingGroup')+error);
+      }
     }
   }
 
@@ -116,11 +120,13 @@ function AddLabGroup({userData}) {
               sx={{ width: '100%' }}
             />
         </Grid>
+        <Grid item xs={12} sm={3}>
+        </Grid>
         <Grid item xs={12} sm={6}>
             <Autocomplete
               disablePortal
               id="teacher-combo-box"
-              options={teachersList.map((t) => t.name)}
+              options={getTeachersOptions()}
               renderInput={(params) => <TextField {...params} label={t('addLabGroups.assignedTeacher')} />}
               onChange={handleTeacherAssignedChange}
               value={teacherAssigned}

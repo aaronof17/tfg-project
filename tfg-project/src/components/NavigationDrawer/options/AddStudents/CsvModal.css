@@ -19,6 +19,10 @@
     width: 25em;
   }
 
+  .csv-modal .csv-template{
+    margin-bottom: 5%;
+  }
+
   
   .csv-modal h3,
   .csv-modal h4,

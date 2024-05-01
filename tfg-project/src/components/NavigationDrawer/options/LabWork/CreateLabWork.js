@@ -3,7 +3,7 @@ import './CreateLabWork.css';
 
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
-import {getLabGroups,getSubjectsFromGroup,getLabGroupsBySubject} from "../../../../services/labGroupService.js";
+import {getTeacherLabGroups,getSubjectsFromGroup,getLabGroupsBySubject} from "../../../../services/labGroupService.js";
 import {getTeacherId} from "../../../../services/teacherService.js";
 import {saveWorks} from "../../../../services/labWorkService.js";
 import {getSubjectsForComboBox} from "../../../../functions/genericFunctions.js";
@@ -33,55 +33,55 @@ function CreateLabWork({userData}) {
     useEffect(() => {
         const fetchGroups = async () => {
           const id = await getTeacherId(setTeacherID,userData.login);
-          getLabGroups(setLabGroups,id);
+          getTeacherLabGroups(setLabGroups,id);
           getSubjectsFromGroup(setSubjects,id);
         };
     
         fetchGroups();
       }, []);
 
-      function saveLabWorks(){
-        if(title === "" || description === "" || percentage === "" || isNaN(percentage)){
-          toast.error(t('createLabWork.dataBlankError'));
+    function saveLabWorks(){
+      if(title === "" || description === "" || percentage === "" || isNaN(percentage)){
+        toast.error(t('createLabWork.dataBlankError'));
+      }else{
+        var datesFromGroups = getTableInformation();
+        if(datesFromGroups.length === 0){
+          toast.error(t('createLabWork.datesBlankError'));
         }else{
-          var datesFromGroups = getTableInformation();
-          if(datesFromGroups.length === 0){
-            toast.error(t('createLabWork.datesBlankError'));
-          }else{
-            saveWorks(datesFromGroups, title, description, percentage, teacherID).then((res) => {
-              if(res){
-                toast.info(t('createLabWork.worksSaved'));
-              }else{
-                toast.error(t('createLabWork.error'));
-              }
-          });
-            
-          }
+          saveWorks(datesFromGroups, title, description, percentage, teacherID).then((res) => {
+            if(res){
+              toast.info(t('createLabWork.worksSaved'));
+            }else{
+              toast.error(t('createLabWork.error'));
+            }
+        });
+          
         }
+      }
     }
 
 
 
-      const handleSubjectChange = (e, selectedOption) => {
-        if (selectedOption) {
-            const fetchFilterGroups = async () => {
-                getLabGroupsBySubject(selectedOption, teacherID, setLabGroups);
-            };
-            fetchFilterGroups();
-        }else{
-          const fetchAllGroups = async () => {
-            getLabGroups(setLabGroups,teacherID);
+    const handleSubjectChange = (e, selectedOption) => {
+      if (selectedOption) {
+          const fetchFilterGroups = async () => {
+              getLabGroupsBySubject(selectedOption, teacherID, setLabGroups);
           };
-          fetchAllGroups();
-        }
+          fetchFilterGroups();
+      }else{
+        const fetchAllGroups = async () => {
+          getTeacherLabGroups(setLabGroups,teacherID);
+        };
+        fetchAllGroups();
       }
+    }
 
-      const handleGroupsSelector = async (selectedOptions) => {
-        if (selectedOptions) {
-            const selectedGroups = selectedOptions.map(option => option.label);
-            setActualGroups(selectedGroups);
-        }
+    const handleGroupsSelector = async (selectedOptions) => {
+      if (selectedOptions) {
+          const selectedGroups = selectedOptions.map(option => option.label);
+          setActualGroups(selectedGroups);
       }
+    }
     
 
 

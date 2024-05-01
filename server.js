@@ -153,6 +153,16 @@ app.post('/works/student', async function (req, res) {
     return result;
 });
 
+app.post('/works/group', async function (req, res) {
+    const result = await workRequests.getWorskByGroup(req,res);
+    return result;
+});
+
+app.post('/works/subject', async function (req, res) {
+    const result = await workRequests.getWorskBySubject(req,res);
+    return result;
+});
+
 app.post('/works/student/group', async function (req, res) {
     const result = await workRequests.getWorksByStudentAndGroup(req,res);
     return result;
@@ -183,8 +193,29 @@ app.post('/groups/name', async function (req, res) {
     return result;
 });
 
-app.post('/labGroups', async function (req, res) {
+app.post('/groups/save', async function (req, res) {
+    const result = await groupRequests.saveLabGroup(req,res);
+    return result;
+});
+
+app.post('/groups/delete', async function (req, res) {
+    const result = await groupRequests.deleteGroup(req,res);
+    return result;
+});
+
+app.post('/groups/edit', async function (req, res) {
+    const result = await groupRequests.editGroup(req,res);
+    return result;
+});
+
+app.post('/groups/teacher', async function (req, res) {
     const result = await groupRequests.getGroupsByTeacherId(req,res);
+    return result;
+});
+
+
+app.get('/groups', async function (req, res) {
+    const result = await groupRequests.getGroups(req,res);
     return result;
 });
 
@@ -604,9 +635,9 @@ async function leerDirectorioRecursivo(directorioRepo,directorio) {
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
-    // databaseRequests.connection.connect(function(err){
-    //     if(err) throw err;
-    //     console.log("Database Connected");
-    // }
-    // );
+    databaseRequests.connection.connect(function(err){
+        if(err) throw err;
+        console.log("Database Connected");
+    }
+    );
 });

@@ -2,9 +2,10 @@ import * as React from 'react';
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import {getTeacherId} from "../../../../services/teacherService.js";
-import {getLabGroups,getSubjectsFromGroup} from "../../../../services/labGroupService.js";
+import {getTeacherLabGroups,getSubjectsFromGroup} from "../../../../services/labGroupService.js";
 import {saveStudent, getIdByEmail} from "../../../../services/studentService.js";
 import {saveEnrolled} from "../../../../services/enrolledService.js";
+import {extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import {toast} from "react-toastify";
 
 import StudentInfo from './StudentInfo.js';
@@ -16,6 +17,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
+import strings from '../../../../assets/files/strings.json';
 import './AddStudents.css';
 
 function AddStudents({userData}) {
@@ -38,7 +40,7 @@ function AddStudents({userData}) {
     useEffect(() => {
         const fetchInfo = async () => {
             const id = await getTeacherId(setTeacherID,userData.login);
-            getLabGroups(setLabGroups,id);
+            getTeacherLabGroups(setLabGroups,id);
             getSubjectsFromGroup(setSubjects,id);
         };
     
@@ -48,23 +50,21 @@ function AddStudents({userData}) {
     const handleSaveCsv = async (data) => {
       for (let element of data) {
         try {
-          await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group, element.path);
+          await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group, element.path, false);
         } catch (error) {
-          sendError(t('addStudents.errorSavingStudent')+error);
+          toast.error(t('addStudents.errorSavingStudent')+error);
+          return;
         }
       }
+      toast.info(t('addStudents.studentsSaved'));
     };
-  
-    const sendError = (message) => {
-      toast.error(message);
-    }
-  
+
 
     function checkData(studentName, studentEmail, studentUser, 
       studentRepository, studentGroup){
       if(studentName === "" || studentEmail === "" ||studentUser === ""
       || studentRepository === "" || studentGroup === ""){
-        sendError('Error with student '+studentName+':'+t('addStudents.dataBlank'));
+        toast.error('Error with student '+studentName+':'+t('addStudents.dataBlank'));
         return false;
       }else{
         return true;
@@ -106,7 +106,7 @@ function AddStudents({userData}) {
     }
 
 
-  async function saveStudentInfo(studentName, studentEmail, studentUser, studentRepository, studentGroup, studentPath){
+  async function saveStudentInfo(studentName, studentEmail, studentUser, studentRepository, studentGroup, studentPath, onlyOne=true){
       if(checkData(studentName, studentEmail, studentUser, studentRepository, studentGroup)){
         try {
           const emailExists = await existsEmail(studentEmail);
@@ -115,13 +115,19 @@ function AddStudents({userData}) {
           }else{
             const res = await saveStudent(studentName, studentEmail, studentUser, studentRepository, studentGroup, studentPath);
             if (res.response) {
-              toast.info(t('addStudents.studentSaved'));
+              if(onlyOne){
+                toast.info(t('addStudents.studentSaved'));
+              }
             } else {
-              sendError(res.error);
+              if(res.code === strings.errors.dupentry){
+                toast.error(extractDuplicateEntry(res.error)+t('worksList.errorExist'));
+              }else{
+                toast.error(res.error);
+              }
             }
           }
         } catch (error) {
-          sendError(t('addStudents.errorSavingStudent')+error);
+          toast.error(t('addStudents.errorSavingStudent')+error);
         }
       }
     }
@@ -157,7 +163,6 @@ function AddStudents({userData}) {
               setModalOpen(false);
             }}
             onSubmit={handleSaveCsv}
-            sendError={sendError}
             labgroups={labGroups}
             existsEmail={existsEmail}
           />

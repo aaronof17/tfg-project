@@ -79,6 +79,48 @@ export async function getWorksByStudent(studentEmail, callback, teacherID) {
 }
 
 
+export async function getWorksByGroup(groupName, callback, teacherID) {
+  try {
+      const response = await fetch('http://localhost:4000/works/group', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ teacherID: teacherID,
+                          groupName: groupName})
+
+      })
+
+      const data = await response.json();
+      callback(data.data);
+    } catch (error) {
+      console.error('Error getting works by group:', error);
+    }
+}
+
+
+export async function getWorksBySubject(subject, callback, teacherID) {
+  try {
+      const response = await fetch('http://localhost:4000/works/subject', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ teacherID: teacherID,
+                          subject: subject})
+      })
+
+      const data = await response.json();
+      callback(data.data);
+    } catch (error) {
+      console.error('Error getting works by subject:', error);
+    }
+}
+
 export async function getWorksByStudentAndGroup(studentId, labgroupName, teacherID) {
   try {
       const response = await fetch('http://localhost:4000/works/student/group', {

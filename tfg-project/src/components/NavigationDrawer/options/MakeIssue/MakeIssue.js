@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 
 import SelectableList from "./SelectableList.js";
 import {createIssue} from "../../../../functions/gitHubFunctions.js";
-import {getLabGroups,getSubjectsFromGroup, getLabGroupsBySubject} from "../../../../services/labGroupService.js";
+import {getTeacherLabGroups,getSubjectsFromGroup, getLabGroupsBySubject} from "../../../../services/labGroupService.js";
 import {getStudents, getStudentsBySubject, getStudentsByWork} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 import {getSubjectsForComboBox,getRepositoryName} from "../../../../functions/genericFunctions.js";
@@ -34,7 +34,7 @@ function MakeIssue({userData}) {
   useEffect(() => {
     const fetchInfo = async () => {
         const id = await getTeacherId(setTeacherID,userData.login);
-        getLabGroups(setLabGroups,id);
+        getTeacherLabGroups(setLabGroups,id);
         getSubjectsFromGroup(setSubjects,id);
         getStudents(setAvailableStudents,id);
         getTeacherToken(setTeacherToken,id);
@@ -57,7 +57,7 @@ function MakeIssue({userData}) {
         fetchFilterStudents();
     }else{
       const fetchAllStudents = async () => {
-        getLabGroups(setLabGroups,teacherID);
+        getTeacherLabGroups(setLabGroups,teacherID);
         getStudents(setAvailableStudents,teacherID).then((newStudents)=>{
           const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => 
                                                                                         existingStudent.labgroup === student.labgroup
