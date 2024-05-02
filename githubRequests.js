@@ -19,17 +19,20 @@ async function getAccessToken(req, res) {
 
 
 async function deleteAppToken(req, res) {
-    const token = req.body.toke;
-    const response = await fetch("https://github.com/applications/"+CLIENT_ID+"/token", {
+    const token = req.body.token;
+    const response = await fetch("https://api.github.com/applications/"+CLIENT_ID+"/token", {
         method: "DELETE",
         headers: {
-            "Accept" : "application/json"
+            "Authorization": req.get("Authorization"),
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         },
         body: JSON.stringify({
             access_token: token
         })
     });
     const data = await response.json();
+    console.log("DATA DE SERVER ",data);
     return data;
 }
 

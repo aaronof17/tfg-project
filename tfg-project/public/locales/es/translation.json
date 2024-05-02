@@ -16,7 +16,8 @@
         "addTeachers" : "Añadir profesor",
         "teachersList" : "Lista de Profesores",
         "addGroups" : "Añadir grupo de laboratorio",
-        "groupsList" : "Lista de grupos de laboratorio"
+        "groupsList" : "Lista de grupos de laboratorio",
+        "defaultView" : "Vista predeterminada"
 
     },
     "studentList" : {
@@ -252,5 +253,9 @@
         "nameExists" : "Este nombre ya existe",
         "confirm" : "Confirmar",
         "cancel" : "Cancelar"
+    },
+    "defaultView" :{
+        "message" : "Lo sentimos, pero no estás en nuestro sistema. Porfavor contacta con nuestro administrador para resolver cualquier duda",
+        "email" : "Email: "
     }
 }

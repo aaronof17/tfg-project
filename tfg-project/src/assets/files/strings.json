@@ -3,6 +3,9 @@
       "dupentry": "ER_DUP_ENTRY",
       "unauthorized" : "Unauthorized",
       "notfound" : "Not Found"
+    },
+    "emails": {
+      "admin" : "uo281997@uniovi.es"
     }
   }
   

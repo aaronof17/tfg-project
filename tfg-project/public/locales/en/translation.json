@@ -16,7 +16,8 @@
         "addTeachers" : "Add Teachers",
         "teachersList" : "Teachers List",
         "addGroups" : "Add Lab Groups",
-        "groupsList" : "Lab Group List"
+        "groupsList" : "Lab Group List",
+        "defaultView" : "Default View"
     },
     "studentList" : {
         "name" : "Name",
@@ -253,5 +254,9 @@
         "nameExists" : "This name already exists",
         "confirm" : "Confirm",
         "cancel" : "Cancel"
+    },
+    "defaultView" :{
+        "message" : "Sorry, but you are not in our system. Please contact our admin to resolve any questions",
+        "email" : "Email: "
     }
 }

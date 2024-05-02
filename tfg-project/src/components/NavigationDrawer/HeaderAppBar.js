@@ -65,7 +65,18 @@ function HeaderAppBar({rerenderPass, isClosing, setMobileOpen, mobileOpen}){
         > 
           <LogoutIcon/>
         </Button>
-
+        <Button
+          variant="contained"
+          onClick={() => {
+            console.log("TOKEN ",localStorage.getItem("accessToken"));
+           
+            // localStorage.removeItem("accessToken"); 
+            // rerenderPass()
+          }}
+          sx={{backgroundColor:"#c9c2c2", color:"black"}}
+        > 
+      
+        </Button>
 
       </Toolbar>
     </AppBar>

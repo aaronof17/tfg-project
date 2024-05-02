@@ -15,6 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import People from '@mui/icons-material/People';
@@ -41,7 +42,7 @@ import AddTeachers from './options/AddTeachers/AddTeachers.js';
 import TeachersList from './options/TeachersList/TeachersList.js';
 import AddLabGroup from './options/AddLabGroup/AddLabGroup.js';
 import LabGroupList from './options/LabGroupList/LabGroupList.js';
-
+import DefaultView from './options/DefaultView/DefaultView.js';
 
 const drawerWidth = 240;
 
@@ -59,13 +60,13 @@ function ResponsiveDrawer(props) {
   const drawerTeacherOptions = [t('navigationDrawer.students'), t('navigationDrawer.addStudents'), t('navigationDrawer.makeIssue'), t('navigationDrawer.makeWork'), t('navigationDrawer.workList'), t('navigationDrawer.mark')];
   const drawerStudentOptions = [t('navigationDrawer.studentLabWorks')];
   const drawerAdminOptions = [t('navigationDrawer.addTeachers'), t('navigationDrawer.teachersList'), t('navigationDrawer.addGroups'), t('navigationDrawer.groupsList')];
-
+  const drawerDefaultOptions = [t('navigationDrawer.defaultView')];
 
   let teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
                       <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
   let studentViews = [<StudentWorks userData={userData}/>, <ProfileView userData={userData}/>];
   let adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>, <LabGroupList userData={userData}/>];
-  let defaultViews = [];
+  let defaultViews = [<DefaultView/>];
 
   const teacherIcons = [ <People/>, <AddCircleOutlineIcon/>, <CircleNotificationsIcon/>, <HomeRepairServiceIcon/>, <ChecklistIcon/>, <BorderColorIcon/>, <AccountBoxIcon/>];
   const adminIcons = [<AddCircleOutlineIcon/>,<FormatListBulletedIcon/>,<AddCircleOutlineIcon/>,<FormatListBulletedIcon/>];
@@ -77,7 +78,13 @@ function ResponsiveDrawer(props) {
 
       if (userDataResponse.login) {
         const role = await getRoleByGitHubUser(userDataResponse.login);
-        setRole(role);
+        console.log("ROLE ",role);
+        if(role !== undefined){
+          setRole(role);
+        }else{
+          let roleDefault = "";
+          setRole(roleDefault);
+        }
         //setRole("admin");
       }
 
@@ -85,7 +92,8 @@ function ResponsiveDrawer(props) {
                         <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
       studentViews = [<StudentWorks userData={userData}/>];
       adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>, <LabGroupList userData={userData}/>];
-      
+      defaultViews = [<DefaultView/>];
+
     };
 
     fetchInfo();
@@ -167,6 +175,18 @@ function ResponsiveDrawer(props) {
           </List>
         </>
         )}
+        {role==="" && drawerDefaultOptions.map((text, index) => (
+          <List>
+          <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
+            <ListItemButton>
+              <ListItemIcon sx={{ color: 'white' }}>
+                <VisibilityIcon/>
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+          </List>
+        ))}
     </div>
   );
 
