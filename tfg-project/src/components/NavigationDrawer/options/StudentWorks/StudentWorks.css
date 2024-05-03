@@ -1,4 +1,3 @@
-
 .student-works-container{
     margin-top: 5vh; 
     padding: 2vw; 
@@ -13,8 +12,23 @@
     overflow-x: hidden;
 }
 
+.student-works-container .student-works-filter-container{
+    padding-top: 5%;
+}
+
+.student-works-container .student-works-empty-container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
 .student-works-container h3{
     color: black;
+}
+
+@media screen and (max-width: 768px) {
+    .student-works-container .student-works-filter-container {
+        padding-top: 10%;
+    }
 }
 
   

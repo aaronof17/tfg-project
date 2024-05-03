@@ -3,12 +3,15 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 
 import { useTranslation } from "react-i18next";
 import {toast} from "react-toastify";
 
 import "./Modal.css";
 import "react-datepicker/dist/react-datepicker.css";
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 function Modal ({ closeModal, onSubmit, defaultValue }){
   const [formState, setFormState] = useState(
@@ -17,7 +20,8 @@ function Modal ({ closeModal, onSubmit, defaultValue }){
       description: "",
       percentage: "",
       initialdate: new Date(),
-      finaldate: new Date()
+      finaldate: new Date(),
+      active: 0,
     }
   );
   const [t] = useTranslation();
@@ -54,6 +58,14 @@ const handleFinalDateChange = (date) => {
         }));
     }
 };
+
+const handleActiveChange = (event) => {
+  setFormState(prevState => ({
+    ...prevState,
+    active: event.target.checked ? 1 : 0 
+}));
+
+}
 
 
 const handleKeyPress = (event) => {
@@ -162,6 +174,10 @@ const handlePercentageChange = (event) => {
                     timeFormat="HH:mm"
                     timeIntervals={15} 
                 />
+          </div>
+          <div className="form-group">
+            <label htmlFor="active">{t('worksList.active')}</label>
+              <Checkbox {...label} checked={formState.active === 1} onChange={handleActiveChange}/>
           </div>
           <Button className="confirm-btn" variant="contained" onClick={handleSubmit}>
                     {t('worksList.confirm')}

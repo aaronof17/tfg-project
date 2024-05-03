@@ -118,6 +118,27 @@ export async function getSubjectsFromGroup(callback, teacherID) {
 }
 
 
+export async function getSubjectsForStudent(callback, studentID) {
+  try {
+      const response = await fetch('http://localhost:4000/subjects/student', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+          JSON.stringify({ studentID: studentID})
+      })
+
+      const data = await response.json();
+      console.log(data.data);
+      callback(data.data);
+    } catch (error) {
+      console.error('Error getting subjects for student:', error);
+    }
+}
+
+
 export async function getLabGroupsBySubject(actualSubject, teacherID, callback) {
   try {
       const response = await fetch('http://localhost:4000/groups/subject', {

@@ -147,6 +147,11 @@ app.post('/works', async function (req, res) {
     return result;
 });
 
+app.post('/works/active', async function (req, res) {
+    const result = await workRequests.getActiveWorksByTeacherId(req,res);
+    return result;
+});
+
 
 app.post('/works/student', async function (req, res) {
     const result = await workRequests.getWorkByStudent(req,res);
@@ -160,6 +165,11 @@ app.post('/works/group', async function (req, res) {
 
 app.post('/works/subject', async function (req, res) {
     const result = await workRequests.getWorskBySubject(req,res);
+    return result;
+});
+
+app.post('/works/student/subject', async function (req, res) {
+    const result = await workRequests.getWorksByStudentAndSubject(req,res);
     return result;
 });
 
@@ -219,6 +229,10 @@ app.get('/groups', async function (req, res) {
     return result;
 });
 
+app.post('/subjects/student', async function (req, res) {
+    const result = await groupRequests.getSubjectsForStudent(req,res);
+    return result;
+});
 
 app.post('/subjects', async function (req, res) {
     const result = await groupRequests.getSubjectsByTeacherId(req,res);
@@ -635,9 +649,9 @@ async function leerDirectorioRecursivo(directorioRepo,directorio) {
 
 app.listen(4000, function() {
     console.log("CORS server running on port 4000");
-    // databaseRequests.connection.connect(function(err){
-    //     if(err) throw err;
-    //     console.log("Database Connected");
-    // }
-    // );
+    databaseRequests.connection.connect(function(err){
+        if(err) throw err;
+        console.log("Database Connected");
+    }
+    );
 });

@@ -68,6 +68,22 @@ function getSubjectsByTeacherId(req,res) {
     })
 }
 
+function getSubjectsForStudent(req,res) {
+    const sql = "SELECT DISTINCT subject FROM labgroups l "+
+                "JOIN enrolled e ON l.idlabGroup = e.labgroupFK "+
+                "JOIN students s ON e.studentFK = s.studentsID "+
+                "where s.studentsID = ?";
+    const params = [req.body.studentID];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting subjects for student: '+ err.sqlMessage, code: err.code});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
 
 function getIdFromGroupsByName(req,res) {
     const sql = "SELECT idlabgroup FROM labgroups where name=? ";
@@ -126,4 +142,4 @@ function editGroup(req,res){
 
 
 
-module.exports = {getIdFromGroupsByName, editGroup, getGroups, deleteGroup, saveLabGroup, getSubjectsByTeacherId, getGroupsBySubject, getGroupsByTeacherId};
+module.exports = {getIdFromGroupsByName, editGroup, getGroups, getSubjectsForStudent, deleteGroup, saveLabGroup, getSubjectsByTeacherId, getGroupsBySubject, getGroupsByTeacherId};

@@ -55,6 +55,27 @@ export async function getLabWorks(callback, teacherID) {
         console.error('Error getting lab groups:', error);
       }
 }
+
+
+export async function getActiveLabWorks(callback, teacherID) {
+  try {
+      const response = await fetch('http://localhost:4000/works/active', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ teacherID: teacherID})
+
+      })
+
+      const data = await response.json();
+      callback(data.data);
+    } catch (error) {
+      console.error('Error getting active lab groups:', error);
+    }
+}
   
 
 export async function getWorksByStudent(studentEmail, callback, teacherID) {
@@ -167,9 +188,30 @@ export async function getWorksByStudentId(callback, studentId) {
     }
 }
 
+export async function getWorksBySubjectAndStudent(subject ,callback, studentId) {
+  try {
+      const response = await fetch('http://localhost:4000/works/student/subject', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ studentId: studentId,
+                                subject: subject})
+      })
+
+      const data = await response.json();
+      callback(data.data);
+    } catch (error) {
+      console.error('Error getting works by student id and subject:', error);
+    }
+}
+
 
 export async function editWork(editRow) {
   try {
+    console.log("ACTIVE ",editRow);
       const response = await fetch('http://localhost:4000/works/edit', {
           method: "POST",
           headers: {
@@ -182,7 +224,8 @@ export async function editWork(editRow) {
                             description: editRow.description,
                             percentage: editRow.percentage,
                             initialdate: formatDate(editRow.initialdate),
-                            finaldate: formatDate(editRow.finaldate)
+                            finaldate: formatDate(editRow.finaldate),
+                            active: editRow.active
                           })
         });
       

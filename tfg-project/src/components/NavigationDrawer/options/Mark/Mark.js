@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect} from 'react';
 import { useTranslation } from "react-i18next";
 
-import {getLabWorks,getWorksByStudent } from "../../../../services/labWorkService.js";
+import {getActiveLabWorks,getWorksByStudent } from "../../../../services/labWorkService.js";
 import {getStudentsWithoutRepo,getStudentsByWork} from "../../../../services/studentService.js";
 import {getTeacherId} from "../../../../services/teacherService.js";
 import {saveMark,getMarkByWorkAndStudent,editMark } from "../../../../services/markService.js";
@@ -33,7 +33,7 @@ function Mark({userData}){
     useEffect(() => {
         const fetchInfo = async () => {
             const id = await getTeacherId(setTeacherID,userData.login);
-            getLabWorks(setLabWorks,id);
+            getActiveLabWorks(setLabWorks,id);
             getStudentsWithoutRepo(setStudents,id);
         };
     
@@ -93,7 +93,7 @@ function Mark({userData}){
         fetchFilterWorks();
     }else{
         const fetchAllWorks = async () => {
-            getLabWorks(setLabWorks,teacherID);
+            getActiveLabWorks(setLabWorks,teacherID);
         };
         setActualStudent("");
         fetchAllWorks();

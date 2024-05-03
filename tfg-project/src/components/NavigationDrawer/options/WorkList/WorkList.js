@@ -169,25 +169,25 @@ function WorksList({userData}){
               {labworks.map((row, idx) => {
                 return ( 
                   <tr key={idx}>
-                    <td>
+                    <td style={{ backgroundColor: row.active === 1 ? "#837e7e" : "#bebebe" }} >
                         {row.labgroupNameFK}
                     </td>
-                    <td>
+                    <td style={{ backgroundColor: row.active === 1 ? "#837e7e" : "#bebebe" }} >
                         {row.title}
                     </td>
-                    <td className="description">
+                    <td style={{ backgroundColor: row.active === 1 ? "#837e7e" : "#bebebe" }}  className="description">
                         {row.description}
                     </td>
-                    <td>
+                    <td style={{ backgroundColor: row.active === 1 ? "#837e7e" : "#bebebe" }} >
                         {row.percentage}
                     </td>
-                    <td>
+                    <td style={{ backgroundColor: row.active === 1 ? "#837e7e" : "#bebebe" }} >
                         {formatDate(row.initialdate)}
                     </td>
-                    <td>
+                    <td style={{ backgroundColor: row.active === 1 ? "#837e7e" : "#bebebe" }} >
                         {formatDate(row.finaldate)}
                     </td>
-                    <td className="fit">
+                    <td style={{ backgroundColor: row.active === 1 ? "#837e7e" : "#bebebe" }}  className="fit">
                       <span className="actions">
 
                         <IconButton 

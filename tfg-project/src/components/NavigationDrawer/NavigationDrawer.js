@@ -78,7 +78,6 @@ function ResponsiveDrawer(props) {
 
       if (userDataResponse.login) {
         const role = await getRoleByGitHubUser(userDataResponse.login);
-        console.log("ROLE ",role);
         if(role !== undefined){
           setRole(role);
         }else{

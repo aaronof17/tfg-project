@@ -60,7 +60,7 @@
   
   .tableWork td {
     border-top: 0.5px solid #ddd;
-    background-color: rgb(131, 126, 126);
+    background-color: #837e7e;
     max-width: 300px;
     white-space: normal;
     word-wrap: break-word; 
@@ -78,10 +78,6 @@
   
   .actions svg {
     cursor: pointer;
-  }
-  
-  .delete-btn {
-    color: #e10d05;
   }
   
 

@@ -153,7 +153,8 @@
         "worksEmpty" : "No hay trabajos de laboratorio asignados todavía",
         "subject" : "Asignatura",
         "labgroup" : "Grupo de laboratorio",
-        "errorExist" :" ya existe"
+        "errorExist" :" ya existe",
+        "active" : "Activo"
     },
     "mark":{
         "students" : "Alumnos",
@@ -195,7 +196,8 @@
         "group" : "Grupo de laboratorio",
         "initialDate" : "Fecha Inicial",
         "finalDate" : "Fecha Final",
-        "withoutMark" : "Este trabajo todavía no ha sido calificado"
+        "withoutMark" : "Este trabajo todavía no ha sido calificado",
+        "subject" : "Asignatura"
     },
     "addTeachers" : {
         "name" : "Nombre completo",
