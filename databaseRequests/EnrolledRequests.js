@@ -1,8 +1,8 @@
-const connection = require('./databaseInfo');
+const connection = require('../databaseInfo');
 
 function insertEnrolled(req,res) {
-    const sql = 'INSERT INTO enrolled (studentFK, labgroupFK, repositoryURL, localPath) VALUES (?,?,?,?)';
-    const params = [req.body.studentId, req.body.groupId, req.body.repository, req.body.path];
+    const sql = 'INSERT INTO enrolled (studentFK, labgroupFK, repositoryURL) VALUES (?,?,?)';
+    const params = [req.body.studentId, req.body.groupId, req.body.repository];
     connection.query(sql, params,(err, data) =>{
         if(err){
             console.log(err);

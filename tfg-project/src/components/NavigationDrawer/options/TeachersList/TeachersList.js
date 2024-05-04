@@ -116,7 +116,7 @@ function TeachersList({userData}) {
               setRowToDelete("");
             })
           }else{
-            toast.error('teachersList.errorDeletingTeacher',res.error); 
+            toast.error('teachersList.errorDeletingTeacher'); 
           }
         });
         
@@ -142,7 +142,7 @@ function TeachersList({userData}) {
             if(res.code === strings.errors.dupentry){
               toast.error(extractDuplicateEntry(res.error)+t('teachersList.errorExist'));
             }else{
-              toast.error(res.error);
+              toast.error(t('teachersList.errorEditingTeacher'));
             }
           }
         });

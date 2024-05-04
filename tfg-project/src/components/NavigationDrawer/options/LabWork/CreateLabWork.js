@@ -13,7 +13,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
@@ -125,7 +125,6 @@ function CreateLabWork({userData}) {
               {t('createLabWork.saveWorks')}
             </Button>
         </div>
-        <ToastContainer className="custom-toast-container"/>
     </div>
   );
 }

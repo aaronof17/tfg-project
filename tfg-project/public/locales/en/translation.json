@@ -38,7 +38,7 @@
         "commitError" : "There was an error creating commit",
         "deleteStudent": "You will delete a student",
         "studentInfo" : "All his information will be deleted too",
-        "errorDeletingStudent" : "An error ocurred deleting stundent",
+        "errorDeletingStudent" : "An error ocurred deleting student",
         "studentDeleted" : "Student deleted",
         "studentsListEmpty" : "There are no students yet",
         "blankInfo" : "No field can be blank, except path",
@@ -68,7 +68,8 @@
         "download" : "Download",
         "commitInfoArchive" : "studentsCommitsInformation",
         "noConflicts": "There are no conflicts with commits",
-        "errorRepository" : "There was a problem with repository, it does not exists or you probably don't have access. Student: "
+        "errorRepository" : "There was a problem with repository, it does not exists or you probably don't have access. Student: ",
+        "errorEditingStudent" : "There was an error editing student"
     },
     "makeIssue" : {
         "title" : "Title",
@@ -109,14 +110,18 @@
         "errorNumberFiles" : "You can only use one file",
         "errorFormatFile" : "Error with file extension, you can only use .csv",
         "errorSomethingWentWrong" : "Something went wrong, please try again",
-        "errorSavingStudent": "Error saving student:",
+        "errorSavingStudent": "Error saving student",
         "errorWithStudentBlankField": "Error with student ",
         "errorCSVdataBlank": "No csv field can be blank",
         "errorGroupNotFound" : "Lab group in csv not found: ",
         "studentExist" : "This student already exist, his email is: ",
         "addEnrolled" : "Do you want to enroll this student in this new lab group?",
         "studentEnrolled" : "Student enrolled",
-        "csvTemplate" : "CSV template"
+        "csvTemplate" : "CSV template",
+        "errorWithStudent" : "Error with student ",
+        "errorExist" : " already exists",
+        "errorSavingEnroled" : "There was an error enrolling student"
+
     },
     "createLabWork":{
         "subjectFilter" : "Subject",
@@ -154,7 +159,9 @@
         "subject" : "Subject",
         "labgroup" : "Lab Work",
         "errorExist" : " already exists",
-        "active" : "Active"
+        "active" : "Active",
+        "errorDeletingWork" : "There was an error deleting work",
+        "errorEditingWork" : "There was an error editing work"
     },
     "mark":{
         "students" : "Students",
@@ -169,8 +176,13 @@
         "confirm" : "Confirm",
         "cancel" : "Cancel",
         "studentHasmark" : "This student already has a mark in this work",
-        "rewrite" : "Do you want to rewrite?"
-
+        "rewrite" : "Do you want to rewrite?",
+        "cantsendemail" : "It's not possible send email",
+        "emailSended" : "Email sended to: ",
+        "errorsendingemail": "There was an error sending email to: ",
+        "errorExist" :" already exists",
+        "errorEditingMark" :"There was an error editing mark",
+        "errorSavingMark" : "There was an error saving mark"
     },
     "userProfile" : {
         "nameLabel" : "Name",
@@ -185,7 +197,9 @@
         "saveToken": "Save Token",
         "tokenError" : "Token can't be blank, please introduce your GitHub Personal Acess Token",
         "tokenSaved" : "Token saved",
-        "error" : "Sorry, an error has ocurred saving token"
+        "error" : "Sorry, an error has ocurred saving token",
+        "errorExist" :" already exists",
+        "errorSavingToken" : "There was an error saving token"
     },
     "studentWorks" : {
         "worksBlank" : "You don't have any lab work assigned yet",
@@ -217,6 +231,7 @@
         "actions" : "Actions",
         "teacherDeleted" : "Teacher Deleted",
         "errorDeletingTeacher" : "There was an error deleting teacher",
+        "errorEditingTeacher" : "Hubo un error editando el profesor",
         "deleteTeacher": "You will delete a teacher",
         "teacherInfo" : "All his information will be deleted too",
         "teachersListEmpty" : "There are not teachers yet",
@@ -251,6 +266,7 @@
         "errorExist" : " already exists",
         "groupEdited" : "Lab Group edited",
         "errorDeletingGroup" : "There was an error deleting lab group",
+        "errorEditingGroup" : "There was an error editing lab group",
         "groupDeleted" : "Lab Group deleted",
         "blankInfo" : "No field can be blank",
         "nameExists" : "This name already exists",

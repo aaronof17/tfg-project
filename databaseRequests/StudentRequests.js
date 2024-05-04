@@ -1,8 +1,8 @@
-const connection = require('./databaseInfo');
+const connection = require('../databaseInfo');
 
 function getStudentsByTeacher(req,res) {
     const sql = "SELECT DISTINCT s.studentsID, s.name, "+
-                "s.email, s.githubuser, e.repositoryURL, e.localPath, g.name as labgroup " +
+                "s.email, s.githubuser, e.repositoryURL, g.name as labgroup " +
                 "FROM students s " +
                 "JOIN enrolled e ON s.studentsID = e.studentFK "+
                 "JOIN labgroups g ON e.labgroupFK = g.idlabgroup "+
@@ -114,13 +114,12 @@ function editStudent(req,res) {
                 "SET s.name = ?, "+
                 "s.githubuser = ?, "+
                 "s.email = ?, "+
-                "e.repositoryURL = ?, "+
-                "e.localPath = ? "+
+                "e.repositoryURL = ? "+
                 "WHERE s.studentsID = ? "+
                 "AND l.name = ? ";
 
     const params = [req.body.name, req.body.githubuser, req.body.email,
-                    req.body.repository, req.body.path, req.body.studentId,req.body.group];
+                    req.body.repository, req.body.studentId,req.body.group];
     connection.query(sql, params ,(err, data) =>{
         if(err){
             console.log(err);

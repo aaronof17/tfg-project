@@ -6,14 +6,17 @@ import {getActiveLabWorks,getWorksByStudent } from "../../../../services/labWork
 import {getStudentsWithoutRepo,getStudentsByWork} from "../../../../services/studentService.js";
 import {getTeacherId} from "../../../../services/teacherService.js";
 import {saveMark,getMarkByWorkAndStudent,editMark } from "../../../../services/markService.js";
-import {getInfoFromFilterMark} from "../../../../functions/genericFunctions.js";
+import {getInfoFromFilterMark, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
+import { sendEmail } from '../../../../functions/senEmail.js';
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 import './Mark.css';
+import strings from '../../../../assets/files/strings.json';
 import Autocomplete from '@mui/material/Autocomplete';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import InfoMark from './InfoMark.js';
-import {ToastContainer, toast} from "react-toastify";
 import Button from '@mui/material/Button';
 import RewriteModal from '../../../Modal/RewriteModal.js';
 
@@ -47,7 +50,8 @@ function Mark({userData}){
             labworks.map((work,index) => {
                 options[index] = {
                     label: `${work.title} - ${work.labgroupNameFK}`,
-                    value: work.worklabID
+                    value: work.worklabID,
+                    worktitle: work.title
                 };
           });
         }     
@@ -60,7 +64,8 @@ function Mark({userData}){
             students.map((student,index) => {
                 options[index] = {
                     label: `${student.name} - ${student.email}`,
-                    value: student.studentsID
+                    value: student.studentsID,
+                    email: student.email
                 };
           });
         }     
@@ -104,8 +109,13 @@ function Mark({userData}){
         editMark(actualWork.value, actualStudent.value, comment, markNumber).then((res)=>{
             if(res.response){
                     toast.info(t('mark.markSaved'));
+                    sendEmailMessage();
                 }else{
-                    toast.error(res.error); 
+                    if(res.code === strings.errors.dupentry){
+                        toast.error(extractDuplicateEntry(res.error)+t('mark.errorExist'));
+                    }else{
+                        toast.error(t('mark.errorEditingMark'));
+                    }
                 }
         });
       }
@@ -115,9 +125,6 @@ function Mark({userData}){
             const res = await getMarkByWorkAndStudent(actualWorkValue, actualStudentValue);
             if (res.response) {
                 return res.data !== 0;
-            } else {
-                toast.error(res.error);
-                return false;
             }
         } catch (error) {
             console.error('Error checking mark existence:', error);
@@ -140,13 +147,32 @@ function Mark({userData}){
                     saveMark(actualWork.value, actualStudent.value, comment, markNumber).then((res)=>{
                         if(res.response){
                             toast.info(t('mark.markSaved'));
+                            sendEmailMessage();
+                        }else{
+                            if(res.code === strings.errors.dupentry){
+                                toast.error(extractDuplicateEntry(res.error)+t('mark.errorExist'));
                             }else{
-                            toast.error(res.error); 
+                                toast.error(t('mark.errorSavingMark'));
                             }
+                        }
                     });
                 }
                
             }
+        }
+    }
+
+    async function sendEmailMessage(){
+        if(actualWork.worktitle === "" || actualStudent.email === ""){
+            toast.error(t('mark.cantsendemail'));
+        }else{
+            sendEmail(markNumber, comment, actualWork.worktitle, actualStudent.email).then((res) => {
+                if(res.response){
+                    toast.info(t('mark.emailSended')+actualStudent.email);        
+                }else{
+                    toast.error(t('mark.errorsendingemail')+actualStudent.email); 
+                }
+            });
         }
     }
 
@@ -202,6 +228,7 @@ function Mark({userData}){
                 />
             )}
             <ToastContainer className="custom-toast-container"/>
+
         </div>
     );
 }

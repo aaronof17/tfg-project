@@ -1,4 +1,4 @@
-const connection = require('./databaseInfo');
+const connection = require('../databaseInfo');
 
 function getGroupsBySubject(req,res) {
     const sql = 'select name from labgroups where subject=? and teacheridfk=?';

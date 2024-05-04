@@ -52,11 +52,11 @@ function AddTeachers({userData}) {
           if(res.code === strings.errors.dupentry){
             toast.error(extractDuplicateEntry(res.error)+t('addTeachers.errorExist'));
           }else{
-            toast.error(res.error);
+            toast.error(t('addTeachers.errorSavingTeacher'));
           }
         }
       } catch (error) {
-        toast.error(t('addTeachers.errorSavingTeacher')+error);
+        toast.error(t('addTeachers.errorSavingTeacher'));
       }
     }
   }

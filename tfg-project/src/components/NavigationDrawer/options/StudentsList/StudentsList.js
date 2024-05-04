@@ -1,5 +1,4 @@
 import  React, {useState, useEffect} from "react";
-import axios from "axios";
 import { DataGrid } from '@mui/x-data-grid';
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
@@ -9,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
 import {calculateWidth, getRepositoryName, extractId, formatDate, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
-import {downloadRepo, getLastCommitInfo, createCommit} from "../../../../functions/gitHubFunctions.js";
+import {downloadRepo, getLastCommitInfo} from "../../../../functions/gitHubFunctions.js";
 import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js";
@@ -147,7 +146,7 @@ function StudentsList({userData}) {
             }
           });
         } catch (error) {
-          toast.error(t('studentList.downloadError')+error);
+          toast.error(t('studentList.downloadError'));
         }
       }
     }
@@ -158,86 +157,10 @@ function StudentsList({userData}) {
         try {
           await downloadStudentsRepositories();
         } catch (error) {
-          toast.error(t('studentList.downloadError') + error);
+          toast.error(t('studentList.downloadError'));
         }
       }
     }
-
-
-    // async function checkDatesFromWorks(){
-    //   for (let student of selectedStudents) {
-    //     try { 
-    //       await getLastCommitInfo(teacherToken, getRepositoryName(student.repository), student.githubuser).then((res) =>{
-    //         if(!res.response){
-    //           if(res.error === 'Unauthorized'){
-    //             toast.error(t('studentList.tokenError'));
-    //           }else{
-    //             toast.error(t('studentList.commitErrorForStudent')+student.name);
-    //             // outOfTimeCommits.push( {
-    //             //   "messageType" : "errorGettingCommits",
-    //             //   "studentName" : student.name,
-    //             //   "repo" : student.repository
-    //             // });
-    //           }
-    //         }else{
-    //           let commitsInfo = res.data;
-    //           getWorksByStudentAndGroup(extractId(student.id), student.group, teacherId).then((worksRes)=>{
-    //             if(!res.response){
-    //               if(res.error === 'Unauthorized'){
-    //                 toast.error(t('studentList.tokenError'));
-    //               }else{
-    //                 toast.error(t('studentList.errorGettingWorksForStudent')+student.name);
-    //               }
-    //             }else{
-    //               if(commitsInfo.length != 0){
-    //                 if( worksRes.data.length != 0){
-    //                   let commitInfo = commitsInfo.map((c) => c.commit)[0];
-    //                   let commitDate = new Date(commitInfo.committer.date);
-    //                   let worksFiltered = worksRes.data.filter(work => new Date(work.finaldate) < commitDate );
-    //                   if( worksFiltered.length != 0){
-    //                     for(let w of worksFiltered){
-    //                       outOfTimeCommits.push({
-    //                         "messageType" : "commit",
-    //                         "studentName" : student.name,
-    //                         "labgroup" : student.group,
-    //                         "repo" : student.repository,
-    //                         "work" : {
-    //                           "title" : w.title,
-    //                           "finaldate" : formatDate(w.finaldate)
-    //                         },
-    //                         "commit":{
-    //                           "message" : commitInfo.message,
-    //                           "date" : formatDate(commitInfo.committer.date)
-    //                         }
-    //                     });
-    //                     }
-    //                   }
-    //                 }else{
-    //                   outOfTimeCommits.push({
-    //                     "messageType" : "withoutWorks",
-    //                     "studentName" : student.name,
-    //                     "labgroup" : student.group,
-    //                   });
-    //                 }
-    //               }else{
-    //                 outOfTimeCommits.push( {
-    //                   "messageType" : "withoutCommit",
-    //                   "studentName" : student.name,
-    //                   "repo" : student.repository,
-    //                 });
-    //               }
-                  
-    //             }
-
-    //           });
-    //         }
-    //       });
-    //     } catch (error) {
-    //       toast.error(t('studentList.checkingDateError')+error);
-    //     }
-    //   }
-
-    // }
 
     async function checkDatesFromWorks(){
       const promises = selectedStudents.map(async (student) => {
@@ -309,7 +232,7 @@ function StudentsList({userData}) {
             }
           });
         } catch (error) {
-          toast.error(t('studentList.checkingDateError')+error);
+          toast.error(t('studentList.checkingDateError'));
         }
       });
 
@@ -323,30 +246,12 @@ function StudentsList({userData}) {
       e.preventDefault();
       if(validateData()){
         try {
-          // // await checkDatesFromWorks().then(() =>{
-          //   console.log("COMMITS MALOS ",outOfTimeCommits[0]);
-          //   setInformationModalOpen(true);
-            
-          // });
           await checkDatesFromWorks();
         } catch (error) {
-          toast.error(t('studentList.checkingDateError') + error);
+          toast.error(t('studentList.checkingDateError'));
         }
       }
     }
-
-
-    async function cloneRepo(e) {
-      e.preventDefault();
-      if(validateData()){
-        try {
-          await createCommit();
-        } catch (error) {
-          toast.error(t('studentList.checkingDateError') + error);
-        }
-      }
-    }
-
 
   
     const handleSelectionChange = (ids) => {
@@ -368,7 +273,7 @@ function StudentsList({userData}) {
               setRowToDelete("");
             })
           }else{
-            toast.error('studentList.errorDeletingStudent',res.error); 
+            toast.error('studentList.errorDeletingStudent'); 
           }
         });
         
@@ -392,7 +297,7 @@ function StudentsList({userData}) {
             if(res.code === strings.errors.dupentry){
               toast.error(extractDuplicateEntry(res.error)+t('worksList.errorExist'));
             }else{
-              toast.error(res.error);
+              toast.error(t('studentList.errorEditingStudent'));
             }
           }
         });
@@ -424,9 +329,6 @@ function StudentsList({userData}) {
           {t('studentList.downloadRepo')}
         </Button>
         <Button className="checkWorksDates" variant="contained" onClick={checkDatesMethod}>
-          {t('studentList.checkWorksDates')}
-        </Button>
-        <Button className="cloneRepo" variant="contained" onClick={cloneRepo}>
           {t('studentList.checkWorksDates')}
         </Button>
       </div>

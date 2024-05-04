@@ -69,7 +69,8 @@
         "download" : "Descargar",
         "commitInfoArchive" : "estudiantesCommitsInformacion",
         "noConflicts": "No hubo conflictos con ningún commit",
-        "errorRepository" : "Hubo un problema con el repositorio, o no existe o probablemente no tengas acceso a él. Alumno: "
+        "errorRepository" : "Hubo un problema con el repositorio, o no existe o probablemente no tengas acceso a él. Alumno: ",
+        "errorEditingStudent" : "Hubo un error editando el estudiante"
 
     },
     "makeIssue" : {
@@ -116,7 +117,10 @@
         "studentExist" : "Este estudiante ya existe, su email es: ",
         "addEnrrolled" : "¿Quiéres matricularlo en este grupo de laboratorio?",
         "studentEnrolled" : "Estudiante matriculado",
-        "csvTemplate" : "Plantilla de csv"
+        "csvTemplate" : "Plantilla de csv",
+        "errorWithStudent" : "Error con estudiante ",
+        "errorExist" : " ya existe",
+        "errorSavingEnroled" : "Hubo un error matriculando al alumno"
     },
     "createLabWork":{
         "subjectFilter" : "Asignatura",
@@ -154,7 +158,9 @@
         "subject" : "Asignatura",
         "labgroup" : "Grupo de laboratorio",
         "errorExist" :" ya existe",
-        "active" : "Activo"
+        "active" : "Activo",
+        "errorDeletingWork" : "Hubo un error eliminando la práctica de laboratorio",
+        "errorEditingWork" : "Hubo un error editando la práctica de laboratorio"
     },
     "mark":{
         "students" : "Alumnos",
@@ -169,7 +175,13 @@
         "confirm" : "Confirmar",
         "cancel" : "Cancelar",
         "studentHasmark" : "Este estudiante ya tiene una calificación en este trabajo",
-        "rewrite" : "¿Quiéres sobreescribirlo?"
+        "rewrite" : "¿Quiéres sobreescribirlo?",
+        "cantsendemail" : "No es posible enviar el email",
+        "emailSended" : "Email enviado a: ",
+        "errorsendingemail": "Hubo un error enviando el email a: ",
+        "errorExist" :" ya existe",
+        "errorEditingMark" :"Hubo un error editando la calificación",
+        "errorSavingMark" : "Hubo un error guardando la calificación"
     },
     "userProfile" : {
         "nameLabel" : "Nombre",
@@ -184,7 +196,9 @@
         "saveToken": "Guardar Token",
         "tokenError" : "El token no puede estar vacío, porfavor introduce tu token de GitHub",
         "tokenSaved" : "Token guardado",
-        "error" : "Lo sentimos ha ocurrido un error guardando el token"
+        "error" : "Lo sentimos ha ocurrido un error guardando el token",
+        "errorExist" :" ya existe",
+        "errorSavingToken" : "Hubo un error guardando el token"
      },
     "studentWorks" : {
         "worksBlank" : "No tienes ninguna práctica asignada todavía",
@@ -216,6 +230,7 @@
         "actions" : "Acciones",
         "teacherDeleted" : "Profesor eliminado",
         "errorDeletingTeacher" : "Hubo un error eliminando el profesor",
+        "errorEditingTeacher" : "Hubo un error editando el profesor",
         "deleteTeacher": "Vas a eliminar un profesor",
         "teacherInfo" : "Toda será eliminada también",
         "teachersListEmpty" : "No hay profesores todavía",
@@ -250,6 +265,7 @@
         "errorExist" : " ya existe",
         "groupEdited" : "Grupo de laboratorio editado",
         "errorDeletingGroup" : "Hubo un error eliminando el grupo de laboratorio",
+        "errorEditingGroup" : "Hubo un error editando el grupo de laboratorio",
         "groupDeleted" : "Grupo de laboratorio eliminado",
         "blankInfo" : "Ningún campo puede estar vacío",
         "nameExists" : "Este nombre ya existe",

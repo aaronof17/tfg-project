@@ -53,7 +53,7 @@ function WorksList({userData}){
             setLabWorks(labworks.filter((_, idx) => idx !== rowToDelete));
             toast.info(t('worksList.workDeleted'));
           }else{
-            toast.error(res.error); 
+            toast.error(t('worksList.errorDeletingWork')); 
           }
         });
       }else{
@@ -89,7 +89,7 @@ function WorksList({userData}){
             if(res.code === strings.errors.dupentry){
               toast.error(extractDuplicateEntry(res.error)+t('worksList.errorExist'));
             }else{
-              toast.error(res.error);
+              toast.error(t('worksList.errorEditingWork'));
             }
           }
         });
@@ -216,7 +216,6 @@ function WorksList({userData}){
         </div>
         ) : (
           <h3>{t('worksList.worksEmpty')}</h3>
-        //<ToastContainer className="custom-toast-container"/>
     )}
     {modalOpen && (
       <Modal

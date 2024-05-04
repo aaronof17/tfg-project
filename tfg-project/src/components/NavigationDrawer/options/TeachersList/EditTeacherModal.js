@@ -18,8 +18,6 @@ function EditTeacherModal ({ closeModal, onSubmit, defaultValue, teachersList}){
   const [t] = useTranslation();
 
   const validateForm = () => {
-    console.log(formState);
-    console.log(teachersList);
 
     if(formState.name === "" || formState.email === "" || formState.githubProfile === ""){
       toast.error(t('teachersList.blankInfo'));

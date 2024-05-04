@@ -93,7 +93,7 @@ export async function getStudentsByWork(group, callback, teacherID) {
 
 
 
-export async function saveStudent(name, email, user, repository, groupId, path) {
+export async function saveStudent(name, email, user, repository, groupId) {
   try {
 
     const response = await fetch('http://localhost:4000/students/save', {
@@ -115,7 +115,7 @@ export async function saveStudent(name, email, user, repository, groupId, path) 
         console.log("An error occurred saving student: ", data.error);
         return { response: false, error: data.error, code:data.code};
       }else {
-        const enrolledResponse = await saveEnrolled(data.data.insertId, groupId, repository, path);
+        const enrolledResponse = await saveEnrolled(data.data.insertId, groupId, repository);
         if (enrolledResponse.response) {
           return { response: true, error: "" };
         } else {

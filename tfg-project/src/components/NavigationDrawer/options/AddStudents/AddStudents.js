@@ -27,7 +27,6 @@ function AddStudents({userData}) {
     const [email, setEmail] = useState("");
     const [user, setUser] = useState("");
     const [repository, setRepository] = useState("");
-    const [path, setPath] = useState("");
     const [subject, setSubject] = useState("");
     const [group, setGroup] = useState("");
     const [labGroups, setLabGroups] = useState([]);
@@ -52,7 +51,7 @@ function AddStudents({userData}) {
         try {
           await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group, element.path, false);
         } catch (error) {
-          toast.error(t('addStudents.errorSavingStudent')+error);
+          toast.error(t('addStudents.errorSavingStudent'));
           return;
         }
       }
@@ -64,7 +63,11 @@ function AddStudents({userData}) {
       studentRepository, studentGroup){
       if(studentName === "" || studentEmail === "" ||studentUser === ""
       || studentRepository === "" || studentGroup === ""){
-        toast.error('Error with student '+studentName+':'+t('addStudents.dataBlank'));
+        if(studentName === ""){
+          toast.error(t('addStudents.errorWithStudent')+':'+t('addStudents.dataBlank'));
+        }else{
+          toast.error(t('addStudents.errorWithStudent')+studentName+':'+t('addStudents.dataBlank'));
+        }
         return false;
       }else{
         return true;
@@ -76,11 +79,15 @@ function AddStudents({userData}) {
     }
 
     function addEnrolled(){
-      saveEnrolled(studentId, group, repository, path).then((res)=>{
+      saveEnrolled(studentId, group, repository).then((res)=>{
           if(res.response){
               toast.info(t('addStudents.studentEnrolled'));
           }else{
-              toast.error(res.error); 
+            if(res.code === strings.errors.dupentry){
+              toast.error(extractDuplicateEntry(res.error)+t('addStudents.errorExist'));
+            }else{
+              toast.error(t('addStudents.errorSavingEnroled'));
+            }
           }
       });
     }
@@ -95,9 +102,6 @@ function AddStudents({userData}) {
               }else{
                 return false;
               }
-          } else {
-              toast.error(res.error);
-              return false;
           }
       } catch (error) {
           console.error('Error checking email count:', error);
@@ -106,14 +110,14 @@ function AddStudents({userData}) {
     }
 
 
-  async function saveStudentInfo(studentName, studentEmail, studentUser, studentRepository, studentGroup, studentPath, onlyOne=true){
+  async function saveStudentInfo(studentName, studentEmail, studentUser, studentRepository, studentGroup, onlyOne=true){
       if(checkData(studentName, studentEmail, studentUser, studentRepository, studentGroup)){
         try {
           const emailExists = await existsEmail(studentEmail);
           if(emailExists){
             setRewriteModalOpen(true);
           }else{
-            const res = await saveStudent(studentName, studentEmail, studentUser, studentRepository, studentGroup, studentPath);
+            const res = await saveStudent(studentName, studentEmail, studentUser, studentRepository, studentGroup);
             if (res.response) {
               if(onlyOne){
                 toast.info(t('addStudents.studentSaved'));
@@ -122,12 +126,12 @@ function AddStudents({userData}) {
               if(res.code === strings.errors.dupentry){
                 toast.error(extractDuplicateEntry(res.error)+t('worksList.errorExist'));
               }else{
-                toast.error(res.error);
+                toast.error(t('addStudents.errorSavingStudent'));
               }
             }
           }
         } catch (error) {
-          toast.error(t('addStudents.errorSavingStudent')+error);
+          toast.error(t('addStudents.errorSavingStudent'));
         }
       }
     }
@@ -135,7 +139,7 @@ function AddStudents({userData}) {
 
   return (
     <div className='students-add-div'>
-        <StudentInfo setName={setName} setEmail={setEmail} setUser={setUser} setRepository={setRepository} setPath={setPath}></StudentInfo>
+        <StudentInfo setName={setName} setEmail={setEmail} setUser={setUser} setRepository={setRepository}></StudentInfo>
         <StudentGroup labGroups={labGroups} setLabGroups={setLabGroups} subjects={subjects} 
             setSubject={setSubject} setGroup={setGroup} teacherID={teacherID}>
         </StudentGroup>
@@ -144,7 +148,7 @@ function AddStudents({userData}) {
                 <Grid item xs={4}>
                 </Grid>
                 <Grid item xs={12} sm={2}>
-                    <Button variant="contained" onClick={() => saveStudentInfo(name, email, user,repository, group, path)}>
+                    <Button variant="contained" onClick={() => saveStudentInfo(name, email, user,repository, group)}>
                       {t('addStudents.saveStudent')}
                     </Button>
                 </Grid>

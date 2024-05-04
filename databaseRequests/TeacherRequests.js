@@ -1,4 +1,4 @@
-const connection = require('./databaseInfo');
+const connection = require('../databaseInfo');
 
 function getRoleByGitHubUser(req,res) {
     const sql = "SELECT 'teacher' AS user_type "+
@@ -60,7 +60,6 @@ function updateTeacherToken(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error saving: '+ err.sqlMessage, code: err.code});
         } else {
-            console.log("TOJEN ",req.body.profileName);
             return res.status(200).json({ success: true, data: data });
         }
     })

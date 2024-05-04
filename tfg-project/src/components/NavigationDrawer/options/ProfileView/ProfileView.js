@@ -2,34 +2,27 @@ import * as React from 'react';
 import './ProfileView.css';
 import "react-toastify/dist/ReactToastify.css";
 import 'reactjs-popup/dist/index.css';
-import { useEffect,useState } from 'react';
+import { useState } from 'react';
 import {useTranslation} from "react-i18next";
-import { getUserData } from '../../../../functions/gitHubFunctions';
-import {ToastContainer, toast} from "react-toastify";
+import { extractDuplicateEntry } from '../../../../functions/genericFunctions.js';
+import {saveTeacherToken} from "../../../../services/teacherService.js";
+import {toast} from "react-toastify";
+
+import strings from '../../../../assets/files/strings.json';
 import user_default from '../../../../assets/images/user-default.jpg';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import PopupInfo from './PopUpInfo.js';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
-import {saveTeacherToken} from "../../../../services/teacherService.js";
 
 /**
  * Component for the Profile View 
  * for logged user
  */
-function ProfileView() {
-  const [userData, setUserData] = useState({});
+function ProfileView({userData}) {
   const [token, setToken] = useState("");
   const [t] = useTranslation();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      getUserData(setUserData);
-    };
-
-    fetchData();
-  }, []);
 
     
   const estiloTextField = {
@@ -52,7 +45,11 @@ function ProfileView() {
         if(res.response){
           toast.info(t('userProfile.tokenSaved'));
         }else{
-          toast.error(res.error); 
+          if(res.code === strings.errors.dupentry){
+            toast.error(extractDuplicateEntry(res.error)+t('userProfile.errorExist'));
+          }else{
+              toast.error(t('userProfile.errorSavingToken'));
+          }
         }
       });
     }

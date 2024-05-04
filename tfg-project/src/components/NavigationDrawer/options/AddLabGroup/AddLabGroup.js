@@ -84,11 +84,11 @@ function AddLabGroup({userData}) {
           if(res.code === strings.errors.dupentry){
             toast.error(extractDuplicateEntry(res.error)+t('addLabGroups.errorExist'));
           }else{
-            toast.error(res.error);
+            toast.error(t('addLabGroups.errorSavingGroup'));
           }
         }
       } catch (error) {
-        toast.error(t('addLabGroups.errorSavingGroup')+error);
+        toast.error(t('addLabGroups.errorSavingGroup'));
       }
     }
   }

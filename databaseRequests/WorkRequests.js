@@ -1,4 +1,4 @@
-const connection = require('./databaseInfo');
+const connection = require('../databaseInfo');
 
 
 

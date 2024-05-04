@@ -1,7 +1,7 @@
 import { getIdFromGroup } from "./labGroupService";
 
 
-export async function saveEnrolled(studentId, groupId, repository, path) {
+export async function saveEnrolled(studentId, groupId, repository) {
     try {
         let id = groupId;
         if(isNaN(groupId)){
@@ -22,8 +22,7 @@ export async function saveEnrolled(studentId, groupId, repository, path) {
             body:
                 JSON.stringify({ studentId: studentId,
                                 groupId: id,
-                                repository: repository,
-                                path: path
+                                repository: repository
                             })
         });
     

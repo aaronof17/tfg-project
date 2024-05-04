@@ -11,12 +11,22 @@ const groupRequests = require('./databaseRequests/LabGroupRequests.js');
 const teacherRequests = require('./databaseRequests/TeacherRequests.js');
 const enrrolledRequests = require('./databaseRequests/EnrolledRequests.js');
 const githubRequests = require('./githubRequests.js');
+const nodemailer = require('nodemailer');
 const fetch = (...args) =>
 import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const app = express();
-const CLIENT_ID = "b771595a6c15c6653d02";
-const CLIENT_SECRET = "534c078c5dcaa7afc22d912c6aceb4bda2038b99";
+require('dotenv').config();
+
+const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST, 
+    port: process.env.SMTP_PORT, 
+    secure: false,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS
+    }
+  });
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -246,6 +256,27 @@ app.post('/enrolled/save', async function (req, res) {
 });
 
 
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+app.post('/sendemail', async function  (req, res){
+    const mailOptions = {
+        from: process.env.SMTP_USER,
+        to: req.body.studentEmail,
+        subject: req.body.subject,
+        text: req.body.message
+      };
+    
+      transporter.sendMail(mailOptions, (error, info) => {
+        if(error){
+            console.log(error);
+            return res.status(500).json({ success: false, error: 'Error sending email to '+ req.body.studentEmail+ ": "+error});
+        } else {
+            return res.status(200).json({ success: true, data:  info.response });
+        }
+      });
+});
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
 

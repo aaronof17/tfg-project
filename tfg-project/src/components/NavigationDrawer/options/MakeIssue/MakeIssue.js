@@ -15,6 +15,7 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import {toast} from "react-toastify";
 
+import strings from '../../../../assets/files/strings.json';
 import './MakeIssue.css';
 import CreateIssueModal from './CreateIssueModal.js';
 
@@ -112,7 +113,7 @@ function MakeIssue({userData}) {
             setModalOpen(false);
             toast.info(t('makeIssue.issueSended'));
           }else{
-            if(res.error === 'Unauthorized'){
+            if(res.error === strings.errors.unauthorized){
               toast.error(t('makeIssue.tokenError'));
             }else{
               toast.error(t('makeIssue.issueErrorSendStudent')+res.name);
@@ -120,7 +121,7 @@ function MakeIssue({userData}) {
           }
         });
         } catch (error) {
-          toast.error(t('makeIssue.issueErrorSend')+error);
+          toast.error(t('makeIssue.issueErrorSend'));
         }
         
     };

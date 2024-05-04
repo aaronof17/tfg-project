@@ -13,8 +13,7 @@ function EditModal ({ closeModal, onSubmit, defaultValue, studentsList}){
       name: "",
       email: "",
       gituser: "",
-      repository: "",
-      path: ""
+      repository: ""
     }
   );
   const [t] = useTranslation();
@@ -88,15 +87,6 @@ function EditModal ({ closeModal, onSubmit, defaultValue, studentsList}){
                 onChange={handleChange} 
                 value={formState.repository}
                 maxLength={200}
-            />
-          </div> 
-          <div className="form-group">
-            <label htmlFor="localPath">{t('studentList.path')}</label>
-            <input 
-                name="localPath" 
-                onChange={handleChange} 
-                value={formState.localPath}
-                maxLength={1000}
             />
           </div> 
           <div className="buttons">

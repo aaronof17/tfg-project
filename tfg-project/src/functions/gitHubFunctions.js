@@ -1,10 +1,3 @@
-import { LightningFS } from '@isomorphic-git/lightning-fs';
-// import git from 'isomorphic-git'
-import { plugins, clone } from 'isomorphic-git'
-import FS from '@isomorphic-git/lightning-fs'
-import http from 'https://unpkg.com/isomorphic-git@beta/http/web/index.js'
-
-
 export async function createIssue(user,repo,title,description,token) {
   const apiUrl = 'http://localhost:4000/createIssue';
   try {
@@ -36,17 +29,36 @@ export async function createIssue(user,repo,title,description,token) {
 
 
 export async function createCommit(title, message, path, token) {
-  window.fs = new FS("fs");
-  //plugins.set('fs', window.fs);
-  let dir = 'C:/Users/aaron/Desktop/UNI/tfg/rutadeprueba/prueba';
+  
 
-  await clone({
-    dir: '/',
-    corsProxy: 'https://cors.isomorphic-git.org',
-    url: 'https://github.com/isomorphic-git/isomorphic-git.git',
-    singleBranch: true,
-    depth: 1
-  })
+  const apiUrl = 'http://localhost:4000/sendemail';
+  try {
+      const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+              "Authorization" : "Bearer "+token,
+              "Content-Type": "application/json"
+          }
+      });
+
+      console.log("gucci");
+
+      
+  } catch (error) {
+      console.error("Error getting last commit information:  ",error);
+  }
+
+  // window.fs = new FS("fs");
+  // //plugins.set('fs', window.fs);
+  // let dir = 'C:/Users/aaron/Desktop/UNI/tfg/rutadeprueba/prueba';
+
+  // await clone({
+  //   dir: '/',
+  //   corsProxy: 'https://cors.isomorphic-git.org',
+  //   url: 'https://github.com/isomorphic-git/isomorphic-git.git',
+  //   singleBranch: true,
+  //   depth: 1
+  // })
 
 
 
@@ -97,7 +109,6 @@ export async function createCommit(title, message, path, token) {
 
 export async function getUserData(callback) {
     try {
-      console.log("cositas");
         const response = await fetch("http://localhost:4000/getUserData", {
           method: "GET",
           headers: {
@@ -105,15 +116,15 @@ export async function getUserData(callback) {
           }
         });
     
-        const data = await response.json();
+      const data = await response.json();
 
-        if (data.success) {
-          callback(data.data);
-          return data.data;
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+      if (data.success) {
+        callback(data.data);
+        return data.data;
       }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
 }
 
 export async function getAccessToken(setRerender,rerender, codeParam){

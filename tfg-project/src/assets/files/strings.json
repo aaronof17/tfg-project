@@ -5,7 +5,13 @@
       "notfound" : "Not Found"
     },
     "emails": {
-      "admin" : "uo281997@uniovi.es"
+      "admin" : "soporteorozco@hotmail.com"
+    },
+    "emailInfo" : {
+      "subject" : "Calificación en práctica ",
+      "text1" : "Práctica de laboratorio: ",
+      "text2" : ", con calificación de ",
+      "text3" : " y con comentario "
     }
   }
   

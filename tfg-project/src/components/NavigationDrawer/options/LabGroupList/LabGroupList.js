@@ -124,7 +124,7 @@ function LabGroupList({userData}) {
               setRowToDelete("");
             })
           }else{
-            toast.error('groupsList.errorDeletingGroup',res.error); 
+            toast.error('groupsList.errorDeletingGroup'); 
           }
         });
         
@@ -149,7 +149,7 @@ function LabGroupList({userData}) {
             if(res.code === strings.errors.dupentry){
               toast.error(extractDuplicateEntry(res.error)+t('groupsList.errorExist'));
             }else{
-              toast.error(res.error);
+              toast.error(t('groupsList.errorEditingGroup'));
             }
           }
         });

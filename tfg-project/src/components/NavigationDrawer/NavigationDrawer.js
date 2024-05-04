@@ -244,7 +244,7 @@ function ResponsiveDrawer(props) {
         {role === 'admin' && adminViews[currentView]}      
         {role === '' && defaultViews[currentView]}
     </Box>
-       <ToastContainer/>
+      <ToastContainer className="custom-toast-container"/>
     </Box>
   );
 }

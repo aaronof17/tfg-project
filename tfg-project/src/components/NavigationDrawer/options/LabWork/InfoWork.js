@@ -23,7 +23,6 @@ function InfoWork({ setTitle, setDescription, setPercentage }) {
         }
         event.target.value = intValue;
         setPercentage(intValue);
-        console.log("porcentaje ", intValue);
     };
 
     const handleTitleChange = (e) => {
