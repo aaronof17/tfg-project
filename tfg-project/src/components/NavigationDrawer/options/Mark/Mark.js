@@ -227,8 +227,6 @@ function Mark({userData}){
                     text2={t('mark.rewrite')}
                 />
             )}
-            <ToastContainer className="custom-toast-container"/>
-
         </div>
     );
 }

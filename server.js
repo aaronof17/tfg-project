@@ -278,6 +278,10 @@ app.post('/sendemail', async function  (req, res){
       });
 });
 
+app.get('/login', async function  (req, res){
+    res.json({ redirectUrl: "https://github.com/login/oauth/authorize?client_id="+ process.env.CLIENT_ID });
+});
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 app.get('/getAccessToken', async function (req,res){

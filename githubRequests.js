@@ -23,16 +23,13 @@ async function deleteAppToken(req, res) {
     const response = await fetch("https://api.github.com/applications/"+CLIENT_ID+"/token", {
         method: "DELETE",
         headers: {
-            "Authorization": req.get("Authorization"),
-            "Content-Type": "application/json",
             "Accept": "application/json"
         },
         body: JSON.stringify({
-            access_token: token
+            access_token: CLIENT_SECRET
         })
     });
     const data = await response.json();
-    console.log("DATA DE SERVER ",data);
     return data;
 }
 

@@ -84,14 +84,13 @@ function ResponsiveDrawer(props) {
           let roleDefault = "";
           setRole(roleDefault);
         }
-        //setRole("admin");
       }
 
-      teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
-                        <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
-      studentViews = [<StudentWorks userData={userData}/>];
-      adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>, <LabGroupList userData={userData}/>];
-      defaultViews = [<DefaultView/>];
+      // teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
+      //                   <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
+      // studentViews = [<StudentWorks userData={userData}/>];
+      // adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>, <LabGroupList userData={userData}/>];
+      // defaultViews = [<DefaultView/>];
 
     };
 
@@ -244,7 +243,7 @@ function ResponsiveDrawer(props) {
         {role === 'admin' && adminViews[currentView]}      
         {role === '' && defaultViews[currentView]}
     </Box>
-      <ToastContainer className="custom-toast-container"/>
+      <ToastContainer/>
     </Box>
   );
 }

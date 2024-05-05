@@ -6,8 +6,6 @@ import ResponsiveDrawer from './components/NavigationDrawer/NavigationDrawer.js'
 import { getAccessToken } from './functions/gitHubFunctions.js';
 import i18n from './i18n';
 
-const CLIENT_ID = "b771595a6c15c6653d02";
-
 function App() {
 
   const [rerender, setRerender] = useState(false);

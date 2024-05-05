@@ -2,8 +2,8 @@ import './LoginForm.css';
 import es_flag from '../../assets/images/es_flag.png';
 import en_flag from '../../assets/images/en_flag.jpg';
 import {useTranslation} from "react-i18next";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Box from '@mui/material/Box';
+import {loginWithGitHub} from '../../functions/gitHubFunctions';
 
 const CLIENT_ID = "b771595a6c15c6653d02";
 
@@ -16,8 +16,10 @@ function Login(){
     }
 
 
-    function loginWithGitHub(){
-        window.location.assign("https://github.com/login/oauth/authorize?client_id="+CLIENT_ID);
+    function login(){
+        loginWithGitHub().then((url) =>{
+            window.location.assign(url);
+        })
     }
 
     return(
@@ -26,7 +28,7 @@ function Login(){
                 <Box>
                     <h1>{t('login.welcome')}</h1>
                     <h2>{t('login.joinUs')}</h2>
-                    <button type="submit" onClick={loginWithGitHub}>
+                    <button type="submit" onClick={login}>
                     {t('login.login')} <i className="fa fa-github"></i> 
                     </button>
         

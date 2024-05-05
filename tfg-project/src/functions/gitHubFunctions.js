@@ -27,6 +27,20 @@ export async function createIssue(user,repo,title,description,token) {
     }
 }
 
+export async function loginWithGitHub(){
+  try {
+    const response = await fetch("http://localhost:4000/login", {
+      method: "GET"
+    });
+
+  const data = await response.json();
+
+  return data.redirectUrl;
+} catch (error) {
+  console.error('Error fetching with the login:', error);
+}
+}
+
 
 export async function createCommit(title, message, path, token) {
   
