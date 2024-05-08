@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import {useTranslation} from "react-i18next";
 
-function StudentInfo({setName, setEmail, setUser, setRepository}) {
+function StudentInfo({name, setName, email, setEmail, user, setUser, repository ,setRepository}) {
 
     const [t] = useTranslation();
 
@@ -32,6 +32,7 @@ function StudentInfo({setName, setEmail, setUser, setRepository}) {
                         className="studentName"
                         label={t('addStudents.name')}
                         type="text"
+                        value={name}
                         inputProps={{ maxLength: 100 }}
                         onChange={handleNameChange}
                         sx={{ width: '100%' }}
@@ -43,6 +44,7 @@ function StudentInfo({setName, setEmail, setUser, setRepository}) {
                         className="studentEmail"
                         label={t('addStudents.email')}
                         type="email"
+                        value={email}
                         inputProps={{ maxLength: 45 }}
                         onChange={handleEmailChange}
                         sx={{ width: '100%' }}
@@ -54,6 +56,7 @@ function StudentInfo({setName, setEmail, setUser, setRepository}) {
                         className="studentGitHubUser"
                         label={t('addStudents.user')}
                         type="text"
+                        value={user}
                         inputProps={{ maxLength: 45 }}
                         onChange={handleUserChange}
                         sx={{ width: '100%' }}
@@ -65,6 +68,7 @@ function StudentInfo({setName, setEmail, setUser, setRepository}) {
                         className="studentRepository"
                         label={t('addStudents.repository')}
                         type="text"
+                        value={repository}
                         inputProps={{ maxLength: 200 }}
                         onChange={handleRepositoryChange}
                         sx={{ width: '100%' }}

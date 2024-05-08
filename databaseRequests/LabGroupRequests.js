@@ -1,7 +1,7 @@
 const connection = require('../databaseInfo');
 
 function getGroupsBySubject(req,res) {
-    const sql = 'select name from labgroups where subject=? and teacheridfk=?';
+    const sql = 'select name,idlabGroup from labgroups where subject=? and teacheridfk=?';
     const params = [req.body.actualSubject, req.body.teacherID];
     connection.query(sql, params,(err, data) =>{
         if(err){

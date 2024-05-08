@@ -95,7 +95,7 @@ export async function getStudentsByWork(group, callback, teacherID) {
 
 export async function saveStudent(name, email, user, repository, groupId) {
   try {
-
+    console.log("aqui aqui ",groupId);
     const response = await fetch('http://localhost:4000/students/save', {
         method: "POST",
         headers: {

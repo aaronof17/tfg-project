@@ -10,7 +10,7 @@ import Grid from '@mui/material/Grid';
 
 import './StudentGroup.css';
 
-function StudentGroup({labGroups, setLabGroups, subjects, setSubject, setGroup, teacherID}) {
+function StudentGroup({group, labGroups, setLabGroups, subjects, subject, setSubject, setGroup, teacherID}) {
 
     const [t] = useTranslation();
 
@@ -24,9 +24,24 @@ function StudentGroup({labGroups, setLabGroups, subjects, setSubject, setGroup, 
         return options;
     }
 
+    const getGroupsOptions= () =>{
+    console.log("grupitos ",labGroups);
+        let options = [];
+        if(labGroups != undefined){
+            labGroups.map((l,index) => {
+            options[index] = {
+                label: `${l.label}`,
+                value: l.value
+            };
+          });
+        }     
+    
+        return options;
+      }
+
     const handleGroupChange = (e, selectedOption) => {
         if (selectedOption) {
-            setGroup(selectedOption.value);
+            setGroup(selectedOption);
         }else{
             setGroup("");
         }
@@ -34,6 +49,7 @@ function StudentGroup({labGroups, setLabGroups, subjects, setSubject, setGroup, 
 
 
     const handleSubjectChange = (e, selectedOption) => {
+        console.log("GRUPO ",group);
         if (selectedOption) {
             const fetchFilterGroups = async () => {
                 getLabGroupsBySubject(selectedOption, teacherID, setLabGroups);
@@ -60,6 +76,7 @@ function StudentGroup({labGroups, setLabGroups, subjects, setSubject, setGroup, 
                         options={getSubjects()}
                         renderInput={(params) => <TextField {...params} label={t('addStudents.subject')} />}
                         onChange={handleSubjectChange}
+                        value={subject}
                     />
                 </Grid>
                 <Grid item xs={2}>
@@ -68,9 +85,10 @@ function StudentGroup({labGroups, setLabGroups, subjects, setSubject, setGroup, 
                     <Autocomplete
                         disablePortal
                         id="group-combo-box"
-                        options={labGroups}
+                        options={getGroupsOptions()}
                         renderInput={(params) => <TextField {...params} label={t('addStudents.groups')} />}
                         onChange={handleGroupChange}
+                        value={group}
                     />
                 </Grid>
                 <Grid item xs={2}>

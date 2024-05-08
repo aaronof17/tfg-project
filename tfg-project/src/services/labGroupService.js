@@ -153,7 +153,8 @@ export async function getLabGroupsBySubject(actualSubject, teacherID, callback) 
       })
 
       const data = await response.json();
-      const groups = data.data.map(group => ({ value: group.name, label: group.name }));
+      console.log("dentro ",data)
+      const groups = data.data.map(group => ({ value: group.idlabGroup, label: group.name }));
       callback(groups);
     } catch (error) {
       console.error('Error getting groups from actual subject:', error);

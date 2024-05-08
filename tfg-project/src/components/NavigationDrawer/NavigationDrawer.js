@@ -80,6 +80,7 @@ function ResponsiveDrawer(props) {
         const role = await getRoleByGitHubUser(userDataResponse.login);
         if(role !== undefined){
           setRole(role);
+          //setRole("admin");
         }else{
           let roleDefault = "";
           setRole(roleDefault);

@@ -49,6 +49,7 @@ function AddStudents({userData}) {
     const handleSaveCsv = async (data) => {
       for (let element of data) {
         try {
+          console.log("Elemento ",element);
           await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group, element.path, false);
         } catch (error) {
           toast.error(t('addStudents.errorSavingStudent'));
@@ -79,9 +80,15 @@ function AddStudents({userData}) {
     }
 
     function addEnrolled(){
-      saveEnrolled(studentId, group, repository).then((res)=>{
+      saveEnrolled(studentId, group.label, repository).then((res)=>{
           if(res.response){
               toast.info(t('addStudents.studentEnrolled'));
+              setName("");
+              setEmail("");
+              setUser("");
+              setRepository("");
+              setSubject("");
+              setGroup("");
           }else{
             if(res.code === strings.errors.dupentry){
               toast.error(extractDuplicateEntry(res.error)+t('addStudents.errorExist'));
@@ -117,10 +124,16 @@ function AddStudents({userData}) {
           if(emailExists){
             setRewriteModalOpen(true);
           }else{
-            const res = await saveStudent(studentName, studentEmail, studentUser, studentRepository, studentGroup);
+            const res = await saveStudent(studentName, studentEmail, studentUser, studentRepository, studentGroup.label);
             if (res.response) {
               if(onlyOne){
                 toast.info(t('addStudents.studentSaved'));
+                setName("");
+                setEmail("");
+                setUser("");
+                setRepository("");
+                setSubject("");
+                setGroup("");
               }
             } else {
               if(res.code === strings.errors.dupentry){
@@ -139,9 +152,9 @@ function AddStudents({userData}) {
 
   return (
     <div className='students-add-div'>
-        <StudentInfo setName={setName} setEmail={setEmail} setUser={setUser} setRepository={setRepository}></StudentInfo>
-        <StudentGroup labGroups={labGroups} setLabGroups={setLabGroups} subjects={subjects} 
-            setSubject={setSubject} setGroup={setGroup} teacherID={teacherID}>
+        <StudentInfo name={name} setName={setName} email={email} setEmail={setEmail} user={user} setUser={setUser} repository={repository} setRepository={setRepository}></StudentInfo>
+        <StudentGroup group={group} labGroups={labGroups} setLabGroups={setLabGroups} subjects={subjects} 
+            subject={subject} setSubject={setSubject} setGroup={setGroup} teacherID={teacherID}>
         </StudentGroup>
         <div className='students-add-buttons'>
             <Grid container spacing={2}>
