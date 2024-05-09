@@ -70,8 +70,19 @@
         "commitInfoArchive" : "estudiantesCommitsInformacion",
         "noConflicts": "No hubo conflictos con ningún commit",
         "errorRepository" : "Hubo un problema con el repositorio, o no existe o probablemente no tengas acceso a él. Alumno: ",
-        "errorEditingStudent" : "Hubo un error editando el estudiante"
-
+        "errorEditingStudent" : "Hubo un error editando el estudiante",
+        "dragFile" :"Arrastra el archivo al area",
+        "sendExplanation" : "Enviar enunciado",
+        "commitTitle" : "Titulo del commit",
+        "informationCharged" : "La información se ha cargado con éxito",
+        "errorSomethingWentWrong" : "Algo ha ido mal, pruébelo en otro momento",
+        "commitTitleBlank" : "El título del commit no puede estar vacío",
+        "errorFormatFile" :"Error con el formato del archivo, solo pueden cargarse archivos pdf",
+        "errorNumberFiles" : "Solo puedes cargar un archivo",
+        "downloadErrorWithStudent" : "Hubo un problema descargando los archivos del alumno ",
+        "errorSendingExplanation" : "Hubo un problema enviando el enunciado",
+        "explanationSended" :"Enunciado enviado",
+        "errorSendingExplanationForStudent": "Hubo un problema enviando el enunciado con el alumno "
     },
     "makeIssue" : {
         "title" : "Título",

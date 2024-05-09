@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import './InfoMark.css';
 
-function InfoMark({ setComment, setMarkNumber }) {
+function InfoMark({ comment, setComment, mark, setMarkNumber }) {
     const [t] = useTranslation();
 
     const handleKeyPress = (event) => {
@@ -60,6 +60,7 @@ function InfoMark({ setComment, setMarkNumber }) {
                         multiline
                         rows={4}
                         inputProps={{ maxLength: 1000 }}
+                        value={comment}
                     />
                 </Grid>
             </Grid>

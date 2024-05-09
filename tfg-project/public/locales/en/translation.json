@@ -69,7 +69,19 @@
         "commitInfoArchive" : "studentsCommitsInformation",
         "noConflicts": "There are no conflicts with commits",
         "errorRepository" : "There was a problem with repository, it does not exists or you probably don't have access. Student: ",
-        "errorEditingStudent" : "There was an error editing student"
+        "errorEditingStudent" : "There was an error editing student",
+        "dragFile" :"Drag file to the area",
+        "sendExplanation" : "Send Work Explanation",
+        "commitTitle" : "Commit title",
+        "informationCharged" : "Information has been loaded successfully",
+        "errorSomethingWentWrong" : "Something went wrong, please try again",
+        "commitTitleBlank" : "Commit title cant be blank",
+        "errorFormatFile" :"Error with file extension, you can only use .pdf",
+        "errorNumberFiles" : "You can only use one file",
+        "downloadErrorWithStudent" : "There was an error downloading archives for student ",
+        "errorSendingExplanation" : "There was an error sending work explanation",
+        "explanationSended" :"Work Explanation sended",
+        "errorSendingExplanationForStudent": "There was an error sending work explanation with student "
     },
     "makeIssue" : {
         "title" : "Title",

@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
 import {calculateWidth, getRepositoryName, extractId, formatDate, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
-import {downloadRepo, getLastCommitInfo} from "../../../../functions/gitHubFunctions.js";
+import {downloadRepo, getLastCommitInfo, commitExplanation} from "../../../../functions/gitHubFunctions.js";
 import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js";
@@ -16,6 +16,7 @@ import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js
 import strings from '../../../../assets/files/strings.json';
 import RewriteModal from '../../../Modal/RewriteModal.js';
 import EditModal from './EditModal.js';
+import ExplanationModal from "./ExplanationModal.js";
 import InformationModal from './InformationModal.js';
 import './StudentsList.css';
 
@@ -27,6 +28,7 @@ function StudentsList({userData}) {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [informationModalOpen, setInformationModalOpen] = useState(false);
+    const [explanationModalOpen, setExplanationModalOpen] = useState(false);
     const [rowToDelete, setRowToDelete] = useState("");
     const [rowToEdit, setRowToEdit] = useState("");
     const [outOfTimeCommits, setOutOfTimeCommits] = useState([]);
@@ -55,7 +57,7 @@ function StudentsList({userData}) {
           { field: 'group', headerName: t('studentList.group'), width: calculateWidth([...studentsList.map((student) => student.labgroup), t('studentList.group')],true) },
           {
             field: 'repository',
-            headerName: t('studentList.githubprofile'),
+            headerName: t('studentList.repository'),
             width: calculateWidth(studentsList.map((student)=>student.repositoryURL),false,true) ,
             renderCell: (params) => {
                 return (
@@ -138,10 +140,13 @@ function StudentsList({userData}) {
             if(!res.response){
               if(res.error ===  strings.errors.unauthorized){
                 toast.error(t('studentList.tokenError'));
+                return;
               }else if(res.error ===  strings.errors.notfound){
                 toast.error(t('studentList.errorRepository')+student.name);
+                return;
               }else{
-                toast.error(t('studentList.issueErrorSendStudent'));
+                toast.error(t('studentList.downloadErrorWithStudent')+student.name);
+                return;
               }
             }
           });
@@ -276,7 +281,6 @@ function StudentsList({userData}) {
             toast.error('studentList.errorDeletingStudent'); 
           }
         });
-        
       }else{
         toast.error('studentList.errorDeletingStudent');
       }
@@ -307,6 +311,54 @@ function StudentsList({userData}) {
     };
 
 
+    async function handleCommitExplanation(file, commitTitle) {
+      if(selectedStudents.length !=0){
+        let errorOcurred=false;
+        let explanationsSended=[];
+        for (let student of selectedStudents) {
+          try { 
+            await commitExplanation(teacherToken, getRepositoryName(student.repository), student.githubuser, file, commitTitle).then((res) =>{
+              if(!res.response){
+                if(res.error ===  strings.errors.unauthorized){
+                  toast.error(t('studentList.tokenError'));
+                }else if(res.error ===  strings.errors.notfound){
+                  toast.error(t('studentList.errorRepository')+student.name);
+                }else{
+                  toast.error(t('studentList.errorSendingExplanationForStudent')+student.name);
+                }
+                errorOcurred = true;
+              }else{
+                explanationsSended.push("sended");
+              }
+            });
+          } catch (error) {
+            toast.error(t('studentList.errorSendingExplanation'));
+            errorOcurred = true;
+          } finally{
+            if(errorOcurred){
+              if(explanationsSended.length != 0){
+                toast.info(t('studentList.explanationSended'));
+              }
+              return;
+            } 
+          }
+        }
+        if(explanationsSended.length != 0){
+          toast.info(t('studentList.explanationSended'));
+        }
+      }else{
+        toast.error(t('studentList.errorOccurred'));
+      }
+    }
+
+    async function openExplanationModal(e) {
+      e.preventDefault();
+      if(validateData()){
+        setExplanationModalOpen(true);
+      }
+    }
+
+
   if(studentsList.length !== 0)
   return (
   <div className="students-wrapper">
@@ -330,6 +382,9 @@ function StudentsList({userData}) {
         </Button>
         <Button className="checkWorksDates" variant="contained" onClick={checkDatesMethod}>
           {t('studentList.checkWorksDates')}
+        </Button>
+        <Button className="commitPDF" variant="contained" onClick={openExplanationModal}>
+          {t('studentList.sendExplanation')}
         </Button>
       </div>
       {deleteModalOpen && (
@@ -361,6 +416,14 @@ function StudentsList({userData}) {
             setOutOfTimeCommits([]);
           }}
           outOfTimeCommits={outOfTimeCommits}
+        />
+      )}
+      {explanationModalOpen && (
+        <ExplanationModal
+          closeModal={() => {
+            setExplanationModalOpen(false);
+          }}
+          onSubmit={handleCommitExplanation}
         />
       )}
     </div>

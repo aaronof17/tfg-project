@@ -42,84 +42,37 @@ export async function loginWithGitHub(){
 }
 
 
-export async function createCommit(title, message, path, token) {
-  
 
-  const apiUrl = 'http://localhost:4000/sendemail';
+export async function commitExplanation(token, repositoryURL, githubUser, file, commitTitle) {
+  const apiUrl = 'http://localhost:4000/commitExplanation';
   try {
+      const formData = new FormData();
+      formData.append('repo', repositoryURL);
+      formData.append('user', githubUser);
+      formData.append('commitTitle', commitTitle);
+      formData.append('file', file);
+
       const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
-              "Authorization" : "Bearer "+token,
-              "Content-Type": "application/json"
-          }
+              "Authorization" : "Bearer "+token
+          },
+          body: formData
       });
 
-      console.log("gucci");
-
-      
+      const data = await response.json(); 
+      if (!data.success) {
+        console.log("An error occurred creating commit for explanation: ", data.error);
+        return { response: false, error: data.error};
+      } else {
+        return { response: true, error: ""};
+      }
   } catch (error) {
-      console.error("Error getting last commit information:  ",error);
+      console.error("Error creating commit for explanation ",error);
   }
-
-  // window.fs = new FS("fs");
-  // //plugins.set('fs', window.fs);
-  // let dir = 'C:/Users/aaron/Desktop/UNI/tfg/rutadeprueba/prueba';
-
-  // await clone({
-  //   dir: '/',
-  //   corsProxy: 'https://cors.isomorphic-git.org',
-  //   url: 'https://github.com/isomorphic-git/isomorphic-git.git',
-  //   singleBranch: true,
-  //   depth: 1
-  // })
-
-
-
-  //let fs = new FS('fs', { wipe: true })
-
-  //const dir = '/test-clone'
-  // commit({
-  //   fs,
-  //   dir: '/tutorial',
-  //   author: {
-  //     name: 'Mr. Test',
-  //     email: 'mrtest@example.com',
-  //   },
-  //   message: 'Added the a.txt file'
-  // })
-  // .then
-  // ((res) => console.log("respuesta ",res));
-  
- // clone({ fs, http, dir, url: 'https://github.com/isomorphic-git/lightning-fs', corsProxy: 'https://cors.isomorphic-git.org' }).then(console.log)
-
-  // const apiUrl = 'http://localhost:4000/createCommit';
-  // try {
-  //     const response = await fetch(apiUrl, {
-  //         method: 'POST',
-  //         headers: {
-  //             "Authorization" : "Bearer "+token,
-  //             "Content-Type": "application/json"
-  //         },
-  //         body:
-  //             JSON.stringify({ title: title,
-  //                           message: message,
-  //                           path: path
-  //                         })
-  //     });
-  //     const data = await response.json(); 
-  //     if (!data.success) {
-  //       console.log("An error occurred creating commit: ", data.error);
-  //       return { response: false, error: data.error};
-  //     } else {
-  //       console.log(data);
-  //       return { response: true, error: ""};
-  //     }
-  // } catch (error) {
-  //     console.error(error);
-  //     return { response: false, error: error};
-  // }
 }
+
+
 
 export async function getUserData(callback) {
     try {
@@ -244,44 +197,3 @@ async function descargarArchivo(url) {
   enlace.href = url;
   enlace.click();
 }
-
-
-// async function downloadFileFromLink(url) {
-//   try {
-//       const response = await fetch(url);
-//       const blob = await response.blob();
-//       saveAs(blob, 'downloaded_file.zip'); // Set a filename
-//   } catch (error) {
-//       console.error('Download error:', error);
-//       // Handle the error
-//   }
-// }
-
-
-// // async function descargarArchivod(url) {
-// //   try {
-// //     const respuesta = await fetch(urls);
-// //     const blob = await respuesta.blob();
-// //     const nombreArchivo = obtenerNombreArchivoDesdeURL(url);
-// //     descargarBlobComoArchivo(blob, nombreArchivo);
-// //   } catch (error) {
-// //     console.error(`Error al descargar el archivo ${url}:`, error);
-// //   }
-// // }
-
-// function obtenerNombreArchivoDesdeURL(url) {
-//   // Lógica para extraer el nombre del archivo de la URL, por ejemplo:
-//   const partesURL = url.split('/');
-//   return partesURL[partesURL.length - 1];
-// }
-
-// // Función para descargar un blob como archivo
-// function descargarBlobComoArchivo(blob, nombreArchivo) {
-//   const url = window.URL.createObjectURL(new Blob([blob]));
-//   const enlace = document.createElement('a');
-//   enlace.href = url;
-//   enlace.setAttribute('download', nombreArchivo);
-//   document.body.appendChild(enlace);
-//   enlace.click();
-//   document.body.removeChild(enlace);
-// }

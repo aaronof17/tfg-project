@@ -50,7 +50,7 @@ function AddStudents({userData}) {
       for (let element of data) {
         try {
           console.log("Elemento ",element);
-          await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group, element.path, false);
+          await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group, false);
         } catch (error) {
           toast.error(t('addStudents.errorSavingStudent'));
           return;

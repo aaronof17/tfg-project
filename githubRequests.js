@@ -1,6 +1,8 @@
 const fetch = (...args) =>
 import('node-fetch').then(({default: fetch}) => fetch(...args));
 require('dotenv').config();
+const fs = require('fs');
+const crypto = require('crypto');
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -135,8 +137,78 @@ async function getFinalCommitInfo(req, res) {
 }
 
 
-async function createCommit(user, repo, accessToken) {
-    // Lógica para descargar un repositorio de GitHub
+async function createExplanationCommit(req, res) {
+    try {
+        const file = req.file;
+        const user = req.body.user;
+        const repo = req.body.repo;
+        const commitMessage = req.body.commitTitle;
+
+        const pdfContent = fs.readFileSync(file.path);
+
+        const newFileHash = crypto.createHash('sha1').update(pdfContent).digest('hex');
+
+        const existingFileInfoResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${file.originalname}`, {
+            headers: {
+                "Authorization": req.get("Authorization")
+            }
+        });
+
+        if (existingFileInfoResponse.ok) {
+            const existingFileInfo = await existingFileInfoResponse.json();
+            const existingFileSha = existingFileInfo.sha;
+
+            if (existingFileSha === newFileHash) {
+                return { message: 'El archivo ya existe y no se ha modificado' };
+            }
+
+            // Si los hashes no coinciden, actualiza el archivo
+            const commitData = {
+                message: commitMessage,
+                content: pdfContent.toString('base64'),
+                sha: existingFileSha 
+            };
+
+            const updateResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${file.originalname}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": req.get("Authorization"),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(commitData)
+            });
+
+            if (!updateResponse.ok) {
+                throw new Error(createResponse.statusText);
+            }
+
+            return { message: 'El archivo existente se ha actualizado' };
+        }
+
+        const commitData = {
+            message: commitMessage,
+            content: pdfContent.toString('base64')
+        };
+
+        const createResponse = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${file.originalname}`, {
+            method: "PUT",
+            headers: {
+                "Authorization": req.get("Authorization"),
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(commitData)
+        });
+
+        if (!createResponse.ok) {
+            throw new Error(createResponse.statusText);
+        }
+
+        return { message: 'Se ha creado un nuevo archivo' };
+
+    } catch (error) {
+        console.error(error);
+        throw new Error(`${error}`);
+    }
 }
 
-module.exports = { getAccessToken, createIssue, getUserData, getFinalCommitInfo, downloadRepo, createCommit, deleteAppToken};
+module.exports = { getAccessToken, createExplanationCommit, createIssue, getUserData, getFinalCommitInfo, downloadRepo, deleteAppToken};

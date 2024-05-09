@@ -41,17 +41,15 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail}){
           return false; 
         }
 
-        let groupExists = labgroups.map(group => group.label === row.group);
-        console.log("Grupillo ",groupExists);
+        let groupExists = labgroups.filter(group => group.label === row.group);
         if (groupExists.length === 0) {
           toast.error(t('addStudents.errorGroupNotFound') + row.group);
-            return false;
+          return false;
         }else{
           row.group = {
             label: groupExists[0].label,
             value:  groupExists[0].value
           }
-          
         }
 
         let emailResponse = await existsEmail(row.email);

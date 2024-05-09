@@ -109,6 +109,10 @@ function Mark({userData}){
         editMark(actualWork.value, actualStudent.value, comment, markNumber).then((res)=>{
             if(res.response){
                     toast.info(t('mark.markSaved'));
+                    setActualStudent("");
+                    setActualWork("");
+                    setMarkNumber("");
+                    setComment("");
                     sendEmailMessage();
                 }else{
                     if(res.code === strings.errors.dupentry){
@@ -147,6 +151,10 @@ function Mark({userData}){
                     saveMark(actualWork.value, actualStudent.value, comment, markNumber).then((res)=>{
                         if(res.response){
                             toast.info(t('mark.markSaved'));
+                            setActualStudent("");
+                            setActualWork("");
+                            setMarkNumber("");
+                            setComment("");
                             sendEmailMessage();
                         }else{
                             if(res.code === strings.errors.dupentry){
@@ -190,6 +198,7 @@ function Mark({userData}){
                             options={getWorks()}
                             renderInput={(params) => <TextField {...params} label={t('mark.labWork')} />}
                             onChange={handleWorkChange}
+                            value={actualWork}
                         />
                     </div>
                 </Grid>
@@ -203,6 +212,7 @@ function Mark({userData}){
                             options={getStudentsOptions()}
                             renderInput={(params) => <TextField {...params} label={t('mark.students')} />}
                             onChange={handleStudentChange}
+                            value={actualStudent}
                         />
                     </div>
                 </Grid>
@@ -210,7 +220,7 @@ function Mark({userData}){
                 </Grid>
             </Grid>
             <div className='infoMark'>
-                <InfoMark setComment={setComment} setMarkNumber={setMarkNumber}></InfoMark>
+                <InfoMark comment={comment} setComment={setComment} mark={markNumber} setMarkNumber={setMarkNumber}></InfoMark>
             </div>
             <div className="saveLabWorks" >
                 <Button variant="contained" onClick={saveMarkButton}>
