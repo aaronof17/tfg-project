@@ -15,12 +15,29 @@ export async function getStudents(callback, teacherID) {
         })
 
         const data = await response.json();
-        console.log("Students ",data.data);
         callback(data.data);
         return data.data;
       } catch (error) {
         console.error('Error getting students:', error);
       }
+}
+
+export async function getAllStudents(callback) {
+  try {
+      const response = await fetch('http://localhost:4000/students', {
+          method: "GET",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          }
+      })
+
+      const data = await response.json();
+      callback(data.data);
+      return data.data;
+    } catch (error) {
+      console.error('Error getting all students:', error);
+    }
 }
 
 export async function getStudentsBySubject(teacherID, subject) {

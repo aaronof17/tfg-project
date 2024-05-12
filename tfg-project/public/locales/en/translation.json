@@ -41,7 +41,7 @@
         "errorDeletingStudent" : "An error ocurred deleting student",
         "studentDeleted" : "Student deleted",
         "studentsListEmpty" : "There are no students yet",
-        "blankInfo" : "No field can be blank, except path",
+        "blankInfo" : "No field can be blank",
         "emailExists" : "This email already exists",
         "userExists" : "This github user already exists",
         "confirm" : "Confirm",
@@ -102,7 +102,7 @@
 
     },
     "addStudents":{
-        "dataBlank" : "No field can be blank, except path",
+        "dataBlank" : "No field can be blank",
         "studentSaved" : "Student saved",
         "studentsSaved" : "Students saved",
         "informationCharged" : "Information has been loaded successfully",
@@ -132,7 +132,11 @@
         "csvTemplate" : "CSV template",
         "errorWithStudent" : "Error with student ",
         "errorExist" : " already exists",
-        "errorSavingEnroled" : "There was an error enrolling student"
+        "errorSavingEnroled" : "There was an error enrolling student",
+        "errorStudentAlreadyEnrolled" : "This student is already enrolled in this lab group",
+        "enrollStudent" : "Enroll student",
+        "labgroup" : "Lab Group",
+        "student" : "Student"
 
     },
     "createLabWork":{

@@ -96,6 +96,11 @@ app.post('/students/teacher', async function (req, res) {
     return result;
 });
 
+app.get('/students', async function (req, res) {
+    const result = await studentRequests.getAllStudents(req,res);
+    return result;
+});
+
 app.post('/students/teacher/subject', async function (req, res) {
     const result = await studentRequests.getStudentsBySubject(req,res);
     return result;
@@ -187,6 +192,11 @@ app.post('/works/student/subject', async function (req, res) {
 
 app.post('/works/student/group', async function (req, res) {
     const result = await workRequests.getWorksByStudentAndGroup(req,res);
+    return result;
+});
+
+app.post('/works/marks/student/group', async function (req, res) {
+    const result = await workRequests.getWorksAndMarksByStudentAndGroup(req,res);
     return result;
 });
 

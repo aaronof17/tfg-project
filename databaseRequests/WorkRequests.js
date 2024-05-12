@@ -164,6 +164,27 @@ function getWorksByStudentAndGroup(req,res) {
 }
 
 
+function getWorksAndMarksByStudentAndGroup(req,res) {
+    const sql = "SELECT DISTINCT w.title, s.studentsID as studentID, w.labgroupNameFK as groupName, "+
+                "w.percentage, COALESCE(m.mark, '') AS mark "+
+                "FROM worklabs w " +
+                "JOIN labgroups g ON w.labgroupnameFK = g.name "+
+                "JOIN enrolled e ON g.idlabgroup = e.labgroupfk "+
+                "JOIN students s ON e.studentfk = s.studentsID "+
+                "LEFT JOIN marks m ON w.worklabID = m.worklabIDFk AND s.studentsId = m.studentIDFK  "+
+                "WHERE s.studentsId=? and w.active=1 and g.name=? and g.teacherIDFK=?";
+    const params = [req.body.studentId, req.body.group, req.body.teacherID];
+    connection.query(sql, params,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting works and marks for student: '+ err.sqlMessage, code: err.code});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
+
 function getWorksByStudentId(req,res) {
     const sql = "SELECT DISTINCT w.worklabID as id, w.title, w.labgroupNameFK as groupName, w.description, w.initialdate, w.active, "+
                 "w.finaldate, w.percentage, COALESCE(m.mark, '') AS mark, COALESCE(m.comment, '') AS comment  "+
@@ -188,4 +209,4 @@ function getWorksByStudentId(req,res) {
 
 
 
-module.exports = {getWorkByStudent, getWorskByGroup, getWorksByStudentAndSubject, getActiveWorksByTeacherId, getWorksByStudentId, getWorskBySubject, deleteWork, getWorksByStudentAndGroup, getWorksByTeacherId, insertWork, editWork};
+module.exports = {getWorkByStudent, getWorksAndMarksByStudentAndGroup, getWorskByGroup, getWorksByStudentAndSubject, getActiveWorksByTeacherId, getWorksByStudentId, getWorskBySubject, deleteWork, getWorksByStudentAndGroup, getWorksByTeacherId, insertWork, editWork};

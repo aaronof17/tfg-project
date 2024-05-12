@@ -8,6 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
 import {calculateWidth, getRepositoryName, extractId, formatDate, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
+import {createExcelAndDownload} from "../../../../functions/createExcel.js";
 import {downloadRepo, getLastCommitInfo, commitExplanation} from "../../../../functions/gitHubFunctions.js";
 import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
@@ -358,6 +359,24 @@ function StudentsList({userData}) {
       }
     }
 
+    async function createExcel(e) {
+      e.preventDefault();
+      if(selectedStudents.length != 0){
+        const firstGroup = selectedStudents[0].group;
+        const sameGroup = selectedStudents.every(student => student.group === firstGroup);
+        if (sameGroup) {
+          createExcelAndDownload(selectedStudents,teacherId,firstGroup).then(()=>{
+
+          });
+        } else {
+          toast.error(t('studentList.differentGroups'));
+        }
+      }else{
+        toast.error(t('studentList.studentsBlank'));
+      }
+    }
+
+
 
   if(studentsList.length !== 0)
   return (
@@ -385,6 +404,9 @@ function StudentsList({userData}) {
         </Button>
         <Button className="commitPDF" variant="contained" onClick={openExplanationModal}>
           {t('studentList.sendExplanation')}
+        </Button>
+        <Button className="createExcel" variant="contained" onClick={createExcel}>
+          {t('studentList.createExcel')}
         </Button>
       </div>
       {deleteModalOpen && (

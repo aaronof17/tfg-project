@@ -19,6 +19,18 @@ function getStudentsByTeacher(req,res) {
     })
 }
 
+function getAllStudents(req,res) {
+    const sql = "SELECT * from students";
+    connection.query(sql,(err, data) =>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({ success: false, error: 'Error getting all students: '+ err.sqlMessage, code: err.code});
+        } else {
+            return res.status(200).json({ success: true, data: data });
+        }
+    })
+}
+
 function getStudentId(req,res) {
     const sql = 'select studentsID from students where githubuser=?';
     const params = [req.body.githubUser];
@@ -179,4 +191,4 @@ function getIdByEmail(req,res) {
 
 
 
-module.exports = {getIdByEmail, deleteStudent, editStudent, getStudentsByTeacherWithoutRepo, getStudentsBySubject,insertStudent, getStudentsByGroup, getStudentsByTeacher, getStudentId};
+module.exports = {getIdByEmail, deleteStudent, getAllStudents, editStudent, getStudentsByTeacherWithoutRepo, getStudentsBySubject,insertStudent, getStudentsByGroup, getStudentsByTeacher, getStudentId};

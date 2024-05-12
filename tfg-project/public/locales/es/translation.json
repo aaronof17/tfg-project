@@ -42,7 +42,7 @@
         "studentInfo" : "Ten en cuenta que toda la información relacionada con él desaparecerá",
         "studentDeleted" : "Estudiante eliminado",
         "studentsListEmpty" : "Todavía no se ha añadido ningún estudiante",
-        "blankInfo" : "Ningún campo puede estar vacío, excepto la ruta de directorio",
+        "blankInfo" : "Ningún campo puede estar vacío",
         "emailExists" : "Este email ya existe",
         "userExists" : "Este usuario de github ya existe",
         "confirm" : "Confirmar",
@@ -102,7 +102,7 @@
         "tokenError" : "Hubo un problema con tu token, puede que no sea correcto o esté caducado"
     },
     "addStudents":{
-        "dataBlank" : "Ningún campo puede estar vacío, excepto la ruta de directorio",
+        "dataBlank" : "Ningún campo puede estar vacío",
         "studentSaved" : "Estudiante guardado",
         "studentsSaved" : "Estudiantes guardados",
         "errorAnalizingCSV" : "Error analizando el archivo",
@@ -131,7 +131,8 @@
         "csvTemplate" : "Plantilla de csv",
         "errorWithStudent" : "Error con estudiante ",
         "errorExist" : " ya existe",
-        "errorSavingEnroled" : "Hubo un error matriculando al alumno"
+        "errorSavingEnroled" : "Hubo un error matriculando al alumno",
+        "errorStudentAlreadyEnrolled" : "Este estudiante ya está matriculado en este grupo"
     },
     "createLabWork":{
         "subjectFilter" : "Asignatura",

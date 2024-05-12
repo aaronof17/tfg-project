@@ -12,6 +12,7 @@ import StudentInfo from './StudentInfo.js';
 import StudentGroup from './StudentGroup.js';
 import CsvModal from './CsvModal.js';
 import RewriteModal from '../../../Modal/RewriteModal.js';
+import EnrollModal from './EnrollModal.js';
 
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -33,6 +34,7 @@ function AddStudents({userData}) {
     const [subjects, setSubjects] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [rewriteModalOpen, setRewriteModalOpen] = useState(false);
+    const [enrollModalOpen, setEnrollModalOpen] = useState(false);
     const [studentId, setStudentId] = useState(null);
 
 
@@ -59,6 +61,20 @@ function AddStudents({userData}) {
       toast.info(t('addStudents.studentsSaved'));
     };
 
+    const enrollStudent = async (studentToEnroll,groupEnroll,repositoryForStudent) => {
+      saveEnrolled(studentToEnroll, groupEnroll, repositoryForStudent).then((res)=>{
+        if(res.response){
+            toast.info(t('addStudents.studentEnrolled'));
+        }else{
+          if(res.code === strings.errors.dupentry){
+            toast.error(t('addStudents.errorStudentAlreadyEnrolled'));
+          }else{
+            toast.error(t('addStudents.errorSavingEnroled'));
+          }
+        }
+    });
+    }
+
 
     function checkData(studentName, studentEmail, studentUser, 
       studentRepository, studentGroup){
@@ -76,8 +92,12 @@ function AddStudents({userData}) {
     } 
 
     function saveCsv(){
-        setModalOpen(true);
+      setModalOpen(true);
     }
+
+    function openEnrollModal(){
+      setEnrollModalOpen(true);
+  }
 
     function addEnrolled(){
       saveEnrolled(studentId, group.label, repository).then((res)=>{
@@ -91,7 +111,7 @@ function AddStudents({userData}) {
               setGroup("");
           }else{
             if(res.code === strings.errors.dupentry){
-              toast.error(extractDuplicateEntry(res.error)+t('addStudents.errorExist'));
+              toast.error(t('addStudents.errorStudentAlreadyEnrolled'));
             }else{
               toast.error(t('addStudents.errorSavingEnroled'));
             }
@@ -158,7 +178,7 @@ function AddStudents({userData}) {
         </StudentGroup>
         <div className='students-add-buttons'>
             <Grid container spacing={2}>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                 </Grid>
                 <Grid item xs={12} sm={2}>
                     <Button variant="contained" onClick={() => saveStudentInfo(name, email, user,repository, group)}>
@@ -170,7 +190,12 @@ function AddStudents({userData}) {
                       {t('addStudents.loadCsv')}
                     </Button>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={2}>
+                    <Button variant="contained" onClick={openEnrollModal} >
+                      {t('addStudents.enrollStudent')}
+                    </Button>
+                </Grid>
+                <Grid item xs={3}>
                 </Grid>
             </Grid>
         </div>
@@ -193,7 +218,16 @@ function AddStudents({userData}) {
                   text1={t('addStudents.studentExist')+email}
                   text2={t('addStudents.addEnrolled')}
                 />
-            )}
+        )}
+        {enrollModalOpen && (
+                <EnrollModal
+                closeModal={() => {
+                  setEnrollModalOpen(false);
+                }}
+                onSubmit={enrollStudent}
+                labGroups={labGroups}
+                />
+        )}
     </div>
   );
 }

@@ -159,13 +159,41 @@ export async function getWorksByStudentAndGroup(studentId, labgroupName, teacher
 
       const data = await response.json();
       if(!data.success){
-        console.log("An error occurred deleting work: ", data.error);
+        console.log("An error occurred getting works for student: ", data.error);
         return { response: false, error: data.error};
       }
         
       return { response: true, data:data.data , error: ""};
     } catch (error) {
-      console.error('Error getting works by student:', error);
+      console.error('Error getting works for student:', error);
+    }
+}
+
+
+export async function getWorksAndMarksByStudentAndGroup(studentId, labgroupName, teacherID) {
+  try {
+      const response = await fetch('http://localhost:4000/works/marks/student/group', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+              JSON.stringify({ teacherID: teacherID,
+                              studentId: studentId,
+                              group: labgroupName})
+
+      })
+
+      const data = await response.json();
+      if(!data.success){
+        console.log("An error occurred works and marks for student: ", data.error);
+        return { response: false, error: data.error};
+      }
+        
+      return { response: true, data:data.data , error: ""};
+    } catch (error) {
+      console.error('Error getting works and marks for student:', error);
     }
 }
 
