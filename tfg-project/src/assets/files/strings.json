@@ -19,6 +19,14 @@
       "group" : "Grupo",
       "work" : "Practica",
       "archive" : "calificaciones.xlsx"
+    },
+    "strings" : {
+      "sended" : "sended",
+      "teacher" : "teacher",
+      "student" : "student",
+      "admin" : "admin",
+      "default" : "",
+      "host" : "http://localhost:4000/"
     }
   }
   

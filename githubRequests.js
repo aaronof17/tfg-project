@@ -80,7 +80,6 @@ async function getUserData(req, res) {
         }
     });
     const data = await response.json();
-    console.log("USER DATA ",data);
     return data;
 }
 
@@ -100,9 +99,7 @@ async function downloadRepo(req, res) {
             throw new Error(`${githubResponse.statusText}`);
         }
 
-        const url = githubResponse.url; // Obtener directamente la URL de descarga del campo 'url'
-        console.log("URL de descarga:", url);
-   
+        const url = githubResponse.url;   
         return url;
 
     } catch (error) {

@@ -23,6 +23,7 @@ function CreateLabWork({userData}) {
     const [teacherID, setTeacherID] = useState("");
     const [labGroups, setLabGroups] = useState([]);
     const [subjects, setSubjects] = useState([]);
+    const [selectedSubject, setSelectedSubject] = useState("");
     const [actualGroups, setActualGroups] = useState([]);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -51,6 +52,10 @@ function CreateLabWork({userData}) {
           saveWorks(datesFromGroups, title, description, percentage, teacherID).then((res) => {
             if(res){
               toast.info(t('createLabWork.worksSaved'));
+              setTitle("");
+              setPercentage("");
+              setDescription("");
+              setSelectedSubject("");
             }else{
               toast.error(t('createLabWork.error'));
             }
@@ -66,11 +71,13 @@ function CreateLabWork({userData}) {
       if (selectedOption) {
           const fetchFilterGroups = async () => {
               getLabGroupsBySubject(selectedOption, teacherID, setLabGroups);
+              setSelectedSubject(selectedOption);
           };
           fetchFilterGroups();
       }else{
         const fetchAllGroups = async () => {
           getTeacherLabGroups(setLabGroups,teacherID);
+          setSelectedSubject("");
         };
         fetchAllGroups();
       }
@@ -98,6 +105,7 @@ function CreateLabWork({userData}) {
                 options={getSubjectsForComboBox(subjects)}
                 renderInput={(params) => <TextField {...params} label={t('createLabWork.subjectFilter')} />}
                 onChange={handleSubjectChange}
+                value={selectedSubject}
             />
             </div>
         </Grid>
@@ -118,7 +126,7 @@ function CreateLabWork({userData}) {
             <GroupTable labGroups={actualGroups}></GroupTable>
         </div>
         <div className="infoWork">
-          <InfoWork setTitle={setTitle} setDescription={setDescription} setPercentage={setPercentage}></InfoWork>
+          <InfoWork title={title} setTitle={setTitle} description={description} setDescription={setDescription} percentage={percentage} setPercentage={setPercentage}></InfoWork>
         </div>
         <div className="saveLabWorks" >
             <Button variant="contained" onClick={saveLabWorks}>

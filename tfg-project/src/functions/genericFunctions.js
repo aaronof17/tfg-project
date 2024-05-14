@@ -1,5 +1,3 @@
-
-
 export function getJSON(yourUrl){
     var Httpreq = new XMLHttpRequest(); // a new request
     Httpreq.open("GET",yourUrl,false);
@@ -82,7 +80,6 @@ export function getInfoFromFilterMark(str) {
 
 export function getRepositoryName(url) {
     const partes = url.split('/');
-    console.log("repositorio ",partes[partes.length - 1]);
     return partes[partes.length - 1];
 }
 

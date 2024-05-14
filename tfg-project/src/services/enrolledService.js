@@ -1,5 +1,5 @@
 import { getIdFromGroup } from "./labGroupService";
-
+import strings from '../assets/files/strings.json';
 
 export async function saveEnrolled(studentId, groupId, repository) {
     try {
@@ -13,7 +13,7 @@ export async function saveEnrolled(studentId, groupId, repository) {
             }
         }
 
-        const response = await fetch('http://localhost:4000/enrolled/save', {
+        const response = await fetch(strings.strings.host+'enrolled/save', {
             method: "POST",
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("accessToken"),

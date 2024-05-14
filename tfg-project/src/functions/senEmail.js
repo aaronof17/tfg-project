@@ -2,7 +2,7 @@ import strings from '../assets/files/strings.json';
 
 
 export async function sendEmail(mark, comment, worklab, studentEmail) {
-    const apiUrl = 'http://localhost:4000/sendemail';
+    const apiUrl = strings.strings.host+'sendemail';
     try {
 
         let subject = strings.emailInfo.subject+'"'+worklab+'"';

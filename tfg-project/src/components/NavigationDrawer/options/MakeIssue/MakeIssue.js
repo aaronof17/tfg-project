@@ -23,6 +23,8 @@ function MakeIssue({userData}) {
 
   const [groups, setLabGroups] = useState();
   const [subjects, setSubjects] = useState();
+  const [selectedLabGroup, setSelectedLabGroup] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
   const [teacherID, setTeacherID] = useState("");
   const [t] = useTranslation();
   const [availableStudents, setAvailableStudents] = useState([]);
@@ -54,6 +56,7 @@ function MakeIssue({userData}) {
                                                                  existingStudent.labgroup === student.labgroup
                                                               && existingStudent.githubuser === student.githubuser));
             setAvailableStudents(filteredStudents);
+            setSelectedSubject(selectedOption);
         };
         fetchFilterStudents();
     }else{
@@ -64,11 +67,26 @@ function MakeIssue({userData}) {
                                                                                         existingStudent.labgroup === student.labgroup
                                                                                      && existingStudent.githubuser === student.githubuser));
           setAvailableStudents(filteredStudents);
+          setSelectedSubject("");
         });
       };
       fetchAllStudents();
     }
   }
+
+  const getGroupsOptions= () =>{
+    let options = [];
+    if(groups != undefined){
+      groups.map((group,index) => {
+            options[index] = {
+                label: group.label,
+                value: group.value
+            };
+      });
+    }     
+
+    return options;
+}
 
   const handleGroupChange = (e, selectedOption) => {
     if (selectedOption) {
@@ -78,6 +96,7 @@ function MakeIssue({userData}) {
                                                                                           existingStudent.labgroup === student.labgroup
                                                                                           && existingStudent.githubuser === student.githubuser));
             setAvailableStudents(filteredStudents);
+            setSelectedLabGroup(selectedOption);
           });
         };
         fetchFilterStudents();
@@ -87,6 +106,7 @@ function MakeIssue({userData}) {
           const filteredStudents = newStudents.filter(student => !selectedStudents.some(existingStudent => existingStudent.labgroup === student.labgroup
                                                                                         && existingStudent.githubuser === student.githubuser));
           setAvailableStudents(filteredStudents);
+          setSelectedLabGroup("");
         });
       };
       fetchAllStudents();
@@ -106,25 +126,41 @@ function MakeIssue({userData}) {
     if(teacherToken === ""){
       toast.error(t('makeIssue.tokenEmpty'));
     }else{
+      let problemWithToken=false;
+      let issuesSended = [];
       for (let actualStudent of selectedStudents) {
         try {
           await createIssue(actualStudent.githubuser,getRepositoryName(actualStudent.repositoryURL),title,description,teacherToken).then((res) =>{
           if(res.response){
+            issuesSended.push(strings.strings.sended);
             setModalOpen(false);
-            toast.info(t('makeIssue.issueSended'));
           }else{
             if(res.error === strings.errors.unauthorized){
               toast.error(t('makeIssue.tokenError'));
+              problemWithToken = true;
+            }else if(res.error ===  strings.errors.notfound){
+              toast.error(t('makeIssue.errorRepository')+actualStudent.name);
             }else{
-              toast.error(t('makeIssue.issueErrorSendStudent')+res.name);
+              toast.error(t('makeIssue.issueErrorSendStudent')+actualStudent.name);
             }
           }
         });
         } catch (error) {
           toast.error(t('makeIssue.issueErrorSend'));
+        }finally{
+          if(problemWithToken){
+            return;
+          }
         }
         
     };
+    if(issuesSended.length != 0){
+      toast.info(t('makeIssue.issueSended'));
+      setSelectedLabGroup("");
+      setSelectedSubject("");
+      getStudents(setAvailableStudents,teacherID);
+      setSelectedStudents([]);
+    }
   }
   };
   
@@ -144,6 +180,7 @@ return (
                   options={getSubjectsForComboBox(subjects)}
                   renderInput={(params) => <TextField {...params} label={t('makeIssue.subject')} />}
                   onChange={handleSubjectChange}
+                  value={selectedSubject}
               />
           </div>
       </Grid>
@@ -154,9 +191,10 @@ return (
               <Autocomplete
                   disablePortal
                   id="group-combo-box"
-                  options={groups}
+                  options={getGroupsOptions()}
                   renderInput={(params) => <TextField {...params} label={t('makeIssue.group')} />}
                   onChange={handleGroupChange}
+                  value={selectedLabGroup}
               />
           </div>
       </Grid>

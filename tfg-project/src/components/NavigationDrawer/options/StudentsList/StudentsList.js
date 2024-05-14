@@ -314,7 +314,7 @@ function StudentsList({userData}) {
 
     async function handleCommitExplanation(file, commitTitle) {
       if(selectedStudents.length !=0){
-        let errorOcurred=false;
+        let problemWithToken=false;
         let explanationsSended=[];
         for (let student of selectedStudents) {
           try { 
@@ -322,26 +322,22 @@ function StudentsList({userData}) {
               if(!res.response){
                 if(res.error ===  strings.errors.unauthorized){
                   toast.error(t('studentList.tokenError'));
+                  problemWithToken = true;
                 }else if(res.error ===  strings.errors.notfound){
                   toast.error(t('studentList.errorRepository')+student.name);
                 }else{
                   toast.error(t('studentList.errorSendingExplanationForStudent')+student.name);
                 }
-                errorOcurred = true;
               }else{
-                explanationsSended.push("sended");
+                explanationsSended.push(strings.strings.sended);
               }
             });
           } catch (error) {
             toast.error(t('studentList.errorSendingExplanation'));
-            errorOcurred = true;
-          } finally{
-            if(errorOcurred){
-              if(explanationsSended.length != 0){
-                toast.info(t('studentList.explanationSended'));
-              }
+          }finally{
+            if(problemWithToken){
               return;
-            } 
+            }
           }
         }
         if(explanationsSended.length != 0){

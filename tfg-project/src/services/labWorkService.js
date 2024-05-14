@@ -1,9 +1,10 @@
 import {formatDate} from '../functions/genericFunctions.js';
+import strings from '../assets/files/strings.json';
 
 export async function saveWorks(datesFromWorks, title, description, percentage,teacherID) {
     try {
       for(var i = 0; i < datesFromWorks.length; i++){
-        const response = await fetch('http://localhost:4000/works/save', {
+        const response = await fetch(strings.strings.host+'works/save', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -38,7 +39,7 @@ export async function saveWorks(datesFromWorks, title, description, percentage,t
 
 export async function getLabWorks(callback, teacherID) {
     try {
-        const response = await fetch('http://localhost:4000/works', {
+        const response = await fetch(strings.strings.host+'works', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -59,7 +60,7 @@ export async function getLabWorks(callback, teacherID) {
 
 export async function getActiveLabWorks(callback, teacherID) {
   try {
-      const response = await fetch('http://localhost:4000/works/active', {
+      const response = await fetch(strings.strings.host+'works/active', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -80,7 +81,7 @@ export async function getActiveLabWorks(callback, teacherID) {
 
 export async function getWorksByStudent(studentEmail, callback, teacherID) {
   try {
-      const response = await fetch('http://localhost:4000/works/student', {
+      const response = await fetch(strings.strings.host+'works/student', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -102,7 +103,7 @@ export async function getWorksByStudent(studentEmail, callback, teacherID) {
 
 export async function getWorksByGroup(groupName, callback, teacherID) {
   try {
-      const response = await fetch('http://localhost:4000/works/group', {
+      const response = await fetch(strings.strings.host+'works/group', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -124,7 +125,7 @@ export async function getWorksByGroup(groupName, callback, teacherID) {
 
 export async function getWorksBySubject(subject, callback, teacherID) {
   try {
-      const response = await fetch('http://localhost:4000/works/subject', {
+      const response = await fetch(strings.strings.host+'works/subject', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -144,7 +145,7 @@ export async function getWorksBySubject(subject, callback, teacherID) {
 
 export async function getWorksByStudentAndGroup(studentId, labgroupName, teacherID) {
   try {
-      const response = await fetch('http://localhost:4000/works/student/group', {
+      const response = await fetch(strings.strings.host+'works/student/group', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -172,7 +173,7 @@ export async function getWorksByStudentAndGroup(studentId, labgroupName, teacher
 
 export async function getWorksAndMarksByStudentAndGroup(studentId, labgroupName, teacherID) {
   try {
-      const response = await fetch('http://localhost:4000/works/marks/student/group', {
+      const response = await fetch(strings.strings.host+'works/marks/student/group', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -199,7 +200,7 @@ export async function getWorksAndMarksByStudentAndGroup(studentId, labgroupName,
 
 export async function getWorksByStudentId(callback, studentId) {
   try {
-      const response = await fetch('http://localhost:4000/works/student/id', {
+      const response = await fetch(strings.strings.host+'works/student/id', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -218,7 +219,7 @@ export async function getWorksByStudentId(callback, studentId) {
 
 export async function getWorksBySubjectAndStudent(subject ,callback, studentId) {
   try {
-      const response = await fetch('http://localhost:4000/works/student/subject', {
+      const response = await fetch(strings.strings.host+'student/subject', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -240,7 +241,7 @@ export async function getWorksBySubjectAndStudent(subject ,callback, studentId) 
 export async function editWork(editRow) {
   try {
     console.log("ACTIVE ",editRow);
-      const response = await fetch('http://localhost:4000/works/edit', {
+      const response = await fetch(strings.strings.host+'works/edit', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -274,7 +275,7 @@ export async function editWork(editRow) {
 
 export async function deleteWork(id) {
   try {
-      const response = await fetch('http://localhost:4000/works/delete', {
+      const response = await fetch(strings.strings.host+'works/delete', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),

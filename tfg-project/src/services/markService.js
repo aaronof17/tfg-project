@@ -1,6 +1,9 @@
+import strings from '../assets/files/strings.json';
+
+
 export async function saveMark(work, student, comment, mark) {
     try {
-        const response = await fetch('http://localhost:4000/marks/save', {
+        const response = await fetch(strings.strings.host+'marks/save', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -32,7 +35,7 @@ export async function saveMark(work, student, comment, mark) {
 
   export async function editMark(work, student, comment, mark) {
     try {
-        const response = await fetch('http://localhost:4000/marks/edit', {
+        const response = await fetch(strings.strings.host+'marks/edit', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -64,7 +67,7 @@ export async function saveMark(work, student, comment, mark) {
 
 export async function getMarkByWorkAndStudent(work, student) {
   try {
-    const response = await fetch('http://localhost:4000/marks/work/student', {
+    const response = await fetch(strings.strings.host+'marks/work/student', {
       method: "POST",
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("accessToken"),

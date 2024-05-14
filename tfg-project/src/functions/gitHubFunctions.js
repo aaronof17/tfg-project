@@ -1,5 +1,7 @@
+import strings from '../assets/files/strings.json';
+
 export async function createIssue(user,repo,title,description,token) {
-  const apiUrl = 'http://localhost:4000/createIssue';
+  const apiUrl = strings.strings.host+'createIssue';
   try {
       const response = await fetch(apiUrl, {
           method: 'POST',
@@ -29,7 +31,7 @@ export async function createIssue(user,repo,title,description,token) {
 
 export async function loginWithGitHub(){
   try {
-    const response = await fetch("http://localhost:4000/login", {
+    const response = await fetch(strings.strings.host+"login", {
       method: "GET"
     });
 
@@ -44,7 +46,7 @@ export async function loginWithGitHub(){
 
 
 export async function commitExplanation(token, repositoryURL, githubUser, file, commitTitle) {
-  const apiUrl = 'http://localhost:4000/commitExplanation';
+  const apiUrl = strings.strings.host+'commitExplanation';
   try {
       const formData = new FormData();
       formData.append('repo', repositoryURL);
@@ -76,7 +78,7 @@ export async function commitExplanation(token, repositoryURL, githubUser, file, 
 
 export async function getUserData(callback) {
     try {
-        const response = await fetch("http://localhost:4000/getUserData", {
+        const response = await fetch(strings.strings.host+"getUserData", {
           method: "GET",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken")
@@ -95,7 +97,7 @@ export async function getUserData(callback) {
 }
 
 export async function getAccessToken(setRerender,rerender, codeParam){
-  await fetch("http://localhost:4000/getAccessToken?code=" + codeParam, {
+  await fetch(strings.strings.host+"getAccessToken?code=" + codeParam, {
     method: "GET"
   }).then((response) => {
     return response.json();
@@ -110,7 +112,7 @@ export async function getAccessToken(setRerender,rerender, codeParam){
 
 
 export async function deleteAppToken(token,rerenderPass){
-  const apiUrl = 'http://localhost:4000/deleteAppToken';
+  const apiUrl = strings.strings.host+'deleteAppToken';
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -130,7 +132,7 @@ export async function deleteAppToken(token,rerenderPass){
 }
 
 export async function getLastCommitInfo(token, repositoryURL, githubUser) {
-  const apiUrl = 'http://localhost:4000/getFinalCommitInfo';
+  const apiUrl = strings.strings.host+'getFinalCommitInfo';
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -159,7 +161,7 @@ export async function getLastCommitInfo(token, repositoryURL, githubUser) {
 
 
 export async function downloadRepo(token, repositoryURL, githubUser) {
-  const apiUrl = 'http://localhost:4000/downloadRepo';
+  const apiUrl = strings.strings.host+'downloadRepo';
   let intento = 0;
   let maximoIntento = 3;
   while(intento < maximoIntento){

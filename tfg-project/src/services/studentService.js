@@ -1,9 +1,10 @@
 import { saveEnrolled } from "./enrolledService";
 import {extractId} from "../functions/genericFunctions"
+import strings from '../assets/files/strings.json';
 
 export async function getStudents(callback, teacherID) {
     try {
-        const response = await fetch('http://localhost:4000/students/teacher', {
+        const response = await fetch(strings.strings.host+'students/teacher', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -24,7 +25,7 @@ export async function getStudents(callback, teacherID) {
 
 export async function getAllStudents(callback) {
   try {
-      const response = await fetch('http://localhost:4000/students', {
+      const response = await fetch(strings.strings.host+'students', {
           method: "GET",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -42,7 +43,7 @@ export async function getAllStudents(callback) {
 
 export async function getStudentsBySubject(teacherID, subject) {
   try {
-      const response = await fetch('http://localhost:4000/students/teacher/subject', {
+      const response = await fetch(strings.strings.host+'students/teacher/subject', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -64,7 +65,7 @@ export async function getStudentsBySubject(teacherID, subject) {
 
 export async function getStudentsWithoutRepo(callback, teacherID) {
   try {
-      const response = await fetch('http://localhost:4000/students/teacher/repo', {
+      const response = await fetch(strings.strings.host+'students/teacher/repo', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -88,7 +89,7 @@ export async function getStudentsWithoutRepo(callback, teacherID) {
 export async function getStudentsByWork(group, callback, teacherID) {
     try {
       console.log("grupo", group);
-        const response = await fetch('http://localhost:4000/students/work', {
+        const response = await fetch(strings.strings.host+'students/work', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -113,7 +114,7 @@ export async function getStudentsByWork(group, callback, teacherID) {
 export async function saveStudent(name, email, user, repository, groupId) {
   try {
     console.log("aqui aqui ",groupId);
-    const response = await fetch('http://localhost:4000/students/save', {
+    const response = await fetch(strings.strings.host+'students/save', {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -147,7 +148,7 @@ export async function saveStudent(name, email, user, repository, groupId) {
 
 export async function deleteStudent(rowToDelete) {
   try {
-    const response = await fetch('http://localhost:4000/students/delete', {
+    const response = await fetch(strings.strings.host+'students/delete', {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -173,7 +174,7 @@ export async function deleteStudent(rowToDelete) {
 
 export async function getIdByEmail(email) {
   try {
-    const response = await fetch('http://localhost:4000/students/email', {
+    const response = await fetch(strings.strings.host+'students/email', {
       method: "POST",
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -202,7 +203,7 @@ export async function getIdByEmail(email) {
 
 export async function getStundentId(callback, githubUser) {
   try {
-      const response = await fetch('http://localhost:4000/students/id', {
+      const response = await fetch(strings.strings.host+'students/id', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -222,7 +223,7 @@ export async function getStundentId(callback, githubUser) {
 
 export async function editStudent(editRow) {
   try {
-      const response = await fetch('http://localhost:4000/students/edit', {
+      const response = await fetch(strings.strings.host+'students/edit', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),

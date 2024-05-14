@@ -1,6 +1,8 @@
+import strings from '../assets/files/strings.json';
+
 export async function getTeacherLabGroups(callback, teacherID) {
     try {
-        const response = await fetch('http://localhost:4000/groups/teacher', {
+        const response = await fetch(strings.strings.host+'groups/teacher', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -21,7 +23,7 @@ export async function getTeacherLabGroups(callback, teacherID) {
 
 export async function editLabGroup(editRow) {
   try {
-      const response = await fetch('http://localhost:4000/groups/edit', {
+      const response = await fetch(strings.strings.host+'groups/edit', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -55,7 +57,7 @@ export async function editLabGroup(editRow) {
 export async function deleteLabGroup(rowToDelete) {
   try {
     console.log(rowToDelete);
-    const response = await fetch('http://localhost:4000/groups/delete', {
+    const response = await fetch(strings.strings.host+'groups/delete', {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -81,7 +83,7 @@ export async function deleteLabGroup(rowToDelete) {
 
 export async function getLabGroups() {
   try {
-      const response = await fetch('http://localhost:4000/groups', {
+      const response = await fetch(strings.strings.host+'groups', {
           method: "GET",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -99,7 +101,7 @@ export async function getLabGroups() {
 
 export async function getSubjectsFromGroup(callback, teacherID) {
     try {
-        const response = await fetch('http://localhost:4000/subjects', {
+        const response = await fetch(strings.strings.host+'subjects', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -120,7 +122,7 @@ export async function getSubjectsFromGroup(callback, teacherID) {
 
 export async function getSubjectsForStudent(callback, studentID) {
   try {
-      const response = await fetch('http://localhost:4000/subjects/student', {
+      const response = await fetch(strings.strings.host+'subjects/student', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -141,7 +143,7 @@ export async function getSubjectsForStudent(callback, studentID) {
 
 export async function getLabGroupsBySubject(actualSubject, teacherID, callback) {
   try {
-      const response = await fetch('http://localhost:4000/groups/subject', {
+      const response = await fetch(strings.strings.host+'groups/subject', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -163,7 +165,7 @@ export async function getLabGroupsBySubject(actualSubject, teacherID, callback) 
 
 export async function getIdFromGroup(groupName) {
   try {
-      const response = await fetch('http://localhost:4000/groups/name', {
+      const response = await fetch(strings.strings.host+'groups/name', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -183,7 +185,7 @@ export async function getIdFromGroup(groupName) {
 export async function saveLabGroup(groupName, subject, teacherAssigned) {
   try {
 
-    const response = await fetch('http://localhost:4000/groups/save', {
+    const response = await fetch(strings.strings.host+'groups/save', {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + localStorage.getItem("accessToken"),

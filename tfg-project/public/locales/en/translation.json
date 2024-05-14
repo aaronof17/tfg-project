@@ -81,7 +81,8 @@
         "downloadErrorWithStudent" : "There was an error downloading archives for student ",
         "errorSendingExplanation" : "There was an error sending work explanation",
         "explanationSended" :"Work Explanation sended",
-        "errorSendingExplanationForStudent": "There was an error sending work explanation with student "
+        "errorSendingExplanationForStudent": "There was an error sending work explanation with student ",
+        "createExcel" : "Generate Excel"
     },
     "makeIssue" : {
         "title" : "Title",
@@ -98,7 +99,8 @@
         "issueSended" : "Issue sended",
         "issueErrorSendStudent" : "There was an error sending issue for ",
         "issueErrorSend" : "There was an error sending issue",
-        "tokenError" : "There was a problem with your token, its could be not correct or expired"
+        "tokenError" : "There was a problem with your token, its could be not correct or expired",
+        "errorRepository" :"There was a problem with repository, it does not exists or you probably don't have access. Student: "
 
     },
     "addStudents":{

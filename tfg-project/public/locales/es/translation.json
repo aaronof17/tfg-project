@@ -82,7 +82,8 @@
         "downloadErrorWithStudent" : "Hubo un problema descargando los archivos del alumno ",
         "errorSendingExplanation" : "Hubo un problema enviando el enunciado",
         "explanationSended" :"Enunciado enviado",
-        "errorSendingExplanationForStudent": "Hubo un problema enviando el enunciado con el alumno "
+        "errorSendingExplanationForStudent": "Hubo un problema enviando el enunciado con el alumno ",
+        "createExcel" : "Generar Excel"
     },
     "makeIssue" : {
         "title" : "Título",
@@ -99,7 +100,9 @@
         "issueSended" : "Issue enviada",
         "issueErrorSendStudent" : "Hubo un error enviando la issue para ",
         "issueErrorSend" : "Hubo un error enviando la issue",
-        "tokenError" : "Hubo un problema con tu token, puede que no sea correcto o esté caducado"
+        "tokenError" : "Hubo un problema con tu token, puede que no sea correcto o esté caducado",
+        "errorRepository" :"Hubo un problema con el repositorio, o no existe o probablemente no tengas acceso a él. Alumno: "
+    
     },
     "addStudents":{
         "dataBlank" : "Ningún campo puede estar vacío",

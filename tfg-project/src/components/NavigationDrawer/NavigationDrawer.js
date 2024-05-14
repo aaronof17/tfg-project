@@ -21,7 +21,6 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import People from '@mui/icons-material/People';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import Toolbar from '@mui/material/Toolbar';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState } from 'react';
 import {useTranslation} from "react-i18next";
 import {ToastContainer, toast} from "react-toastify";
@@ -43,6 +42,7 @@ import TeachersList from './options/TeachersList/TeachersList.js';
 import AddLabGroup from './options/AddLabGroup/AddLabGroup.js';
 import LabGroupList from './options/LabGroupList/LabGroupList.js';
 import DefaultView from './options/DefaultView/DefaultView.js';
+import strings from '../../assets/files/strings.json'
 
 const drawerWidth = 240;
 
@@ -239,10 +239,10 @@ function ResponsiveDrawer(props) {
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` },  }}
       >
-        {role === 'teacher' && teacherViews[currentView]} 
-        {role === 'student' && studentViews[currentView]} 
-        {role === 'admin' && adminViews[currentView]}      
-        {role === '' && defaultViews[currentView]}
+        {role === strings.strings.teacher && teacherViews[currentView]} 
+        {role === strings.strings.student && studentViews[currentView]} 
+        {role === strings.strings.admin && adminViews[currentView]}      
+        {role === strings.strings.default && defaultViews[currentView]}
     </Box>
       <ToastContainer/>
     </Box>

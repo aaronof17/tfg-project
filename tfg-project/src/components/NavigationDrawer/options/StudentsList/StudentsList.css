@@ -7,7 +7,7 @@
     height: 100%;
     border-radius: 1.5vw; 
     box-shadow: 0.3vw 1vw 1.5vw hsl(0deg 0% 0% / 0.31);
-    background-color: #D5DBDB;
+    background-color: #ffffff;
 }
 
 .students-wrapper h3{
@@ -22,7 +22,9 @@
 }
 
 .buttons .downloadRepo,
-.buttons .checkWorksDates{
+.buttons .checkWorksDates,
+.buttons .createExcel,
+.buttons .commitPDF{
     margin-left: 2%;
     margin-right: 2%;
 }

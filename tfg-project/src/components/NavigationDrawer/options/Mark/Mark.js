@@ -113,6 +113,7 @@ function Mark({userData}){
                     setActualWork("");
                     setMarkNumber("");
                     setComment("");
+                    setMarkNumber(0);
                     sendEmailMessage();
                 }else{
                     if(res.code === strings.errors.dupentry){

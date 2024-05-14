@@ -1,4 +1,6 @@
 import * as CryptoJS from 'crypto-js';
+import strings from '../assets/files/strings.json';
+
 
 const encryptToken = (token) => {
   const encryptedToken = CryptoJS.AES.encrypt(token, 'z8Y#rT@6Mv!yP$qX').toString();
@@ -14,7 +16,7 @@ const decryptToken = (encryptedToken) => {
 export async function saveTeacherToken(teacherToken, userProfileName) {
     try {
         const encryptedToken = await encryptToken(teacherToken);
-        const response = await fetch('http://localhost:4000/teachers/token', {
+        const response = await fetch(strings.strings.host+'teachers/token', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -43,7 +45,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
   export async function getTeacherId(callback, profileURL) {
     try {
       console.log("perfil ", profileURL);
-        const response = await fetch('http://localhost:4000/teachers/id', {
+        const response = await fetch(strings.strings.host+'teachers/id', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -64,7 +66,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
 
   export async function getTeacherToken(callback, teacherId) {
     try {
-        const response = await fetch('http://localhost:4000/teachers/token/id', {
+        const response = await fetch(strings.strings.host+'teachers/token/id', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -86,7 +88,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
 
   export async function getTeachers() {
     try {
-        const response = await fetch('http://localhost:4000/teachers', {
+        const response = await fetch(strings.strings.host+'teachers', {
             method: "GET",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -103,7 +105,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
 
   export async function getTeacherByGitHubUser(gituser) {
     try {
-        const response = await fetch('http://localhost:4000/teachers/gituser', {
+        const response = await fetch(strings.strings.host+'teachers/gituser', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -124,9 +126,8 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
 
   
   export async function getRoleByGitHubUser(gituser) {
-    console.log("user ",gituser);
     try {
-        const response = await fetch('http://localhost:4000/role/gituser', {
+        const response = await fetch(strings.strings.host+'role/gituser', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -151,7 +152,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
   export async function saveTeacher(name, email, user) {
     try {
   
-      const response = await fetch('http://localhost:4000/teachers/save', {
+      const response = await fetch(strings.strings.host+'teachers/save', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -180,7 +181,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
 
   export async function deleteTeacher(rowToDelete) {
     try {
-      const response = await fetch('http://localhost:4000/teachers/delete', {
+      const response = await fetch(strings.strings.host+'teachers/delete', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -206,7 +207,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
 
   export async function getStundentId(callback, githubUser) {
     try {
-        const response = await fetch('http://localhost:4000/students/id', {
+        const response = await fetch(strings.strings.host+'students/id', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -226,7 +227,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
   
   export async function editTeacher(editRow) {
     try {
-        const response = await fetch('http://localhost:4000/teachers/edit', {
+        const response = await fetch(strings.strings.host+'teachers/edit', {
             method: "POST",
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("accessToken"),
