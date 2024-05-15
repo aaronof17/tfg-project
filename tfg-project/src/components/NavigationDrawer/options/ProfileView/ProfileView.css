@@ -1,0 +1,71 @@
+
+.profileViewerDiv{
+  margin: 20px 0;
+  display: flex;
+  padding: 20px;
+  align-items: center; 
+  width: 100%; 
+  height: 100%;
+  border-radius: 15px;
+  box-shadow: 3px 10px 15px hsl(0deg 0% 0% / 0.31);
+  background-color:white; 
+
+}
+
+
+.profileViewerDiv .avatar {
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+.profileViewerDiv .avatar img {
+  max-width: 100%;
+  height: auto;
+  max-height: 300px; /* Ajusta la altura máxima de la imagen */
+  border-radius: 100%;
+  border: solid 4px #070707;
+}
+.profileViewerDiv .body {
+  text-align: left;
+}
+
+.profileViewerDiv .profileLink {
+  font-size: medium;
+}
+
+
+
+.profileViewerDiv .textField {
+  margin: 10%;
+  margin-bottom: 10px;
+  width: 100%;
+  padding-top: 10%;
+  padding-left: 40px;
+  padding-right: 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profileViewerDiv .saveToken {
+  padding-top: 5%;
+}
+
+.custom-toast-container {
+    font-size: 1vw; 
+  }
+
+@media (max-width: 768px) {
+  .profileViewerDiv {
+    flex-direction: column;
+  }
+
+  /* .profileViewerDiv .textField {
+    margin: 0%;
+    padding-left: 0;
+    padding-right: 0;
+    display: flex;
+    justify-content: center;
+  } */
+  
+}

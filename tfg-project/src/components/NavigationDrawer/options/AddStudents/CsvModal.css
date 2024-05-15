@@ -1,0 +1,51 @@
+.csv-modal-container {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .csv-modal {
+    border-radius: 5%;
+    padding: 2rem;
+    background-color: white;
+    width: 25em;
+  }
+
+  .csv-modal .csv-template{
+    margin-bottom: 5%;
+  }
+
+  
+  .csv-modal h3,
+  .csv-modal h4,
+  .csv-modal input{
+    color: black;
+  }
+  
+  .confirm-modal .confirm-btn{
+    margin: 3%;
+  }
+
+  .confirm-modal .cancel-btn{
+    margin: 3%;
+
+    background-color: red;
+  }
+  
+  .dropzone {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    border: 5px dashed rgb(117, 112, 112);
+    padding: 2rem;
+  }
+  

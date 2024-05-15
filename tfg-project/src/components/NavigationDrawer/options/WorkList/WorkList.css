@@ -1,0 +1,89 @@
+.work-list{
+  margin-top: 5vh; 
+  padding: 2vw; 
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  border-radius: 1.5vw; 
+  box-shadow: 0.3vw 1vw 1.5vw hsl(0deg 0% 0% / 0.31);
+  background-color: #ffffff;
+}
+
+
+.work-list h3{
+ color: black;
+}
+
+.work-list-filters{
+  margin-bottom: 2%;
+}
+
+
+.table-wrapperWork {
+    width: 100%;
+    max-height: 500px;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+    background-color: white;
+    font-size: large;
+  }
+  
+  .tableWork{
+    border: 1rem hidden #443C68;
+    border-collapse: collapse;
+    overflow: hidden;
+  }
+  
+  .tableWork thead {
+    background-color: #474040;
+    color: #ffffff;
+  }
+  
+  .tableWork th,
+  .tableWork td {
+    padding: 0.8rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 300px;
+    word-wrap: break-word;
+    color: #ffffff;
+
+  }
+
+  .tableWork td.description {
+    max-width: 300px;
+    white-space: normal;
+    word-wrap: break-word; 
+  }
+  
+  .tableWork td {
+    border-top: 0.5px solid #ddd;
+    background-color: #837e7e;
+    max-width: 300px;
+    white-space: normal;
+    word-wrap: break-word; 
+  }
+  
+  .tableWork tbody tr:hover {
+    background-color: #eee;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-around;
+    top:0
+  }
+  
+  .actions svg {
+    cursor: pointer;
+  }
+  
+
+  @media (max-width: 768px) {
+    .tableWork {
+        overflow-x: unset;
+    }
+  }
+  

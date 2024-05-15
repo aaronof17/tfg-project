@@ -1,0 +1,71 @@
+.info-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow: auto;
+}
+
+.info-modal {
+  max-width: 90%;
+  max-height: 80%;
+  overflow-y: auto; 
+  background-color: white;
+  color: black;
+  padding: 2rem;
+  background-color: white;
+  width: 25em;
+
+}
+
+.commit-container{
+  background-color: rgb(158, 158, 158);
+  margin-top: 5%;
+  padding: 3%;
+}
+
+.commit-container p{
+  font-size: large  ;
+}
+
+
+.commit-container h2{
+  font-size: x-large;
+}
+
+.commit-info{
+  background-color: rgb(201, 201, 201);
+  padding: 3%;
+  margin: 3%;
+}
+
+.info-modal::-webkit-scrollbar {
+  height: 12px;
+}
+
+.info-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.info-modal::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+}
+
+.info-modal::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.info-modal {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+.info-modal::-webkit-scrollbar-corner {
+  display: none;
+}

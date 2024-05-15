@@ -1,0 +1,71 @@
+import React, { useState } from "react";
+
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
+import { useTranslation } from "react-i18next";
+import {toast} from "react-toastify";
+
+import "./CreateIssueModal.css";
+
+function CreateIssueModal ({ closeModal, onSubmit, title, setTitle, description, setDescription}){
+  const [t] = useTranslation();
+
+  const handleChangeTitle = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleChangeDescription = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const validateForm = () => {
+    if(title === "" || description === ""){
+       toast.error(t('makeIssue.dataBlank'));
+       return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = (e) => {
+    if(validateForm()){
+        onSubmit();
+    }
+
+  };
+
+  return (
+    <div className="create-issue-modal-container"
+        onClick={(e) => {
+            if (e.target.className === "create-issue-modal-container") closeModal();
+        }}
+    >
+        <div className="modal">
+        <form>
+          <div className="form-group">
+            <label htmlFor="title">{t('makeIssue.title')}</label>
+            <input 
+                name="title" 
+                onChange={handleChangeTitle} 
+                maxLength={50}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">{t('makeIssue.description')}</label>
+            <textarea
+              name="description"
+              onChange={handleChangeDescription}
+              maxLength={1000}
+            />
+          </div>
+          
+          <Button className="confirm-btn" variant="contained" onClick={handleSubmit}>
+                    {t('makeIssue.sendIssue')}
+          </Button>
+        </form>
+        </div>
+    </div>
+  );
+};
+
+export default CreateIssueModal;

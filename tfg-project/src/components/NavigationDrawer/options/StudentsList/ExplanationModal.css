@@ -1,0 +1,49 @@
+.explanation-modal-container {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .explanation-modal {
+    border-radius: 5%;
+    padding: 2rem;
+    background-color: white;
+    width: 25em;
+  }
+
+  .explanation-modal .explanation-template{
+    margin-bottom: 5%;
+  }
+
+  
+  .explanation-modal h3,
+  .explanation-modal h4,
+  .explanation-modal input{
+    color: black;
+  }
+  
+  .explanation-modal .confirm-btn{
+    margin: 3%;
+  }
+
+  .explanation-modal .cancel-btn{
+    background-color: red;
+  }
+  
+  .dropzone {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    border: 5px dashed rgb(117, 112, 112);
+    padding: 2rem;
+  }
+  

@@ -1,0 +1,51 @@
+.createLabWorkDiv {
+    margin-top: 5vh; 
+    padding-top: 2vw; 
+    padding-left: 2vw; 
+    padding-right: 2vw; 
+    align-items: center;
+    width: 90vw; 
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    border-radius: 1.5vw; 
+    box-shadow: 0.3vw 1vw 1.5vw hsl(0deg 0% 0% / 0.31);
+    background-color: white;
+}
+
+@media screen and (min-width: 768px) {
+    .createLabWorkDiv {
+        margin-top: 5vh; 
+        width: 80vw; 
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .createLabWorkDiv {
+        margin-top: 5vh; 
+        width: 70vw; 
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .createLabWorkDiv {
+        margin-top: 5vh; 
+        width: 100vw;
+    }
+}
+
+.filterGroup {
+    width: 100%;
+    color: black;
+    font-size: 1vw; 
+    background-color: blue;
+    z-index: 1000;
+}
+
+.filterSubject {
+    font-size: 1vw; 
+}
+
+.custom-toast-container {
+    font-size: 1vw; 
+  }

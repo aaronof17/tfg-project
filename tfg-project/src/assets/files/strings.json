@@ -1,0 +1,32 @@
+{
+    "errors": {
+      "dupentry": "ER_DUP_ENTRY",
+      "unauthorized" : "Unauthorized",
+      "notfound" : "Not Found"
+    },
+    "emails": {
+      "admin" : "soporteorozco@hotmail.com"
+    },
+    "emailInfo" : {
+      "subject" : "Calificación en práctica ",
+      "text1" : "Práctica de laboratorio: ",
+      "text2" : ", con calificación de ",
+      "text3" : " y con comentario "
+    },
+    "excel" : {
+      "name" : "Nombre Completo",
+      "email" : "Email",
+      "group" : "Grupo",
+      "work" : "Practica",
+      "archive" : "calificaciones.xlsx"
+    },
+    "strings" : {
+      "sended" : "sended",
+      "teacher" : "teacher",
+      "student" : "student",
+      "admin" : "admin",
+      "default" : "",
+      "host" : "http://localhost:4000/"
+    }
+  }
+  

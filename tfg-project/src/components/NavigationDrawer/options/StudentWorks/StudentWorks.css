@@ -1,0 +1,36 @@
+.student-works-container{
+    margin-top: 5vh; 
+    padding: 2vw; 
+    align-items: center;
+    width: 90vw; 
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    border-radius: 1.5vw; 
+    box-shadow: 0.3vw 1vw 1.5vw hsl(0deg 0% 0% / 0.31);
+    background-color: #D5DBDB; 
+    overflow-x: hidden;
+}
+
+.student-works-container .student-works-filter-container{
+    padding-top: 5%;
+}
+
+.student-works-container .student-works-empty-container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.student-works-container h3{
+    color: black;
+}
+
+@media screen and (max-width: 768px) {
+    .student-works-container .student-works-filter-container {
+        padding-top: 10%;
+    }
+}
+
+  
+  
+  
