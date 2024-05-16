@@ -82,7 +82,8 @@
         "errorSendingExplanation" : "There was an error sending work explanation",
         "explanationSended" :"Work Explanation sended",
         "errorSendingExplanationForStudent": "There was an error sending work explanation with student ",
-        "createExcel" : "Generate Excel"
+        "createExcel" : "Generate Excel",
+        "differentGroups" : "All the students need to be at the same lab group"
     },
     "makeIssue" : {
         "title" : "Title",

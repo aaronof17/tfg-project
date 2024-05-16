@@ -83,7 +83,9 @@
         "errorSendingExplanation" : "Hubo un problema enviando el enunciado",
         "explanationSended" :"Enunciado enviado",
         "errorSendingExplanationForStudent": "Hubo un problema enviando el enunciado con el alumno ",
-        "createExcel" : "Generar Excel"
+        "createExcel" : "Generar Excel",
+        "differentGroups" : "Todos los estudiantes tienen que estar en el mismo grupo de laboratorio"
+
     },
     "makeIssue" : {
         "title" : "Título",
