@@ -5,7 +5,6 @@ import {useTranslation} from "react-i18next";
 import Box from '@mui/material/Box';
 import {loginWithGitHub} from '../../functions/gitHubFunctions';
 
-const CLIENT_ID = "b771595a6c15c6653d02";
 
 function Login(){
 
@@ -18,6 +17,7 @@ function Login(){
 
     function login(){
         loginWithGitHub().then((url) =>{
+            console.log("LOGIN ",url);
             window.location.assign(url);
         })
     }

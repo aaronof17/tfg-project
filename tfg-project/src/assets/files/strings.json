@@ -26,7 +26,7 @@
       "student" : "student",
       "admin" : "admin",
       "default" : "",
-      "host" : "http://localhost:4000/",
+      "host" : "http://localhost:4001/",
       "local" : "http://localhost:4000/http://13.51.207.26/"
     }
   }
