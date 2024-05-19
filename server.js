@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const simpleGit = require("simple-git");
 const multer = require('multer');
 const git = simpleGit();
-const databaseRequests = require('./databaseRequests');
+const databaseRequests = require('./databaseInfo.js');
 const markRequests = require('./databaseRequests/MarkRequests.js');
 const studentRequests = require('./databaseRequests/StudentRequests.js');
 const workRequests = require('./databaseRequests/WorkRequests.js');
@@ -14,8 +14,6 @@ const enrrolledRequests = require('./databaseRequests/EnrolledRequests.js');
 const githubRequests = require('./githubRequests.js');
 const nodemailer = require('nodemailer');
 const upload = multer({ dest: 'uploads/' });
-const fetch = (...args) =>
-import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const app = express();
 require('dotenv').config();
@@ -28,14 +26,31 @@ const transporter = nodemailer.createTransport({
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS
     }
-  });
+});
+
+const corsOptions = {
+origin: '*',
+methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Requested-With',
+    'X-Content-Type-Options',
+    'Accept',
+    'Origin',
+    'Access-Control-Allow-Origin'
+],
+credentials: true,
+preflightContinue: false,
+optionsSuccessStatus: 204
+};
+
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
-const path = require('path');
-const fs = require('fs');
+
 //BD---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 app.post('/role/gituser',  async function (req, res) {
@@ -393,7 +408,7 @@ app.post('/commitExplanation', upload.single('file'), async function(req, res) {
 
 app.listen(4001, function() {
     console.log("CORS server running on port 4001");
-    databaseRequests.connection.connect(function(err){
+    databaseRequests.connect(function(err){
         if(err) throw err;
         console.log("Database Connected");
     }

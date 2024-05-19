@@ -121,7 +121,6 @@ function CreateLabWork({userData}) {
             </div>
         </Grid>
       </Grid>
-
         <div className="labGroups">
             <GroupTable labGroups={actualGroups}></GroupTable>
         </div>

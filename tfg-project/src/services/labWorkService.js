@@ -219,7 +219,7 @@ export async function getWorksByStudentId(callback, studentId) {
 
 export async function getWorksBySubjectAndStudent(subject ,callback, studentId) {
   try {
-      const response = await fetch(strings.strings.host+'student/subject', {
+      const response = await fetch(strings.strings.host+'works/student/subject', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -240,7 +240,6 @@ export async function getWorksBySubjectAndStudent(subject ,callback, studentId) 
 
 export async function editWork(editRow) {
   try {
-    console.log("ACTIVE ",editRow);
       const response = await fetch(strings.strings.host+'works/edit', {
           method: "POST",
           headers: {

@@ -3,12 +3,12 @@ import strings from '../assets/files/strings.json';
 
 
 const encryptToken = (token) => {
-  const encryptedToken = CryptoJS.AES.encrypt(token, 'z8Y#rT@6Mv!yP$qX').toString();
+  const encryptedToken = CryptoJS.AES.encrypt(token, strings.strings.encrypt).toString();
   return encryptedToken;
 }
 
 const decryptToken = (encryptedToken) => {
-  const decryptedBytes = CryptoJS.AES.decrypt(encryptedToken, 'z8Y#rT@6Mv!yP$qX');
+  const decryptedBytes = CryptoJS.AES.decrypt(encryptedToken, strings.strings.encrypt);
   const decryptedToken = decryptedBytes.toString(CryptoJS.enc.Utf8);
   return decryptedToken;
 }
