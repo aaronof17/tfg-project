@@ -12,6 +12,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.5",
     "font-awesome": "^4.7.0",
     "i18next": "^23.9.0",
     "i18next-http-backend": "^2.5.0",
@@ -30,7 +31,9 @@
   "scripts": {
     "start": "set PORT=3001 && react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
+    "test:backend": "mocha --require @babel/register test/**/*.test.js",
+    "test:frontend": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -52,6 +55,13 @@
     ]
   },
   "devDependencies": {
-    "electron": "^30.0.1"
+    "@babel/core": "^7.24.5",
+    "@babel/preset-env": "^7.24.5",
+    "@babel/register": "^7.23.7",
+    "chai": "^5.1.1",
+    "electron": "^30.0.1",
+    "mocha": "^10.4.0",
+    "mysql2": "^3.9.7",
+    "sinon": "^18.0.0"
   }
 }

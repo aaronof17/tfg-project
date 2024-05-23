@@ -1,6 +1,5 @@
-import * as CryptoJS from 'crypto-js';
-import strings from '../assets/files/strings.json';
-
+const strings = require('../assets/files/strings.json');
+const CryptoJS = require('crypto-js');
 
 const encryptToken = (token) => {
   const encryptedToken = CryptoJS.AES.encrypt(token, strings.strings.encrypt).toString();
@@ -151,7 +150,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
 
   export async function saveTeacher(name, email, user) {
     try {
-  
+      
       const response = await fetch(strings.strings.host+'teachers/save', {
           method: "POST",
           headers: {
