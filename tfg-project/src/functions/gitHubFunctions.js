@@ -111,24 +111,49 @@ export async function getAccessToken(setRerender,rerender, codeParam){
 }
 
 
-export async function deleteAppToken(token,rerenderPass){
-  const apiUrl = strings.strings.host+'deleteAppToken';
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                "Authorization" : "Bearer "+token,
-                "Content-Type": "application/json"
-            }
-        });
+// export async function deleteAppToken(token,rerenderPass){
+//   const apiUrl = strings.strings.host+'deleteAppToken';
+//     try {
+//         const response = await fetch(apiUrl, {
+//             method: 'POST',
+//             headers: {
+//                 "Authorization" : "Bearer "+token,
+//                 "Content-Type": "application/json"
+//             }
+//         });
 
-        const data = await response.json(); 
-        console.log("DELTE DATA ",data);
-        localStorage.removeItem("accessToken"); 
-        rerenderPass();
-    } catch (error) {
-        console.error("Error getting last commit information:  ",error);
+//         const data = await response.json(); 
+//         console.log("DELTE DATA ",data);
+//         localStorage.removeItem("accessToken"); 
+//         rerenderPass();
+//     } catch (error) {
+//         console.error("Error getting last commit information:  ",error);
+//     }
+// }
+
+
+export async function deleteAppToken(token,rerenderPass){
+  const apiUrl = strings.strings.host + 'deleteAppToken';
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ token }) // Enviar el token en el cuerpo de la petición
+    });
+
+    if (response.ok) {
+      // Eliminar el token del almacenamiento local
+      localStorage.removeItem("accessToken");
+      rerenderPass();
+    } else {
+      console.error("Error deleting token: ", response.statusText);
     }
+  } catch (error) {
+    console.error("Error deleting token: ", error);
+  }
 }
 
 export async function getLastCommitInfo(token, repositoryURL, githubUser) {
