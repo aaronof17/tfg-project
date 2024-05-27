@@ -18,14 +18,16 @@ function EditTeacherModal ({ closeModal, onSubmit, defaultValue, teachersList}){
   const [t] = useTranslation();
 
   const validateForm = () => {
+    const trimmedEmail = formState.email.trim();
+    const trimmedGithubProfile = formState.githubProfile.trim();
 
-    if(formState.name === "" || formState.email === "" || formState.githubProfile === ""){
+    if(formState.name.trim() === "" || formState.email === "" || formState.githubProfile === ""){
       toast.error(t('teachersList.blankInfo'));
       return false;    
-    }else if(teachersList.filter(teacher => teacher.email !== formState.id).some(teacher => teacher.email === formState.email)){
+    }else if(teachersList.filter(teacher => teacher.email !== formState.id).some(teacher => teacher.email === trimmedEmail)){
       toast.error(t('teachersList.emailExists'));
       return false;
-    }else if(teachersList.filter(teacher => teacher.email !== formState.id).some(teacher => teacher.githubProfile === formState.githubProfile)){
+    }else if(teachersList.filter(teacher => teacher.email !== formState.id).some(teacher => teacher.githubProfile === trimmedGithubProfile)){
       toast.error(t('teachersList.userExists'));
       return false;
     }
@@ -33,22 +35,19 @@ function EditTeacherModal ({ closeModal, onSubmit, defaultValue, teachersList}){
   };
 
   const handleChange = (e) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    setFormState({ ...formState, [e.target.name]: e.target.value});
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    onSubmit(formState);
+        onSubmit({ ...formState, email: formState.email.trim(), githubProfile: formState.githubProfile.trim() });
     closeModal();
   };
 
   return (
     <div
       className="teacheredit-modal-container"
-      onClick={(e) => {
-        if (e.target.className === "teacheredit-modal-container") closeModal();
-      }}
     >
       <div className="modal">
         <form>

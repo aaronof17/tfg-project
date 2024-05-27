@@ -130,6 +130,7 @@
         "errorCSVdataBlank": "No csv field can be blank",
         "errorGroupNotFound" : "Lab group in csv not found: ",
         "studentExist" : "This student already exist, his email is: ",
+        "userExist" : "This github user already exist: ",
         "addEnrolled" : "Do you want to enroll this student in this new lab group?",
         "studentEnrolled" : "Student enrolled",
         "csvTemplate" : "CSV template",

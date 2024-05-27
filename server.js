@@ -151,6 +151,11 @@ app.post('/students/email', async function (req, res) {
     return result;
 });
 
+app.post('/students/githubUser', async function (req, res) {
+    const result = await studentRequests.getIdByUser(req,res);
+    return result;
+});
+
 app.post('/works/student/id',  async function (req, res) {
     const result = await workRequests.getWorksByStudentId(req,res);
     return result;

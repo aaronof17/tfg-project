@@ -131,13 +131,17 @@
         "errorCSVdataBlank": "Ningún campo del csv puede estar en blanco",
         "errorGroupNotFound" : "Un grupo de laboratorio del csv no existe: ",
         "studentExist" : "Este estudiante ya existe, su email es: ",
+        "userExist" : "Este perfil de github ya existe: ",
         "addEnrrolled" : "¿Quiéres matricularlo en este grupo de laboratorio?",
         "studentEnrolled" : "Estudiante matriculado",
         "csvTemplate" : "Plantilla de csv",
         "errorWithStudent" : "Error con estudiante ",
         "errorExist" : " ya existe",
         "errorSavingEnroled" : "Hubo un error matriculando al alumno",
-        "errorStudentAlreadyEnrolled" : "Este estudiante ya está matriculado en este grupo"
+        "errorStudentAlreadyEnrolled" : "Este estudiante ya está matriculado en este grupo",
+        "enrollStudent" : "Matricular alumno",
+        "labgroup" : "Grupo de laboratorio",
+        "student" : "Alumno"
     },
     "createLabWork":{
         "subjectFilter" : "Asignatura",

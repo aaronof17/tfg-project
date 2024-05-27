@@ -25,7 +25,6 @@ function StudentGroup({group, labGroups, setLabGroups, subjects, subject, setSub
     }
 
     const getGroupsOptions= () =>{
-    console.log("grupitos ",labGroups);
         let options = [];
         if(labGroups != undefined){
             labGroups.map((l,index) => {
@@ -49,7 +48,6 @@ function StudentGroup({group, labGroups, setLabGroups, subjects, subject, setSub
 
 
     const handleSubjectChange = (e, selectedOption) => {
-        console.log("GRUPO ",group);
         if (selectedOption) {
             const fetchFilterGroups = async () => {
                 getLabGroupsBySubject(selectedOption, teacherID, setLabGroups);

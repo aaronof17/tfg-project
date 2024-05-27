@@ -135,12 +135,14 @@ function StudentsList({userData}) {
     }
 
     async function downloadStudentsRepositories(){
+      let tokenError = false;
       for (let student of selectedStudents) {
         try { 
           await downloadRepo(teacherToken, getRepositoryName(student.repository), student.githubuser).then((res) =>{
             if(!res.response){
               if(res.error ===  strings.errors.unauthorized){
                 toast.error(t('studentList.tokenError'));
+                tokenError = true;
                 return;
               }else if(res.error ===  strings.errors.notfound){
                 toast.error(t('studentList.errorRepository')+student.name);
@@ -153,6 +155,10 @@ function StudentsList({userData}) {
           });
         } catch (error) {
           toast.error(t('studentList.downloadError'));
+        } finally{
+          if(tokenError){
+            return;
+          }
         }
       }
     }
