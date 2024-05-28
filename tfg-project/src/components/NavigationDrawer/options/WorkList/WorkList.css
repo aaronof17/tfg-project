@@ -10,6 +10,9 @@
   background-color: #ffffff;
 }
 
+.modal {
+  position: relative;
+}
 
 .work-list h3{
  color: black;
@@ -78,6 +81,19 @@
   
   .actions svg {
     cursor: pointer;
+  }
+
+  .custom-datepicker {
+    z-index: 1050; 
+  }
+  
+  .react-datepicker__tab-loop,
+  .react-datepicker__portal {
+    z-index: 1050 !important;
+  }
+  
+  .react-datepicker-popper {
+    z-index: 1050 !important;
   }
   
 

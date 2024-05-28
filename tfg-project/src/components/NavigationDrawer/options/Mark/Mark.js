@@ -115,6 +115,12 @@ function Mark({userData}){
                     setComment("");
                     setMarkNumber(0);
                     sendEmailMessage();
+                    const fetchInfo = async () => {
+                        getActiveLabWorks(setLabWorks,teacherID);
+                        getStudentsWithoutRepo(setStudents,teacherID);
+                    };
+                
+                    fetchInfo();
                 }else{
                     if(res.code === strings.errors.dupentry){
                         toast.error(extractDuplicateEntry(res.error)+t('mark.errorExist'));
@@ -138,7 +144,7 @@ function Mark({userData}){
     }
 
     async function saveMarkButton(){
-        if(comment === "" || markNumber === "" || isNaN(markNumber)){
+        if(comment.trim() === "" || markNumber === "" || isNaN(markNumber)){
             toast.error(t('mark.dataBlankError'));
         }else{
             if(actualStudent === "" || actualWork=== ""){
@@ -157,6 +163,12 @@ function Mark({userData}){
                             setMarkNumber("");
                             setComment("");
                             sendEmailMessage();
+                            const fetchInfo = async () => {
+                                getActiveLabWorks(setLabWorks,teacherID);
+                                getStudentsWithoutRepo(setStudents,teacherID);
+                            };
+                        
+                            fetchInfo();
                         }else{
                             if(res.code === strings.errors.dupentry){
                                 toast.error(extractDuplicateEntry(res.error)+t('mark.errorExist'));

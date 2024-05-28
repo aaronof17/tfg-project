@@ -212,7 +212,7 @@
         "email" : "Email",
         "avatar" : "Avatar",
         "token" : "GitHub Token",
-        "tokenInfo":"If you want to use all functions from our applications you have to add you personal access token from GitHub, if you need a tutorial use this link",
+        "tokenInfo":"If you want to use all functions from our applications you have to add you personal access token from GitHub with ALL permissions enabled. If you need a tutorial use this link: ",
         "generateToken":"link",
         "saveToken": "Save Token",
         "tokenError" : "Token can't be blank, please introduce your GitHub Personal Acess Token",

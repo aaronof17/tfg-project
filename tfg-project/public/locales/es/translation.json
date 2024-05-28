@@ -212,7 +212,7 @@
         "email" : "Email",
         "avatar" : "Foto de perfil",
         "token" : "Token de GitHub",
-        "tokenInfo":"Para realizar las principales funciones de la aplicación es necesario introducir el token de acceso generado en su perfil de GitHub, puede saber como generarlo desde este enlace",
+        "tokenInfo":"Para realizar las principales funciones de la aplicación es necesario introducir el token de acceso generado en su perfil de GitHub con TODOS los permisos. Puede ver en este tutorial como generarlo:",
         "generateToken":"enlace",
         "saveToken": "Guardar Token",
         "tokenError" : "El token no puede estar vacío, porfavor introduce tu token de GitHub",
