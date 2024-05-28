@@ -3,7 +3,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import Login from './components/Login/LoginForm.js';
 import ResponsiveDrawer from './components/NavigationDrawer/NavigationDrawer.js';
-import { getAccessToken } from './functions/gitHubFunctions.js';
+import { getAccessToken } from './services/gitHubFunctions.js';
 import i18n from './i18n';
 
 function App() {

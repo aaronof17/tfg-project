@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 
 import {calculateWidth, getRepositoryName, extractId, formatDate, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import {createExcelAndDownload} from "../../../../functions/createExcel.js";
-import {downloadRepo, getLastCommitInfo, commitExplanation} from "../../../../functions/gitHubFunctions.js";
+import {downloadRepo, getLastCommitInfo, commitExplanation} from "../../../../services/gitHubFunctions.js";
 import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js";

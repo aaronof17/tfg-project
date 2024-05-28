@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 
 import SelectableList from "./SelectableList.js";
-import {createIssue} from "../../../../functions/gitHubFunctions.js";
+import {createIssue} from "../../../../services/gitHubFunctions.js";
 import {getTeacherLabGroups,getSubjectsFromGroup, getLabGroupsBySubject} from "../../../../services/labGroupService.js";
 import {getStudents, getStudentsBySubject, getStudentsByWork} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";

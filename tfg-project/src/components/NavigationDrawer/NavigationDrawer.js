@@ -26,7 +26,7 @@ import {useTranslation} from "react-i18next";
 import {ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-import {getUserData} from '../../functions/gitHubFunctions.js';
+import {getUserData} from '../../services/gitHubFunctions.js';
 import {getRoleByGitHubUser} from '../../services/teacherService.js';
 import StudentsList from './options/StudentsList/StudentsList.js';
 import MakeIssue from './options/MakeIssue/MakeIssue';

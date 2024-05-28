@@ -7,7 +7,7 @@ import {getStudentsWithoutRepo,getStudentsByWork} from "../../../../services/stu
 import {getTeacherId} from "../../../../services/teacherService.js";
 import {saveMark,getMarkByWorkAndStudent,editMark } from "../../../../services/markService.js";
 import {getInfoFromFilterMark, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
-import { sendEmail } from '../../../../functions/senEmail.js';
+import { sendEmail } from '../../../../functions/sendEmail.js';
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
