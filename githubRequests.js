@@ -51,7 +51,6 @@ async function getAccessToken(req, res) {
 // }
 
  async function deleteAppToken(req, res) {
-    console.log("sip");
     const token = req.body.token;
     const response = await fetch(`https://api.github.com/applications/${CLIENT_ID}/token`, {
         method: "DELETE",
@@ -64,7 +63,6 @@ async function getAccessToken(req, res) {
         })
     });
     const data = await response.json();
-    console.log("data ",data);
     return data;
 }
 

@@ -56,7 +56,6 @@ export async function editLabGroup(editRow) {
 
 export async function deleteLabGroup(rowToDelete) {
   try {
-    console.log(rowToDelete);
     const response = await fetch(strings.strings.host+'groups/delete', {
         method: "POST",
         headers: {
@@ -112,7 +111,6 @@ export async function getSubjectsFromGroup(callback, teacherID) {
         })
 
         const data = await response.json();
-        console.log("asignaturas ",data.data);
         callback(data.data);
       } catch (error) {
         console.error('Error getting subjects:', error);
@@ -133,7 +131,6 @@ export async function getSubjectsForStudent(callback, studentID) {
       })
 
       const data = await response.json();
-      console.log(data.data);
       callback(data.data);
     } catch (error) {
       console.error('Error getting subjects for student:', error);
@@ -155,7 +152,6 @@ export async function getLabGroupsBySubject(actualSubject, teacherID, callback) 
       })
 
       const data = await response.json();
-      console.log("dentro ",data)
       const groups = data.data.map(group => ({ value: group.idlabGroup, label: group.name }));
       callback(groups);
     } catch (error) {
@@ -199,7 +195,6 @@ export async function saveLabGroup(groupName, subject, teacherAssigned) {
       });
     
       const data = await response.json(); 
-      console.log("data ",data);
       if(!data.success){
         console.log("An error occurred saving lab group: ", data.error);
         return { response: false, error: data.error, code:data.code};

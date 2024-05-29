@@ -17,7 +17,6 @@ function Login(){
 
     function login(){
         loginWithGitHub().then((url) =>{
-            console.log("LOGIN ",url);
             window.location.assign(url);
         })
     }

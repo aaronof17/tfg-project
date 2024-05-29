@@ -1,9 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const simpleGit = require("simple-git");
 const multer = require('multer');
-const git = simpleGit();
 const databaseRequests = require('./databaseInfo.js');
 const markRequests = require('./databaseRequests/MarkRequests.js');
 const studentRequests = require('./databaseRequests/StudentRequests.js');
@@ -400,7 +398,6 @@ app.post('/commitExplanation', upload.single('file'), async function(req, res) {
         return res.status(200).json({ success: true, data: result });
     } catch (error) {
         if(error.message === 'Error: Unauthorized'){
-            console.log("q si  qsi ");
             return res.status(401).json({ success: false, error: 'Unauthorized' });
         }
         if(error.message === 'Error: Not Found'){

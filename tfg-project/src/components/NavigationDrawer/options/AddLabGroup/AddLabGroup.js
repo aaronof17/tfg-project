@@ -24,7 +24,6 @@ function AddLabGroup({userData}) {
   useEffect(() => {
     const fetchInfo = async () => {
       const teachers = await getTeachers();
-      console.log(teachers);
       setTeachersList(teachers);
       
     };

@@ -54,7 +54,6 @@ function HeaderAppBar({rerenderPass, isClosing, setMobileOpen, mobileOpen}){
         <Button
           variant="contained"
           onClick={() => {
-            console.log("TOKEN ",localStorage.getItem("accessToken"));
             deleteAppToken(localStorage.getItem("accessToken"), rerenderPass);
             // localStorage.removeItem("accessToken"); 
             // rerenderPass()

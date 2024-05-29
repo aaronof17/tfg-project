@@ -77,7 +77,6 @@ export async function getStudentsWithoutRepo(callback, teacherID) {
       })
 
       const data = await response.json();
-      console.log("students ", data.data);
       callback(data.data);
     } catch (error) {
       console.error('Error getting students:', error);
@@ -88,7 +87,6 @@ export async function getStudentsWithoutRepo(callback, teacherID) {
 
 export async function getStudentsByWork(group, callback, teacherID) {
     try {
-      console.log("grupo", group);
         const response = await fetch(strings.strings.host+'students/work', {
             method: "POST",
             headers: {
@@ -113,7 +111,6 @@ export async function getStudentsByWork(group, callback, teacherID) {
 
 export async function saveStudent(name, email, user, repository, groupId) {
   try {
-    console.log("aqui aqui ",groupId);
     const response = await fetch(strings.strings.host+'students/save', {
         method: "POST",
         headers: {

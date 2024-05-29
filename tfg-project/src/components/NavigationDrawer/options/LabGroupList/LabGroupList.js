@@ -30,10 +30,8 @@ function LabGroupList({userData}) {
     useEffect(() => {
       const fetchInfo = async () => {
         const labgroups = await getLabGroups();
-        console.log(labgroups);
         setGroupsList(labgroups);
         const teachers = await getTeachers();
-        console.log(teachers);
         setTeachersList(teachers);
       };
 

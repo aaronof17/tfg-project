@@ -271,7 +271,6 @@ function StudentsList({userData}) {
       const selectedRows = getRows().filter((row) =>
         selectedIDs.has(row.id),
       );
-      console.log(selectedRows);
       setSelectedStudents(selectedRows);
     };
 
