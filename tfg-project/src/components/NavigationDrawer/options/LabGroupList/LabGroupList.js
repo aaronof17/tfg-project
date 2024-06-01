@@ -112,7 +112,7 @@ function LabGroupList({userData}) {
     };
 
 
-    function deleteTeacherMethod(){
+    function deleteGroupMethod(){
       if(rowToDelete != ""){
         deleteLabGroup(rowToDelete).then((res)=>{
           if(res.response){
@@ -179,7 +179,7 @@ function LabGroupList({userData}) {
           setDeleteModalOpen(false);
           setRowToDelete("");
           }}
-          genericFunction={deleteTeacherMethod}
+          genericFunction={deleteGroupMethod}
           text1={t('groupsList.deleteGroup')}
           text2={t('groupsList.groupInfo')}
         />

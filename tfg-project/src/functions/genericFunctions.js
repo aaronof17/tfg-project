@@ -7,7 +7,7 @@ export function getJSON(yourUrl){
 
 export function calculateWidth(list, uppercase=false, itsURL=false){
     const longestOption = Math.max(...list.map(option => option.length));
-    let approximateCharWidth = 9; 
+    let approximateCharWidth = 10; 
     if(uppercase){
         return longestOption * approximateCharWidth * 2;
     }else if(itsURL){
