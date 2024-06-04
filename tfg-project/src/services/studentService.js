@@ -77,7 +77,6 @@ export async function getStudentsWithoutRepo(callback, teacherID) {
       })
 
       const data = await response.json();
-      console.log("students ", data.data);
       callback(data.data);
     } catch (error) {
       console.error('Error getting students:', error);
@@ -88,7 +87,6 @@ export async function getStudentsWithoutRepo(callback, teacherID) {
 
 export async function getStudentsByWork(group, callback, teacherID) {
     try {
-      console.log("grupo", group);
         const response = await fetch(strings.strings.host+'students/work', {
             method: "POST",
             headers: {
@@ -113,7 +111,6 @@ export async function getStudentsByWork(group, callback, teacherID) {
 
 export async function saveStudent(name, email, user, repository, groupId) {
   try {
-    console.log("aqui aqui ",groupId);
     const response = await fetch(strings.strings.host+'students/save', {
         method: "POST",
         headers: {
@@ -198,6 +195,35 @@ export async function getIdByEmail(email) {
       return data;
     } catch (error) {
       console.error('Error getting email:', error);
+    }
+}
+
+export async function getIdByUser(user) {
+  try {
+    const response = await fetch(strings.strings.host+'students/githubUser', {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+        "Content-Type": "application/json"
+      },
+      body:
+          JSON.stringify({ user: user})
+    });
+      
+      const data = await response.json();
+
+      if(!data.success){
+        console.log("An error occurred geting user: ", data.error);
+        return { response: false, error: data.error};
+      }
+      if(data.data.length === 0){
+        return { response: true, data:"undefined", error: ""};
+      }else{
+        return { response: true, data:data.data[0].studentsID, error: ""};
+      }
+      return data;
+    } catch (error) {
+      console.error('Error getting user:', error);
     }
 }
 

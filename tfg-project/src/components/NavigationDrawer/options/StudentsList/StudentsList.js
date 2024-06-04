@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 
 import {calculateWidth, getRepositoryName, extractId, formatDate, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import {createExcelAndDownload} from "../../../../functions/createExcel.js";
-import {downloadRepo, getLastCommitInfo, commitExplanation} from "../../../../functions/gitHubFunctions.js";
+import {downloadRepo, getLastCommitInfo, commitExplanation} from "../../../../services/gitHubFunctions.js";
 import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js";
@@ -135,12 +135,14 @@ function StudentsList({userData}) {
     }
 
     async function downloadStudentsRepositories(){
+      let tokenError = false;
       for (let student of selectedStudents) {
         try { 
           await downloadRepo(teacherToken, getRepositoryName(student.repository), student.githubuser).then((res) =>{
             if(!res.response){
               if(res.error ===  strings.errors.unauthorized){
                 toast.error(t('studentList.tokenError'));
+                tokenError = true;
                 return;
               }else if(res.error ===  strings.errors.notfound){
                 toast.error(t('studentList.errorRepository')+student.name);
@@ -153,6 +155,10 @@ function StudentsList({userData}) {
           });
         } catch (error) {
           toast.error(t('studentList.downloadError'));
+        } finally{
+          if(tokenError){
+            return;
+          }
         }
       }
     }
@@ -265,7 +271,6 @@ function StudentsList({userData}) {
       const selectedRows = getRows().filter((row) =>
         selectedIDs.has(row.id),
       );
-      console.log(selectedRows);
       setSelectedStudents(selectedRows);
     };
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './NavigationDrawer.css';
 import Box from '@mui/material/Box';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
@@ -21,12 +21,9 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import People from '@mui/icons-material/People';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import Toolbar from '@mui/material/Toolbar';
-import { useState } from 'react';
 import {useTranslation} from "react-i18next";
 import {ToastContainer, toast} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
-import {getUserData} from '../../functions/gitHubFunctions.js';
+import {getUserData} from '../../services/gitHubFunctions.js';
 import {getRoleByGitHubUser} from '../../services/teacherService.js';
 import StudentsList from './options/StudentsList/StudentsList.js';
 import MakeIssue from './options/MakeIssue/MakeIssue';
@@ -43,6 +40,7 @@ import AddLabGroup from './options/AddLabGroup/AddLabGroup.js';
 import LabGroupList from './options/LabGroupList/LabGroupList.js';
 import DefaultView from './options/DefaultView/DefaultView.js';
 import strings from '../../assets/files/strings.json'
+import 'react-toastify/dist/ReactToastify.css';
 
 const drawerWidth = 240;
 
@@ -80,18 +78,11 @@ function ResponsiveDrawer(props) {
         const role = await getRoleByGitHubUser(userDataResponse.login);
         if(role !== undefined){
           setRole(role);
-          //setRole("admin");
         }else{
           let roleDefault = "";
           setRole(roleDefault);
         }
       }
-
-      // teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
-      //                   <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
-      // studentViews = [<StudentWorks userData={userData}/>];
-      // adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>, <LabGroupList userData={userData}/>];
-      // defaultViews = [<DefaultView/>];
 
     };
 
@@ -119,73 +110,77 @@ function ResponsiveDrawer(props) {
   const drawer = (
     <div>
       <Toolbar />
-        {role==='teacher' && drawerTeacherOptions.map((text, index) => (
+        {role === strings.strings.teacher && (
           <List>
-          <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
-            <ListItemButton>
-              <ListItemIcon sx={{ color: 'white' }}>
-                {
-                teacherIcons[index]
-                }
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-          </List>
-        ))}
-        {role==='student' && drawerStudentOptions.map((text, index) => (
-          <List>
-          <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
-            <ListItemButton>
-              <ListItemIcon sx={{ color: 'white' }}>
-                <HomeRepairServiceIcon></HomeRepairServiceIcon>
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-          </List>
-        ))}
-        {role==='admin' && drawerAdminOptions.map((text, index) => (
-          <List>
-          <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
-            <ListItemButton>
-              <ListItemIcon sx={{ color: 'white' }}>
-                {
-                  adminIcons[index]
-                }
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-          </List>
-        ))}
-        {role==='teacher' && (
-        <>
-          <Divider />
-          <List>
-            <ListItem key={t('navigationDrawer.profile')} disablePadding  onClick={() => handleListItemClick(6)}>
-              <ListItemButton>
+            {drawerTeacherOptions.map((text, index) => (
+              <ListItem key={`teacher-option-${index}`} disablePadding onClick={() => handleListItemClick(index)}>
+                <ListItemButton>
                   <ListItemIcon sx={{ color: 'white' }}>
-                    <AccountBoxIcon/>
+                    {teacherIcons[index]}
                   </ListItemIcon>
-                <ListItemText primary={t('navigationDrawer.profile')} />
+                  <ListItemText primary={text} />
                 </ListItemButton>
-            </ListItem>
+              </ListItem>
+            ))}
           </List>
-        </>
         )}
-        {role==="" && drawerDefaultOptions.map((text, index) => (
+        {role === strings.strings.student && (
           <List>
-          <ListItem key={text} disablePadding  onClick={() => handleListItemClick(index)}>
-            <ListItemButton>
-              <ListItemIcon sx={{ color: 'white' }}>
-                <VisibilityIcon/>
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+            {drawerStudentOptions.map((text, index) => (
+              <ListItem key={`student-option-${index}`} disablePadding onClick={() => handleListItemClick(index)}>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: 'white' }}>
+                    <HomeRepairServiceIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
           </List>
-        ))}
+        )}
+        {role === strings.strings.admin && (
+          <List>
+            {drawerAdminOptions.map((text, index) => (
+              <ListItem key={`admin-option-${index}`} disablePadding onClick={() => handleListItemClick(index)}>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: 'white' }}>
+                    {adminIcons[index]}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        )}
+        {role === strings.strings.teacher && (
+          <>
+            <Divider />
+            <List>
+              <ListItem key="teacher-profile" disablePadding onClick={() => handleListItemClick(6)}>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: 'white' }}>
+                    <AccountBoxIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={t('navigationDrawer.profile')} />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </>
+        )}
+        {role === strings.strings.default && (
+          <List>
+            {drawerDefaultOptions.map((text, index) => (
+              <ListItem key={`default-option-${index}`} disablePadding onClick={() => handleListItemClick(index)}>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: 'white' }}>
+                    <VisibilityIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        )}
     </div>
   );
 

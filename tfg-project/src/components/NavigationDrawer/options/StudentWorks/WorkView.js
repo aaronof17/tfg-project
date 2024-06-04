@@ -84,10 +84,10 @@ function WorkView({work}) {
                             {work.comment != "" ?
                             (
                                 <>
-                                <Grid item xs={12} sm={2}>
+                                <Grid item xs={12} sm={12}>
                                     <h3>{work.mark}</h3>
                                 </Grid>
-                                <Grid item xs={12} sm={10}>
+                                <Grid item xs={12} sm={12}>
                                     <TextField
                                         id="outlined-required-comment"
                                         className="workComment"

@@ -102,7 +102,6 @@ export async function getAccessToken(setRerender,rerender, codeParam){
   }).then((response) => {
     return response.json();
   }).then((data) => {
-    console.log("mucha data ",data.data);
     if(data.data.access_token){
       localStorage.setItem("accessToken", data.data.access_token);
       setRerender(!rerender);
@@ -112,23 +111,27 @@ export async function getAccessToken(setRerender,rerender, codeParam){
 
 
 export async function deleteAppToken(token,rerenderPass){
-  const apiUrl = strings.strings.host+'deleteAppToken';
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                "Authorization" : "Bearer "+token,
-                "Content-Type": "application/json"
-            }
-        });
+  const apiUrl = strings.strings.host + 'deleteAppToken';
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ token }) // Enviar el token en el cuerpo de la petición
+    });
 
-        const data = await response.json(); 
-        console.log("DELTE DATA ",data);
-        localStorage.removeItem("accessToken"); 
-        rerenderPass();
-    } catch (error) {
-        console.error("Error getting last commit information:  ",error);
+    if (response.ok) {
+      // Eliminar el token del almacenamiento local
+      localStorage.removeItem("accessToken");
+      rerenderPass();
+    } else {
+      console.error("Error deleting token: ", response.statusText);
     }
+  } catch (error) {
+    console.error("Error deleting token: ", error);
+  }
 }
 
 export async function getLastCommitInfo(token, repositoryURL, githubUser) {
@@ -151,7 +154,6 @@ export async function getLastCommitInfo(token, repositoryURL, githubUser) {
           console.log("An error occurred getting last commit information: ", data.error);
           return { response: false, error: data.error};
         } else {
-          console.log("datation ",data);
           return { response: true, data: data.data,error: ""};
         }
     } catch (error) {

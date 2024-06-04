@@ -42,7 +42,7 @@ function CreateLabWork({userData}) {
       }, []);
 
     function saveLabWorks(){
-      if(title === "" || description === "" || percentage === "" || isNaN(percentage)){
+      if(title.trim() === "" || description.trim() === "" || percentage === "" || isNaN(percentage)){
         toast.error(t('createLabWork.dataBlankError'));
       }else{
         var datesFromGroups = getTableInformation();

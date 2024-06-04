@@ -1,9 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const simpleGit = require("simple-git");
 const multer = require('multer');
-const git = simpleGit();
 const databaseRequests = require('./databaseInfo.js');
 const markRequests = require('./databaseRequests/MarkRequests.js');
 const studentRequests = require('./databaseRequests/StudentRequests.js');
@@ -29,7 +27,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const corsOptions = {
-origin: '*',
+origin: '*', //http://156.35.98.77:3001
 methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 allowedHeaders: [
     'Content-Type',
@@ -46,7 +44,7 @@ optionsSuccessStatus: 204
 };
 
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -148,6 +146,11 @@ app.post('/students/delete', async function (req, res) {
 
 app.post('/students/email', async function (req, res) {
     const result = await studentRequests.getIdByEmail(req,res);
+    return result;
+});
+
+app.post('/students/githubUser', async function (req, res) {
+    const result = await studentRequests.getIdByUser(req,res);
     return result;
 });
 
@@ -395,7 +398,6 @@ app.post('/commitExplanation', upload.single('file'), async function(req, res) {
         return res.status(200).json({ success: true, data: result });
     } catch (error) {
         if(error.message === 'Error: Unauthorized'){
-            console.log("q si  qsi ");
             return res.status(401).json({ success: false, error: 'Unauthorized' });
         }
         if(error.message === 'Error: Not Found'){

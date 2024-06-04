@@ -19,14 +19,14 @@ function EditModal ({ closeModal, onSubmit, defaultValue, studentsList}){
   const [t] = useTranslation();
 
   const validateForm = () => {
-    if(formState.name === "" || formState.email === "" ||
-      formState.githubuser === "" || formState.repository === ""){
+    if(formState.name.trim() === "" || formState.email.trim() === "" ||
+      formState.githubuser.trim() === "" || formState.repository.trim() === ""){
       toast.error(t('studentList.blankInfo'));
       return false;    
-    }else if(studentsList.filter(student => student.studentsID !== extractId(formState.id)).some(student => student.email === formState.email)){
+    }else if(studentsList.filter(student => student.studentsID !== extractId(formState.id)).some(student => student.email === formState.email.trim())){
       toast.error(t('studentList.emailExists'));
       return false;
-    }else if(studentsList.filter(student => student.studentsID !== extractId(formState.id)).some(student => student.githubuser === formState.githubuser)){
+    }else if(studentsList.filter(student => student.studentsID !== extractId(formState.id)).some(student => student.githubuser === formState.githubuser.trim())){
       toast.error(t('studentList.userExists'));
       return false;
     }
@@ -47,9 +47,6 @@ function EditModal ({ closeModal, onSubmit, defaultValue, studentsList}){
   return (
     <div
       className="edit-modal-container"
-      onClick={(e) => {
-        if (e.target.className === "edit-modal-container") closeModal();
-      }}
     >
       <div className="modal">
         <form>

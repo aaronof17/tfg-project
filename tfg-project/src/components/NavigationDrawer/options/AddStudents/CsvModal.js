@@ -9,7 +9,7 @@ import {toast} from "react-toastify";
 
 import "./CsvModal.css";
 
-function CsvModal ({closeModal, onSubmit, labgroups, existsEmail}){
+function CsvModal ({closeModal, onSubmit, labgroups, existsEmail, existsUser}){
     const [t] = useTranslation(); 
     const [data, setData] = useState([]);
     const [file, setFile] = useState(null);
@@ -55,6 +55,12 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail}){
         let emailResponse = await existsEmail(row.email);
         if(emailResponse){
           toast.error(t('addStudents.studentExist') + row.email);
+          return false;
+        }
+
+        let userResponse = await existsUser(row.githubuser);
+        if(userResponse){
+          toast.error(t('addStudents.userExist') + row.githubuser);
           return false;
         }
       }

@@ -43,7 +43,6 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
 
   export async function getTeacherId(callback, profileURL) {
     try {
-      console.log("perfil ", profileURL);
         const response = await fetch(strings.strings.host+'teachers/id', {
             method: "POST",
             headers: {
@@ -77,7 +76,6 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
         
         const data = await response.json();
         const decryptedToken = await decryptToken(data.data[0].githubToken);
-        console.log("TOKEN ",decryptedToken);
         callback(decryptedToken);
       } catch (error) {
         console.error('Error getting teacher token:', error);
@@ -165,7 +163,6 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
         });
       
         const data = await response.json(); 
-        console.log("data ",data);
         if(!data.success){
           console.log("An error occurred saving teacher: ", data.error);
           return { response: false, error: data.error, code:data.code};

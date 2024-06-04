@@ -55,7 +55,6 @@ function getWorksByTeacherId(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting works: '+ err.sqlMessage, code: err.code});
         } else {
-            console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
         }
     })
@@ -69,7 +68,6 @@ function getActiveWorksByTeacherId(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting active works: '+ err.sqlMessage, code: err.code});
         } else {
-            console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
         }
     })
@@ -137,7 +135,6 @@ function getWorksByStudentAndSubject(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting work for student and subject: '+ err.sqlMessage, code: err.code});
         } else {
-            console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
         }
     })
@@ -157,7 +154,6 @@ function getWorksByStudentAndGroup(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting work for student and group: '+ err.sqlMessage, code: err.code});
         } else {
-            console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
         }
     })

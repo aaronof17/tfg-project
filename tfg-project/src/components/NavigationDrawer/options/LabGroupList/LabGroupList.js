@@ -30,10 +30,8 @@ function LabGroupList({userData}) {
     useEffect(() => {
       const fetchInfo = async () => {
         const labgroups = await getLabGroups();
-        console.log(labgroups);
         setGroupsList(labgroups);
         const teachers = await getTeachers();
-        console.log(teachers);
         setTeachersList(teachers);
       };
 
@@ -114,7 +112,7 @@ function LabGroupList({userData}) {
     };
 
 
-    function deleteTeacherMethod(){
+    function deleteGroupMethod(){
       if(rowToDelete != ""){
         deleteLabGroup(rowToDelete).then((res)=>{
           if(res.response){
@@ -181,7 +179,7 @@ function LabGroupList({userData}) {
           setDeleteModalOpen(false);
           setRowToDelete("");
           }}
-          genericFunction={deleteTeacherMethod}
+          genericFunction={deleteGroupMethod}
           text1={t('groupsList.deleteGroup')}
           text2={t('groupsList.groupInfo')}
         />

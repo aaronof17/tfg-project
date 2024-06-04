@@ -25,7 +25,7 @@ function ExplanationModal ({closeModal, onSubmit}){
 
     function validateFiles(files){
       if(files.length != 1){
-        toast.error(t('addStustudentListents.errorNumberFiles'));
+        toast.error(t('studentList.errorNumberFiles'));
       }else{
         const fileFromExplanation = files[0]
         if(!fileFromExplanation.name.endsWith('.pdf')){ 

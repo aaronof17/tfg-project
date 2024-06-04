@@ -88,7 +88,7 @@ const handlePercentageChange = (event) => {
 };
 
   const validateForm = () => {
-    if(formState.title === "" || formState.description === "" ||
+    if(formState.title.trim() === "" || formState.description.trim() === "" ||
         isNaN(formState.percentage) || formState.initialdate === ""||
         formState.finaldate === ""){
         toast.error(t('worksList.blankInfo'));
@@ -114,9 +114,6 @@ const handlePercentageChange = (event) => {
   return (
     <div
       className="modal-container"
-      onClick={(e) => {
-        if (e.target.className === "modal-container") closeModal();
-      }}
     >
       <div className="modal">
         <form>
@@ -162,6 +159,7 @@ const handlePercentageChange = (event) => {
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15} 
+                    className="custom-datepicker"
                 />
           </div>
           <div className="form-group">
@@ -173,6 +171,7 @@ const handlePercentageChange = (event) => {
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15} 
+                    className="custom-datepicker"
                 />
           </div>
           <div className="form-group">

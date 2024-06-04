@@ -3,7 +3,7 @@ import es_flag from '../../assets/images/es_flag.png';
 import en_flag from '../../assets/images/en_flag.jpg';
 import {useTranslation} from "react-i18next";
 import Box from '@mui/material/Box';
-import {loginWithGitHub} from '../../functions/gitHubFunctions';
+import {loginWithGitHub} from '../../services/gitHubFunctions';
 
 
 function Login(){
@@ -17,7 +17,6 @@ function Login(){
 
     function login(){
         loginWithGitHub().then((url) =>{
-            console.log("LOGIN ",url);
             window.location.assign(url);
         })
     }

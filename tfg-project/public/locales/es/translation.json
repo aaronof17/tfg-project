@@ -131,13 +131,17 @@
         "errorCSVdataBlank": "Ningún campo del csv puede estar en blanco",
         "errorGroupNotFound" : "Un grupo de laboratorio del csv no existe: ",
         "studentExist" : "Este estudiante ya existe, su email es: ",
-        "addEnrrolled" : "¿Quiéres matricularlo en este grupo de laboratorio?",
+        "userExist" : "Este perfil de github ya existe: ",
+        "addEnrolled" : "¿Quiéres matricularlo en este grupo de laboratorio?",
         "studentEnrolled" : "Estudiante matriculado",
         "csvTemplate" : "Plantilla de csv",
         "errorWithStudent" : "Error con estudiante ",
         "errorExist" : " ya existe",
         "errorSavingEnroled" : "Hubo un error matriculando al alumno",
-        "errorStudentAlreadyEnrolled" : "Este estudiante ya está matriculado en este grupo"
+        "errorStudentAlreadyEnrolled" : "Este estudiante ya está matriculado en este grupo",
+        "enrollStudent" : "Matricular alumno",
+        "labgroup" : "Grupo de laboratorio",
+        "student" : "Alumno"
     },
     "createLabWork":{
         "subjectFilter" : "Asignatura",
@@ -208,7 +212,7 @@
         "email" : "Email",
         "avatar" : "Foto de perfil",
         "token" : "Token de GitHub",
-        "tokenInfo":"Para realizar las principales funciones de la aplicación es necesario introducir el token de acceso generado en su perfil de GitHub, puede saber como generarlo desde este enlace",
+        "tokenInfo":"Para realizar las principales funciones de la aplicación es necesario introducir el token de acceso generado en su perfil de GitHub con TODOS los permisos. Puede ver en este tutorial como generarlo:",
         "generateToken":"enlace",
         "saveToken": "Guardar Token",
         "tokenError" : "El token no puede estar vacío, porfavor introduce tu token de GitHub",

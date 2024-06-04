@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import {getTeacherId} from "../../../../services/teacherService.js";
 import {getTeacherLabGroups,getSubjectsFromGroup} from "../../../../services/labGroupService.js";
-import {saveStudent, getIdByEmail} from "../../../../services/studentService.js";
+import {saveStudent, getIdByEmail, getIdByUser} from "../../../../services/studentService.js";
 import {saveEnrolled} from "../../../../services/enrolledService.js";
 import {extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import {toast} from "react-toastify";
@@ -51,7 +51,6 @@ function AddStudents({userData}) {
     const handleSaveCsv = async (data) => {
       for (let element of data) {
         try {
-          console.log("Elemento ",element);
           await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group, false);
         } catch (error) {
           toast.error(t('addStudents.errorSavingStudent'));
@@ -78,10 +77,10 @@ function AddStudents({userData}) {
 
     function checkData(studentName, studentEmail, studentUser, 
       studentRepository, studentGroup){
-      if(studentName === "" || studentEmail === "" ||studentUser === ""
-      || studentRepository === "" || studentGroup === ""){
-        if(studentName === ""){
-          toast.error(t('addStudents.errorWithStudent')+':'+t('addStudents.dataBlank'));
+      if(studentName.trim() === "" || studentEmail.trim() === "" ||studentUser.trim() === ""
+      || studentRepository.trim() === "" || studentGroup === ""){
+        if(studentName.trim() === ""){
+          toast.error(t('addStudents.errorWithStudent')+t('addStudents.dataBlank'));
         }else{
           toast.error(t('addStudents.errorWithStudent')+studentName+':'+t('addStudents.dataBlank'));
         }
@@ -100,7 +99,7 @@ function AddStudents({userData}) {
   }
 
     function addEnrolled(){
-      saveEnrolled(studentId, group.label, repository).then((res)=>{
+      saveEnrolled(studentId, group.label, repository.trim()).then((res)=>{
           if(res.response){
               toast.info(t('addStudents.studentEnrolled'));
               setName("");
@@ -121,7 +120,7 @@ function AddStudents({userData}) {
 
     async function existsEmail(actualEmail){
       try {
-          const res = await getIdByEmail(actualEmail);
+          const res = await getIdByEmail(actualEmail.trim());
           if (res.response) {
               if(!isNaN(res.data)){
                 setStudentId(res.data);
@@ -136,6 +135,23 @@ function AddStudents({userData}) {
       }
     }
 
+    async function existsUser(actualUser){
+      try {
+          const res = await getIdByUser(actualUser.trim());
+          if (res.response) {
+              if(!isNaN(res.data)){
+                setStudentId(res.data);
+                return true;
+              }else{
+                return false;
+              }
+          }
+      } catch (error) {
+          console.error('Error checking github user count:', error);
+          return false;
+      }
+    }
+
 
   async function saveStudentInfo(studentName, studentEmail, studentUser, studentRepository, studentGroup, onlyOne=true){
       if(checkData(studentName, studentEmail, studentUser, studentRepository, studentGroup)){
@@ -144,7 +160,7 @@ function AddStudents({userData}) {
           if(emailExists){
             setRewriteModalOpen(true);
           }else{
-            const res = await saveStudent(studentName, studentEmail, studentUser, studentRepository, studentGroup.label);
+            const res = await saveStudent(studentName.trim(), studentEmail.trim(), studentUser.trim(), studentRepository.trim(), studentGroup.label);
             if (res.response) {
               if(onlyOne){
                 toast.info(t('addStudents.studentSaved'));
@@ -207,6 +223,7 @@ function AddStudents({userData}) {
             onSubmit={handleSaveCsv}
             labgroups={labGroups}
             existsEmail={existsEmail}
+            existsUser={existsUser}
           />
         )}
         {rewriteModalOpen && (

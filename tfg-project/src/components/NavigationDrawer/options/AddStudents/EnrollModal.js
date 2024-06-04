@@ -97,9 +97,6 @@ function EnrollModal ({ closeModal, onSubmit, labGroups}){
   return (
     <div
       className="enroll-modal-container"
-      onClick={(e) => {
-        if (e.target.className === "enroll-modal-container") closeModalMethod();
-      }}
     >
      <div className="modal">
         <form>
