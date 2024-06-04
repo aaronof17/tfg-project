@@ -148,7 +148,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
 
   export async function saveTeacher(name, email, user) {
     try {
-      
+      console.log("yeih ", localStorage.getItem("accessToken"));
       const response = await fetch(strings.strings.host+'teachers/save', {
           method: "POST",
           headers: {
@@ -170,7 +170,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           return { response: true, error: "" };
         }
     } catch (error) {
-        return { response: false, error: "Sorry, an error occurred saving teacher"};
+        return { response: false, error: "Sorry, an error occurred saving teacher "+error, };
     }
   }
 

@@ -79,6 +79,7 @@ function getTeacherId(req,res) {
 
 
 function insertTeacher(req,res) {
+    console.log("ke");
     const sql = 'INSERT INTO teachers (name, email, githubProfile) VALUES (?,?,?)';
     const params = [req.body.name, req.body.email, req.body.user];
     connection.query(sql, params,(err, data) =>{

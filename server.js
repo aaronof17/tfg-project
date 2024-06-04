@@ -85,6 +85,8 @@ app.post('/teachers/id', async function (req, res) {
 
 
 app.post('/teachers/save', async function (req, res) {
+    console.log("HOla");
+    console.log("Request body: ", req.body);
     const result = await teacherRequests.insertTeacher(req,res);
     return result;
 });

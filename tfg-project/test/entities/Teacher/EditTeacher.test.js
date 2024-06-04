@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise');
 const { saveTeacher } = require('../../../src/services/teacherService');
 require('dotenv').config();
-
+require('../../setupFetch');
 
 global.localStorage = {
   getItem: (key) => {
@@ -18,13 +18,17 @@ global.localStorage = {
   describe('addTeacher', () => {
     it('should add a teacher to the database', async () => {
 
-      console.log("holaaa");
-
       const teacherName = 'Test Teacher';
       const emailName = 'test@example.com';
       const userName = 'testgithubuser';
 
-      await saveTeacher(teacherName, emailName, userName);
+
+      const response = await saveTeacher(teacherName, emailName, userName);
+      console.log(response); // Verificar la respuesta de saveTeacher
+
+      if (!response.response) {
+        throw new Error(response.error);
+      }
 
       // conexión a la base de datos para verificar si el estudiante fue agregado
       const connection = await mysql.createConnection({
