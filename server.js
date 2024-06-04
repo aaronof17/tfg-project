@@ -27,7 +27,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const corsOptions = {
-origin: '*',
+origin: '*', //http://156.35.98.77:3001
 methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 allowedHeaders: [
     'Content-Type',
@@ -44,7 +44,7 @@ optionsSuccessStatus: 204
 };
 
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
 
