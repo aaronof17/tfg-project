@@ -79,7 +79,6 @@ function getTeacherId(req,res) {
 
 
 function insertTeacher(req,res) {
-    console.log("ke");
     const sql = 'INSERT INTO teachers (name, email, githubProfile) VALUES (?,?,?)';
     const params = [req.body.name, req.body.email, req.body.user];
     connection.query(sql, params,(err, data) =>{
@@ -110,6 +109,7 @@ function editTeacher(req,res) {
     const sql = "UPDATE teachers set name=?, email=?, githubProfile=? where email=?";
 
     const params = [req.body.name,  req.body.email, req.body.githubuser, req.body.teacherID];
+    
     connection.query(sql, params ,(err, data) =>{
         if(err){
             console.log(err);
