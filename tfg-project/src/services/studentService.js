@@ -249,7 +249,6 @@ export async function getStundentId(callback, githubUser) {
 
 export async function editStudent(editRow) {
   try {
-    console.log("editRow.id ",editRow.id);
       const response = await fetch(strings.strings.host+'students/edit', {
           method: "POST",
           headers: {

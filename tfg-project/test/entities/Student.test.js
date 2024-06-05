@@ -1,9 +1,10 @@
 const mysql = require('mysql2/promise');
-const {saveStudent, editStudent, deleteStudent} = require('../../../src/services/studentService');
-const {saveTeacher} = require('../../../src/services/teacherService');
-const {saveLabGroup} = require('../../../src/services/labGroupService');
+const {saveStudent, editStudent, deleteStudent} = require('../../src/services/studentService');
+const {saveTeacher} = require('../../src/services/teacherService');
+const {saveLabGroup} = require('../../src/services/labGroupService');
+const {saveEnrolled} = require('../../src/services/enrolledService');
 require('dotenv').config();
-require('../../setupFetch');
+require('../setupFetch');
 
 global.localStorage = {
   getItem: (key) => {
@@ -140,7 +141,7 @@ describe('Student Management', () => {
   });
 
   // Prueba para eliminar un estudiante
-    it('should edit a student', async () => {
+    it('should delete a student', async () => {
 
         //añadimos un profesor
         const teacherName = `Delete Teacher ${Date.now()}`;
@@ -179,5 +180,79 @@ describe('Student Management', () => {
 
         expect(studentDeleteRows.length).toBe(0);
   });
+
+  // Prueba para probar a añadir un estudiante que tiene datos que ya están en la base de datos
+  it('should not add a student due to same data', async () => {
+
+    //añadimos un profesor
+    const teacherName = `Teacher ${Date.now()}`;
+    const teacherEmail = `teacher@example.com ${Date.now()}`;
+    const teacherlUserName =`teachergithubuser ${Date.now()}`;
+    await saveTeacher(teacherName, teacherEmail, teacherlUserName);
+
+    const [teacherRows] = await connection.execute('SELECT * FROM teachers WHERE name = ?', [teacherName]);
+
+    //añadimos un grupo de laboratorio y se lo asignamos al profesor añadido anteriormente
+    const groupName = `Group Name ${Date.now()}`;
+    const groupSubject = `SUBJECT ${Date.now()}`;
+
+    await saveLabGroup(groupName, groupSubject, teacherRows[0].TeacherID);
+
+    const [groupRows] = await connection.execute('SELECT * FROM labgroups WHERE name = ?', [groupName]);
+
+    //añadimos un estudiante
+    const studentName = `Student ${Date.now()}`;
+    const studentEmail = `student@example.com ${Date.now()}`;
+    const studentUserName = `studentGitUser ${Date.now()}`;
+    const studentRepository = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName, studentEmail, studentUserName, studentRepository, groupRows[0].idlabGroup);
+
+
+    //añadimos otro estudiante con datos ya existentes, por lo que debería dar error
+    const studentNotName = `Not Student ${Date.now()}`;
+    const studentNotRepository = `http://studentNotRepository ${Date.now()}`;
+    const response = await saveStudent(studentNotName, studentEmail, studentUserName, studentNotRepository, groupRows[0].idlabGroup);
+
+    expect(response.response).toBe(false);
+    expect(response.code).toBe('ER_DUP_ENTRY');
+
+  });
+
+
+  // Prueba para probar a añadir un estudiante a un grupo de laboratorio en el que ya está
+  it('should not add a student at the same lab group', async () => {
+
+    //añadimos un profesor
+    const teacherName = `Teacher ${Date.now()}`;
+    const teacherEmail = `teacher@example.com ${Date.now()}`;
+    const teacherlUserName =`teachergithubuser ${Date.now()}`;
+    await saveTeacher(teacherName, teacherEmail, teacherlUserName);
+
+    const [teacherRows] = await connection.execute('SELECT * FROM teachers WHERE name = ?', [teacherName]);
+
+    //añadimos un grupo de laboratorio y se lo asignamos al profesor añadido anteriormente
+    const groupName = `Group Name ${Date.now()}`;
+    const groupSubject = `SUBJECT ${Date.now()}`;
+
+    await saveLabGroup(groupName, groupSubject, teacherRows[0].TeacherID);
+
+    const [groupRows] = await connection.execute('SELECT * FROM labgroups WHERE name = ?', [groupName]);
+
+    //añadimos un estudiante
+    const studentName = `Student ${Date.now()}`;
+    const studentEmail = `student@example.com ${Date.now()}`;
+    const studentUserName = `studentGitUser ${Date.now()}`;
+    const studentRepository = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName, studentEmail, studentUserName, studentRepository, groupRows[0].idlabGroup);
+
+    const [studentRows] = await connection.execute('SELECT * FROM students WHERE email = ?', [studentEmail]);
+
+    //incluimos un estudiante en grupo en el que ya está
+    const response = await saveEnrolled(studentRows[0].studentsID, groupRows[0].idlabGroup, studentRepository);
+
+    expect(response.response).toBe(false);
+    expect(response.code).toBe('ER_DUP_ENTRY');
+  });
+
 
  });
