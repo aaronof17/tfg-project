@@ -1,4 +1,5 @@
 module.exports = {
     testEnvironment: 'node',
-    setupFiles: ['dotenv/config']
+    setupFiles: ['dotenv/config'],
+    maxConcurrency: 1,
   };
