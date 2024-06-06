@@ -96,7 +96,7 @@ export async function getWorksByStudent(studentEmail, callback, teacherID) {
       const data = await response.json();
       callback(data.data);
     } catch (error) {
-      console.error('Error getting works by student:', error);
+      console.error('Error getting works for student:', error);
     }
 }
 

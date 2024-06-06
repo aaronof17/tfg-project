@@ -1,5 +1,5 @@
 const mysql = require('mysql2/promise');
-const {saveStudent, editStudent, deleteStudent} = require('../../src/services/studentService');
+const {saveStudent, editStudent, deleteStudent, getStudents, getAllStudents, getStudentsBySubject, getStudentsByWork} = require('../../src/services/studentService');
 const {saveTeacher} = require('../../src/services/teacherService');
 const {saveLabGroup} = require('../../src/services/labGroupService');
 const {saveEnrolled} = require('../../src/services/enrolledService');
@@ -254,5 +254,230 @@ describe('Student Management', () => {
     expect(response.code).toBe('ER_DUP_ENTRY');
   });
 
+  // Prueba para obtener los estudiantes de un profesor
+  it('should get all students for teacher', async () => {
+
+    //añadimos un profesor
+    const teacherName = `Teacher ${Date.now()}`;
+    const teacherEmail = `teacher@example.com ${Date.now()}`;
+    const teacherlUserName =`teachergithubuser ${Date.now()}`;
+    await saveTeacher(teacherName, teacherEmail, teacherlUserName);
+
+    const [teacherRows] = await connection.execute('SELECT * FROM teachers WHERE name = ?', [teacherName]);
+
+    //añadimos un grupo de laboratorio y se lo asignamos al profesor añadido anteriormente
+    const groupName = `Group Name ${Date.now()}`;
+    const groupSubject = `SUBJECT ${Date.now()}`;
+
+    await saveLabGroup(groupName, groupSubject, teacherRows[0].TeacherID);
+
+    const [groupRows] = await connection.execute('SELECT * FROM labgroups WHERE name = ?', [groupName]);
+
+    //añadimos varios estudiantes
+    const studentName1 = `Student ${Date.now()}`;
+    const studentEmail1 = `student@example.com ${Date.now()}`;
+    const studentUserName1 = `studentGitUser ${Date.now()}`;
+    const studentRepository1 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName1, studentEmail1, studentUserName1, studentRepository1, groupRows[0].idlabGroup);
+
+    const studentName2 = `Student ${Date.now()}`;
+    const studentEmail2 = `student@example.com ${Date.now()}`;
+    const studentUserName2 = `studentGitUser ${Date.now()}`;
+    const studentRepository2 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName2, studentEmail2, studentUserName2, studentRepository2, groupRows[0].idlabGroup);
+
+    const studentName3 = `Student ${Date.now()}`;
+    const studentEmail3 = `student@example.com ${Date.now()}`;
+    const studentUserName3 = `studentGitUser ${Date.now()}`;
+    const studentRepository3 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName3, studentEmail3, studentUserName3, studentRepository3, groupRows[0].idlabGroup);
+
+    //obtenemos los estudiantes del profesor
+    let studentsList;
+    await getStudents((sl)=>{studentsList=sl}, teacherRows[0].TeacherID);
+
+    expect(studentsList.length).toBe(3);
+    expect(studentsList[0].name).toBe(studentName1);
+    expect(studentsList[0].email).toBe(studentEmail1);
+    expect(studentsList[0].githubuser).toBe(studentUserName1);
+    expect(studentsList[0].repositoryURL).toBe(studentRepository1);
+    expect(studentsList[1].name).toBe(studentName2);
+    expect(studentsList[1].email).toBe(studentEmail2);
+    expect(studentsList[1].githubuser).toBe(studentUserName2);
+    expect(studentsList[1].repositoryURL).toBe(studentRepository2);
+    expect(studentsList[2].name).toBe(studentName3);
+    expect(studentsList[2].email).toBe(studentEmail3);
+    expect(studentsList[2].githubuser).toBe(studentUserName3);
+    expect(studentsList[2].repositoryURL).toBe(studentRepository3);
+  });
+
+
+  // Prueba para obtener todos los estudiantes
+  it('should get all students', async () => {
+
+    //añadimos un profesor
+    const teacherName = `Teacher ${Date.now()}`;
+    const teacherEmail = `teacher@example.com ${Date.now()}`;
+    const teacherlUserName =`teachergithubuser ${Date.now()}`;
+    await saveTeacher(teacherName, teacherEmail, teacherlUserName);
+
+    const [teacherRows] = await connection.execute('SELECT * FROM teachers WHERE name = ?', [teacherName]);
+
+    //añadimos un grupo de laboratorio y se lo asignamos al profesor añadido anteriormente
+    const groupName = `Group Name ${Date.now()}`;
+    const groupSubject = `SUBJECT ${Date.now()}`;
+
+    await saveLabGroup(groupName, groupSubject, teacherRows[0].TeacherID);
+
+    const [groupRows] = await connection.execute('SELECT * FROM labgroups WHERE name = ?', [groupName]);
+
+    //añadimos varios estudiantes
+    const studentName1 = `Student ${Date.now()}`;
+    const studentEmail1 = `student@example.com ${Date.now()}`;
+    const studentUserName1 = `studentGitUser ${Date.now()}`;
+    const studentRepository1 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName1, studentEmail1, studentUserName1, studentRepository1, groupRows[0].idlabGroup);
+
+    const studentName2 = `Student ${Date.now()}`;
+    const studentEmail2 = `student@example.com ${Date.now()}`;
+    const studentUserName2 = `studentGitUser ${Date.now()}`;
+    const studentRepository2 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName2, studentEmail2, studentUserName2, studentRepository2, groupRows[0].idlabGroup);
+
+    const studentName3 = `Student ${Date.now()}`;
+    const studentEmail3 = `student@example.com ${Date.now()}`;
+    const studentUserName3 = `studentGitUser ${Date.now()}`;
+    const studentRepository3 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName3, studentEmail3, studentUserName3, studentRepository3, groupRows[0].idlabGroup);
+
+    //obtenemos todos los estudiantes
+    let studentsList;
+    await getAllStudents((sl)=>{studentsList=sl});
+
+    expect(studentsList.length).toBe(3);
+    expect(studentsList[0].name).toBe(studentName1);
+    expect(studentsList[0].email).toBe(studentEmail1);
+    expect(studentsList[0].githubuser).toBe(studentUserName1);
+    expect(studentsList[1].name).toBe(studentName2);
+    expect(studentsList[1].email).toBe(studentEmail2);
+    expect(studentsList[1].githubuser).toBe(studentUserName2);
+    expect(studentsList[2].name).toBe(studentName3);
+    expect(studentsList[2].email).toBe(studentEmail3);
+    expect(studentsList[2].githubuser).toBe(studentUserName3);
+  });
+
+
+  // Prueba para obtener los estudiantes por asignatura
+  it('should get all students by subject', async () => {
+
+    //añadimos un profesor
+    const teacherName = `Teacher ${Date.now()}`;
+    const teacherEmail = `teacher@example.com ${Date.now()}`;
+    const teacherlUserName =`teachergithubuser ${Date.now()}`;
+    await saveTeacher(teacherName, teacherEmail, teacherlUserName);
+
+    const [teacherRows] = await connection.execute('SELECT * FROM teachers WHERE name = ?', [teacherName]);
+
+    //añadimos varios grupos de laboratorio y se los asignamos al profesor añadido anteriormente
+    const groupName1 = `Group Name ${Date.now()}`;
+    const groupSubject1 = `SUBJECT ${Date.now()}`;
+    await saveLabGroup(groupName1, groupSubject1, teacherRows[0].TeacherID);
+
+    const groupName2 = `Group Name ${Date.now()}`;
+    const groupSubject2 = `SUBJECT ${Date.now()}`;
+
+    await saveLabGroup(groupName2, groupSubject2, teacherRows[0].TeacherID);
+
+    const [groupRows1] = await connection.execute('SELECT * FROM labgroups WHERE name = ?', [groupName1]);
+    const [groupRows2] = await connection.execute('SELECT * FROM labgroups WHERE name = ?', [groupName2]);
+
+    //añadimos varios estudiantes, dos al grupo 1 y el otro al grupo 2
+    const studentName1 = `Student ${Date.now()}`;
+    const studentEmail1 = `student@example.com ${Date.now()}`;
+    const studentUserName1 = `studentGitUser ${Date.now()}`;
+    const studentRepository1 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName1, studentEmail1, studentUserName1, studentRepository1, groupRows1[0].idlabGroup);
+
+    const studentName2 = `Student ${Date.now()}`;
+    const studentEmail2 = `student@example.com ${Date.now()}`;
+    const studentUserName2 = `studentGitUser ${Date.now()}`;
+    const studentRepository2 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName2, studentEmail2, studentUserName2, studentRepository2, groupRows2[0].idlabGroup);
+
+    const studentName3 = `Student ${Date.now()}`;
+    const studentEmail3 = `student@example.com ${Date.now()}`;
+    const studentUserName3 = `studentGitUser ${Date.now()}`;
+    const studentRepository3 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName3, studentEmail3, studentUserName3, studentRepository3, groupRows1[0].idlabGroup);
+
+    //obtenemos los estudiantes de la asignatura del grupo 1
+    const studentsList = await getStudentsBySubject(teacherRows[0].TeacherID,groupSubject1);
+
+    expect(studentsList.length).toBe(2);
+    expect(studentsList[0].name).toBe(studentName1);
+    expect(studentsList[0].email).toBe(studentEmail1);
+    expect(studentsList[0].githubuser).toBe(studentUserName1);
+    expect(studentsList[1].name).toBe(studentName3);
+    expect(studentsList[1].email).toBe(studentEmail3);
+    expect(studentsList[1].githubuser).toBe(studentUserName3);
+  });
+
+
+  // Prueba para obtener los estudiantes por grupo
+  it('should get all students by group', async () => {
+
+    //añadimos un profesor
+    const teacherName = `Teacher ${Date.now()}`;
+    const teacherEmail = `teacher@example.com ${Date.now()}`;
+    const teacherlUserName =`teachergithubuser ${Date.now()}`;
+    await saveTeacher(teacherName, teacherEmail, teacherlUserName);
+
+    const [teacherRows] = await connection.execute('SELECT * FROM teachers WHERE name = ?', [teacherName]);
+
+    //añadimos varios grupos de laboratorio y se los asignamos al profesor añadido anteriormente
+    const groupName1 = `Group Name ${Date.now()}`;
+    const groupSubject1 = `SUBJECT ${Date.now()}`;
+    await saveLabGroup(groupName1, groupSubject1, teacherRows[0].TeacherID);
+
+    const groupName2 = `Group Name ${Date.now()}`;
+    const groupSubject2 = `SUBJECT ${Date.now()}`;
+
+    await saveLabGroup(groupName2, groupSubject2, teacherRows[0].TeacherID);
+
+    const [groupRows1] = await connection.execute('SELECT * FROM labgroups WHERE name = ?', [groupName1]);
+    const [groupRows2] = await connection.execute('SELECT * FROM labgroups WHERE name = ?', [groupName2]);
+
+    //añadimos varios estudiantes, dos al grupo 1 y el otro al grupo 2
+    const studentName1 = `Student ${Date.now()}`;
+    const studentEmail1 = `student@example.com ${Date.now()}`;
+    const studentUserName1 = `studentGitUser ${Date.now()}`;
+    const studentRepository1 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName1, studentEmail1, studentUserName1, studentRepository1, groupRows1[0].idlabGroup);
+
+    const studentName2 = `Student ${Date.now()}`;
+    const studentEmail2 = `student@example.com ${Date.now()}`;
+    const studentUserName2 = `studentGitUser ${Date.now()}`;
+    const studentRepository2 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName2, studentEmail2, studentUserName2, studentRepository2, groupRows2[0].idlabGroup);
+
+    const studentName3 = `Student ${Date.now()}`;
+    const studentEmail3 = `student@example.com ${Date.now()}`;
+    const studentUserName3 = `studentGitUser ${Date.now()}`;
+    const studentRepository3 = `http://studentRepository ${Date.now()}`;
+    await saveStudent(studentName3, studentEmail3, studentUserName3, studentRepository3, groupRows1[0].idlabGroup);
+
+    //obtenemos los estudiantes del grupo 1
+    let studentsList;
+    await getStudentsByWork(groupName1,(sl)=>{studentsList=sl},teacherRows[0].TeacherID);
+
+    expect(studentsList.length).toBe(2);
+    expect(studentsList[0].name).toBe(studentName1);
+    expect(studentsList[0].email).toBe(studentEmail1);
+    expect(studentsList[0].githubuser).toBe(studentUserName1);
+    expect(studentsList[1].name).toBe(studentName3);
+    expect(studentsList[1].email).toBe(studentEmail3);
+    expect(studentsList[1].githubuser).toBe(studentUserName3);
+  });
 
  });
+

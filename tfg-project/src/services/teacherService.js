@@ -36,7 +36,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           return { response: true, error: ""};
   
         } catch (error) {
-            return { response: false, error: "Sorry, an error occurred saving token"};
+            return { response: false, error: "Sorry, an error occurred saving token: "+error};
         }
   }
 
