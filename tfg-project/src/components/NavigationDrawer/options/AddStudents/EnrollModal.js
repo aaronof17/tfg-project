@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 
 import { getAllStudents } from "../../../../services/studentService.js";
+import {getTeacherLabGroups} from "../../../../services/labGroupService.js";
 import {toast} from "react-toastify";
 import { useTranslation } from "react-i18next";
 
@@ -10,15 +11,17 @@ import TextField from '@mui/material/TextField';
 
 import "./EnrollModal.css";
 
-function EnrollModal ({ closeModal, onSubmit, labGroups}){
+function EnrollModal ({ closeModal, onSubmit,teacherID}){
   const [t] = useTranslation();
   const [studentToEnroll, setStudentToEnroll] = useState("");
   const [groupEnroll, setGroupEnroll] = useState("");
   const [repository, setRepository] = useState("");
   const [allStudents, setAllStudents] = useState([]);
+  const [labGroups, setLabGroups] = useState([]);
 
   useEffect(() => {
     const fetchInfo = async () => {
+      getTeacherLabGroups(setLabGroups,teacherID);
       getAllStudents(setAllStudents);
     };
 

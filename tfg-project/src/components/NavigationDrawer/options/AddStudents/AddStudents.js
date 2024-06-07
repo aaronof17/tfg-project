@@ -242,7 +242,7 @@ function AddStudents({userData}) {
                   setEnrollModalOpen(false);
                 }}
                 onSubmit={enrollStudent}
-                labGroups={labGroups}
+                teacherID={teacherID}
                 />
         )}
     </div>
