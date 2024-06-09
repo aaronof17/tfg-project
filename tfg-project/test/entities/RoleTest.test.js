@@ -39,7 +39,7 @@ describe('Role Management', () => {
   });
 
   // Prueba de que se obtiene el rol correctamente
-  it('should add a teacher to the database', async () => {
+  it('should get correct roles for users', async () => {
     //añadimos un profesor
     const teacherName = `Test Teacher ${Date.now()}`;
     const emailName = `test@example.com ${Date.now()}`;
@@ -72,7 +72,7 @@ describe('Role Management', () => {
     const responseStudent = await getRoleByGitHubUser(studentUserName);
     expect(responseStudent).toBe('student');
 
-    //comprobamos el rol del profesor
+    //comprobamos el rol del usuario no introducido en el sistema
     let userWithoutRole = `GitUser ${Date.now()}`
     const responseWithouRol = await getRoleByGitHubUser(userWithoutRole);
     expect(responseWithouRol).toBe('');

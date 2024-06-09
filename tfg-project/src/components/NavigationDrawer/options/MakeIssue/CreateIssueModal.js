@@ -20,7 +20,7 @@ function CreateIssueModal ({ closeModal, onSubmit, title, setTitle, description,
   };
 
   const validateForm = () => {
-    if(title === "" || description === ""){
+    if(title.trim() === "" || description.trim() === ""){
        toast.error(t('makeIssue.dataBlank'));
        return false;
     }
@@ -36,9 +36,6 @@ function CreateIssueModal ({ closeModal, onSubmit, title, setTitle, description,
 
   return (
     <div className="create-issue-modal-container"
-        onClick={(e) => {
-            if (e.target.className === "create-issue-modal-container") closeModal();
-        }}
     >
         <div className="modal">
         <form>
@@ -61,6 +58,9 @@ function CreateIssueModal ({ closeModal, onSubmit, title, setTitle, description,
           
           <Button className="confirm-btn" variant="contained" onClick={handleSubmit}>
                     {t('makeIssue.sendIssue')}
+          </Button>
+          <Button className="cancel-btn" variant="contained" onClick={closeModal}>
+                    {t('addStudents.cancel')}
           </Button>
         </form>
         </div>

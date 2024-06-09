@@ -34,6 +34,8 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail, existsUser}){
     }
 
     async function checkCSVData(csvData,fileParameter){
+      csvData = csvData.filter(row => row.name || row.group || row.email || row.repo || row.githubuser);
+
       for (let i = 0; i < csvData.length; i++) {
         const row = csvData[i];
         if (!row.name || !row.group || !row.email || !row.repo || !row.githubuser) {
@@ -144,11 +146,9 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail, existsUser}){
     return (
       <div
         className="csv-modal-container"
-        onClick={(e) => {
-          if (e.target.className === "csv-modal-container") closeModal();
-        }}
       >
           <div className="csv-modal">
+          <p>{t('addStudents.csvRecommendation')}</p>
           <Button className="csv-template" onClick={downloadCSV} variant="contained" color="primary"> {t('addStudents.csvTemplate')}</Button>
             <div 
               className="dropzone"
@@ -164,6 +164,9 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail, existsUser}){
                     </Grid>
                 </Grid>
               </div>
+            <Button className="cancel-btn" variant="contained" onClick={closeModal}>
+              {t('addStudents.cancel')}
+            </Button>
           </div>
       </div>
   );

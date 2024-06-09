@@ -141,7 +141,8 @@
         "errorStudentAlreadyEnrolled" : "Este estudiante ya está incluido en este grupo",
         "enrollStudent" : "Incluir alumno",
         "labgroup" : "Grupo de laboratorio",
-        "student" : "Alumno"
+        "student" : "Alumno",
+        "csvRecommendation" : "Se recomienda usar un editor de texto, como el bloc de notas"
     },
     "createLabWork":{
         "subjectFilter" : "Asignatura",

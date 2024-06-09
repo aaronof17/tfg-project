@@ -140,7 +140,8 @@
         "errorStudentAlreadyEnrolled" : "This student is already enrolled in this lab group",
         "enrollStudent" : "Enroll student",
         "labgroup" : "Lab Group",
-        "student" : "Student"
+        "student" : "Student",
+        "csvRecommendation" : "It is recommended to use a text editor, such as notepad"
 
     },
     "createLabWork":{

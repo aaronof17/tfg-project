@@ -20,7 +20,7 @@ function ExplanationModal ({closeModal, onSubmit}){
     };
 
     const handleCommitTitleChange = (e) => {
-      setCommitTitle(e.target.value);
+      setCommitTitle(e.target.value.trim());
     };
 
     function validateFiles(files){
@@ -69,9 +69,6 @@ function ExplanationModal ({closeModal, onSubmit}){
     if(file) return(
       <div
         className="explanation-modal-container"
-        onClick={(e) => {
-          if (e.target.className === "explanation-modal-container") closeModal();
-        }}
       >
         <div className="explanation-modal">
           <Grid container spacing={2}>
@@ -106,9 +103,6 @@ function ExplanationModal ({closeModal, onSubmit}){
     return (
       <div
         className="explanation-modal-container"
-        onClick={(e) => {
-          if (e.target.className === "explanation-modal-container") closeModal();
-        }}
       >
           <div className="explanation-modal">
             <div 

@@ -158,6 +158,8 @@ function MakeIssue({userData}) {
       toast.info(t('makeIssue.issueSended'));
       setSelectedLabGroup("");
       setSelectedSubject("");
+      setTitle("");
+      setDescription(""); 
       getStudents(setAvailableStudents,teacherID);
       setSelectedStudents([]);
     }

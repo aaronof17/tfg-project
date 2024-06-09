@@ -19,6 +19,12 @@
     width: 25em;
   }
 
+  .csv-modal p{
+    color: black;
+    font-size: x-large;
+  }
+
+
   .csv-modal .csv-template{
     margin-bottom: 5%;
   }
@@ -30,13 +36,12 @@
     color: black;
   }
   
-  .confirm-modal .confirm-btn{
+  .csv-modal .confirm-btn{
     margin: 3%;
   }
 
-  .confirm-modal .cancel-btn{
-    margin: 3%;
-
+  .csv-modal .cancel-btn{
+    margin-top: 3%;
     background-color: red;
   }
   
