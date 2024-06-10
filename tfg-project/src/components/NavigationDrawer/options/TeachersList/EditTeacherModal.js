@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-
-import {extractId} from "../../../../functions/genericFunctions.js";
-import Button from '@mui/material/Button';
 import {toast} from "react-toastify";
 import { useTranslation } from "react-i18next";
 
+import Button from '@mui/material/Button';
 import "./EditTeacherModal.css";
 
 function EditTeacherModal ({ closeModal, onSubmit, defaultValue, teachersList}){

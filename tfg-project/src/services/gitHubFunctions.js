@@ -119,11 +119,10 @@ export async function deleteAppToken(token,rerenderPass){
         "Authorization": "Bearer " + token,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ token }) // Enviar el token en el cuerpo de la petición
+      body: JSON.stringify({ token })
     });
 
     if (response.ok) {
-      // Eliminar el token del almacenamiento local
       localStorage.removeItem("accessToken");
       rerenderPass();
     } else {

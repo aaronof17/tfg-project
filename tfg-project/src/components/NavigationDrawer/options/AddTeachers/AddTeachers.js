@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import strings from '../../../../assets/files/strings.json';
 import './AddTeachers.css';
 
-function AddTeachers({userData}) {
+function AddTeachers() {
   const [t] = useTranslation();
   const [teacherName, setTeacherName] = useState("");
   const [teacherEmail, setTeacherEmail] = useState("");

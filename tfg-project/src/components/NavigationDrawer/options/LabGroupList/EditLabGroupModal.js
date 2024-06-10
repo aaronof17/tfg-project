@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import {extractId} from "../../../../functions/genericFunctions.js";
 import {toast} from "react-toastify";
 import { useTranslation } from "react-i18next";
 

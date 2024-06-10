@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
-
 import {getStundentId} from "../../../../services/studentService.js";
 import {getWorksByStudentId, getWorksBySubjectAndStudent} from "../../../../services/labWorkService.js";
 import {getSubjectsForStudent} from "../../../../services/labGroupService.js";

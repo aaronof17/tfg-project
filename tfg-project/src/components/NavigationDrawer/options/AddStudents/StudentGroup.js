@@ -1,6 +1,4 @@
 import * as React from 'react';
-
-import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import {getTeacherLabGroups, getLabGroupsBySubject} from "../../../../services/labGroupService.js";
 

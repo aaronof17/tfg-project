@@ -82,20 +82,12 @@ function EnrollModal ({ closeModal, onSubmit,teacherID}){
     return true;
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
     onSubmit(studentToEnroll,groupEnroll,repository);
     closeModal();
   };
-
-  const closeModalMethod = ()=>{
-    setAllStudents("");
-    setGroupEnroll("");
-    setStudentToEnroll("");
-    closeModal();
-  }
 
   return (
     <div

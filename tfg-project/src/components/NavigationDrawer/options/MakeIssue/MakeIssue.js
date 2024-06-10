@@ -1,20 +1,18 @@
 import * as React from 'react';
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
-
-import SelectableList from "./SelectableList.js";
 import {createIssue} from "../../../../services/gitHubFunctions.js";
 import {getTeacherLabGroups,getSubjectsFromGroup, getLabGroupsBySubject} from "../../../../services/labGroupService.js";
 import {getStudents, getStudentsBySubject, getStudentsByWork} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 import {getSubjectsForComboBox,getRepositoryName} from "../../../../functions/genericFunctions.js";
+import {toast} from "react-toastify";
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import {toast} from "react-toastify";
-
+import SelectableList from "./SelectableList.js";
 import strings from '../../../../assets/files/strings.json';
 import './MakeIssue.css';
 import CreateIssueModal from './CreateIssueModal.js';
@@ -84,7 +82,6 @@ function MakeIssue({userData}) {
             };
       });
     }     
-
     return options;
 }
 
@@ -119,7 +116,6 @@ function MakeIssue({userData}) {
     }else{
       toast.error(t('makeIssue.studentsEmpty'));
     }
-    
   }
 
   const saveIssue = async () => {
@@ -152,18 +148,17 @@ function MakeIssue({userData}) {
             return;
           }
         }
-        
-    };
-    if(issuesSended.length != 0){
-      toast.info(t('makeIssue.issueSended'));
-      setSelectedLabGroup("");
-      setSelectedSubject("");
-      setTitle("");
-      setDescription(""); 
-      getStudents(setAvailableStudents,teacherID);
-      setSelectedStudents([]);
+      };
+      if(issuesSended.length != 0){
+        toast.info(t('makeIssue.issueSended'));
+        setSelectedLabGroup("");
+        setSelectedSubject("");
+        setTitle("");
+        setDescription(""); 
+        getStudents(setAvailableStudents,teacherID);
+        setSelectedStudents([]);
+      }
     }
-  }
   };
   
 
@@ -225,7 +220,6 @@ return (
       />
     )}
   </div>
-  
 );
 }
 

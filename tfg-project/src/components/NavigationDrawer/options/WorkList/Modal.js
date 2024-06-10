@@ -1,13 +1,11 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import {toast} from "react-toastify";
 
 import DatePicker from "react-datepicker";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-
-import { useTranslation } from "react-i18next";
-import {toast} from "react-toastify";
-
 import "./Modal.css";
 import "react-datepicker/dist/react-datepicker.css";
 

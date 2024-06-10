@@ -43,7 +43,6 @@ preflightContinue: false,
 optionsSuccessStatus: 204
 };
 
-
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
@@ -66,7 +65,6 @@ app.post('/teachers/gituser',  async function (req, res) {
     return result;
 });
 
-
 app.post('/teachers/token',  async function (req, res) {
     const result = await teacherRequests.updateTeacherToken(req,res);
     return result;
@@ -77,12 +75,10 @@ app.post('/teachers/token/id',  async function (req, res) {
     return result;
 });
 
-
 app.post('/teachers/id', async function (req, res) {
     const result = await teacherRequests.getTeacherId(req,res);
     return result;
 });
-
 
 app.post('/teachers/save', async function (req, res) {
     const result = await teacherRequests.insertTeacher(req,res);
@@ -164,18 +160,15 @@ app.post('/works/save',  async function (req, res) {
     return result;
 });
 
-
 app.post('/works/edit', async function (req, res) {
     const result = await workRequests.editWork(req,res);
     return result;
 });
 
-
 app.post('/works/delete', async function (req, res) {
     const result = await workRequests.deleteWork(req,res);
     return result;
 });
-
 
 app.post('/works', async function (req, res) {
     const result = await workRequests.getWorksByTeacherId(req,res);
@@ -186,7 +179,6 @@ app.post('/works/active', async function (req, res) {
     const result = await workRequests.getActiveWorksByTeacherId(req,res);
     return result;
 });
-
 
 app.post('/works/student', async function (req, res) {
     const result = await workRequests.getWorkByStudent(req,res);
@@ -263,7 +255,6 @@ app.post('/groups/teacher', async function (req, res) {
     return result;
 });
 
-
 app.get('/groups', async function (req, res) {
     const result = await groupRequests.getGroups(req,res);
     return result;
@@ -279,16 +270,12 @@ app.post('/subjects', async function (req, res) {
     return result;
 });
 
-
 app.post('/enrolled/save', async function (req, res) {
     const result = await enrrolledRequests.insertEnrolled(req,res);
     return result;
 });
 
-
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 app.post('/sendemail', async function  (req, res){
     const mailOptions = {
@@ -308,11 +295,12 @@ app.post('/sendemail', async function  (req, res){
       });
 });
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 app.get('/login', async function  (req, res){
     res.json({ redirectUrl: "https://github.com/login/oauth/authorize?client_id="+ process.env.CLIENT_ID });
 });
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 app.get('/getAccessToken', async function (req,res){
     try {

@@ -28,11 +28,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-
         {localStorage.getItem("accessToken") ? 
-        <ResponsiveDrawer rerenderPass={rerenderPass}></ResponsiveDrawer>
-        :
-        <Login/>
+          <ResponsiveDrawer rerenderPass={rerenderPass}></ResponsiveDrawer>
+          :
+          <Login/>
         }
       </header>
     </div>

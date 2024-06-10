@@ -14,7 +14,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import strings from '../../../../assets/files/strings.json';
 import './AddLabGroup.css';
 
-function AddLabGroup({userData}) {
+function AddLabGroup() {
   const [t] = useTranslation();
   const [groupName, setGroupName] = useState("");
   const [subject, setSubject] = useState("");
@@ -25,7 +25,6 @@ function AddLabGroup({userData}) {
     const fetchInfo = async () => {
       const teachers = await getTeachers();
       setTeachersList(teachers);
-      
     };
 
     fetchInfo();

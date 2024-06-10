@@ -1,9 +1,10 @@
 import React from 'react';
+import {useTranslation} from "react-i18next";
+
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
-import {useTranslation} from "react-i18next";
 
 export default function PopupInfo() {
     const [t] = useTranslation();

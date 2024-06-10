@@ -1,23 +1,22 @@
 import * as React from 'react';
-import './CreateLabWork.css';
-
 import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import {getTeacherLabGroups,getSubjectsFromGroup,getLabGroupsBySubject} from "../../../../services/labGroupService.js";
 import {getTeacherId} from "../../../../services/teacherService.js";
 import {saveWorks} from "../../../../services/labWorkService.js";
 import {getSubjectsForComboBox} from "../../../../functions/genericFunctions.js";
+import {toast} from "react-toastify";
+import { getTableInformation } from '../../../../functions/genericFunctions.js';
+
 import GroupTable from "./GroupTable.js";
 import InfoWork from "./InfoWork.js";
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import {toast} from "react-toastify";
-
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
-import { getTableInformation } from '../../../../functions/genericFunctions.js';
+import './CreateLabWork.css';
 
 function CreateLabWork({userData}) {
     const [teacherID, setTeacherID] = useState("");
@@ -66,7 +65,6 @@ function CreateLabWork({userData}) {
     }
 
 
-
     const handleSubjectChange = (e, selectedOption) => {
       if (selectedOption) {
           const fetchFilterGroups = async () => {
@@ -91,10 +89,7 @@ function CreateLabWork({userData}) {
     }
     
 
-
-
   return (
-    
     <div className='createLabWorkDiv'>
       <Grid container spacing={2}>
         <Grid item xs={3}>

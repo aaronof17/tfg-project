@@ -1,18 +1,11 @@
 import * as React from 'react';
-import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
-import {toast} from "react-toastify";
-import {getTeachers} from "../../../../services/teacherService.js";
-import { extractDuplicateEntry } from '../../../../functions/genericFunctions.js';
-import {saveLabGroup} from "../../../../services/labGroupService.js";
-
 
 import strings from '../../../../assets/files/strings.json';
 import './DefaultView.css';
 
-function DefaultView({userData}) {
+function DefaultView() {
   const [t] = useTranslation();
-
 
   return (
     <div className='default-view-div'>

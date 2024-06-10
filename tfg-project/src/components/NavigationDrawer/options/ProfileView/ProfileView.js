@@ -1,13 +1,13 @@
 import * as React from 'react';
-import './ProfileView.css';
-import "react-toastify/dist/ReactToastify.css";
-import 'reactjs-popup/dist/index.css';
 import { useState } from 'react';
 import {useTranslation} from "react-i18next";
 import { extractDuplicateEntry } from '../../../../functions/genericFunctions.js';
 import {saveTeacherToken} from "../../../../services/teacherService.js";
 import {toast} from "react-toastify";
 
+import './ProfileView.css';
+import "react-toastify/dist/ReactToastify.css";
+import 'reactjs-popup/dist/index.css';
 import strings from '../../../../assets/files/strings.json';
 import user_default from '../../../../assets/images/user-default.jpg';
 import TextField from '@mui/material/TextField';

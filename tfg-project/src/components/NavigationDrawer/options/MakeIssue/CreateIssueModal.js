@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-
+import React from "react";
 import { useTranslation } from "react-i18next";
 import {toast} from "react-toastify";
 
+import Button from '@mui/material/Button';
 import "./CreateIssueModal.css";
 
 function CreateIssueModal ({ closeModal, onSubmit, title, setTitle, description, setDescription}){

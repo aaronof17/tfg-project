@@ -1,11 +1,10 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import {toast} from "react-toastify";
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-
-import { useTranslation } from "react-i18next";
-import {toast} from "react-toastify";
 
 import "./ExplanationModal.css";
 

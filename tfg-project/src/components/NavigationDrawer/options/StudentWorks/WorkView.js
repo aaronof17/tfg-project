@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
+import {formatDate} from '../../../../functions/genericFunctions';
+
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import {formatDate} from '../../../../functions/genericFunctions';
 
 import './WorkView.css';
 

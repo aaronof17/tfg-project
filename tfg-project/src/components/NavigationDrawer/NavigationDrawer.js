@@ -1,8 +1,12 @@
 import * as React from 'react';
-import './NavigationDrawer.css';
-import Box from '@mui/material/Box';
-import { useEffect, useState } from 'react';
 
+import { useEffect, useState } from 'react';
+import {useTranslation} from "react-i18next";
+import {ToastContainer, toast} from "react-toastify";
+import {getUserData} from '../../services/gitHubFunctions.js';
+import {getRoleByGitHubUser} from '../../services/teacherService.js';
+
+import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -21,10 +25,6 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import People from '@mui/icons-material/People';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import Toolbar from '@mui/material/Toolbar';
-import {useTranslation} from "react-i18next";
-import {ToastContainer, toast} from "react-toastify";
-import {getUserData} from '../../services/gitHubFunctions.js';
-import {getRoleByGitHubUser} from '../../services/teacherService.js';
 import StudentsList from './options/StudentsList/StudentsList.js';
 import MakeIssue from './options/MakeIssue/MakeIssue';
 import ProfileView from './options/ProfileView/ProfileView.js';
@@ -41,10 +41,9 @@ import LabGroupList from './options/LabGroupList/LabGroupList.js';
 import DefaultView from './options/DefaultView/DefaultView.js';
 import strings from '../../assets/files/strings.json'
 import 'react-toastify/dist/ReactToastify.css';
+import './NavigationDrawer.css';
 
 const drawerWidth = 240;
-
-
 
 function ResponsiveDrawer(props) {
   const { window, rerenderPass } = props;
@@ -184,9 +183,7 @@ function ResponsiveDrawer(props) {
     </div>
   );
 
-
   const container = window !== undefined ? () => window().document.body : undefined;
- // const isMobile = useMediaQuery('(max-width:700px)'); 
 
   return (
     <Box className="principalBox" sx={{ display: 'flex' }}>
@@ -207,7 +204,7 @@ function ResponsiveDrawer(props) {
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
@@ -243,6 +240,5 @@ function ResponsiveDrawer(props) {
     </Box>
   );
 }
-
 
 export default ResponsiveDrawer;

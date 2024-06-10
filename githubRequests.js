@@ -190,7 +190,6 @@ async function createExplanationCommit(req, res) {
                 return { message: 'El archivo ya existe y no se ha modificado' };
             }
 
-            // Si los hashes no coinciden, actualiza el archivo
             const commitData = {
                 message: commitMessage,
                 content: pdfContent.toString('base64'),

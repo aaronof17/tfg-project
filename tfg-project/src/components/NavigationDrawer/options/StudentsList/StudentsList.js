@@ -2,11 +2,6 @@ import  React, {useState, useEffect} from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-
 import {calculateWidth, getRepositoryName, extractId, formatDate, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import {createExcelAndDownload} from "../../../../functions/createExcel.js";
 import {downloadRepo, getLastCommitInfo, commitExplanation} from "../../../../services/gitHubFunctions.js";
@@ -14,6 +9,10 @@ import {getStudents,deleteStudent, editStudent} from "../../../../services/stude
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js";
 
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
 import strings from '../../../../assets/files/strings.json';
 import RewriteModal from '../../../Modal/RewriteModal.js';
 import EditModal from './EditModal.js';
@@ -44,8 +43,6 @@ function StudentsList({userData}) {
 
       fetchInfo();
     }, []);
-
-    
 
 
     const getColumns = () =>{
@@ -250,7 +247,6 @@ function StudentsList({userData}) {
 
       await Promise.all(promises);
       setInformationModalOpen(true);
-    
     }
 
 
@@ -290,7 +286,6 @@ function StudentsList({userData}) {
       }else{
         toast.error('studentList.errorDeletingStudent');
       }
-      
     }
 
 
@@ -376,7 +371,6 @@ function StudentsList({userData}) {
         toast.error(t('studentList.studentsBlank'));
       }
     }
-
 
 
   if(studentsList.length !== 0)

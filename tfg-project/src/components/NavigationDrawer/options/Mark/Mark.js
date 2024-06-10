@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { useState, useEffect} from 'react';
 import { useTranslation } from "react-i18next";
-
 import {getActiveLabWorks,getWorksByStudent } from "../../../../services/labWorkService.js";
 import {getStudentsWithoutRepo,getStudentsByWork} from "../../../../services/studentService.js";
 import {getTeacherId} from "../../../../services/teacherService.js";
 import {saveMark,getMarkByWorkAndStudent,editMark } from "../../../../services/markService.js";
 import {getInfoFromFilterMark, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import { sendEmail } from '../../../../functions/sendEmail.js';
-import {toast, ToastContainer} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from "react-toastify";
 
+import 'react-toastify/dist/ReactToastify.css';
 import './Mark.css';
 import strings from '../../../../assets/files/strings.json';
 import Autocomplete from '@mui/material/Autocomplete';

@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect} from 'react';
 import { useTranslation } from "react-i18next";
-
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-
 import {toast} from "react-toastify";
 import {getSubjectsFromGroup} from "../../../../services/labGroupService.js";
 import {getLabWorks, editWork, deleteWork, getWorksByGroup, getWorksBySubject} from "../../../../services/labWorkService.js";
@@ -13,6 +8,9 @@ import {getTeacherId} from "../../../../services/teacherService.js";
 import {formatDate, getSubjectsForComboBox, extractDuplicateEntry} from '../../../../functions/genericFunctions.js';
 import { getTeacherLabGroups} from '../../../../services/labGroupService.js';
 
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import strings from '../../../../assets/files/strings.json';
 import './WorkList.css';
 import Modal from "./Modal.js";

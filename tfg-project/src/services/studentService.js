@@ -221,7 +221,6 @@ export async function getIdByUser(user) {
       }else{
         return { response: true, data:data.data[0].studentsID, error: ""};
       }
-      return data;
     } catch (error) {
       console.error('Error getting user:', error);
     }
