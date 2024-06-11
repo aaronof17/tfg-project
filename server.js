@@ -282,7 +282,7 @@ app.post('/sendemail', async function  (req, res){
         from: process.env.SMTP_USER,
         to: req.body.studentEmail,
         subject: req.body.subject,
-        text: req.body.message
+        html: req.body.message
       };
     
       transporter.sendMail(mailOptions, (error, info) => {

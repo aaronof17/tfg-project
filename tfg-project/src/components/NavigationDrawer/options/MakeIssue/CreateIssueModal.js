@@ -31,6 +31,13 @@ function CreateIssueModal ({ closeModal, onSubmit, title, setTitle, description,
 
   };
 
+
+  const handleCancel = (e) => {
+    setTitle("");
+    setDescription("");
+    closeModal();
+  };
+
   return (
     <div className="create-issue-modal-container"
     >
@@ -56,7 +63,7 @@ function CreateIssueModal ({ closeModal, onSubmit, title, setTitle, description,
           <Button className="confirm-btn" variant="contained" onClick={handleSubmit}>
                     {t('makeIssue.sendIssue')}
           </Button>
-          <Button className="cancel-btn" variant="contained" onClick={closeModal}>
+          <Button className="cancel-btn" variant="contained" onClick={handleCancel}>
                     {t('addStudents.cancel')}
           </Button>
         </form>

@@ -6,10 +6,16 @@ export async function sendEmail(mark, comment, worklab, studentEmail) {
     try {
 
         let subject = strings.emailInfo.subject+'"'+worklab+'"';
-        let message = strings.emailInfo.text1+worklab+strings.emailInfo.text2+mark;
-        if(comment !== "" || comment !== undefined){
-            message = message+strings.emailInfo.text3+'"'+comment+'"';
-        }
+        
+        let message = `
+            <a href="http://156.35.98.77:3001">Puedes ver tu nota aquí</a>
+            <br>
+            <ul>
+                <li>Práctica: ${worklab}</li>
+                <li>Calificación: ${mark}</li>
+                ${comment ? `<li>Comentario: "${comment}"</li>` : ''}
+            </ul>
+        `;
         
         const response = await fetch(apiUrl, {
             method: 'POST',
