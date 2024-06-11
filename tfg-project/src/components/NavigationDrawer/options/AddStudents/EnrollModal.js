@@ -75,7 +75,7 @@ function EnrollModal ({ closeModal, onSubmit,teacherID}){
   }
 
   const validateForm = () => {
-    if(studentToEnroll === "" || groupEnroll === "" || repository === ""){
+    if(studentToEnroll === "" || groupEnroll === "" || repository.trim() === ""){
       toast.error(t('addStudents.dataBlank'));
       return false;    
     }

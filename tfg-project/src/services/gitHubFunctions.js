@@ -160,43 +160,89 @@ export async function getLastCommitInfo(token, repositoryURL, githubUser) {
     }
 }
 
-
 export async function downloadRepo(token, repositoryURL, githubUser) {
-  const apiUrl = strings.strings.host+'downloadRepo';
-  let intento = 0;
-  let maximoIntento = 3;
-  while(intento < maximoIntento){
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                "Authorization" : "Bearer "+token,
-                "Content-Type": "application/json"
-            },
-            body:
-                JSON.stringify({repo: repositoryURL,
-                                user: githubUser
-                              })
-        });
+  const apiUrl = strings.strings.host + 'downloadRepo';
+  const maximoIntento = 3;
+  const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-        const data = await response.json(); 
-        if (!data.success) {
-          console.log("An error occurred downloading repository: ", data.error);
-          return { response: false, error: data.error};
-        } else {
-          await descargarArchivo(data.data);
-          return { response: true, error: ""};
-        }
+  for (let intento = 0; intento < maximoIntento; intento++) {
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          repo: repositoryURL,
+          user: githubUser
+        })
+      });
+
+      const data = await response.json(); 
+      if (!data.success) {
+        console.log("An error occurred downloading repository: ", data.error);
+        return { response: false, error: data.error};
+      } else {
+        await descargarArchivo(data.data);
+        return { response: true, error: ""};
+      }
+
     } catch (error) {
-        console.error("Error downloading ",error);
-        intento++;
+      console.error("Error downloading ", error);
+      if (intento < maximoIntento - 1) {
+        await delay(1000);
+      }
     }
   }
 }
 
 
+// export async function downloadRepo(token, repositoryURL, githubUser) {
+//   const apiUrl = strings.strings.host+'downloadRepo';
+//   let intento = 0;
+//   let maximoIntento = 3;
+//   while(intento < maximoIntento){
+//     try {
+//         const response = await fetch(apiUrl, {
+//             method: 'POST',
+//             headers: {
+//                 "Authorization" : "Bearer "+token,
+//                 "Content-Type": "application/json"
+//             },
+//             body:
+//                 JSON.stringify({repo: repositoryURL,
+//                                 user: githubUser
+//                               })
+//         });
+
+//         const data = await response.json(); 
+//         console.log("ENlace ",data.data)
+//         if (!data.success) {
+//           console.log("An error occurred downloading repository: ", data.error);
+//           return { response: false, error: data.error};
+//         } else {
+//           await descargarArchivo(data.data);
+//           return { response: true, error: ""};
+//         }
+//     } catch (error) {
+//         console.error("Error downloading ",error);
+//         intento++;
+//     }
+//   }
+// }
+
+
 async function descargarArchivo(url) {
+  if (!url) {
+    console.error("Download URL is invalid");
+    return;
+  }
+
   const enlace = document.createElement('a');
   enlace.href = url;
+  enlace.setAttribute('download', ''); 
+  document.body.appendChild(enlace);
   enlace.click();
+  document.body.removeChild(enlace);
 }

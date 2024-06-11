@@ -152,10 +152,12 @@ function AddStudents({userData}) {
   }
 
   async function saveStudentInfo(studentName, studentEmail, studentUser, studentRepository, studentGroup, onlyOne=true){
+    console.log(" UYUYUYU ");
       if(checkData(studentName, studentEmail, studentUser, studentRepository, studentGroup)){
         try {
           const emailExists = await existsEmail(studentEmail);
-          if(emailExists){
+          if(emailExists && onlyOne){
+            console.log(emailExists+" UYUYUYU "+onlyOne);
             setRewriteModalOpen(true);
           }else{
             const res = await saveStudent(studentName.trim(), studentEmail.trim(), studentUser.trim(), studentRepository.trim(), studentGroup.label);
