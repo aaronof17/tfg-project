@@ -63,6 +63,7 @@ async function getAccessToken(req, res) {
         })
     });
     const data = await response.json();
+    console.log("data ",data);
     return data;
 }
 
