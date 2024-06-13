@@ -125,6 +125,7 @@ export async function deleteAppToken(token,rerenderPass){
     if (response.ok) {
       localStorage.removeItem("accessToken");
       rerenderPass();
+      window.location.assign("https://github.com/login/oauth/authorize?client_id=b771595a6c15c6653d02");
     } else {
       console.error("Error deleting token: ", response.statusText);
     }

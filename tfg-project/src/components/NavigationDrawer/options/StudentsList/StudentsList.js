@@ -18,6 +18,7 @@ import RewriteModal from '../../../Modal/RewriteModal.js';
 import EditModal from './EditModal.js';
 import ExplanationModal from "./ExplanationModal.js";
 import InformationModal from './InformationModal.js';
+import PopUp from "./PopUp.js";
 import './StudentsList.css';
 
 function StudentsList({userData}) {
@@ -391,18 +392,24 @@ function StudentsList({userData}) {
         onRowSelectionModelChange ={handleSelectionChange}
       />
       <div className="buttons" >
+        <div className="button-check-commits" >
+          <PopUp text={t('studentList.infoCheckCommits')}></PopUp>
+          <Button className="checkWorksDates" variant="contained" onClick={checkDatesMethod}>
+            {t('studentList.checkWorksDates')}
+          </Button>
+        </div>
         <Button className="downloadRepo" variant="contained" onClick={downloadRepository}>
           {t('studentList.downloadRepo')}
-        </Button>
-        <Button className="checkWorksDates" variant="contained" onClick={checkDatesMethod}>
-          {t('studentList.checkWorksDates')}
-        </Button>
-        <Button className="commitPDF" variant="contained" onClick={openExplanationModal}>
-          {t('studentList.sendExplanation')}
         </Button>
         <Button className="createExcel" variant="contained" onClick={createExcel}>
           {t('studentList.createExcel')}
         </Button>
+        <div className="button-send-pdf" >
+          <Button className="commitPDF" variant="contained" onClick={openExplanationModal}>
+            {t('studentList.sendExplanation')}
+          </Button>
+          <PopUp text={t('studentList.infosendPDF')}></PopUp>
+        </div>
       </div>
       {deleteModalOpen && (
           <RewriteModal

@@ -83,7 +83,9 @@
         "explanationSended" :"PDF sended",
         "errorSendingExplanationForStudent": "There was an error sending PDF with student ",
         "createExcel" : "Generate Excel",
-        "differentGroups" : "All the students need to be at the same lab group"
+        "differentGroups" : "All the students need to be at the same lab group",
+        "infoCheckCommits" : "You can check if a student has made a late commit for any of the lab works assigned to them",
+        "infosendPDF" : "You can send PDF files to student repositories"
     },
     "makeIssue" : {
         "title" : "Title",

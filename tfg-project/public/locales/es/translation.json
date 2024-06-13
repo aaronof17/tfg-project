@@ -54,7 +54,7 @@
         "commitErrorForStudent" : "Hubo un error al obtener los commits de ",
         "pathBlank" : "La ruta de directorio no puede ser vacía para: ",
         "checkingDateError" : "Hubo un error intentando comprobar las fechas de las prácticas de laboratorio",
-        "checkWorksDates" : "Comprobar fecha de prácticas de laboratorio",
+        "checkWorksDates" : "Comprobar commits",
         "errorGettingWorksForStudent" : "Hubo un error obteniendo los trabajos para ",
         "messageForOOTCommitStudent" : "Estudiante: ",
         "messageForOOTCommitWithoutWorks" : " no tiene prácticas de laboratorio asociadas a su grupo ",
@@ -72,7 +72,7 @@
         "errorRepository" : "Hubo un problema con el repositorio, o no existe o probablemente no tengas acceso a él. Alumno: ",
         "errorEditingStudent" : "Hubo un error editando el estudiante",
         "dragFile" :"Arrastra el archivo al area",
-        "sendExplanation" : "Enviar enunciado",
+        "sendExplanation" : "Enviar PDF",
         "commitTitle" : "Titulo del commit",
         "informationCharged" : "La información se ha cargado con éxito",
         "errorSomethingWentWrong" : "Algo ha ido mal, pruébelo en otro momento",
@@ -84,7 +84,9 @@
         "explanationSended" :"Enunciado enviado",
         "errorSendingExplanationForStudent": "Hubo un problema enviando el enunciado con el alumno ",
         "createExcel" : "Generar Excel",
-        "differentGroups" : "Todos los estudiantes tienen que estar en el mismo grupo de laboratorio"
+        "differentGroups" : "Todos los estudiantes tienen que estar en el mismo grupo de laboratorio",
+        "infoCheckCommits" : "Puedes comprobar si un alumno ha realizado un commit fuera de plazo para alguna de las prácticas que tiene asignadas",
+        "infosendPDF" : "Puedes enviar archivos PDF a los repositorios de los alumnos"
 
     },
     "makeIssue" : {

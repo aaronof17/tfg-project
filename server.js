@@ -328,6 +328,19 @@ app.post('/createIssue', async function  (req, res){
 });
 
 
+// app.post('/deleteAppToken', async function  (req, res){
+//     try {
+//         console.log("hey");
+//         res.clearCookie('connect.sid'); 
+//         console.log("hou");
+//         return res.status(200).json({ success: true, data: '' });
+//     } catch (error) {
+//         console.log("hay");
+//         return res.status(500).json({ success: false, error: error });
+//     }
+
+// });
+
 app.post('/deleteAppToken', async function  (req, res){
     try {
         const result = await githubRequests.deleteAppToken(req, res);
