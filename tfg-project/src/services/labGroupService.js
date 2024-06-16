@@ -41,7 +41,6 @@ export async function editLabGroup(editRow) {
     const data = await response.json(); 
 
     if(!data.success){
-      console.log("An error occurred editing lab group: ", data.error);
       return { response: false, error: data.error, code:data.code};
     }
       
@@ -69,7 +68,6 @@ export async function deleteLabGroup(rowToDelete) {
       const data = await response.json(); 
 
       if(!data.success){
-        console.log("An error occurred deleting lab group: ", data.error);
         return { response: false, error: data.error};
       }
       return { response: true, error: ""};
@@ -196,7 +194,6 @@ export async function saveLabGroup(groupName, subject, teacherAssigned) {
     
       const data = await response.json(); 
       if(!data.success){
-        console.log("An error occurred saving lab group: ", data.error);
         return { response: false, error: data.error, code:data.code};
       }else {
         return { response: true, error: "" };

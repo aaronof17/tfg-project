@@ -33,7 +33,6 @@ export async function sendEmail(mark, comment, worklab, studentEmail) {
         const data = await response.json(); 
 
         if(!data.success){
-            console.log("An error occurred sending email: ", data.error);
             return { response: false, error: data.error, code:data.code};
         }
             

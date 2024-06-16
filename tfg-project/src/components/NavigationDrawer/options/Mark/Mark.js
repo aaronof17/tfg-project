@@ -137,7 +137,6 @@ function Mark({userData}){
                 return res.data !== 0;
             }
         } catch (error) {
-            console.error('Error checking mark existence:', error);
             return false;
         }
     }

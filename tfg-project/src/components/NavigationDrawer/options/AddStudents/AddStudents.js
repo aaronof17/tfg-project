@@ -129,7 +129,6 @@ function AddStudents({userData}) {
             }
         }
     } catch (error) {
-        console.error('Error checking email count:', error);
         return false;
     }
   }
@@ -146,18 +145,15 @@ function AddStudents({userData}) {
             }
         }
     } catch (error) {
-        console.error('Error checking github user count:', error);
         return false;
     }
   }
 
   async function saveStudentInfo(studentName, studentEmail, studentUser, studentRepository, studentGroup, onlyOne=true){
-    console.log(" UYUYUYU ");
       if(checkData(studentName, studentEmail, studentUser, studentRepository, studentGroup)){
         try {
           const emailExists = await existsEmail(studentEmail);
           if(emailExists && onlyOne){
-            console.log(emailExists+" UYUYUYU "+onlyOne);
             setRewriteModalOpen(true);
           }else{
             const res = await saveStudent(studentName.trim(), studentEmail.trim(), studentUser.trim(), studentRepository.trim(), studentGroup.label);

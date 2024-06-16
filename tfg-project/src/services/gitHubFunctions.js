@@ -18,13 +18,11 @@ export async function createIssue(user,repo,title,description,token) {
       });
       const data = await response.json(); 
       if (!data.success) {
-        console.log("An error occurred sending issue: ", data.error);
         return { response: false, error: data.error};
       } else {
         return { response: true, error: ""};
       }
   } catch (error) {
-      console.error(error);
       return { response: false, error: error};
     }
 }
@@ -64,13 +62,12 @@ export async function commitExplanation(token, repositoryURL, githubUser, file, 
 
       const data = await response.json(); 
       if (!data.success) {
-        console.log("An error occurred creating commit for explanation: ", data.error);
         return { response: false, error: data.error};
       } else {
         return { response: true, error: ""};
       }
   } catch (error) {
-      console.error("Error creating commit for explanation ",error);
+    return { response: false, error: "Error sending PDF"};
   }
 }
 
@@ -127,13 +124,12 @@ export async function getLastCommitInfo(token, repositoryURL, githubUser) {
 
         const data = await response.json(); 
         if (!data.success) {
-          console.log("An error occurred getting last commit information: ", data.error);
           return { response: false, error: data.error};
         } else {
           return { response: true, data: data.data,error: ""};
         }
     } catch (error) {
-        console.error("Error getting last commit information:  ",error);
+      return { response: false, error: "Sorry, an error occurred error getting commits info"};
     }
 }
 
@@ -158,7 +154,6 @@ export async function downloadRepo(token, repositoryURL, githubUser) {
 
       const data = await response.json(); 
       if (!data.success) {
-        console.log("An error occurred downloading repository: ", data.error);
         return { response: false, error: data.error};
       } else {
         await descargarArchivo(data.data);
@@ -166,7 +161,6 @@ export async function downloadRepo(token, repositoryURL, githubUser) {
       }
 
     } catch (error) {
-      console.error("Error downloading ", error);
       if (intento < maximoIntento - 1) {
         await delay(1000);
       }
@@ -178,7 +172,6 @@ export async function downloadRepo(token, repositoryURL, githubUser) {
 
 async function descargarArchivo(url) {
   if (!url) {
-    console.error("Download URL is invalid");
     return;
   }
 

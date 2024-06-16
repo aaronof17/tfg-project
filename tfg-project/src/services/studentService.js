@@ -127,7 +127,6 @@ export async function saveStudent(name, email, user, repository, groupId) {
       const data = await response.json(); 
 
       if(!data.success){
-        console.log("An error occurred saving student: ", data.error);
         return { response: false, error: data.error, code:data.code};
       }else {
         const enrolledResponse = await saveEnrolled(data.data.insertId, groupId, repository);
@@ -159,7 +158,6 @@ export async function deleteStudent(rowToDelete) {
       const data = await response.json(); 
 
       if(!data.success){
-        console.log("An error occurred deleting student: ", data.error);
         return { response: false, error: data.error};
       }
       return { response: true, error: ""};
@@ -184,7 +182,6 @@ export async function getIdByEmail(email) {
       const data = await response.json();
 
       if(!data.success){
-        console.log("An error occurred geting email: ", data.error);
         return { response: false, error: data.error};
       }
       if(data.data.length === 0){
@@ -213,7 +210,6 @@ export async function getIdByUser(user) {
       const data = await response.json();
 
       if(!data.success){
-        console.log("An error occurred geting user: ", data.error);
         return { response: false, error: data.error};
       }
       if(data.data.length === 0){
@@ -267,7 +263,6 @@ export async function editStudent(editRow) {
     const data = await response.json(); 
 
     if(!data.success){
-      console.log("An error occurred editing student: ", data.error);
       return { response: false, error: data.error, code:data.code};
     }
       

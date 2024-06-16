@@ -22,11 +22,9 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail, existsUser}){
       Papa.parse(fileParameter, {
         header: true,
         complete: (results) => {
-          console.log("Información del archivo CSV cargado:", results.data);
           checkCSVData(results.data,fileParameter)
         },
         error: (error) => {
-          console.error("Error al analizar el archivo CSV:", error);
           toast.error(t('addStudents.errorAnalizingCSV'));
         }
       });
@@ -67,7 +65,6 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail, existsUser}){
       }
       setData(csvData);
       setFile(fileParameter);
-      console.log("Todos los campos están completos en todas las filas.");
       return true;
     }
 

@@ -733,8 +733,6 @@ describe('Lab Work Management', () => {
     let worksList;
     await getWorksBySubjectAndStudent(groupSubject2,(wl)=>{worksList=wl},studentRows[0].studentsID);
 
-    console.log(worksList);
-
     expect(worksList.length).toBe(1);
     expect(worksList[0].title).toBe(workTitle);
     expect(worksList[0].description).toBe(workDescription);

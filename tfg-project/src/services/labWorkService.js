@@ -24,7 +24,6 @@ export async function saveWorks(datesFromWorks, title, description, percentage,t
           const data = await response.json(); 
 
           if(!data.success){
-            console.log("An error occurred saving mark: ", data.error);
             return { response: false, error: data.error, code:data.code};
           }
       }
@@ -160,7 +159,6 @@ export async function getWorksByStudentAndGroup(studentId, labgroupName, teacher
 
       const data = await response.json();
       if(!data.success){
-        console.log("An error occurred getting works for student: ", data.error);
         return { response: false, error: data.error};
       }
         
@@ -188,7 +186,6 @@ export async function getWorksAndMarksByStudentAndGroup(studentId, labgroupName,
 
       const data = await response.json();
       if(!data.success){
-        console.log("An error occurred works and marks for student: ", data.error);
         return { response: false, error: data.error};
       }
         
@@ -260,7 +257,6 @@ export async function editWork(editRow) {
     const data = await response.json(); 
 
     if(!data.success){
-      console.log("An error occurred editing work: ", data.error);
       return { response: false, error: data.error, code:data.code};
     }
       
@@ -287,7 +283,6 @@ export async function deleteWork(id) {
     const data = await response.json(); 
 
     if(!data.success){
-      console.log("An error occurred deleting work: ", data.error);
       return { response: false, error: data.error};
     }
       

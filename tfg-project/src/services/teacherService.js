@@ -29,7 +29,6 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           const data = await response.json(); 
 
           if(!data.success){
-            console.log("An error occurred saving token: ", data.error);
             return { response: false, error: data.error, code:data.code};
           }
           
@@ -163,7 +162,6 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
       
         const data = await response.json(); 
         if(!data.success){
-          console.log("An error occurred saving teacher: ", data.error);
           return { response: false, error: data.error, code:data.code};
         }else {
           return { response: true, error: "" };
@@ -189,7 +187,6 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
         const data = await response.json(); 
   
         if(!data.success){
-          console.log("An error occurred deleting teacher: ", data.error);
           return { response: false, error: data.error};
         }
         return { response: true, error: ""};
@@ -220,7 +217,6 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
       const data = await response.json(); 
   
       if(!data.success){
-        console.log("An error occurred editing teacher: ", data.error);
         return { response: false, error: data.error, code:data.code};
       }
         
