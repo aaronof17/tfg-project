@@ -1,23 +1,23 @@
 import strings from '../assets/files/strings.json';
 
 export async function getTeacherLabGroups(callback, teacherID) {
-    try {
-        const response = await fetch(strings.strings.host+'groups/teacher', {
-            method: "POST",
-            headers: {
-              "Authorization": "Bearer " + localStorage.getItem("accessToken"),
-              "Content-Type": "application/json"
-            },
-            body:
-            JSON.stringify({ teacherID: teacherID})
-        })
+  try {
+      const response = await fetch(strings.strings.host+'groups/teacher', {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json"
+          },
+          body:
+          JSON.stringify({ teacherID: teacherID})
+      })
 
-        const data = await response.json();
-        const groups = data.data.map(group => ({ value: group.idlabGroup, label: group.name }));
-        callback(groups);
-      } catch (error) {
-        console.error('Error getting lab groups:', error);
-      }
+      const data = await response.json();
+      const groups = data.data.map(group => ({ value: group.idlabGroup, label: group.name }));
+      callback(groups);
+    } catch (error) {
+      console.error('Error getting lab groups:', error);
+    }
 }
 
 

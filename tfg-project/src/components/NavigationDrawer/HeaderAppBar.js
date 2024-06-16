@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState, useEffect} from 'react';
 import { useTranslation } from "react-i18next";
 
 import AppBar from '@mui/material/AppBar';
@@ -12,15 +11,10 @@ import Box from '@mui/material/Box';
 import BasicMenu from './DropDownMenu.js';
 import './HeaderAppBar.css';
 
-import {deleteAppToken} from "../../services/gitHubFunctions.js";
 
 function HeaderAppBar({rerenderPass, isClosing, setMobileOpen, mobileOpen}){
-  const [t,i18n] = useTranslation();
 
   const drawerWidth = 240;
-  const handleChangeLanguage = (lang) => {
-    i18n.changeLanguage(lang);
-  }
 
   const handleDrawerToggle = () => {
     if (!isClosing) {
@@ -54,9 +48,8 @@ function HeaderAppBar({rerenderPass, isClosing, setMobileOpen, mobileOpen}){
         <Button
           variant="contained"
           onClick={() => {
-            deleteAppToken(localStorage.getItem("accessToken"), rerenderPass);
-            // localStorage.removeItem("accessToken"); 
-            // rerenderPass()
+            localStorage.removeItem("accessToken"); 
+            rerenderPass()
           }}
           sx={{backgroundColor:"#c9c2c2", color:"black"}}
         > 

@@ -20,54 +20,6 @@ async function getAccessToken(req, res) {
 }
 
 
-// async function deleteAppToken(req, res) {
-//     console.log("sipp");
-//     try {
-//         const token = req.body.token; // Obtener el token del cuerpo de la petición
-//         const response = await fetch(`https://api.github.com/applications/${CLIENT_ID}/token`, {
-//           method: "DELETE",
-//           headers: {
-//             "Accept": "application/vnd.github.v3+json",
-//             "Authorization": `Basic ${Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`
-//           },
-//           body: JSON.stringify({
-//             access_token: token
-//           })
-//         });
-    
-//         if (response.ok) {
-//             console.log("entra guay");
-//           res.status(200).json({ message: "Token deleted successfully" });
-//         } else {
-//             console.log("NONOO entra guay");
-//           const errorData = await response.json();
-//           res.status(response.status).json({ error: errorData });
-//         }
-//     } catch (error) {
-//         console.log("PEOR entra guay");
-//         console.error("Error deleting token: ", error);
-//         res.status(500).json({ error: "Internal server error" });
-//     }
-// }
-
- async function deleteAppToken(req, res) {
-    const token = req.body.token;
-    const response = await fetch(`https://api.github.com/applications/${CLIENT_ID}/token`, {
-        method: "DELETE",
-        headers: {
-            "Authorization" : req.get("Authorization"),
-            "Accept": "application/vnd.github.v3+json"
-        },
-        body: JSON.stringify({
-            access_token: CLIENT_SECRET
-        })
-    });
-    const data = await response.json();
-    console.log("data ",data);
-    return data;
-}
-
-
 async function createIssue(req, res) {
     const userName = req.body.user;
     const repo = req.body.repo;
@@ -239,4 +191,4 @@ async function createExplanationCommit(req, res) {
     }
 }
 
-module.exports = { getAccessToken, createExplanationCommit, createIssue, getUserData, getFinalCommitInfo, downloadRepo, deleteAppToken};
+module.exports = { getAccessToken, createExplanationCommit, createIssue, getUserData, getFinalCommitInfo, downloadRepo};

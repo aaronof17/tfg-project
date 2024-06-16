@@ -198,27 +198,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
         return { response: false, error: "Sorry, an error occurred deleting teacher"};
     }
   }
-
-
-  export async function getStundentId(callback, githubUser) {
-    try {
-        const response = await fetch(strings.strings.host+'students/id', {
-            method: "POST",
-            headers: {
-              "Authorization": "Bearer " + localStorage.getItem("accessToken"),
-              "Content-Type": "application/json"
-            },
-            body:
-                JSON.stringify({ githubUser: githubUser })
-          });
-        
-        const data = await response.json();
-        callback(data.data[0].studentsID);
-        return data.data[0].studentsID;
-      } catch (error) {
-        console.error('Error getting student id:', error);
-      }
-  }
+  
   
   export async function editTeacher(editRow) {
     try {

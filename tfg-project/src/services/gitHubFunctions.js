@@ -110,30 +110,6 @@ export async function getAccessToken(setRerender,rerender, codeParam){
 }
 
 
-export async function deleteAppToken(token,rerenderPass){
-  const apiUrl = strings.strings.host + 'deleteAppToken';
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ token })
-    });
-
-    if (response.ok) {
-      localStorage.removeItem("accessToken");
-      rerenderPass();
-      window.location.assign("https://github.com/login/oauth/authorize?client_id=b771595a6c15c6653d02");
-    } else {
-      console.error("Error deleting token: ", response.statusText);
-    }
-  } catch (error) {
-    console.error("Error deleting token: ", error);
-  }
-}
-
 export async function getLastCommitInfo(token, repositoryURL, githubUser) {
   const apiUrl = strings.strings.host+'getFinalCommitInfo';
     try {
@@ -198,40 +174,6 @@ export async function downloadRepo(token, repositoryURL, githubUser) {
   }
 }
 
-
-// export async function downloadRepo(token, repositoryURL, githubUser) {
-//   const apiUrl = strings.strings.host+'downloadRepo';
-//   let intento = 0;
-//   let maximoIntento = 3;
-//   while(intento < maximoIntento){
-//     try {
-//         const response = await fetch(apiUrl, {
-//             method: 'POST',
-//             headers: {
-//                 "Authorization" : "Bearer "+token,
-//                 "Content-Type": "application/json"
-//             },
-//             body:
-//                 JSON.stringify({repo: repositoryURL,
-//                                 user: githubUser
-//                               })
-//         });
-
-//         const data = await response.json(); 
-//         console.log("ENlace ",data.data)
-//         if (!data.success) {
-//           console.log("An error occurred downloading repository: ", data.error);
-//           return { response: false, error: data.error};
-//         } else {
-//           await descargarArchivo(data.data);
-//           return { response: true, error: ""};
-//         }
-//     } catch (error) {
-//         console.error("Error downloading ",error);
-//         intento++;
-//     }
-//   }
-// }
 
 
 async function descargarArchivo(url) {

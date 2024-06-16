@@ -32,6 +32,7 @@
         "edit" : "Edit",
         "delete" : "Delete",
         "studentsBlank" : "There must be at least one student on the selected list",
+        "studentsOnlyOne" : "There must be ONE student selected",
         "downloadRepo" : "Download repositories",
         "tokenError" : "There was a problem with your token, its could be not correct or expired",
         "downloadError" : "There was an error downloading archives",

@@ -33,6 +33,7 @@
         "edit" : "Editar",
         "delete" : "Eliminar",
         "studentsBlank" : "Selecciona al menos un estudiante",
+        "studentsOnlyOne" : "Se debe seleccionar UN estudiante",
         "downloadRepo" : "Descargar repositorios",
         "tokenError" : "Hubo un problema con tu token, puede que no sea correcto o esté caducado",
         "downloadError" : "Hubo un problema descargando los archivos",

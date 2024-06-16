@@ -60,7 +60,7 @@ function StudentsList({userData}) {
             width: calculateWidth(studentsList.map((student)=>student.repositoryURL),false,true) ,
             renderCell: (params) => {
                 return (
-                    <a href={params.value} target="_blank" rel="noopener noreferrer">
+                    <a href={params.value} target="_blank" rel="noopener noreferrer" style={{ color: 'black' }}>
                         {params.value}
                     </a>
                 );
@@ -118,6 +118,20 @@ function StudentsList({userData}) {
       return rows;
     }
 
+    const validateDataDownload = () =>{
+      if(selectedStudents.length === 0 || selectedStudents.length > 1){
+        toast.error(t('studentList.studentsOnlyOne'));
+        return false;
+      }else{
+        if(teacherToken === ""){
+          toast.error(t('studentList.tokenEmpty'));
+          return false;
+        }else{
+          return true; 
+        }
+      }
+    }
+
     const validateData = () =>{
       if(selectedStudents.length != 0){
         if(teacherToken === ""){
@@ -163,7 +177,7 @@ function StudentsList({userData}) {
 
     async function downloadRepository(e) {
       e.preventDefault();
-      if (validateData()) {
+      if (validateDataDownload()) {
         try {
           await downloadStudentsRepositories();
         } catch (error) {
