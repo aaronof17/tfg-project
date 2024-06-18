@@ -35,7 +35,6 @@ function getTeachers(req,res) {
 }
 
 
-
 function getTeacherByGitHubUser(req,res) {
     const sql = "SELECT COUNT(*) as count FROM teachers where githubProfile = ?";
     const params = [req.body.gituser];

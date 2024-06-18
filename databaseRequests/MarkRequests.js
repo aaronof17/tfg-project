@@ -16,7 +16,6 @@ function insertMark(req,res) {
 }
 
 
-
 function getMarkByWorkAndStudent(req,res) {
     const sql = "SELECT COUNT(*) as count FROM marks where studentIDFK=? and worklabIDFK=? ";
     const params = [req.body.student, req.body.work];

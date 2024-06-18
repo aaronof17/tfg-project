@@ -1,7 +1,5 @@
 const connection = require('../databaseInfo');
 
-
-
 function insertWork(req,res) {
     const sql = 'INSERT INTO worklabs (title, description, initialdate, finaldate, percentage, labgroupNameFK, teacherIDFK, active) VALUES (?,?,?,?,?,?,?,1)';
     const params = [req.body.title, req.body.description, req.body.initialDate,
@@ -31,7 +29,6 @@ function editWork(req,res) {
         }
     })
 }
-
 
 
 function deleteWork(req,res) {
@@ -200,9 +197,6 @@ function getWorksByStudentId(req,res) {
         }
     })
 }
-
-
-
 
 
 module.exports = {getWorkByStudent, getWorksAndMarksByStudentAndGroup, getWorskByGroup, getWorksByStudentAndSubject, getActiveWorksByTeacherId, getWorksByStudentId, getWorskBySubject, deleteWork, getWorksByStudentAndGroup, getWorksByTeacherId, insertWork, editWork};

@@ -45,7 +45,6 @@ function getStudentId(req,res) {
 }
 
 
-
 function getStudentsBySubject(req,res) {
     const sql = "SELECT DISTINCT s.studentsID, s.name, "+
                 "s.email, s.githubuser, e.repositoryURL, g.name as labgroup " +
@@ -143,7 +142,6 @@ function editStudent(req,res) {
 }
 
 
-
 function deleteStudent(req,res) {
     const sql1 = "delete enrolled from enrolled "+
                 "JOIN students as s ON s.studentsID = enrolled.studentFK "+
@@ -173,7 +171,6 @@ function deleteStudent(req,res) {
         }
     })
 }
-
 
 
 function getIdByEmail(req,res) {
