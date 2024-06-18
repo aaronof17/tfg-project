@@ -28,8 +28,6 @@ function WorksList({userData}){
     const [rowToEdit, setRowToEdit] = useState(null);
     const [rowToDelete, setRowToDelete] = useState(null);
     const [workToDelete, setWorkToDelete] = useState(null);
-    const [actualGroupName, setActualGroupName] = useState("");
-    const [actualSubject, setSubject] = useState("");
     const [labgroups, setLabGroups] = useState([]);
     const [subjects, setSubjects] = useState([]);
 

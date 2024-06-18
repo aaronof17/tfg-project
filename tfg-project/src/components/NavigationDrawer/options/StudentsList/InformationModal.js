@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 import Button from '@mui/material/Button';
@@ -20,7 +20,7 @@ function InformationModal ({closeModal, outOfTimeCommits}){
       URL.revokeObjectURL(url);
   };
 
-  if(outOfTimeCommits.length != 0)
+  if(outOfTimeCommits.length !== 0)
   return (
     <div
       className="info-modal-container"

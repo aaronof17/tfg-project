@@ -17,7 +17,8 @@
         "teachersList" : "Teachers List",
         "addGroups" : "Add Lab Groups",
         "groupsList" : "Lab Group List",
-        "defaultView" : "Default View"
+        "defaultView" : "Default View",
+        "errorView" : "Error View"
     },
     "studentList" : {
         "name" : "Name",
@@ -299,6 +300,10 @@
     },
     "defaultView" :{
         "message" : "Sorry, but you are not in our system. Please contact our admin to resolve any questions",
+        "email" : "Email: "
+    },
+    "errorView" : {
+        "message" : "Sorry, we are under maintenance. Come back later.",
         "email" : "Email: "
     }
 }

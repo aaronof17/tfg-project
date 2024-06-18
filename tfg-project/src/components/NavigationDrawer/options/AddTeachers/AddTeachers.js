@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect} from 'react';
+import { useState} from 'react';
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 import {saveTeacher} from "../../../../services/teacherService.js";

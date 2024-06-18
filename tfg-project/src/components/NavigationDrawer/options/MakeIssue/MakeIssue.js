@@ -74,7 +74,7 @@ function MakeIssue({userData}) {
 
   const getGroupsOptions= () =>{
     let options = [];
-    if(groups != undefined){
+    if(groups !== undefined){
       groups.map((group,index) => {
             options[index] = {
                 label: group.label,
@@ -149,7 +149,7 @@ function MakeIssue({userData}) {
           }
         }
       };
-      if(issuesSended.length != 0){
+      if(issuesSended.length !== 0){
         toast.info(t('makeIssue.issueSended'));
         setSelectedLabGroup("");
         setSelectedSubject("");

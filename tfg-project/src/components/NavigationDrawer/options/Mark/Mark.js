@@ -45,7 +45,7 @@ function Mark({userData}){
 
     const getWorks= () =>{
         let options = [];
-        if(labworks != undefined){
+        if(labworks !== undefined){
             labworks.map((work,index) => {
                 options[index] = {
                     label: `${work.title} - ${work.labgroupNameFK}`,
@@ -59,7 +59,7 @@ function Mark({userData}){
 
     const getStudentsOptions= () =>{
         let options = [];
-        if(students != undefined){
+        if(students !== undefined){
             students.map((student,index) => {
                 options[index] = {
                     label: `${student.name} - ${student.email}`,

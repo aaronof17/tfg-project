@@ -9,7 +9,6 @@ import {getTeachers} from "../../../../services/teacherService.js";
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
 import RewriteModal from '../../../Modal/RewriteModal.js';
 import EditLabGroupModal from './EditLabGroupModal.js';
 import strings from '../../../../assets/files/strings.json';
@@ -40,7 +39,7 @@ function LabGroupList() {
 
     const getColumns = () =>{
       let columns = [];
-      if(groupsList != undefined){
+      if(groupsList !== undefined){
         columns = [ 
           { field: 'name', headerName: t('groupsList.name'), width: calculateWidth([...groupsList.map((group) => group.name), t('groupsList.name')], true) },
           { field: 'subject', headerName: t('groupsList.subject'), width: calculateWidth([...groupsList.map((group) => group.subject), t('groupsList.subject')], true) },
@@ -110,7 +109,7 @@ function LabGroupList() {
 
 
     function deleteGroupMethod(){
-      if(rowToDelete != ""){
+      if(rowToDelete !== ""){
         deleteLabGroup(rowToDelete).then((res)=>{
           if(res.response){
             getLabGroups().then((groupsGetted)=>{

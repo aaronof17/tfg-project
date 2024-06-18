@@ -13,8 +13,14 @@ export async function getTeacherLabGroups(callback, teacherID) {
       })
 
       const data = await response.json();
-      const groups = data.data.map(group => ({ value: group.idlabGroup, label: group.name }));
-      callback(groups);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        const groups = data.data.map(group => ({ value: group.idlabGroup, label: group.name }));
+        callback(groups);
+      }
+
     } catch (error) {
       console.error('Error getting lab groups:', error);
     }
@@ -89,6 +95,11 @@ export async function getLabGroups() {
       })
 
       const data = await response.json();
+
+      if(!data.success){
+        return [];
+      }
+
       return data.data;
     } catch (error) {
       console.error('Error getting lab groups:', error);
@@ -109,7 +120,13 @@ export async function getSubjectsFromGroup(callback, teacherID) {
         })
 
         const data = await response.json();
-        callback(data.data);
+
+        if(!data.success){
+          callback([]);
+        }else{
+          callback(data.data);
+        }
+        
       } catch (error) {
         console.error('Error getting subjects:', error);
       }
@@ -129,7 +146,13 @@ export async function getSubjectsForStudent(callback, studentID) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
+
     } catch (error) {
       console.error('Error getting subjects for student:', error);
     }
@@ -150,8 +173,14 @@ export async function getLabGroupsBySubject(actualSubject, teacherID, callback) 
       })
 
       const data = await response.json();
-      const groups = data.data.map(group => ({ value: group.idlabGroup, label: group.name }));
-      callback(groups);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        const groups = data.data.map(group => ({ value: group.idlabGroup, label: group.name }));
+        callback(groups);
+      }
+
     } catch (error) {
       console.error('Error getting groups from actual subject:', error);
     }
@@ -170,6 +199,11 @@ export async function getIdFromGroup(groupName) {
       })
 
       const data = await response.json();
+
+      if(!data.success){
+        return "error";
+      }
+
       return data;
     } catch (error) {
       console.error('Error getting id from group:', error);

@@ -69,7 +69,7 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail, existsUser}){
     }
 
     function validateFiles(files){
-      if(files.length != 1){
+      if(files.length !== 1){
         toast.error(t('addStudents.errorNumberFiles'));
       }else{
         const fileFromCsv = files[0]

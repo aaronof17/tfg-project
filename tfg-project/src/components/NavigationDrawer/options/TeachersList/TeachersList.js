@@ -34,7 +34,7 @@ function TeachersList() {
 
   const getColumns = () =>{
     let columns = [];
-    if(teachersList != undefined){
+    if(teachersList !== undefined){
       columns = [ 
         { field: 'name', headerName: t('teachersList.name'), width: calculateWidth([...teachersList.map((teacher) => teacher.name), t('teachersList.name')]) },
         { field: 'email', headerName: t('teachersList.email'), width: calculateWidth([...teachersList.map((teacher) => teacher.email), t('teachersList.email')]) },
@@ -100,7 +100,7 @@ function TeachersList() {
 
 
   function deleteTeacherMethod(){
-    if(rowToDelete != ""){
+    if(rowToDelete !== ""){
       deleteTeacher(rowToDelete).then((res)=>{
         if(res.response){
           getTeachers().then((teacherGetted)=>{

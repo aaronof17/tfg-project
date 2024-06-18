@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { useEffect, useState } from 'react';
 import {useTranslation} from "react-i18next";
-import {ToastContainer, toast} from "react-toastify";
+import {ToastContainer} from "react-toastify";
 import {getUserData} from '../../services/gitHubFunctions.js';
 import {getRoleByGitHubUser} from '../../services/teacherService.js';
 
@@ -39,6 +39,7 @@ import TeachersList from './options/TeachersList/TeachersList.js';
 import AddLabGroup from './options/AddLabGroup/AddLabGroup.js';
 import LabGroupList from './options/LabGroupList/LabGroupList.js';
 import DefaultView from './options/DefaultView/DefaultView.js';
+import ErrorView from './options/ErrorView/ErrorView.js';
 import strings from '../../assets/files/strings.json'
 import 'react-toastify/dist/ReactToastify.css';
 import './NavigationDrawer.css';
@@ -58,12 +59,14 @@ function ResponsiveDrawer(props) {
   const drawerStudentOptions = [t('navigationDrawer.studentLabWorks')];
   const drawerAdminOptions = [t('navigationDrawer.addTeachers'), t('navigationDrawer.teachersList'), t('navigationDrawer.addGroups'), t('navigationDrawer.groupsList')];
   const drawerDefaultOptions = [t('navigationDrawer.defaultView')];
+  const drawerErrorOptions = [t('navigationDrawer.errorView')];
 
   let teacherViews = [<StudentsList userData={userData} />, <AddStudents userData={userData}/>, <MakeIssue userData={userData}/>, 
                       <CreateLabWork userData={userData}/>, <WorksList userData={userData}/>, <Mark userData={userData}/>, <ProfileView userData={userData}/>];
   let studentViews = [<StudentWorks userData={userData}/>, <ProfileView userData={userData}/>];
   let adminViews = [<AddTeachers userData={userData}/>,<TeachersList userData={userData}/>, <AddLabGroup  userData={userData}/>, <LabGroupList userData={userData}/>];
   let defaultViews = [<DefaultView/>];
+  let errorViews = [<ErrorView/>];
 
   const teacherIcons = [ <People/>, <AddCircleOutlineIcon/>, <CircleNotificationsIcon/>, <HomeRepairServiceIcon/>, <ChecklistIcon/>, <BorderColorIcon/>, <AccountBoxIcon/>];
   const adminIcons = [<AddCircleOutlineIcon/>,<FormatListBulletedIcon/>,<AddCircleOutlineIcon/>,<FormatListBulletedIcon/>];
@@ -81,6 +84,9 @@ function ResponsiveDrawer(props) {
           let roleDefault = "";
           setRole(roleDefault);
         }
+      }else{
+        let roleError = "error";
+        setRole(roleError);
       }
 
     };
@@ -180,6 +186,20 @@ function ResponsiveDrawer(props) {
             ))}
           </List>
         )}
+        {role === strings.strings.error && (
+          <List>
+            {drawerErrorOptions.map((text, index) => (
+              <ListItem key={`error-option-${index}`} disablePadding onClick={() => handleListItemClick(index)}>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: 'white' }}>
+                    <VisibilityIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        )}
     </div>
   );
 
@@ -235,6 +255,7 @@ function ResponsiveDrawer(props) {
         {role === strings.strings.student && studentViews[currentView]} 
         {role === strings.strings.admin && adminViews[currentView]}      
         {role === strings.strings.default && defaultViews[currentView]}
+        {role === strings.strings.error && errorViews[currentView]}
     </Box>
       <ToastContainer/>
     </Box>

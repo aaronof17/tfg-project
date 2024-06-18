@@ -17,7 +17,8 @@
         "teachersList" : "Lista de Profesores",
         "addGroups" : "Añadir grupo de laboratorio",
         "groupsList" : "Lista de grupos de laboratorio",
-        "defaultView" : "Vista predeterminada"
+        "defaultView" : "Vista predeterminada",
+        "errorView" : "Vista de Error"
 
     },
     "studentList" : {
@@ -299,6 +300,10 @@
     },
     "defaultView" :{
         "message" : "Lo sentimos, pero no estás en nuestro sistema. Porfavor contacta con nuestro administrador para resolver cualquier duda",
+        "email" : "Email: "
+    },
+    "errorView" : {
+        "message" : "Lo sentimos, estamos en mantenimiento. Vuelva más tarde.",
         "email" : "Email: "
     }
 }

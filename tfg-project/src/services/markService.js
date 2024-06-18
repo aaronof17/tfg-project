@@ -85,6 +85,6 @@ export async function getMarkByWorkAndStudent(work, student) {
       
       return { response: true, data:data.data[0].count, error: ""};
     } catch (error) {
-      console.error('Error getting marks from student:', error);
+      console.error('Error getting marks student:', error);
     }
 }

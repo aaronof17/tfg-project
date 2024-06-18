@@ -50,7 +50,7 @@ function EnrollModal ({ closeModal, onSubmit,teacherID}){
 
   const getGroupsOptions= () =>{
     let options = [];
-    if(labGroups != undefined){
+    if(labGroups !== undefined){
       labGroups.map((group,index) => {
         options[index] = {
             label: group.label,
@@ -63,7 +63,7 @@ function EnrollModal ({ closeModal, onSubmit,teacherID}){
 
   const getStudentsOptions= () =>{
     let options = [];
-    if(allStudents != undefined){
+    if(allStudents !== undefined){
       allStudents.map((student,index) => {
         options[index] = {
           label: student.name+" - "+student.email,

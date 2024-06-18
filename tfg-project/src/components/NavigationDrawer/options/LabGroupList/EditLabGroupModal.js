@@ -51,7 +51,7 @@ function EditLabGroupModal ({ closeModal, onSubmit, defaultValue, groupsList, te
 
   const getTeachersOptions= () =>{
     let options = [];
-    if(teachersList != undefined){
+    if(teachersList !== undefined){
       teachersList.map((teacher,index) => {
         options[index] = {
             label: `${teacher.name}`,

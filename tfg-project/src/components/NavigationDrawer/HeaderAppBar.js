@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useTranslation } from "react-i18next";
 
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';

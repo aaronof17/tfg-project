@@ -53,6 +53,12 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           });
         
         const data = await response.json();
+
+        if(!data.success){
+          callback("error");
+          return "error";
+        }
+
         callback(data.data[0].teacherID);
         return data.data[0].teacherID;
       } catch (error) {
@@ -74,6 +80,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           });
         
         const data = await response.json();
+
         const decryptedToken = await decryptToken(data.data[0].githubToken);
         callback(decryptedToken);
       } catch (error) {
@@ -93,6 +100,11 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           });
         
         const data = await response.json();
+
+        if(!data.success){
+          return [];
+        }
+
         return data.data;
       } catch (error) {
         console.error('Error getting teachers:', error);
@@ -113,6 +125,11 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
       
         
         const data = await response.json();
+
+        if(!data.success){
+          return 0;
+        }
+
         return data.data[0].count;
       } catch (error) {
         console.error('Error getting teachers:', error);
@@ -135,7 +152,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
       
         
         const data = await response.json();
-        if(data.data.length != 0){
+        if(data.data.length !== 0){
           return data.data[0].user_type
         }else{
           return "";

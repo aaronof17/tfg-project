@@ -34,7 +34,6 @@ export async function loginWithGitHub(){
     });
 
   const data = await response.json();
-
   return data.redirectUrl;
 } catch (error) {
   console.error('Error fetching with the login:', error);
@@ -87,9 +86,14 @@ export async function getUserData(callback) {
       if (data.success) {
         callback(data.data);
         return data.data;
+      }else{
+        callback("");
+        return "";
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
+      callback("");
+      return "";
     }
 }
 

@@ -16,6 +16,12 @@ export async function getStudents(callback, teacherID) {
         })
 
         const data = await response.json();
+        
+        if(!data.success){
+          callback([]);
+          return [];
+        }
+
         callback(data.data);
         return data.data;
       } catch (error) {
@@ -34,6 +40,12 @@ export async function getAllStudents(callback) {
       })
 
       const data = await response.json();
+
+      if(!data.success){
+        callback([]);
+        return [];
+      }
+
       callback(data.data);
       return data.data;
     } catch (error) {
@@ -55,6 +67,11 @@ export async function getStudentsBySubject(teacherID, subject) {
       })
 
       const data = await response.json();
+
+      if(!data.success){
+        return [];
+      }
+
       return data.data;
     } catch (error) {
       console.error('Error getting students by subject:', error);
@@ -77,7 +94,12 @@ export async function getStudentsWithoutRepo(callback, teacherID) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
     } catch (error) {
       console.error('Error getting students:', error);
     }
@@ -100,6 +122,12 @@ export async function getStudentsByWork(group, callback, teacherID) {
         })
 
         const data = await response.json();
+
+        if(!data.success){
+          callback([]);
+          return [];
+        }  
+
         callback(data.data);
         return data.data;
       } catch (error) {
@@ -189,7 +217,6 @@ export async function getIdByEmail(email) {
       }else{
         return { response: true, data:data.data[0].studentsID, error: ""};
       }
-      return data;
     } catch (error) {
       console.error('Error getting email:', error);
     }
@@ -235,6 +262,12 @@ export async function getStundentId(callback, githubUser) {
         });
       
       const data = await response.json();
+
+      if(!data.success){
+        callback("error");
+        return "error";
+      }
+
       callback(data.data[0].studentsID);
       return data.data[0].studentsID;
     } catch (error) {

@@ -50,7 +50,12 @@ export async function getLabWorks(callback, teacherID) {
         })
 
         const data = await response.json();
-        callback(data.data);
+
+        if(!data.success){
+          callback([]);
+        }else{  
+          callback(data.data);
+        }
       } catch (error) {
         console.error('Error getting lab groups:', error);
       }
@@ -71,7 +76,12 @@ export async function getActiveLabWorks(callback, teacherID) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
     } catch (error) {
       console.error('Error getting active lab groups:', error);
     }
@@ -93,7 +103,12 @@ export async function getWorksByStudent(studentEmail, callback, teacherID) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
     } catch (error) {
       console.error('Error getting works for student:', error);
     }
@@ -115,7 +130,12 @@ export async function getWorksByGroup(groupName, callback, teacherID) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
     } catch (error) {
       console.error('Error getting works by group:', error);
     }
@@ -136,7 +156,12 @@ export async function getWorksBySubject(subject, callback, teacherID) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
     } catch (error) {
       console.error('Error getting works by subject:', error);
     }
@@ -208,7 +233,12 @@ export async function getWorksByStudentId(callback, studentId) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
     } catch (error) {
       console.error('Error getting works by student id:', error);
     }
@@ -228,7 +258,13 @@ export async function getWorksBySubjectAndStudent(subject ,callback, studentId) 
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
+
     } catch (error) {
       console.error('Error getting works by student id and subject:', error);
     }

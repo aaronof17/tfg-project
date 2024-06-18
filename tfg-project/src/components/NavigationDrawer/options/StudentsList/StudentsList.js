@@ -48,7 +48,7 @@ function StudentsList({userData}) {
 
     const getColumns = () =>{
       let columns = [];
-      if(studentsList != undefined){
+      if(studentsList !== undefined){
         columns = [ 
           { field: 'name', headerName: t('studentList.name'), width: calculateWidth([...studentsList.map((student) => student.name), t('studentList.name')]) },
           { field: 'email', headerName: t('studentList.email'), width: calculateWidth([...studentsList.map((student) => student.email), t('studentList.email')]) },
@@ -133,7 +133,7 @@ function StudentsList({userData}) {
     }
 
     const validateData = () =>{
-      if(selectedStudents.length != 0){
+      if(selectedStudents.length !== 0){
         if(teacherToken === ""){
           toast.error(t('studentList.tokenEmpty'));
           return false;
@@ -208,12 +208,12 @@ function StudentsList({userData}) {
                     toast.error(t('studentList.errorGettingWorksForStudent')+student.name);
                   }
                 }else{
-                  if(commitsInfo.length != 0){
-                    if( worksRes.data.length != 0){
+                  if(commitsInfo.length !== 0){
+                    if( worksRes.data.length !== 0){
                       let commitInfo = commitsInfo.map((c) => c.commit)[0];
                       let commitDate = new Date(commitInfo.committer.date);
                       let worksFiltered = worksRes.data.filter(work => new Date(work.finaldate) < commitDate );
-                      if( worksFiltered.length != 0){
+                      if( worksFiltered.length !== 0){
                         for(let w of worksFiltered){
                           setOutOfTimeCommits(prevInfo => [...prevInfo, 
                             {
@@ -287,7 +287,7 @@ function StudentsList({userData}) {
 
 
     function deleteStudentMethod(){
-      if(rowToDelete != ""){
+      if(rowToDelete !== ""){
         deleteStudent(rowToDelete).then((res)=>{
           if(res.response){
             getStudents(setStudentsList,teacherId).then(()=>{
@@ -328,7 +328,7 @@ function StudentsList({userData}) {
 
 
     async function handleCommitExplanation(file, commitTitle) {
-      if(selectedStudents.length !=0){
+      if(selectedStudents.length !==0){
         let problemWithToken=false;
         let explanationsSended=[];
         for (let student of selectedStudents) {
@@ -355,7 +355,7 @@ function StudentsList({userData}) {
             }
           }
         }
-        if(explanationsSended.length != 0){
+        if(explanationsSended.length !== 0){
           toast.info(t('studentList.explanationSended'));
         }
       }else{
@@ -372,7 +372,7 @@ function StudentsList({userData}) {
 
     async function createExcel(e) {
       e.preventDefault();
-      if(selectedStudents.length != 0){
+      if(selectedStudents.length !== 0){
         const firstGroup = selectedStudents[0].group;
         const sameGroup = selectedStudents.every(student => student.group === firstGroup);
         if (sameGroup) {
