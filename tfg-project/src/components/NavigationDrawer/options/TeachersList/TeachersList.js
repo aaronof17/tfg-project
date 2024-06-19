@@ -2,7 +2,7 @@ import  React, {useState, useEffect} from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
-import {calculateWidth, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
+import {extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import {getTeachers,deleteTeacher, editTeacher} from "../../../../services/teacherService.js";
 
 import IconButton from '@mui/material/IconButton';
@@ -36,13 +36,13 @@ function TeachersList() {
     let columns = [];
     if(teachersList !== undefined){
       columns = [ 
-        { field: 'name', headerName: t('teachersList.name'), width: calculateWidth([...teachersList.map((teacher) => teacher.name), t('teachersList.name')]) },
-        { field: 'email', headerName: t('teachersList.email'), width: calculateWidth([...teachersList.map((teacher) => teacher.email), t('teachersList.email')]) },
-        { field: 'githubProfile', headerName: t('teachersList.githubprofile'), width: calculateWidth([...teachersList.map((teacher) => teacher.githubProfile), t('teachersList.githubprofile')],true) },
+        { field: 'name', headerName: t('teachersList.name'), width: 270 },
+        { field: 'email', headerName: t('teachersList.email'), width: 270 },
+        { field: 'githubProfile', headerName: t('teachersList.githubprofile'), width: 270 },
         {
           field: 'actions',
           headerName: t('teachersList.actions'),
-          width: 150,
+          width: 100,
           renderCell: (params) => {
             return (
               <div>

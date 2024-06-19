@@ -43,11 +43,11 @@ function LabGroupList() {
         columns = [ 
           { field: 'name', headerName: t('groupsList.name'), width: calculateWidth([...groupsList.map((group) => group.name), t('groupsList.name')], true) },
           { field: 'subject', headerName: t('groupsList.subject'), width: calculateWidth([...groupsList.map((group) => group.subject), t('groupsList.subject')], true) },
-          { field: 'teacherName', headerName: t('groupsList.teacherName'), width: calculateWidth([...groupsList.map((group) => group.teacherName), t('groupsList.teacherName')]) },
+          { field: 'teacherName', headerName: t('groupsList.teacherName'), width:270 },
           {
             field: 'actions',
             headerName: t('groupsList.actions'),
-            width: 150,
+            width: 100,
             renderCell: (params) => {
               return (
                 <div>

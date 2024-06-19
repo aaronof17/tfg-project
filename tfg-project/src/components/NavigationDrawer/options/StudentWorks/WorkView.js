@@ -68,7 +68,6 @@ function WorkView({ work }) {
                         fullWidth
                         multiline
                         rows={4}
-                        style={estiloTextField}
                         InputProps={{ readOnly: true }}
                         InputLabelProps={{ htmlFor: "work-description", style: { color: 'black' } }}
                     />
@@ -93,7 +92,6 @@ function WorkView({ work }) {
                                                 fullWidth
                                                 multiline
                                                 rows={4}
-                                                style={estiloTextField}
                                                 InputProps={{ readOnly: true }}
                                                 InputLabelProps={{ htmlFor: "work-comment", style: { color: 'black' } }}
                                             />

@@ -2,7 +2,7 @@ import  React, {useState, useEffect} from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
-import {calculateWidth, getRepositoryName, extractId, formatDate, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
+import {getRepositoryName, extractId, formatDate, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import {createExcelAndDownload} from "../../../../functions/createExcel.js";
 import {downloadRepo, getLastCommitInfo, commitExplanation} from "../../../../services/gitHubFunctions.js";
 import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
@@ -50,14 +50,14 @@ function StudentsList({userData}) {
       let columns = [];
       if(studentsList !== undefined){
         columns = [ 
-          { field: 'name', headerName: t('studentList.name'), width: calculateWidth([...studentsList.map((student) => student.name), t('studentList.name')]) },
-          { field: 'email', headerName: t('studentList.email'), width: calculateWidth([...studentsList.map((student) => student.email), t('studentList.email')]) },
-          { field: 'githubuser', headerName: t('studentList.githubprofile'), width: calculateWidth([...studentsList.map((student) => student.githubuser), t('studentList.githubprofile')]) },
-          { field: 'group', headerName: t('studentList.group'), width: calculateWidth([...studentsList.map((student) => student.labgroup), t('studentList.group')],true) },
+          { field: 'name', headerName: t('studentList.name'), width:270 },
+          { field: 'email', headerName: t('studentList.email'), width:200 },
+          { field: 'githubuser', headerName: t('studentList.githubprofile'), width: 180 },
+          { field: 'group', headerName: t('studentList.group'), width: 130},
           {
             field: 'repository',
             headerName: t('studentList.repository'),
-            width: calculateWidth(studentsList.map((student)=>student.repositoryURL),false,true) ,
+            width: 230 ,
             renderCell: (params) => {
               const url = params.value;
               const repositoryName = url.split('/').pop();
@@ -70,7 +70,7 @@ function StudentsList({userData}) {
           {
             field: 'actions',
             headerName: t('studentList.actions'),
-            width: 150,
+            width: 100,
             renderCell: (params) => {
               return (
                 <div>
