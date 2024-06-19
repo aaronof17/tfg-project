@@ -11,7 +11,7 @@ export function calculateWidth(list, uppercase=false, itsURL=false){
     if(uppercase){
         return longestOption * approximateCharWidth * 2;
     }else if(itsURL){
-        approximateCharWidth = 5;
+        approximateCharWidth = 3;
         return longestOption * approximateCharWidth;
     }else{
         return longestOption * approximateCharWidth;

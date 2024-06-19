@@ -59,11 +59,13 @@ function StudentsList({userData}) {
             headerName: t('studentList.repository'),
             width: calculateWidth(studentsList.map((student)=>student.repositoryURL),false,true) ,
             renderCell: (params) => {
-                return (
-                    <a href={params.value} target="_blank" rel="noopener noreferrer" style={{ color: 'black' }}>
-                        {params.value}
-                    </a>
-                );
+              const url = params.value;
+              const repositoryName = url.split('/').pop();
+              return (
+                <a href={params.value} target="_blank" rel="noopener noreferrer" style={{ color: 'black' }}>
+                  {repositoryName}
+                </a>
+              );
           }},
           {
             field: 'actions',
