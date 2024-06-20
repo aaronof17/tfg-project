@@ -55,7 +55,7 @@ function EditModal ({ closeModal, onSubmit, defaultValue, studentsList}){
                 name="name" 
                 onChange={handleChange} 
                 value={formState.name}
-                maxLength={45}
+                maxLength={100}
             />
           </div>
           <div className="form-group">
