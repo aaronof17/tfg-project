@@ -33,11 +33,11 @@ export async function loginWithGitHub(){
       method: "GET"
     });
 
-  const data = await response.json();
-  return data.redirectUrl;
-} catch (error) {
-  console.error('Error fetching with the login:', error);
-}
+    const data = await response.json();
+    return data.redirectUrl;
+  } catch (error) {
+    console.error('Error fetching with the login:', error);
+  }
 }
 
 
