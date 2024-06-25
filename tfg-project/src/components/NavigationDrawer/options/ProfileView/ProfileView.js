@@ -1,13 +1,13 @@
 import * as React from 'react';
-import './ProfileView.css';
-import "react-toastify/dist/ReactToastify.css";
-import 'reactjs-popup/dist/index.css';
 import { useState } from 'react';
 import {useTranslation} from "react-i18next";
 import { extractDuplicateEntry } from '../../../../functions/genericFunctions.js';
 import {saveTeacherToken} from "../../../../services/teacherService.js";
 import {toast} from "react-toastify";
 
+import './ProfileView.css';
+import "react-toastify/dist/ReactToastify.css";
+import 'reactjs-popup/dist/index.css';
 import strings from '../../../../assets/files/strings.json';
 import user_default from '../../../../assets/images/user-default.jpg';
 import TextField from '@mui/material/TextField';
@@ -16,10 +16,7 @@ import PopupInfo from './PopUpInfo.js';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
 
-/**
- * Component for the Profile View 
- * for logged user
- */
+
 function ProfileView({userData}) {
   const [token, setToken] = useState("");
   const [t] = useTranslation();
@@ -34,11 +31,8 @@ function ProfileView({userData}) {
   }
 
 
-  /**
-   * Save token in database
-   */
   function saveToken(){
-    if(token === ""){
+    if(token.trim() === ""){
       toast.error(t('userProfile.tokenError'));
     }else{
       saveTeacherToken(token,userData.login).then((res) =>{
@@ -56,10 +50,6 @@ function ProfileView({userData}) {
   }
 
 
-  /**
-   * This method returns the avatar url
-   * of GitHob profile or the default image
-   */
   function getImage(){
     if(userData && userData.avatar_url){
       return (<img src={userData.avatar_url} alt="Avatar" />);
@@ -68,10 +58,7 @@ function ProfileView({userData}) {
     }
   }
 
-  /***
-   * This method returns de name of logged user
-   * or default message
-   */
+
   function getName(){
     if(userData && userData.name){
       return userData.name;
@@ -89,10 +76,6 @@ function ProfileView({userData}) {
   }
 
   
-  /**
-   * This method returns the url profile or
-   * default message
-   */
   function getGitHubProfile(){
     if(userData && userData.html_url){
       return (

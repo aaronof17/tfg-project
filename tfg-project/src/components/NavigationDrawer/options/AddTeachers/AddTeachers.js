@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect} from 'react';
+import { useState} from 'react';
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 import {saveTeacher} from "../../../../services/teacherService.js";
@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import strings from '../../../../assets/files/strings.json';
 import './AddTeachers.css';
 
-function AddTeachers({userData}) {
+function AddTeachers() {
   const [t] = useTranslation();
   const [teacherName, setTeacherName] = useState("");
   const [teacherEmail, setTeacherEmail] = useState("");
@@ -31,7 +31,7 @@ function AddTeachers({userData}) {
   };
 
   function checkData(){
-    if(teacherName === "" || teacherEmail === "" ||teacherGitUser === ""){
+    if(teacherName.trim() === "" || teacherEmail.trim() === "" ||teacherGitUser.trim() === ""){
       toast.error(t('addTeachers.dataBlank'));
       return false;
     }else{
@@ -42,7 +42,7 @@ function AddTeachers({userData}) {
   async function saveTeacherInfo(){
     if(checkData()){
       try {
-        const res = await saveTeacher(teacherName, teacherEmail, teacherGitUser);
+        const res = await saveTeacher(teacherName.trim(), teacherEmail.trim(), teacherGitUser.trim());
         if (res.response) {
           toast.info(t('addTeachers.teacherSaved'));
           setTeacherName("");

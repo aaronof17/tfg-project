@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,7 +10,6 @@ today.setDate(today.getDate() + 1);
 function TableRow({ rowData  }) {
     const [initialDate, setInitialDate] = useState(new Date());
     const [finalDate, setFinalDate] = useState(today);
-    const [t] = useTranslation();
 
     const handleInitialDateChange = (date) => {
         setInitialDate(date);
@@ -60,8 +59,6 @@ function TableRow({ rowData  }) {
 
 function GroupTable({ labGroups }) {
     const [t] = useTranslation();
-
-    
 
     return (
         <div className='table-wrapper'>

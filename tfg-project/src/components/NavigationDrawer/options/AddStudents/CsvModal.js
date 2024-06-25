@@ -1,15 +1,14 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import {toast} from "react-toastify";
 
 import Papa from 'papaparse';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
-import { useTranslation } from "react-i18next";
-import {toast} from "react-toastify";
-
 import "./CsvModal.css";
 
-function CsvModal ({closeModal, onSubmit, labgroups, existsEmail}){
+function CsvModal ({closeModal, onSubmit, labgroups, existsEmail, existsUser}){
     const [t] = useTranslation(); 
     const [data, setData] = useState([]);
     const [file, setFile] = useState(null);
@@ -23,17 +22,17 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail}){
       Papa.parse(fileParameter, {
         header: true,
         complete: (results) => {
-          console.log("Información del archivo CSV cargado:", results.data);
           checkCSVData(results.data,fileParameter)
         },
         error: (error) => {
-          console.error("Error al analizar el archivo CSV:", error);
           toast.error(t('addStudents.errorAnalizingCSV'));
         }
       });
     }
 
     async function checkCSVData(csvData,fileParameter){
+      csvData = csvData.filter(row => row.name || row.group || row.email || row.repo || row.githubuser);
+
       for (let i = 0; i < csvData.length; i++) {
         const row = csvData[i];
         if (!row.name || !row.group || !row.email || !row.repo || !row.githubuser) {
@@ -57,15 +56,20 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail}){
           toast.error(t('addStudents.studentExist') + row.email);
           return false;
         }
+
+        let userResponse = await existsUser(row.githubuser);
+        if(userResponse){
+          toast.error(t('addStudents.userExist') + row.githubuser);
+          return false;
+        }
       }
       setData(csvData);
       setFile(fileParameter);
-      console.log("Todos los campos están completos en todas las filas.");
       return true;
     }
 
     function validateFiles(files){
-      if(files.length != 1){
+      if(files.length !== 1){
         toast.error(t('addStudents.errorNumberFiles'));
       }else{
         const fileFromCsv = files[0]
@@ -138,11 +142,9 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail}){
     return (
       <div
         className="csv-modal-container"
-        onClick={(e) => {
-          if (e.target.className === "csv-modal-container") closeModal();
-        }}
       >
           <div className="csv-modal">
+          <p>{t('addStudents.csvRecommendation')}</p>
           <Button className="csv-template" onClick={downloadCSV} variant="contained" color="primary"> {t('addStudents.csvTemplate')}</Button>
             <div 
               className="dropzone"
@@ -158,6 +160,9 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail}){
                     </Grid>
                 </Grid>
               </div>
+            <Button className="cancel-btn" variant="contained" onClick={closeModal}>
+              {t('addStudents.cancel')}
+            </Button>
           </div>
       </div>
   );

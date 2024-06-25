@@ -10,7 +10,6 @@ function getRoleByGitHubUser(req,res) {
     "SELECT 'admin' AS user_type " +
     "FROM admins WHERE githubProfile = ? ";
 
-    console.log(req.body.gituser);
 
     const params = [req.body.gituser, req.body.gituser, req.body.gituser];
     connection.query(sql, params, (err, data) =>{
@@ -18,7 +17,6 @@ function getRoleByGitHubUser(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting teachers: '+ err.sqlMessage, code: err.code});
         } else {
-            console.log("sisi ",data);
             return res.status(200).json({ success: true, data: data });
         }
     })
@@ -35,7 +33,6 @@ function getTeachers(req,res) {
         }
     })
 }
-
 
 
 function getTeacherByGitHubUser(req,res) {
@@ -111,6 +108,7 @@ function editTeacher(req,res) {
     const sql = "UPDATE teachers set name=?, email=?, githubProfile=? where email=?";
 
     const params = [req.body.name,  req.body.email, req.body.githubuser, req.body.teacherID];
+    
     connection.query(sql, params ,(err, data) =>{
         if(err){
             console.log(err);

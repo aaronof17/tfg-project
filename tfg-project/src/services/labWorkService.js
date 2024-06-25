@@ -24,7 +24,6 @@ export async function saveWorks(datesFromWorks, title, description, percentage,t
           const data = await response.json(); 
 
           if(!data.success){
-            console.log("An error occurred saving mark: ", data.error);
             return { response: false, error: data.error, code:data.code};
           }
       }
@@ -51,7 +50,12 @@ export async function getLabWorks(callback, teacherID) {
         })
 
         const data = await response.json();
-        callback(data.data);
+
+        if(!data.success){
+          callback([]);
+        }else{  
+          callback(data.data);
+        }
       } catch (error) {
         console.error('Error getting lab groups:', error);
       }
@@ -72,7 +76,12 @@ export async function getActiveLabWorks(callback, teacherID) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
     } catch (error) {
       console.error('Error getting active lab groups:', error);
     }
@@ -94,9 +103,14 @@ export async function getWorksByStudent(studentEmail, callback, teacherID) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
     } catch (error) {
-      console.error('Error getting works by student:', error);
+      console.error('Error getting works for student:', error);
     }
 }
 
@@ -116,7 +130,12 @@ export async function getWorksByGroup(groupName, callback, teacherID) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
     } catch (error) {
       console.error('Error getting works by group:', error);
     }
@@ -137,7 +156,12 @@ export async function getWorksBySubject(subject, callback, teacherID) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
     } catch (error) {
       console.error('Error getting works by subject:', error);
     }
@@ -160,7 +184,6 @@ export async function getWorksByStudentAndGroup(studentId, labgroupName, teacher
 
       const data = await response.json();
       if(!data.success){
-        console.log("An error occurred getting works for student: ", data.error);
         return { response: false, error: data.error};
       }
         
@@ -188,7 +211,6 @@ export async function getWorksAndMarksByStudentAndGroup(studentId, labgroupName,
 
       const data = await response.json();
       if(!data.success){
-        console.log("An error occurred works and marks for student: ", data.error);
         return { response: false, error: data.error};
       }
         
@@ -211,7 +233,12 @@ export async function getWorksByStudentId(callback, studentId) {
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
     } catch (error) {
       console.error('Error getting works by student id:', error);
     }
@@ -219,7 +246,7 @@ export async function getWorksByStudentId(callback, studentId) {
 
 export async function getWorksBySubjectAndStudent(subject ,callback, studentId) {
   try {
-      const response = await fetch(strings.strings.host+'student/subject', {
+      const response = await fetch(strings.strings.host+'works/student/subject', {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("accessToken"),
@@ -231,7 +258,13 @@ export async function getWorksBySubjectAndStudent(subject ,callback, studentId) 
       })
 
       const data = await response.json();
-      callback(data.data);
+
+      if(!data.success){
+        callback([]);
+      }else{
+        callback(data.data);
+      }
+
     } catch (error) {
       console.error('Error getting works by student id and subject:', error);
     }
@@ -240,7 +273,6 @@ export async function getWorksBySubjectAndStudent(subject ,callback, studentId) 
 
 export async function editWork(editRow) {
   try {
-    console.log("ACTIVE ",editRow);
       const response = await fetch(strings.strings.host+'works/edit', {
           method: "POST",
           headers: {
@@ -261,7 +293,6 @@ export async function editWork(editRow) {
     const data = await response.json(); 
 
     if(!data.success){
-      console.log("An error occurred editing work: ", data.error);
       return { response: false, error: data.error, code:data.code};
     }
       
@@ -288,7 +319,6 @@ export async function deleteWork(id) {
     const data = await response.json(); 
 
     if(!data.success){
-      console.log("An error occurred deleting work: ", data.error);
       return { response: false, error: data.error};
     }
       

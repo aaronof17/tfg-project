@@ -1,6 +1,4 @@
 import * as React from 'react';
-
-import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import {getTeacherLabGroups, getLabGroupsBySubject} from "../../../../services/labGroupService.js";
 
@@ -16,7 +14,7 @@ function StudentGroup({group, labGroups, setLabGroups, subjects, subject, setSub
 
     const getSubjects= () =>{
         let options = [];
-        if(subjects != undefined){
+        if(subjects !== undefined){
             subjects.map((subject,index) => {
                 options[index] = subject.subject;
           });
@@ -25,9 +23,8 @@ function StudentGroup({group, labGroups, setLabGroups, subjects, subject, setSub
     }
 
     const getGroupsOptions= () =>{
-    console.log("grupitos ",labGroups);
         let options = [];
-        if(labGroups != undefined){
+        if(labGroups !== undefined){
             labGroups.map((l,index) => {
             options[index] = {
                 label: `${l.label}`,
@@ -49,7 +46,6 @@ function StudentGroup({group, labGroups, setLabGroups, subjects, subject, setSub
 
 
     const handleSubjectChange = (e, selectedOption) => {
-        console.log("GRUPO ",group);
         if (selectedOption) {
             const fetchFilterGroups = async () => {
                 getLabGroupsBySubject(selectedOption, teacherID, setLabGroups);

@@ -1,9 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
 import Login from './components/Login/LoginForm.js';
 import ResponsiveDrawer from './components/NavigationDrawer/NavigationDrawer.js';
-import { getAccessToken } from './functions/gitHubFunctions.js';
+import { getAccessToken } from './services/gitHubFunctions.js';
 import i18n from './i18n';
 
 function App() {
@@ -29,11 +28,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-
         {localStorage.getItem("accessToken") ? 
-        <ResponsiveDrawer rerenderPass={rerenderPass}></ResponsiveDrawer>
-        :
-        <Login/>
+          <ResponsiveDrawer rerenderPass={rerenderPass}></ResponsiveDrawer>
+          :
+          <Login/>
         }
       </header>
     </div>

@@ -14,7 +14,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import strings from '../../../../assets/files/strings.json';
 import './AddLabGroup.css';
 
-function AddLabGroup({userData}) {
+function AddLabGroup() {
   const [t] = useTranslation();
   const [groupName, setGroupName] = useState("");
   const [subject, setSubject] = useState("");
@@ -24,9 +24,7 @@ function AddLabGroup({userData}) {
   useEffect(() => {
     const fetchInfo = async () => {
       const teachers = await getTeachers();
-      console.log(teachers);
       setTeachersList(teachers);
-      
     };
 
     fetchInfo();
@@ -50,7 +48,7 @@ function AddLabGroup({userData}) {
 
   const getTeachersOptions= () =>{
     let options = [];
-    if(teachersList != undefined){
+    if(teachersList !== undefined){
       teachersList.map((teacher,index) => {
         options[index] = {
             label: `${teacher.name}`,
@@ -63,7 +61,7 @@ function AddLabGroup({userData}) {
   }
 
   function checkData(){
-    if(groupName === "" || subject === "" ||teacherAssigned === "" ){
+    if(groupName.trim() === "" || subject.trim() === "" ||teacherAssigned === "" ){
       toast.error(t('addLabGroups.dataBlank'));
       return false;
     }else{
@@ -74,7 +72,7 @@ function AddLabGroup({userData}) {
   async function saveTeacherInfo(){
     if(checkData()){
       try {
-        const res = await saveLabGroup(groupName, subject, teacherAssigned.value);
+        const res = await saveLabGroup(groupName.trim(), subject.trim(), teacherAssigned.value);
         if (res.response) {
           toast.info(t('addLabGroups.groupSaved'));
           setGroupName("");

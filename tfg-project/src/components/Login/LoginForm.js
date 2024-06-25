@@ -3,9 +3,8 @@ import es_flag from '../../assets/images/es_flag.png';
 import en_flag from '../../assets/images/en_flag.jpg';
 import {useTranslation} from "react-i18next";
 import Box from '@mui/material/Box';
-import {loginWithGitHub} from '../../functions/gitHubFunctions';
+import {loginWithGitHub} from '../../services/gitHubFunctions';
 
-const CLIENT_ID = "b771595a6c15c6653d02";
 
 function Login(){
 

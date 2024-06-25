@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-
 import {extractId} from "../../../../functions/genericFunctions.js";
-import Button from '@mui/material/Button';
 import {toast} from "react-toastify";
 import { useTranslation } from "react-i18next";
 
+import Button from '@mui/material/Button';
 import "./EditModal.css";
 
 function EditModal ({ closeModal, onSubmit, defaultValue, studentsList}){
@@ -19,14 +18,14 @@ function EditModal ({ closeModal, onSubmit, defaultValue, studentsList}){
   const [t] = useTranslation();
 
   const validateForm = () => {
-    if(formState.name === "" || formState.email === "" ||
-      formState.githubuser === "" || formState.repository === ""){
+    if(formState.name.trim() === "" || formState.email.trim() === "" ||
+      formState.githubuser.trim() === "" || formState.repository.trim() === ""){
       toast.error(t('studentList.blankInfo'));
       return false;    
-    }else if(studentsList.filter(student => student.studentsID !== extractId(formState.id)).some(student => student.email === formState.email)){
+    }else if(studentsList.filter(student => student.studentsID !== extractId(formState.id)).some(student => student.email === formState.email.trim())){
       toast.error(t('studentList.emailExists'));
       return false;
-    }else if(studentsList.filter(student => student.studentsID !== extractId(formState.id)).some(student => student.githubuser === formState.githubuser)){
+    }else if(studentsList.filter(student => student.studentsID !== extractId(formState.id)).some(student => student.githubuser === formState.githubuser.trim())){
       toast.error(t('studentList.userExists'));
       return false;
     }
@@ -47,9 +46,6 @@ function EditModal ({ closeModal, onSubmit, defaultValue, studentsList}){
   return (
     <div
       className="edit-modal-container"
-      onClick={(e) => {
-        if (e.target.className === "edit-modal-container") closeModal();
-      }}
     >
       <div className="modal">
         <form>
@@ -59,7 +55,7 @@ function EditModal ({ closeModal, onSubmit, defaultValue, studentsList}){
                 name="name" 
                 onChange={handleChange} 
                 value={formState.name}
-                maxLength={45}
+                maxLength={100}
             />
           </div>
           <div className="form-group">

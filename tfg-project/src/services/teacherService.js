@@ -1,14 +1,13 @@
-import * as CryptoJS from 'crypto-js';
-import strings from '../assets/files/strings.json';
-
+const strings = require('../assets/files/strings.json');
+const CryptoJS = require('crypto-js');
 
 const encryptToken = (token) => {
-  const encryptedToken = CryptoJS.AES.encrypt(token, 'z8Y#rT@6Mv!yP$qX').toString();
+  const encryptedToken = CryptoJS.AES.encrypt(token, strings.strings.encrypt).toString();
   return encryptedToken;
 }
 
 const decryptToken = (encryptedToken) => {
-  const decryptedBytes = CryptoJS.AES.decrypt(encryptedToken, 'z8Y#rT@6Mv!yP$qX');
+  const decryptedBytes = CryptoJS.AES.decrypt(encryptedToken, strings.strings.encrypt);
   const decryptedToken = decryptedBytes.toString(CryptoJS.enc.Utf8);
   return decryptedToken;
 }
@@ -30,21 +29,19 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           const data = await response.json(); 
 
           if(!data.success){
-            console.log("An error occurred saving token: ", data.error);
             return { response: false, error: data.error, code:data.code};
           }
           
           return { response: true, error: ""};
   
         } catch (error) {
-            return { response: false, error: "Sorry, an error occurred saving token"};
+            return { response: false, error: "Sorry, an error occurred saving token: "+error};
         }
   }
 
 
   export async function getTeacherId(callback, profileURL) {
     try {
-      console.log("perfil ", profileURL);
         const response = await fetch(strings.strings.host+'teachers/id', {
             method: "POST",
             headers: {
@@ -56,6 +53,12 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           });
         
         const data = await response.json();
+
+        if(!data.success){
+          callback("error");
+          return "error";
+        }
+
         callback(data.data[0].teacherID);
         return data.data[0].teacherID;
       } catch (error) {
@@ -77,8 +80,8 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           });
         
         const data = await response.json();
+
         const decryptedToken = await decryptToken(data.data[0].githubToken);
-        console.log("TOKEN ",decryptedToken);
         callback(decryptedToken);
       } catch (error) {
         console.error('Error getting teacher token:', error);
@@ -97,6 +100,11 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
           });
         
         const data = await response.json();
+
+        if(!data.success){
+          return [];
+        }
+
         return data.data;
       } catch (error) {
         console.error('Error getting teachers:', error);
@@ -117,6 +125,11 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
       
         
         const data = await response.json();
+
+        if(!data.success){
+          return 0;
+        }
+
         return data.data[0].count;
       } catch (error) {
         console.error('Error getting teachers:', error);
@@ -139,7 +152,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
       
         
         const data = await response.json();
-        if(data.data.length != 0){
+        if(data.data.length !== 0){
           return data.data[0].user_type
         }else{
           return "";
@@ -151,7 +164,6 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
 
   export async function saveTeacher(name, email, user) {
     try {
-  
       const response = await fetch(strings.strings.host+'teachers/save', {
           method: "POST",
           headers: {
@@ -166,15 +178,13 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
         });
       
         const data = await response.json(); 
-        console.log("data ",data);
         if(!data.success){
-          console.log("An error occurred saving teacher: ", data.error);
           return { response: false, error: data.error, code:data.code};
         }else {
           return { response: true, error: "" };
         }
     } catch (error) {
-        return { response: false, error: "Sorry, an error occurred saving teacher"};
+        return { response: false, error: "Sorry, an error occurred saving teacher " };
     }
   }
 
@@ -194,7 +204,6 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
         const data = await response.json(); 
   
         if(!data.success){
-          console.log("An error occurred deleting teacher: ", data.error);
           return { response: false, error: data.error};
         }
         return { response: true, error: ""};
@@ -203,27 +212,7 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
         return { response: false, error: "Sorry, an error occurred deleting teacher"};
     }
   }
-
-
-  export async function getStundentId(callback, githubUser) {
-    try {
-        const response = await fetch(strings.strings.host+'students/id', {
-            method: "POST",
-            headers: {
-              "Authorization": "Bearer " + localStorage.getItem("accessToken"),
-              "Content-Type": "application/json"
-            },
-            body:
-                JSON.stringify({ githubUser: githubUser })
-          });
-        
-        const data = await response.json();
-        callback(data.data[0].studentsID);
-        return data.data[0].studentsID;
-      } catch (error) {
-        console.error('Error getting student id:', error);
-      }
-  }
+  
   
   export async function editTeacher(editRow) {
     try {
@@ -245,14 +234,13 @@ export async function saveTeacherToken(teacherToken, userProfileName) {
       const data = await response.json(); 
   
       if(!data.success){
-        console.log("An error occurred editing teacher: ", data.error);
         return { response: false, error: data.error, code:data.code};
       }
         
       return { response: true, error: ""};
   
       } catch (error) {
-          return { response: false, error: "Sorry, an error occurred editing teacher"};
+          return { response: false, error: "Sorry, an error occurred editing teacher "};
       }
 }
   

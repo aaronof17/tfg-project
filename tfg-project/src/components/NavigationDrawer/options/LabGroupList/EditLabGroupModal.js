@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import {extractId} from "../../../../functions/genericFunctions.js";
 import {toast} from "react-toastify";
 import { useTranslation } from "react-i18next";
 
@@ -21,10 +20,10 @@ function EditLabGroupModal ({ closeModal, onSubmit, defaultValue, groupsList, te
   const [t] = useTranslation();
 
   const validateForm = () => {
-    if(formState.name === "" || formState.subject === "" || formState.teacherName === ""){
+    if(formState.name.trim() === "" || formState.subject.trim() === "" || formState.teacherName === ""){
       toast.error(t('groupsList.blankInfo'));
       return false;    
-    }else if(groupsList.filter(group => group.id !== formState.id).some(group => group.name === formState.name)){
+    }else if(groupsList.filter(group => group.id !== formState.id).some(group => group.name === formState.name.trim())){
       toast.error(t('groupsList.nameExists'));
       return false;
     }
@@ -52,7 +51,7 @@ function EditLabGroupModal ({ closeModal, onSubmit, defaultValue, groupsList, te
 
   const getTeachersOptions= () =>{
     let options = [];
-    if(teachersList != undefined){
+    if(teachersList !== undefined){
       teachersList.map((teacher,index) => {
         options[index] = {
             label: `${teacher.name}`,
@@ -68,9 +67,6 @@ function EditLabGroupModal ({ closeModal, onSubmit, defaultValue, groupsList, te
   return (
     <div
       className="groupedit-modal-container"
-      onClick={(e) => {
-        if (e.target.className === "groupedit-modal-container") closeModal();
-      }}
     >
       <div className="modal">
         <form>

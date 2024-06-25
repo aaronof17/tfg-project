@@ -1,10 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const simpleGit = require("simple-git");
 const multer = require('multer');
-const git = simpleGit();
-const databaseRequests = require('./databaseRequests');
+const databaseRequests = require('./databaseInfo.js');
 const markRequests = require('./databaseRequests/MarkRequests.js');
 const studentRequests = require('./databaseRequests/StudentRequests.js');
 const workRequests = require('./databaseRequests/WorkRequests.js');
@@ -14,8 +12,6 @@ const enrrolledRequests = require('./databaseRequests/EnrolledRequests.js');
 const githubRequests = require('./githubRequests.js');
 const nodemailer = require('nodemailer');
 const upload = multer({ dest: 'uploads/' });
-const fetch = (...args) =>
-import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const app = express();
 require('dotenv').config();
@@ -28,14 +24,30 @@ const transporter = nodemailer.createTransport({
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS
     }
-  });
+});
 
-app.use(cors());
+const corsOptions = {
+origin: '*', //http://156.35.98.77:3001
+methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Requested-With',
+    'X-Content-Type-Options',
+    'Accept',
+    'Origin',
+    'Access-Control-Allow-Origin'
+],
+credentials: true,
+preflightContinue: false,
+optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
 
-const path = require('path');
-const fs = require('fs');
+
 //BD---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 app.post('/role/gituser',  async function (req, res) {
@@ -53,7 +65,6 @@ app.post('/teachers/gituser',  async function (req, res) {
     return result;
 });
 
-
 app.post('/teachers/token',  async function (req, res) {
     const result = await teacherRequests.updateTeacherToken(req,res);
     return result;
@@ -64,12 +75,10 @@ app.post('/teachers/token/id',  async function (req, res) {
     return result;
 });
 
-
 app.post('/teachers/id', async function (req, res) {
     const result = await teacherRequests.getTeacherId(req,res);
     return result;
 });
-
 
 app.post('/teachers/save', async function (req, res) {
     const result = await teacherRequests.insertTeacher(req,res);
@@ -136,6 +145,11 @@ app.post('/students/email', async function (req, res) {
     return result;
 });
 
+app.post('/students/githubUser', async function (req, res) {
+    const result = await studentRequests.getIdByUser(req,res);
+    return result;
+});
+
 app.post('/works/student/id',  async function (req, res) {
     const result = await workRequests.getWorksByStudentId(req,res);
     return result;
@@ -146,18 +160,15 @@ app.post('/works/save',  async function (req, res) {
     return result;
 });
 
-
 app.post('/works/edit', async function (req, res) {
     const result = await workRequests.editWork(req,res);
     return result;
 });
 
-
 app.post('/works/delete', async function (req, res) {
     const result = await workRequests.deleteWork(req,res);
     return result;
 });
-
 
 app.post('/works', async function (req, res) {
     const result = await workRequests.getWorksByTeacherId(req,res);
@@ -168,7 +179,6 @@ app.post('/works/active', async function (req, res) {
     const result = await workRequests.getActiveWorksByTeacherId(req,res);
     return result;
 });
-
 
 app.post('/works/student', async function (req, res) {
     const result = await workRequests.getWorkByStudent(req,res);
@@ -245,7 +255,6 @@ app.post('/groups/teacher', async function (req, res) {
     return result;
 });
 
-
 app.get('/groups', async function (req, res) {
     const result = await groupRequests.getGroups(req,res);
     return result;
@@ -261,23 +270,19 @@ app.post('/subjects', async function (req, res) {
     return result;
 });
 
-
 app.post('/enrolled/save', async function (req, res) {
     const result = await enrrolledRequests.insertEnrolled(req,res);
     return result;
 });
 
-
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 app.post('/sendemail', async function  (req, res){
     const mailOptions = {
         from: process.env.SMTP_USER,
         to: req.body.studentEmail,
         subject: req.body.subject,
-        text: req.body.message
+        html: req.body.message
       };
     
       transporter.sendMail(mailOptions, (error, info) => {
@@ -290,11 +295,12 @@ app.post('/sendemail', async function  (req, res){
       });
 });
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 app.get('/login', async function  (req, res){
     res.json({ redirectUrl: "https://github.com/login/oauth/authorize?client_id="+ process.env.CLIENT_ID });
 });
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 app.get('/getAccessToken', async function (req,res){
     try {
@@ -317,16 +323,6 @@ app.post('/createIssue', async function  (req, res){
         if(error.message === 'Error: Not Found'){
             return res.status(402).json({ success: false, error: 'Not Found' });
         }
-        return res.status(500).json({ success: false, error: error });
-    }
-});
-
-
-app.post('/deleteAppToken', async function  (req, res){
-    try {
-        const result = await githubRequests.deleteAppToken(req, res);
-        return res.status(200).json({ success: true, data: result });
-    } catch (error) {
         return res.status(500).json({ success: false, error: error });
     }
 });
@@ -380,7 +376,6 @@ app.post('/commitExplanation', upload.single('file'), async function(req, res) {
         return res.status(200).json({ success: true, data: result });
     } catch (error) {
         if(error.message === 'Error: Unauthorized'){
-            console.log("q si  qsi ");
             return res.status(401).json({ success: false, error: 'Unauthorized' });
         }
         if(error.message === 'Error: Not Found'){
@@ -391,11 +386,6 @@ app.post('/commitExplanation', upload.single('file'), async function(req, res) {
 });
 
 
-app.listen(4000, function() {
-    console.log("CORS server running on port 4000");
-    databaseRequests.connection.connect(function(err){
-        if(err) throw err;
-        console.log("Database Connected");
-    }
-    );
+app.listen(4001, function() {
+    console.log("CORS server running on port 4001");
 });

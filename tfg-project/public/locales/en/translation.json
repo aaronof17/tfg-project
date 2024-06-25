@@ -17,14 +17,15 @@
         "teachersList" : "Teachers List",
         "addGroups" : "Add Lab Groups",
         "groupsList" : "Lab Group List",
-        "defaultView" : "Default View"
+        "defaultView" : "Default View",
+        "errorView" : "Error View"
     },
     "studentList" : {
         "name" : "Name",
         "username" : "Username",
         "email" : "Email",
         "githubprofile" : "GitHub Profile",
-        "repository" : "Repositorio",
+        "repository" : "Repository",
         "path" : "Ruta de directorio",
         "group" : "Group",
         "subject" : "Subject",
@@ -32,6 +33,7 @@
         "edit" : "Edit",
         "delete" : "Delete",
         "studentsBlank" : "There must be at least one student on the selected list",
+        "studentsOnlyOne" : "There must be ONE student selected",
         "downloadRepo" : "Download repositories",
         "tokenError" : "There was a problem with your token, its could be not correct or expired",
         "downloadError" : "There was an error downloading archives",
@@ -71,7 +73,7 @@
         "errorRepository" : "There was a problem with repository, it does not exists or you probably don't have access. Student: ",
         "errorEditingStudent" : "There was an error editing student",
         "dragFile" :"Drag file to the area",
-        "sendExplanation" : "Send Work Explanation",
+        "sendExplanation" : "Send PDF",
         "commitTitle" : "Commit title",
         "informationCharged" : "Information has been loaded successfully",
         "errorSomethingWentWrong" : "Something went wrong, please try again",
@@ -79,10 +81,13 @@
         "errorFormatFile" :"Error with file extension, you can only use .pdf",
         "errorNumberFiles" : "You can only use one file",
         "downloadErrorWithStudent" : "There was an error downloading archives for student ",
-        "errorSendingExplanation" : "There was an error sending work explanation",
-        "explanationSended" :"Work Explanation sended",
-        "errorSendingExplanationForStudent": "There was an error sending work explanation with student ",
-        "createExcel" : "Generate Excel"
+        "errorSendingExplanation" : "There was an error sending PDF",
+        "explanationSended" :"PDF sended",
+        "errorSendingExplanationForStudent": "There was an error sending PDF with student ",
+        "createExcel" : "Generate Excel",
+        "differentGroups" : "All the students need to be at the same lab group",
+        "infoCheckCommits" : "You can check if a student has made a late commit for any of the lab works assigned to them",
+        "infosendPDF" : "You can send PDF files to student repositories"
     },
     "makeIssue" : {
         "title" : "Title",
@@ -129,6 +134,7 @@
         "errorCSVdataBlank": "No csv field can be blank",
         "errorGroupNotFound" : "Lab group in csv not found: ",
         "studentExist" : "This student already exist, his email is: ",
+        "userExist" : "This github user already exist: ",
         "addEnrolled" : "Do you want to enroll this student in this new lab group?",
         "studentEnrolled" : "Student enrolled",
         "csvTemplate" : "CSV template",
@@ -138,7 +144,8 @@
         "errorStudentAlreadyEnrolled" : "This student is already enrolled in this lab group",
         "enrollStudent" : "Enroll student",
         "labgroup" : "Lab Group",
-        "student" : "Student"
+        "student" : "Student",
+        "csvRecommendation" : "It is recommended to use a text editor, such as notepad"
 
     },
     "createLabWork":{
@@ -210,7 +217,7 @@
         "email" : "Email",
         "avatar" : "Avatar",
         "token" : "GitHub Token",
-        "tokenInfo":"If you want to use all functions from our applications you have to add you personal access token from GitHub, if you need a tutorial use this link",
+        "tokenInfo":"If you want to use all functions from our applications you have to add you personal access token from GitHub with ALL permissions enabled. If you need a tutorial use this link: ",
         "generateToken":"link",
         "saveToken": "Save Token",
         "tokenError" : "Token can't be blank, please introduce your GitHub Personal Acess Token",
@@ -293,6 +300,10 @@
     },
     "defaultView" :{
         "message" : "Sorry, but you are not in our system. Please contact our admin to resolve any questions",
+        "email" : "Email: "
+    },
+    "errorView" : {
+        "message" : "Sorry, we are under maintenance. Come back later.",
         "email" : "Email: "
     }
 }

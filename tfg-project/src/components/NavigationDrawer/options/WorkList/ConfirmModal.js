@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-
-import Button from '@mui/material/Button';
-
+import React from "react";
 import { useTranslation } from "react-i18next";
 
+import Button from '@mui/material/Button';
 import "./ConfirmModal.css";
 
 function ConfirmModal ({closeConfirmModal, deleteRow, titleText,text}){

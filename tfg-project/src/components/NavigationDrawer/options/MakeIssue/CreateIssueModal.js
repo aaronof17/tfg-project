@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-
+import React from "react";
 import { useTranslation } from "react-i18next";
 import {toast} from "react-toastify";
 
+import Button from '@mui/material/Button';
 import "./CreateIssueModal.css";
 
 function CreateIssueModal ({ closeModal, onSubmit, title, setTitle, description, setDescription}){
@@ -20,7 +17,7 @@ function CreateIssueModal ({ closeModal, onSubmit, title, setTitle, description,
   };
 
   const validateForm = () => {
-    if(title === "" || description === ""){
+    if(title.trim() === "" || description.trim() === ""){
        toast.error(t('makeIssue.dataBlank'));
        return false;
     }
@@ -34,11 +31,15 @@ function CreateIssueModal ({ closeModal, onSubmit, title, setTitle, description,
 
   };
 
+
+  const handleCancel = (e) => {
+    setTitle("");
+    setDescription("");
+    closeModal();
+  };
+
   return (
     <div className="create-issue-modal-container"
-        onClick={(e) => {
-            if (e.target.className === "create-issue-modal-container") closeModal();
-        }}
     >
         <div className="modal">
         <form>
@@ -61,6 +62,9 @@ function CreateIssueModal ({ closeModal, onSubmit, title, setTitle, description,
           
           <Button className="confirm-btn" variant="contained" onClick={handleSubmit}>
                     {t('makeIssue.sendIssue')}
+          </Button>
+          <Button className="cancel-btn" variant="contained" onClick={handleCancel}>
+                    {t('addStudents.cancel')}
           </Button>
         </form>
         </div>

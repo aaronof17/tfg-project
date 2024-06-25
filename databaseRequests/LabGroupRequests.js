@@ -135,7 +135,16 @@ function editGroup(req,res){
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error saving: '+ err.sqlMessage, code: err.code});
         } else {
-            return res.status(200).json({ success: true, data: data });
+            const sql2 = "update worklabs set teacherIDFK =? where labgroupNameFK=?";
+            const params2 = [req.body.teacherID, req.body.name];
+            connection.query(sql2, params2 ,(err, data) =>{
+                if(err){
+                    console.log(err);
+                    return res.status(500).json({ success: false, error: 'Error saving: '+ err.sqlMessage, code: err.code});
+                } else {                    
+                    return res.status(200).json({ success: true, data: data });
+                }
+            })
         }
     })
 }

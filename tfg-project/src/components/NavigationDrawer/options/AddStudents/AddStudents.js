@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import {getTeacherId} from "../../../../services/teacherService.js";
 import {getTeacherLabGroups,getSubjectsFromGroup} from "../../../../services/labGroupService.js";
-import {saveStudent, getIdByEmail} from "../../../../services/studentService.js";
+import {saveStudent, getIdByEmail, getIdByUser} from "../../../../services/studentService.js";
 import {saveEnrolled} from "../../../../services/enrolledService.js";
 import {extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import {toast} from "react-toastify";
@@ -15,56 +15,98 @@ import RewriteModal from '../../../Modal/RewriteModal.js';
 import EnrollModal from './EnrollModal.js';
 
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 import strings from '../../../../assets/files/strings.json';
 import './AddStudents.css';
 
 function AddStudents({userData}) {
-    const [t] = useTranslation();
-    const [teacherID, setTeacherID] = useState("");
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [user, setUser] = useState("");
-    const [repository, setRepository] = useState("");
-    const [subject, setSubject] = useState("");
-    const [group, setGroup] = useState("");
-    const [labGroups, setLabGroups] = useState([]);
-    const [subjects, setSubjects] = useState([]);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [rewriteModalOpen, setRewriteModalOpen] = useState(false);
-    const [enrollModalOpen, setEnrollModalOpen] = useState(false);
-    const [studentId, setStudentId] = useState(null);
+  const [t] = useTranslation();
+  const [teacherID, setTeacherID] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [user, setUser] = useState("");
+  const [repository, setRepository] = useState("");
+  const [subject, setSubject] = useState("");
+  const [group, setGroup] = useState("");
+  const [labGroups, setLabGroups] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [rewriteModalOpen, setRewriteModalOpen] = useState(false);
+  const [enrollModalOpen, setEnrollModalOpen] = useState(false);
+  const [studentId, setStudentId] = useState(null);
 
 
-    useEffect(() => {
-        const fetchInfo = async () => {
-            const id = await getTeacherId(setTeacherID,userData.login);
-            getTeacherLabGroups(setLabGroups,id);
-            getSubjectsFromGroup(setSubjects,id);
-        };
-    
-        fetchInfo();
-      }, []);
+  useEffect(() => {
+      const fetchInfo = async () => {
+          const id = await getTeacherId(setTeacherID,userData.login);
+          getTeacherLabGroups(setLabGroups,id);
+          getSubjectsFromGroup(setSubjects,id);
+      };
+  
+      fetchInfo();
+    }, []);
 
-    const handleSaveCsv = async (data) => {
-      for (let element of data) {
-        try {
-          console.log("Elemento ",element);
-          await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group, false);
-        } catch (error) {
-          toast.error(t('addStudents.errorSavingStudent'));
-          return;
+  const handleSaveCsv = async (data) => {
+    for (let element of data) {
+      try {
+        await saveStudentInfo(element.name, element.email, element.githubuser, element.repo, element.group, false);
+      } catch (error) {
+        toast.error(t('addStudents.errorSavingStudent'));
+        return;
+      }
+    }
+    toast.info(t('addStudents.studentsSaved'));
+  };
+
+  const enrollStudent = async (studentToEnroll,groupEnroll,repositoryForStudent) => {
+    saveEnrolled(studentToEnroll, groupEnroll, repositoryForStudent).then((res)=>{
+      if(res.response){
+          toast.info(t('addStudents.studentEnrolled'));
+      }else{
+        if(res.code === strings.errors.dupentry){
+          toast.error(t('addStudents.errorStudentAlreadyEnrolled'));
+        }else{
+          toast.error(t('addStudents.errorSavingEnroled'));
         }
       }
-      toast.info(t('addStudents.studentsSaved'));
-    };
+    });
+  }
 
-    const enrollStudent = async (studentToEnroll,groupEnroll,repositoryForStudent) => {
-      saveEnrolled(studentToEnroll, groupEnroll, repositoryForStudent).then((res)=>{
+
+  function checkData(studentName, studentEmail, studentUser, 
+    studentRepository, studentGroup){
+    if(studentName.trim() === "" || studentEmail.trim() === "" ||studentUser.trim() === ""
+    || studentRepository.trim() === "" || studentGroup === ""){
+      if(studentName.trim() === ""){
+        toast.error(t('addStudents.errorWithStudent')+t('addStudents.dataBlank'));
+      }else{
+        toast.error(t('addStudents.errorWithStudent')+studentName+':'+t('addStudents.dataBlank'));
+      }
+      return false;
+    }else{
+      return true;
+    }
+  } 
+
+  function saveCsv(){
+    setModalOpen(true);
+  }
+
+  function openEnrollModal(){
+    setEnrollModalOpen(true);
+  }
+
+  function addEnrolled(){
+    saveEnrolled(studentId, group.label, repository.trim()).then((res)=>{
         if(res.response){
             toast.info(t('addStudents.studentEnrolled'));
+            setName("");
+            setEmail("");
+            setUser("");
+            setRepository("");
+            setSubject("");
+            setGroup("");
         }else{
           if(res.code === strings.errors.dupentry){
             toast.error(t('addStudents.errorStudentAlreadyEnrolled'));
@@ -73,78 +115,48 @@ function AddStudents({userData}) {
           }
         }
     });
-    }
-
-
-    function checkData(studentName, studentEmail, studentUser, 
-      studentRepository, studentGroup){
-      if(studentName === "" || studentEmail === "" ||studentUser === ""
-      || studentRepository === "" || studentGroup === ""){
-        if(studentName === ""){
-          toast.error(t('addStudents.errorWithStudent')+':'+t('addStudents.dataBlank'));
-        }else{
-          toast.error(t('addStudents.errorWithStudent')+studentName+':'+t('addStudents.dataBlank'));
-        }
-        return false;
-      }else{
-        return true;
-      }
-    } 
-
-    function saveCsv(){
-      setModalOpen(true);
-    }
-
-    function openEnrollModal(){
-      setEnrollModalOpen(true);
   }
 
-    function addEnrolled(){
-      saveEnrolled(studentId, group.label, repository).then((res)=>{
-          if(res.response){
-              toast.info(t('addStudents.studentEnrolled'));
-              setName("");
-              setEmail("");
-              setUser("");
-              setRepository("");
-              setSubject("");
-              setGroup("");
-          }else{
-            if(res.code === strings.errors.dupentry){
-              toast.error(t('addStudents.errorStudentAlreadyEnrolled'));
+  async function existsEmail(actualEmail){
+    try {
+        const res = await getIdByEmail(actualEmail.trim());
+        if (res.response) {
+            if(!isNaN(res.data)){
+              setStudentId(res.data);
+              return true;
             }else{
-              toast.error(t('addStudents.errorSavingEnroled'));
+              return false;
             }
-          }
-      });
+        }
+    } catch (error) {
+        return false;
     }
+  }
 
-    async function existsEmail(actualEmail){
-      try {
-          const res = await getIdByEmail(actualEmail);
-          if (res.response) {
-              if(!isNaN(res.data)){
-                setStudentId(res.data);
-                return true;
-              }else{
-                return false;
-              }
-          }
-      } catch (error) {
-          console.error('Error checking email count:', error);
-          return false;
-      }
+  async function existsUser(actualUser){
+    try {
+        const res = await getIdByUser(actualUser.trim());
+        if (res.response) {
+            if(!isNaN(res.data)){
+              setStudentId(res.data);
+              return true;
+            }else{
+              return false;
+            }
+        }
+    } catch (error) {
+        return false;
     }
-
+  }
 
   async function saveStudentInfo(studentName, studentEmail, studentUser, studentRepository, studentGroup, onlyOne=true){
       if(checkData(studentName, studentEmail, studentUser, studentRepository, studentGroup)){
         try {
           const emailExists = await existsEmail(studentEmail);
-          if(emailExists){
+          if(emailExists && onlyOne){
             setRewriteModalOpen(true);
           }else{
-            const res = await saveStudent(studentName, studentEmail, studentUser, studentRepository, studentGroup.label);
+            const res = await saveStudent(studentName.trim(), studentEmail.trim(), studentUser.trim(), studentRepository.trim(), studentGroup.label);
             if (res.response) {
               if(onlyOne){
                 toast.info(t('addStudents.studentSaved'));
@@ -167,7 +179,7 @@ function AddStudents({userData}) {
           toast.error(t('addStudents.errorSavingStudent'));
         }
       }
-    }
+  }
 
 
   return (
@@ -207,6 +219,7 @@ function AddStudents({userData}) {
             onSubmit={handleSaveCsv}
             labgroups={labGroups}
             existsEmail={existsEmail}
+            existsUser={existsUser}
           />
         )}
         {rewriteModalOpen && (
@@ -225,7 +238,7 @@ function AddStudents({userData}) {
                   setEnrollModalOpen(false);
                 }}
                 onSubmit={enrollStudent}
-                labGroups={labGroups}
+                teacherID={teacherID}
                 />
         )}
     </div>

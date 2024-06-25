@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-
-import Button from '@mui/material/Button';
-
+import React from "react";
 import { useTranslation } from "react-i18next";
 
+import Button from '@mui/material/Button';
 import "./InformationModal.css";
 
 function InformationModal ({closeModal, outOfTimeCommits}){
@@ -22,7 +20,7 @@ function InformationModal ({closeModal, outOfTimeCommits}){
       URL.revokeObjectURL(url);
   };
 
-  if(outOfTimeCommits.length != 0)
+  if(outOfTimeCommits.length !== 0)
   return (
     <div
       className="info-modal-container"
@@ -33,7 +31,7 @@ function InformationModal ({closeModal, outOfTimeCommits}){
       <div className="info-modal">
         <Button onClick={downloadJSON} variant="contained" color="primary"> {t('studentList.download')}</Button>
         {outOfTimeCommits.map((commitInfo)=>{
-          if(commitInfo.messageType == 'commit'){
+          if(commitInfo.messageType === 'commit'){
             return(
               <div className="commit-container">
                 <p>
@@ -51,7 +49,7 @@ function InformationModal ({closeModal, outOfTimeCommits}){
               </div>
             );
 
-          }else if(commitInfo.messageType == 'withoutWorks'){
+          }else if(commitInfo.messageType === 'withoutWorks'){
             return(
               <div className="commit-container">
                 <p>
@@ -60,7 +58,7 @@ function InformationModal ({closeModal, outOfTimeCommits}){
                 </p>
               </div>
             );
-          }else if(commitInfo.messageType == 'withoutCommit'){
+          }else if(commitInfo.messageType === 'withoutCommit'){
             return(
               <div className="commit-container">
                 <p>

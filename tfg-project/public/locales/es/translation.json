@@ -17,7 +17,8 @@
         "teachersList" : "Lista de Profesores",
         "addGroups" : "Añadir grupo de laboratorio",
         "groupsList" : "Lista de grupos de laboratorio",
-        "defaultView" : "Vista predeterminada"
+        "defaultView" : "Vista predeterminada",
+        "errorView" : "Vista de Error"
 
     },
     "studentList" : {
@@ -33,6 +34,7 @@
         "edit" : "Editar",
         "delete" : "Eliminar",
         "studentsBlank" : "Selecciona al menos un estudiante",
+        "studentsOnlyOne" : "Se debe seleccionar UN estudiante",
         "downloadRepo" : "Descargar repositorios",
         "tokenError" : "Hubo un problema con tu token, puede que no sea correcto o esté caducado",
         "downloadError" : "Hubo un problema descargando los archivos",
@@ -54,7 +56,7 @@
         "commitErrorForStudent" : "Hubo un error al obtener los commits de ",
         "pathBlank" : "La ruta de directorio no puede ser vacía para: ",
         "checkingDateError" : "Hubo un error intentando comprobar las fechas de las prácticas de laboratorio",
-        "checkWorksDates" : "Comprobar fecha de prácticas de laboratorio",
+        "checkWorksDates" : "Comprobar commits",
         "errorGettingWorksForStudent" : "Hubo un error obteniendo los trabajos para ",
         "messageForOOTCommitStudent" : "Estudiante: ",
         "messageForOOTCommitWithoutWorks" : " no tiene prácticas de laboratorio asociadas a su grupo ",
@@ -72,7 +74,7 @@
         "errorRepository" : "Hubo un problema con el repositorio, o no existe o probablemente no tengas acceso a él. Alumno: ",
         "errorEditingStudent" : "Hubo un error editando el estudiante",
         "dragFile" :"Arrastra el archivo al area",
-        "sendExplanation" : "Enviar enunciado",
+        "sendExplanation" : "Enviar PDF",
         "commitTitle" : "Titulo del commit",
         "informationCharged" : "La información se ha cargado con éxito",
         "errorSomethingWentWrong" : "Algo ha ido mal, pruébelo en otro momento",
@@ -83,7 +85,11 @@
         "errorSendingExplanation" : "Hubo un problema enviando el enunciado",
         "explanationSended" :"Enunciado enviado",
         "errorSendingExplanationForStudent": "Hubo un problema enviando el enunciado con el alumno ",
-        "createExcel" : "Generar Excel"
+        "createExcel" : "Generar Excel",
+        "differentGroups" : "Todos los estudiantes tienen que estar en el mismo grupo de laboratorio",
+        "infoCheckCommits" : "Puedes comprobar si un alumno ha realizado un commit fuera de plazo para alguna de las prácticas que tiene asignadas",
+        "infosendPDF" : "Puedes enviar archivos PDF a los repositorios de los alumnos"
+
     },
     "makeIssue" : {
         "title" : "Título",
@@ -129,13 +135,18 @@
         "errorCSVdataBlank": "Ningún campo del csv puede estar en blanco",
         "errorGroupNotFound" : "Un grupo de laboratorio del csv no existe: ",
         "studentExist" : "Este estudiante ya existe, su email es: ",
-        "addEnrrolled" : "¿Quiéres matricularlo en este grupo de laboratorio?",
-        "studentEnrolled" : "Estudiante matriculado",
+        "userExist" : "Este perfil de github ya existe: ",
+        "addEnrolled" : "¿Quiéres incluirlo en este grupo de laboratorio?",
+        "studentEnrolled" : "Estudiante incluido",
         "csvTemplate" : "Plantilla de csv",
         "errorWithStudent" : "Error con estudiante ",
         "errorExist" : " ya existe",
-        "errorSavingEnroled" : "Hubo un error matriculando al alumno",
-        "errorStudentAlreadyEnrolled" : "Este estudiante ya está matriculado en este grupo"
+        "errorSavingEnroled" : "Hubo un error incluyendo al alumno",
+        "errorStudentAlreadyEnrolled" : "Este estudiante ya está incluido en este grupo",
+        "enrollStudent" : "Incluir alumno",
+        "labgroup" : "Grupo de laboratorio",
+        "student" : "Alumno",
+        "csvRecommendation" : "Se recomienda usar un editor de texto, como el bloc de notas"
     },
     "createLabWork":{
         "subjectFilter" : "Asignatura",
@@ -206,7 +217,7 @@
         "email" : "Email",
         "avatar" : "Foto de perfil",
         "token" : "Token de GitHub",
-        "tokenInfo":"Para realizar las principales funciones de la aplicación es necesario introducir el token de acceso generado en su perfil de GitHub, puede saber como generarlo desde este enlace",
+        "tokenInfo":"Para realizar las principales funciones de la aplicación es necesario introducir el token de acceso generado en su perfil de GitHub con TODOS los permisos. Puede ver en este tutorial como generarlo:",
         "generateToken":"enlace",
         "saveToken": "Guardar Token",
         "tokenError" : "El token no puede estar vacío, porfavor introduce tu token de GitHub",
@@ -289,6 +300,10 @@
     },
     "defaultView" :{
         "message" : "Lo sentimos, pero no estás en nuestro sistema. Porfavor contacta con nuestro administrador para resolver cualquier duda",
+        "email" : "Email: "
+    },
+    "errorView" : {
+        "message" : "Lo sentimos, estamos en mantenimiento. Vuelva más tarde.",
         "email" : "Email: "
     }
 }

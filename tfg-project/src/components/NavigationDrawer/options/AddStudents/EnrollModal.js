@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 
 import { getAllStudents } from "../../../../services/studentService.js";
+import {getTeacherLabGroups} from "../../../../services/labGroupService.js";
 import {toast} from "react-toastify";
 import { useTranslation } from "react-i18next";
 
@@ -10,15 +11,17 @@ import TextField from '@mui/material/TextField';
 
 import "./EnrollModal.css";
 
-function EnrollModal ({ closeModal, onSubmit, labGroups}){
+function EnrollModal ({ closeModal, onSubmit,teacherID}){
   const [t] = useTranslation();
   const [studentToEnroll, setStudentToEnroll] = useState("");
   const [groupEnroll, setGroupEnroll] = useState("");
   const [repository, setRepository] = useState("");
   const [allStudents, setAllStudents] = useState([]);
+  const [labGroups, setLabGroups] = useState([]);
 
   useEffect(() => {
     const fetchInfo = async () => {
+      getTeacherLabGroups(setLabGroups,teacherID);
       getAllStudents(setAllStudents);
     };
 
@@ -47,7 +50,7 @@ function EnrollModal ({ closeModal, onSubmit, labGroups}){
 
   const getGroupsOptions= () =>{
     let options = [];
-    if(labGroups != undefined){
+    if(labGroups !== undefined){
       labGroups.map((group,index) => {
         options[index] = {
             label: group.label,
@@ -60,7 +63,7 @@ function EnrollModal ({ closeModal, onSubmit, labGroups}){
 
   const getStudentsOptions= () =>{
     let options = [];
-    if(allStudents != undefined){
+    if(allStudents !== undefined){
       allStudents.map((student,index) => {
         options[index] = {
           label: student.name+" - "+student.email,
@@ -72,13 +75,12 @@ function EnrollModal ({ closeModal, onSubmit, labGroups}){
   }
 
   const validateForm = () => {
-    if(studentToEnroll === "" || groupEnroll === "" || repository === ""){
+    if(studentToEnroll === "" || groupEnroll === "" || repository.trim() === ""){
       toast.error(t('addStudents.dataBlank'));
       return false;    
     }
     return true;
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,19 +89,9 @@ function EnrollModal ({ closeModal, onSubmit, labGroups}){
     closeModal();
   };
 
-  const closeModalMethod = ()=>{
-    setAllStudents("");
-    setGroupEnroll("");
-    setStudentToEnroll("");
-    closeModal();
-  }
-
   return (
     <div
       className="enroll-modal-container"
-      onClick={(e) => {
-        if (e.target.className === "enroll-modal-container") closeModalMethod();
-      }}
     >
      <div className="modal">
         <form>

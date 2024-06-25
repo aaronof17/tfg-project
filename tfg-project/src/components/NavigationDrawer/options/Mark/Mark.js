@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { useState, useEffect} from 'react';
 import { useTranslation } from "react-i18next";
-
 import {getActiveLabWorks,getWorksByStudent } from "../../../../services/labWorkService.js";
 import {getStudentsWithoutRepo,getStudentsByWork} from "../../../../services/studentService.js";
 import {getTeacherId} from "../../../../services/teacherService.js";
 import {saveMark,getMarkByWorkAndStudent,editMark } from "../../../../services/markService.js";
 import {getInfoFromFilterMark, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
-import { sendEmail } from '../../../../functions/senEmail.js';
-import {toast, ToastContainer} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { sendEmail } from '../../../../functions/sendEmail.js';
+import {toast} from "react-toastify";
 
+import 'react-toastify/dist/ReactToastify.css';
 import './Mark.css';
 import strings from '../../../../assets/files/strings.json';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -46,7 +45,7 @@ function Mark({userData}){
 
     const getWorks= () =>{
         let options = [];
-        if(labworks != undefined){
+        if(labworks !== undefined){
             labworks.map((work,index) => {
                 options[index] = {
                     label: `${work.title} - ${work.labgroupNameFK}`,
@@ -60,7 +59,7 @@ function Mark({userData}){
 
     const getStudentsOptions= () =>{
         let options = [];
-        if(students != undefined){
+        if(students !== undefined){
             students.map((student,index) => {
                 options[index] = {
                     label: `${student.name} - ${student.email}`,
@@ -115,6 +114,12 @@ function Mark({userData}){
                     setComment("");
                     setMarkNumber(0);
                     sendEmailMessage();
+                    const fetchInfo = async () => {
+                        getActiveLabWorks(setLabWorks,teacherID);
+                        getStudentsWithoutRepo(setStudents,teacherID);
+                    };
+                
+                    fetchInfo();
                 }else{
                     if(res.code === strings.errors.dupentry){
                         toast.error(extractDuplicateEntry(res.error)+t('mark.errorExist'));
@@ -132,13 +137,12 @@ function Mark({userData}){
                 return res.data !== 0;
             }
         } catch (error) {
-            console.error('Error checking mark existence:', error);
             return false;
         }
     }
 
     async function saveMarkButton(){
-        if(comment === "" || markNumber === "" || isNaN(markNumber)){
+        if(comment.trim() === "" || markNumber === "" || isNaN(markNumber)){
             toast.error(t('mark.dataBlankError'));
         }else{
             if(actualStudent === "" || actualWork=== ""){
@@ -157,6 +161,12 @@ function Mark({userData}){
                             setMarkNumber("");
                             setComment("");
                             sendEmailMessage();
+                            const fetchInfo = async () => {
+                                getActiveLabWorks(setLabWorks,teacherID);
+                                getStudentsWithoutRepo(setStudents,teacherID);
+                            };
+                        
+                            fetchInfo();
                         }else{
                             if(res.code === strings.errors.dupentry){
                                 toast.error(extractDuplicateEntry(res.error)+t('mark.errorExist'));

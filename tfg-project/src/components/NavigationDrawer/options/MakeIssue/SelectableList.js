@@ -11,6 +11,13 @@ import IconButton from '@mui/material/IconButton';
 function SelectableList({ availableStudents, setAvailableStudents, selectedStudents, setSelectedStudents }) {
     const [t] = useTranslation();
 
+    const truncateName = (name, maxLength = 30) => {
+        if (name.length > maxLength) {
+            return name.substring(0, maxLength) + '...';
+        }
+        return name;
+    };
+
     const handleToggleSelect = (student) => {
         const isSelected = selectedStudents.some((s) => (s.name+"-"+s.labgroup) === (student.name+"-"+student.labgroup));
 
@@ -41,7 +48,7 @@ function SelectableList({ availableStudents, setAvailableStudents, selectedStude
                     <ul>
                         {availableStudents.map((student) => (
                             <li key={student.name+"-"+student.labgroup}>
-                                {student.name+"-"+student.labgroup}
+                                {truncateName(student.name)+"-"+student.labgroup}
                                 <IconButton 
                                     aria-label="move-right" 
                                     className="move-right"
@@ -76,7 +83,7 @@ function SelectableList({ availableStudents, setAvailableStudents, selectedStude
                     <ul>
                         {selectedStudents.map((student) => (
                             <li key={student.name+"-"+student.labgroup}>
-                                {student.name+"-"+student.labgroup}
+                                {truncateName(student.name)+"-"+student.labgroup}
                                 <IconButton 
                                     aria-label="move-left" 
                                     className="move-left"

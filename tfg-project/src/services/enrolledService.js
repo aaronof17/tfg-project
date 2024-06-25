@@ -29,12 +29,11 @@ export async function saveEnrolled(studentId, groupId, repository) {
         const data = await response.json(); 
 
         if(!data.success){
-            console.log("An error occurred saving enrolled: ", data.error);
             return { response: false, error: data.error, code:data.code};
         }
         return { response: true, error: ""};
 
       } catch (error) {
-          return { response: false, error: "Sorry, an error occurred saving enrolled "+error};
+          return { response: false, error: "Sorry, an error occurred saving enrolled "};
       }
   }

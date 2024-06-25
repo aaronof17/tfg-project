@@ -20,22 +20,6 @@ async function getAccessToken(req, res) {
 }
 
 
-async function deleteAppToken(req, res) {
-    const token = req.body.token;
-    const response = await fetch("https://api.github.com/applications/"+CLIENT_ID+"/token", {
-        method: "DELETE",
-        headers: {
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({
-            access_token: CLIENT_SECRET
-        })
-    });
-    const data = await response.json();
-    return data;
-}
-
-
 async function createIssue(req, res) {
     const userName = req.body.user;
     const repo = req.body.repo;
@@ -159,7 +143,6 @@ async function createExplanationCommit(req, res) {
                 return { message: 'El archivo ya existe y no se ha modificado' };
             }
 
-            // Si los hashes no coinciden, actualiza el archivo
             const commitData = {
                 message: commitMessage,
                 content: pdfContent.toString('base64'),
@@ -208,4 +191,4 @@ async function createExplanationCommit(req, res) {
     }
 }
 
-module.exports = { getAccessToken, createExplanationCommit, createIssue, getUserData, getFinalCommitInfo, downloadRepo, deleteAppToken};
+module.exports = { getAccessToken, createExplanationCommit, createIssue, getUserData, getFinalCommitInfo, downloadRepo};

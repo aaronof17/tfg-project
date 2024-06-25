@@ -5,9 +5,8 @@
 
 .selectable-list-container {
     flex: 1;
-    padding: 0 10px;
     background: #dbdbdb;
-    margin-top: 5rem;
+    margin-top: 2rem;
     padding: 2rem;
     border-radius: 5px;
 }

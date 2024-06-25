@@ -1,5 +1,5 @@
 export function getJSON(yourUrl){
-    var Httpreq = new XMLHttpRequest(); // a new request
+    var Httpreq = new XMLHttpRequest(); 
     Httpreq.open("GET",yourUrl,false);
     Httpreq.send(null);
     return Httpreq.responseText;          
@@ -11,7 +11,7 @@ export function calculateWidth(list, uppercase=false, itsURL=false){
     if(uppercase){
         return longestOption * approximateCharWidth * 2;
     }else if(itsURL){
-        approximateCharWidth = 5;
+        approximateCharWidth = 3;
         return longestOption * approximateCharWidth;
     }else{
         return longestOption * approximateCharWidth;

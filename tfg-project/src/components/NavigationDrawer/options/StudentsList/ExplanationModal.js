@@ -1,11 +1,10 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import {toast} from "react-toastify";
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-
-import { useTranslation } from "react-i18next";
-import {toast} from "react-toastify";
 
 import "./ExplanationModal.css";
 
@@ -20,12 +19,12 @@ function ExplanationModal ({closeModal, onSubmit}){
     };
 
     const handleCommitTitleChange = (e) => {
-      setCommitTitle(e.target.value);
+      setCommitTitle(e.target.value.trim());
     };
 
     function validateFiles(files){
-      if(files.length != 1){
-        toast.error(t('addStustudentListents.errorNumberFiles'));
+      if(files.length !== 1){
+        toast.error(t('studentList.errorNumberFiles'));
       }else{
         const fileFromExplanation = files[0]
         if(!fileFromExplanation.name.endsWith('.pdf')){ 
@@ -38,7 +37,7 @@ function ExplanationModal ({closeModal, onSubmit}){
 
     const handleSaveExplanation = (e) => {
       if(file){
-        if(commitTitle != ""){
+        if(commitTitle !== ""){
           onSubmit(file,commitTitle);
           closeModal();
         }else{
@@ -69,9 +68,6 @@ function ExplanationModal ({closeModal, onSubmit}){
     if(file) return(
       <div
         className="explanation-modal-container"
-        onClick={(e) => {
-          if (e.target.className === "explanation-modal-container") closeModal();
-        }}
       >
         <div className="explanation-modal">
           <Grid container spacing={2}>
@@ -106,9 +102,6 @@ function ExplanationModal ({closeModal, onSubmit}){
     return (
       <div
         className="explanation-modal-container"
-        onClick={(e) => {
-          if (e.target.className === "explanation-modal-container") closeModal();
-        }}
       >
           <div className="explanation-modal">
             <div 

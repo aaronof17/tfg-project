@@ -21,10 +21,15 @@
     background-color: rgb(202, 202, 202);
 }
 
+.buttons{
+    display: flex;
+    justify-content: center;
+}
+
 .buttons .downloadRepo,
-.buttons .checkWorksDates,
+.buttons .button-check-commits,
 .buttons .createExcel,
-.buttons .commitPDF{
+.buttons .button-send-pdf{
     margin-left: 2%;
     margin-right: 2%;
 }

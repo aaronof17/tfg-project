@@ -2,22 +2,19 @@ import  React, {useState, useEffect} from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-
 import {calculateWidth, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import {getLabGroups, deleteLabGroup, editLabGroup} from "../../../../services/labGroupService.js";
 import {getTeachers} from "../../../../services/teacherService.js";
 
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import RewriteModal from '../../../Modal/RewriteModal.js';
 import EditLabGroupModal from './EditLabGroupModal.js';
-import './LabGroupList.css';
 import strings from '../../../../assets/files/strings.json';
+import './LabGroupList.css';
 
-
-function LabGroupList({userData}) {
+function LabGroupList() {
     const [groupsList, setGroupsList] = useState([]);
     const [teachersList, setTeachersList] = useState([]);
     const [selectedGroups, setSelectedGroups] = useState([]);
@@ -30,10 +27,8 @@ function LabGroupList({userData}) {
     useEffect(() => {
       const fetchInfo = async () => {
         const labgroups = await getLabGroups();
-        console.log(labgroups);
         setGroupsList(labgroups);
         const teachers = await getTeachers();
-        console.log(teachers);
         setTeachersList(teachers);
       };
 
@@ -44,15 +39,15 @@ function LabGroupList({userData}) {
 
     const getColumns = () =>{
       let columns = [];
-      if(groupsList != undefined){
+      if(groupsList !== undefined){
         columns = [ 
           { field: 'name', headerName: t('groupsList.name'), width: calculateWidth([...groupsList.map((group) => group.name), t('groupsList.name')], true) },
           { field: 'subject', headerName: t('groupsList.subject'), width: calculateWidth([...groupsList.map((group) => group.subject), t('groupsList.subject')], true) },
-          { field: 'teacherName', headerName: t('groupsList.teacherName'), width: calculateWidth([...groupsList.map((group) => group.teacherName), t('groupsList.teacherName')]) },
+          { field: 'teacherName', headerName: t('groupsList.teacherName'), width:270 },
           {
             field: 'actions',
             headerName: t('groupsList.actions'),
-            width: 150,
+            width: 100,
             renderCell: (params) => {
               return (
                 <div>
@@ -104,7 +99,6 @@ function LabGroupList({userData}) {
     }
 
 
-
     const handleSelectionChange = (ids) => {
       const selectedIDs = new Set(ids);
       const selectedRows = getRows().filter((row) =>
@@ -114,8 +108,8 @@ function LabGroupList({userData}) {
     };
 
 
-    function deleteTeacherMethod(){
-      if(rowToDelete != ""){
+    function deleteGroupMethod(){
+      if(rowToDelete !== ""){
         deleteLabGroup(rowToDelete).then((res)=>{
           if(res.response){
             getLabGroups().then((groupsGetted)=>{
@@ -160,53 +154,53 @@ function LabGroupList({userData}) {
 
 
   if(groupsList.length !== 0)
-  return (
-  <div className="groups-wrapper">
-    <div className="groups-wrapper-container">
-      <DataGrid
-        className="groups-table"
-        rows={getRows()}
-        columns={getColumns()}
-        initialState={{
-          pagination: { 
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSize={5}
-        onRowSelectionModelChange ={handleSelectionChange}
-      />
-      {deleteModalOpen && (
-        <RewriteModal
-          closeRewriteModal={() => {
-          setDeleteModalOpen(false);
-          setRowToDelete("");
-          }}
-          genericFunction={deleteTeacherMethod}
-          text1={t('groupsList.deleteGroup')}
-          text2={t('groupsList.groupInfo')}
-        />
-      )}
-      {editModalOpen && (
-          <EditLabGroupModal
-            closeModal={() => {
-              setEditModalOpen(false);
-              setRowToEdit("");
-            }}
-            onSubmit={handleEditRow}
-            defaultValue={rowToEdit}
-            groupsList={groupsList}
-            teachersList={teachersList}
-          />
-        )} 
-    </div>
-    </div>
-  );
-
-  return (
+    return (
     <div className="groups-wrapper">
-      <h3>{t('groupsList.groupsListEmpty')}</h3>
-    </div>
-  );
+      <div className="groups-wrapper-container">
+        <DataGrid
+          className="groups-table"
+          rows={getRows()}
+          columns={getColumns()}
+          initialState={{
+            pagination: { 
+              paginationModel: { page: 0, pageSize: 5 },
+            },
+          }}
+          pageSize={5}
+          onRowSelectionModelChange ={handleSelectionChange}
+        />
+        {deleteModalOpen && (
+          <RewriteModal
+            closeRewriteModal={() => {
+            setDeleteModalOpen(false);
+            setRowToDelete("");
+            }}
+            genericFunction={deleteGroupMethod}
+            text1={t('groupsList.deleteGroup')}
+            text2={t('groupsList.groupInfo')}
+          />
+        )}
+        {editModalOpen && (
+            <EditLabGroupModal
+              closeModal={() => {
+                setEditModalOpen(false);
+                setRowToEdit("");
+              }}
+              onSubmit={handleEditRow}
+              defaultValue={rowToEdit}
+              groupsList={groupsList}
+              teachersList={teachersList}
+            />
+          )} 
+      </div>
+      </div>
+    );
+
+    return (
+      <div className="groups-wrapper">
+        <h3>{t('groupsList.groupsListEmpty')}</h3>
+      </div>
+    );
 }
 
 

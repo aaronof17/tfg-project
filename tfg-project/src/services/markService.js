@@ -20,7 +20,6 @@ export async function saveMark(work, student, comment, mark) {
         const data = await response.json(); 
 
         if(!data.success){
-          console.log("An error occurred saving mark: ", data.error);
           return { response: false, error: data.error, code:data.code};
         }
         
@@ -52,7 +51,6 @@ export async function saveMark(work, student, comment, mark) {
         const data = await response.json(); 
 
         if(!data.success){
-          console.log("An error occurred editing mark: ", data.error);
           return { response: false, error: data.error, code:data.code};
         }
         
@@ -82,13 +80,11 @@ export async function getMarkByWorkAndStudent(work, student) {
       const data = await response.json();
 
       if(!data.success){
-        console.log("An error occurred geting mark id: ", data.error);
         return { response: false, error: data.error};
       }
       
       return { response: true, data:data.data[0].count, error: ""};
-      return data;
     } catch (error) {
-      console.error('Error getting marks from student:', error);
+      console.error('Error getting marks student:', error);
     }
 }

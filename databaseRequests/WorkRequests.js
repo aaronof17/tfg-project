@@ -1,7 +1,5 @@
 const connection = require('../databaseInfo');
 
-
-
 function insertWork(req,res) {
     const sql = 'INSERT INTO worklabs (title, description, initialdate, finaldate, percentage, labgroupNameFK, teacherIDFK, active) VALUES (?,?,?,?,?,?,?,1)';
     const params = [req.body.title, req.body.description, req.body.initialDate,
@@ -33,7 +31,6 @@ function editWork(req,res) {
 }
 
 
-
 function deleteWork(req,res) {
     const sql = 'delete from worklabs where worklabID = ?';
     const params = [req.body.worklabID];
@@ -55,7 +52,6 @@ function getWorksByTeacherId(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting works: '+ err.sqlMessage, code: err.code});
         } else {
-            console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
         }
     })
@@ -69,7 +65,6 @@ function getActiveWorksByTeacherId(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting active works: '+ err.sqlMessage, code: err.code});
         } else {
-            console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
         }
     })
@@ -137,7 +132,6 @@ function getWorksByStudentAndSubject(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting work for student and subject: '+ err.sqlMessage, code: err.code});
         } else {
-            console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
         }
     })
@@ -157,7 +151,6 @@ function getWorksByStudentAndGroup(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, error: 'Error getting work for student and group: '+ err.sqlMessage, code: err.code});
         } else {
-            console.log("roks ",data);
             return res.status(200).json({ success: true, data: data });
         }
     })
@@ -204,9 +197,6 @@ function getWorksByStudentId(req,res) {
         }
     })
 }
-
-
-
 
 
 module.exports = {getWorkByStudent, getWorksAndMarksByStudentAndGroup, getWorskByGroup, getWorksByStudentAndSubject, getActiveWorksByTeacherId, getWorksByStudentId, getWorskBySubject, deleteWork, getWorksByStudentAndGroup, getWorksByTeacherId, insertWork, editWork};

@@ -2,23 +2,23 @@ import  React, {useState, useEffect} from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-
-import {calculateWidth, getRepositoryName, extractId, formatDate, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
+import {getRepositoryName, extractId, formatDate, extractDuplicateEntry} from "../../../../functions/genericFunctions.js";
 import {createExcelAndDownload} from "../../../../functions/createExcel.js";
-import {downloadRepo, getLastCommitInfo, commitExplanation} from "../../../../functions/gitHubFunctions.js";
+import {downloadRepo, getLastCommitInfo, commitExplanation} from "../../../../services/gitHubFunctions.js";
 import {getStudents,deleteStudent, editStudent} from "../../../../services/studentService.js";
 import {getTeacherId, getTeacherToken} from "../../../../services/teacherService.js";
 import {getWorksByStudentAndGroup } from "../../../../services/labWorkService.js";
 
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
 import strings from '../../../../assets/files/strings.json';
 import RewriteModal from '../../../Modal/RewriteModal.js';
 import EditModal from './EditModal.js';
 import ExplanationModal from "./ExplanationModal.js";
 import InformationModal from './InformationModal.js';
+import PopUp from "./PopUp.js";
 import './StudentsList.css';
 
 function StudentsList({userData}) {
@@ -45,32 +45,32 @@ function StudentsList({userData}) {
       fetchInfo();
     }, []);
 
-    
-
 
     const getColumns = () =>{
       let columns = [];
-      if(studentsList != undefined){
+      if(studentsList !== undefined){
         columns = [ 
-          { field: 'name', headerName: t('studentList.name'), width: calculateWidth([...studentsList.map((student) => student.name), t('studentList.name')]) },
-          { field: 'email', headerName: t('studentList.email'), width: calculateWidth([...studentsList.map((student) => student.email), t('studentList.email')]) },
-          { field: 'githubuser', headerName: t('studentList.githubprofile'), width: calculateWidth([...studentsList.map((student) => student.githubuser), t('studentList.githubprofile')]) },
-          { field: 'group', headerName: t('studentList.group'), width: calculateWidth([...studentsList.map((student) => student.labgroup), t('studentList.group')],true) },
+          { field: 'name', headerName: t('studentList.name'), width:270 },
+          { field: 'email', headerName: t('studentList.email'), width:200 },
+          { field: 'githubuser', headerName: t('studentList.githubprofile'), width: 180 },
+          { field: 'group', headerName: t('studentList.group'), width: 130},
           {
             field: 'repository',
             headerName: t('studentList.repository'),
-            width: calculateWidth(studentsList.map((student)=>student.repositoryURL),false,true) ,
+            width: 230 ,
             renderCell: (params) => {
-                return (
-                    <a href={params.value} target="_blank" rel="noopener noreferrer">
-                        {params.value}
-                    </a>
-                );
+              const url = params.value;
+              const repositoryName = url.split('/').pop();
+              return (
+                <a href={params.value} target="_blank" rel="noopener noreferrer" style={{ color: 'black' }}>
+                  {repositoryName}
+                </a>
+              );
           }},
           {
             field: 'actions',
             headerName: t('studentList.actions'),
-            width: 150,
+            width: 100,
             renderCell: (params) => {
               return (
                 <div>
@@ -120,8 +120,22 @@ function StudentsList({userData}) {
       return rows;
     }
 
+    const validateDataDownload = () =>{
+      if(selectedStudents.length === 0 || selectedStudents.length > 1){
+        toast.error(t('studentList.studentsOnlyOne'));
+        return false;
+      }else{
+        if(teacherToken === ""){
+          toast.error(t('studentList.tokenEmpty'));
+          return false;
+        }else{
+          return true; 
+        }
+      }
+    }
+
     const validateData = () =>{
-      if(selectedStudents.length != 0){
+      if(selectedStudents.length !== 0){
         if(teacherToken === ""){
           toast.error(t('studentList.tokenEmpty'));
           return false;
@@ -135,12 +149,14 @@ function StudentsList({userData}) {
     }
 
     async function downloadStudentsRepositories(){
+      let tokenError = false;
       for (let student of selectedStudents) {
         try { 
           await downloadRepo(teacherToken, getRepositoryName(student.repository), student.githubuser).then((res) =>{
             if(!res.response){
               if(res.error ===  strings.errors.unauthorized){
                 toast.error(t('studentList.tokenError'));
+                tokenError = true;
                 return;
               }else if(res.error ===  strings.errors.notfound){
                 toast.error(t('studentList.errorRepository')+student.name);
@@ -153,13 +169,17 @@ function StudentsList({userData}) {
           });
         } catch (error) {
           toast.error(t('studentList.downloadError'));
+        } finally{
+          if(tokenError){
+            return;
+          }
         }
       }
     }
 
     async function downloadRepository(e) {
       e.preventDefault();
-      if (validateData()) {
+      if (validateDataDownload()) {
         try {
           await downloadStudentsRepositories();
         } catch (error) {
@@ -190,12 +210,12 @@ function StudentsList({userData}) {
                     toast.error(t('studentList.errorGettingWorksForStudent')+student.name);
                   }
                 }else{
-                  if(commitsInfo.length != 0){
-                    if( worksRes.data.length != 0){
+                  if(commitsInfo.length !== 0){
+                    if( worksRes.data.length !== 0){
                       let commitInfo = commitsInfo.map((c) => c.commit)[0];
                       let commitDate = new Date(commitInfo.committer.date);
                       let worksFiltered = worksRes.data.filter(work => new Date(work.finaldate) < commitDate );
-                      if( worksFiltered.length != 0){
+                      if( worksFiltered.length !== 0){
                         for(let w of worksFiltered){
                           setOutOfTimeCommits(prevInfo => [...prevInfo, 
                             {
@@ -244,7 +264,6 @@ function StudentsList({userData}) {
 
       await Promise.all(promises);
       setInformationModalOpen(true);
-    
     }
 
 
@@ -265,13 +284,12 @@ function StudentsList({userData}) {
       const selectedRows = getRows().filter((row) =>
         selectedIDs.has(row.id),
       );
-      console.log(selectedRows);
       setSelectedStudents(selectedRows);
     };
 
 
     function deleteStudentMethod(){
-      if(rowToDelete != ""){
+      if(rowToDelete !== ""){
         deleteStudent(rowToDelete).then((res)=>{
           if(res.response){
             getStudents(setStudentsList,teacherId).then(()=>{
@@ -285,7 +303,6 @@ function StudentsList({userData}) {
       }else{
         toast.error('studentList.errorDeletingStudent');
       }
-      
     }
 
 
@@ -313,7 +330,7 @@ function StudentsList({userData}) {
 
 
     async function handleCommitExplanation(file, commitTitle) {
-      if(selectedStudents.length !=0){
+      if(selectedStudents.length !==0){
         let problemWithToken=false;
         let explanationsSended=[];
         for (let student of selectedStudents) {
@@ -340,7 +357,7 @@ function StudentsList({userData}) {
             }
           }
         }
-        if(explanationsSended.length != 0){
+        if(explanationsSended.length !== 0){
           toast.info(t('studentList.explanationSended'));
         }
       }else{
@@ -357,7 +374,7 @@ function StudentsList({userData}) {
 
     async function createExcel(e) {
       e.preventDefault();
-      if(selectedStudents.length != 0){
+      if(selectedStudents.length !== 0){
         const firstGroup = selectedStudents[0].group;
         const sameGroup = selectedStudents.every(student => student.group === firstGroup);
         if (sameGroup) {
@@ -371,7 +388,6 @@ function StudentsList({userData}) {
         toast.error(t('studentList.studentsBlank'));
       }
     }
-
 
 
   if(studentsList.length !== 0)
@@ -392,18 +408,24 @@ function StudentsList({userData}) {
         onRowSelectionModelChange ={handleSelectionChange}
       />
       <div className="buttons" >
+        <div className="button-check-commits" >
+          <PopUp text={t('studentList.infoCheckCommits')}></PopUp>
+          <Button className="checkWorksDates" variant="contained" onClick={checkDatesMethod}>
+            {t('studentList.checkWorksDates')}
+          </Button>
+        </div>
         <Button className="downloadRepo" variant="contained" onClick={downloadRepository}>
           {t('studentList.downloadRepo')}
-        </Button>
-        <Button className="checkWorksDates" variant="contained" onClick={checkDatesMethod}>
-          {t('studentList.checkWorksDates')}
-        </Button>
-        <Button className="commitPDF" variant="contained" onClick={openExplanationModal}>
-          {t('studentList.sendExplanation')}
         </Button>
         <Button className="createExcel" variant="contained" onClick={createExcel}>
           {t('studentList.createExcel')}
         </Button>
+        <div className="button-send-pdf" >
+          <Button className="commitPDF" variant="contained" onClick={openExplanationModal}>
+            {t('studentList.sendExplanation')}
+          </Button>
+          <PopUp text={t('studentList.infosendPDF')}></PopUp>
+        </div>
       </div>
       {deleteModalOpen && (
           <RewriteModal
