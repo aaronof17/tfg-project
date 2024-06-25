@@ -166,6 +166,7 @@ function AddStudents({userData}) {
                 setRepository("");
                 setSubject("");
                 setGroup("");
+                getTeacherLabGroups(setLabGroups,teacherID);
               }
             } else {
               if(res.code === strings.errors.dupentry){

@@ -125,12 +125,12 @@ function CsvModal ({closeModal, onSubmit, labgroups, existsEmail, existsUser}){
                 <h4>{t('addStudents.informationCharged')}</h4>
               </Grid>
               <Grid item xs={12}>
-                <Button variant="contained" onClick={handlesaveCsvInfo} >
+                <Button className="confirm-btn"  variant="contained" onClick={handlesaveCsvInfo} >
                   {t('addStudents.saveStudents')}
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                <Button variant="contained" onClick={() => setFile(null)} >
+                <Button className="cancel-btn" variant="contained" onClick={() => setFile(null)} >
                   {t('addStudents.cancel')}
                 </Button>
               </Grid>

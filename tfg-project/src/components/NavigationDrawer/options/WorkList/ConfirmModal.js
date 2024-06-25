@@ -16,9 +16,6 @@ function ConfirmModal ({closeConfirmModal, deleteRow, titleText,text}){
     return (
     <div
       className="confirm-modal-container"
-      onClick={(e) => {
-        if (e.target.className === "confirm-modal-container") closeConfirmModal();
-      }}
     >
         <div className="confirm-modal">
             <h4>{titleText}</h4>

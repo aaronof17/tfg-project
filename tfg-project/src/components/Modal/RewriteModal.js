@@ -18,9 +18,6 @@ function RewriteModal ({closeRewriteModal, genericFunction, text1, text2}){
     return (
     <div
       className="rewrite-modal-container"
-      onClick={(e) => {
-        if (e.target.className === "rewrite-modal-container") closeRewriteModal();
-      }}
     >
         <div className="rewrite-modal">
             <h4>{text1}</h4>
@@ -29,7 +26,7 @@ function RewriteModal ({closeRewriteModal, genericFunction, text1, text2}){
                 <Button className="rewrite-btn" variant="contained" onClick={handleEdit}>
                     {t('mark.confirm')}
                 </Button>
-                <Button className="cancel-btn" variant="contained" onClick={closeRewriteModal}>
+                <Button className="cancel-btn-rm" variant="contained" onClick={closeRewriteModal}>
                     {t('mark.cancel')}
                 </Button>
             </div>
