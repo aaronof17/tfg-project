@@ -30,6 +30,7 @@ function AddStudents({userData}) {
   const [subject, setSubject] = useState("");
   const [group, setGroup] = useState("");
   const [labGroups, setLabGroups] = useState([]);
+  const [allLabGroups, setAllLabGroups] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [rewriteModalOpen, setRewriteModalOpen] = useState(false);
@@ -41,6 +42,7 @@ function AddStudents({userData}) {
       const fetchInfo = async () => {
           const id = await getTeacherId(setTeacherID,userData.login);
           getTeacherLabGroups(setLabGroups,id);
+          getTeacherLabGroups(setAllLabGroups,id);
           getSubjectsFromGroup(setSubjects,id);
       };
   
@@ -218,7 +220,7 @@ function AddStudents({userData}) {
               setModalOpen(false);
             }}
             onSubmit={handleSaveCsv}
-            labgroups={getTeacherLabGroups(setLabGroups,teacherID)}
+            labgroups={allLabGroups}
             existsEmail={existsEmail}
             existsUser={existsUser}
           />
