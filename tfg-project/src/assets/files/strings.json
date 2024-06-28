@@ -28,8 +28,7 @@
       "default" : "",
       "error" : "error",
       "encrypt" : "z8Y#rT@6Mv!yP$qX",
-      "host" : "http://localhost:4001/",
-      "local" : "http://localhost:4000/http://13.51.207.26/"
+      "host" : "http://localhost:4001/"
     }
   }
   
