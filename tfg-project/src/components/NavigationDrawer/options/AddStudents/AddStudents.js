@@ -218,7 +218,7 @@ function AddStudents({userData}) {
               setModalOpen(false);
             }}
             onSubmit={handleSaveCsv}
-            labgroups={labGroups}
+            labgroups={getTeacherLabGroups(teacherID,id)}
             existsEmail={existsEmail}
             existsUser={existsUser}
           />
